@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{labels.ManagePersons}" >
+                <h:panelGrid id ="gpVeda" columns="2" >
+
+                    <h:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <h:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="#{labels.Persons}" >
+                                </h:outputText>
+
+                                <h:inputText id="txtSelect" value="#{personController.selectText}"   style="min-width: 200px" >
+                                    <f:ajax  event="keyup" render="lstSelect gpDetail" >
+                                    </f:ajax>
+                                </h:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+
+
+                                <h:selectOneListbox id="lstSelect"   size="10" value="#{personController.current}" style="min-width: 223px" >
+                                    <f:selectItems value="#{personController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:ajax render="gpDetail" execute="lstSelect" >                                
+                                    </f:ajax>
+                                </h:selectOneListbox>
+
+                            </h:panelGrid>
+
+                        </p:panel>
+                    </h:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <h:panelGrid id="gpDetailText" columns="3">
+                                <h:selectOneListbox  size="1" id="cmbType" value="#{personController.currentContact.contactType}" style="width: 300px;"  >
+                                    <f:selectItems value="#{contactTypeController.items}" var="ct" itemLabel="#{ct.name}" itemValue="#{ct}" />
+                                </h:selectOneListbox>
+                                <h:inputText id="txtContact" value="#{personController.currentContact.name}"  ></h:inputText>
+                                <h:commandButton id="btnAdd" value="Add" action="#{personController.addContact}">
+                                    <f:ajax render="lstCon"  execute="btnAdd txtContact cmbType" >
+                                    </f:ajax>
+                                </h:commandButton>
+                            </h:panelGrid>
+
+                            <h:panelGrid id="gpTblContact" columns="2">
+                                <h:selectOneListbox value="#{personController.currentContact}" id="lstCon">
+                                    <f:selectItems value="#{personController.currentContacts}" var="pc" itemValue="#{pc}" itemLabel="#{pc.contactType.name} - #{pc.name}"  />
+                                </h:selectOneListbox>
+                                <h:commandButton id="btnRemove" value="Remove"  action="#{personController.removeContact}" styleClass="buttons">
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

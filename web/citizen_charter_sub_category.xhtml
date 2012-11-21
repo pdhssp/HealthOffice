@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:panel header="#{postLabels.subcategories}" >
+
+                <p:panelGrid columns="3">
+                    <h:outputLabel value="#{postLabels.category}" >
+                    </h:outputLabel>
+                    <h:selectOneListbox size="5"  id="cmbCat" value="#{citizenCharterSubCategoryController.cat}" >
+                        <f:selectItems value="#{citizenCharterSubCategoryController.cats}" var="cat" itemValue="#{cat}" itemLabel="#{cat.name}"/>
+                    </h:selectOneListbox>
+                    <h:commandButton value="#{labels.display}"  />
+
+
+                    <h:outputLabel value="#{postLabels.subcategories}" >
+                    </h:outputLabel>
+                    <h:selectOneListbox id="cmbSub" value="#{citizenCharterSubCategoryController.subCat.id}" >
+                        <f:selectItems value="#{citizenCharterSubCategoryController.subCats}" var="sub" itemValue="#{sub.id}" itemLabel="#{sub.name}"/>
+                    </h:selectOneListbox>   
+                    <h:outputLabel value="" >
+                    </h:outputLabel>
+
+                    <h:outputLabel value="#{postLabels.newSubcategoryName}" >
+                    </h:outputLabel>
+                    <h:inputText id="txtSub" value="#{citizenCharterSubCategoryController.txtName}" >
+                    </h:inputText>  
+                    <h:commandButton value="#{labels.save}" action="#{citizenCharterSubCategoryController.saveSubCat}" />
+
+                    
+                </p:panelGrid>
+            </p:panel>
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

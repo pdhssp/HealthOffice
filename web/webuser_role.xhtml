@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="Manage WebUserRoles" >
+                <h:panelGrid id ="gpVeda" columns="2" >
+
+                    <h:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <h:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="User Roles" >
+                                </h:outputText>
+
+                                <h:inputText id="txtSelect" value="#{webUserRoleController.selectText}" disabled="#{webUserRoleController.selectControlDisable}"  style="min-width: 200px" >
+                                    <f:ajax  event="keyup" render="lstSelect txtName" >
+                                    </f:ajax>
+                                </h:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+
+
+                                <h:selectOneListbox id="lstSelect"  disabled="#{webUserRoleController.selectControlDisable}" size="10" value="#{webUserRoleController.current}" style="min-width: 223px">
+                                    <f:selectItems value="#{webUserRoleController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:ajax render="gpDetail" execute="lstSelect" >                                
+                                    </f:ajax>
+                                </h:selectOneListbox>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid id="gpSelectButtons" columns="3"  >
+                                <h:commandButton id="btnAdd" value="Add" disabled="#{webUserRoleController.selectControlDisable}" action="#{webUserRoleController.prepareAdd()}" styleClass="buttons" >
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="btnEdit" >                                
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id ="btnEdit" value="Edit" disabled="#{webUserRoleController.selectControlDisable}" action="#{webUserRoleController.prepareEdit()}"  styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="lstSelect" >
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id="btnDelete" onclick="confirmation.show()" value="Delete" disabled="#{webUserRoleController.selectControlDisable}" styleClass="buttons">
+                                </h:commandButton>
+                            </h:panelGrid>
+                            <p:confirmDialog appendToBody="true" message="Are you sure you want to delete" header="Initiating destroy process" severity="alert" widgetVar="confirmation">  
+                                <p:commandButton value="Yes" oncomplete="confirmation.hide()" action="#{webUserRoleController.delete()}" update="lstSelect txtName"  />  
+                                <p:commandButton value="No" onclick="confirmation.hide()" type="button" />   
+                            </p:confirmDialog>
+                        </p:panel>
+                    </h:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <h:panelGrid id="gpDetailText" columns="2">
+                                <h:outputText id="lblName" value="WebUserRole" ></h:outputText>
+                                <h:inputText id="txtName" value="#{webUserRoleController.current.name}" disabled="#{webUserRoleController.modifyControlDisable}" ></h:inputText>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="5" >
+                                <h:outputLabel value="Privilege" />
+                                <h:outputLabel value="View" />
+                                <h:outputLabel value="Add" />
+                                <h:outputLabel value="Edit" />
+                                <h:outputLabel value="Delete" />
+
+                                <h:outputLabel value="Administration" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}" value="#{webUserRoleController.privilege.activateAccounts}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.dectivateAccounts}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.deleteAccounts}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.manageAccounts}"/>
+
+                                <h:outputLabel value="HR" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.caderView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.caderAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.caderEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.caderDelete}"/>
+
+                                <h:outputLabel value="Finance" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.financeView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.financeAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.financeEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.financeDelete}"/>
+
+                                <h:outputLabel value="Medical Supplies" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.msView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.msAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.msEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.msDelete}"/>
+
+                                <h:outputLabel value="Biomedical" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.bmeView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.bmeAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.bmeEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.bmeDelete}"/>
+
+
+                                <h:outputLabel value="Demography" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.demographyView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.demographyAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.demographyEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.demographyDelete}"/>
+
+                                <h:outputLabel value="Inventory" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.inventaryView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.inventaryAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.inventaryEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.inventaryDelete}"/>
+
+                                <h:outputLabel value="Library" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.libraryView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.libraryAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.libraryEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.libraryDelete}"/>
+
+                                <h:outputLabel value="Vehicle" />
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.vehicleView}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.vehicleAdd}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.vehicleEdit}"/>
+                                <h:selectBooleanCheckbox disabled="#{webUserRoleController.modifyControlDisable}"  value="#{webUserRoleController.privilege.vehicleDelete}"/>
+
+                                
+                                
+                                
+                            </h:panelGrid>
+
+
+                            <h:panelGrid id="gpDetailButtons" columns="2">
+                                <h:commandButton id="btnSave" value="Save" disabled="#{webUserRoleController.modifyControlDisable}" action="#{webUserRoleController.saveSelected()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id ="btnCancel" value="Cancel" disabled="#{webUserRoleController.modifyControlDisable}" action="#{webUserRoleController.cancelSelect()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName selectFocus" execute="gpDetail" >                                
+                                    </f:ajax>
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

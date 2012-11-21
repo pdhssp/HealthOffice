@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <h:form enctype="multipart/form-data">
+            <pou:growl ></pou:growl>
+            <h:outputLabel value="Person Images" ></h:outputLabel>
+            <h:panelGrid columns="2" >
+                <h:outputText value="Person"/>
+                <h:outputText id="cmbLoc" value="#{imageController.person.name}" />
+            </h:panelGrid>
+            <pou:galleria id="gal" value="#{imageController.appImages}" var="img">
+                <pou:graphicImage value="#{imageController.scImageById}" >
+                    <f:param name="id" value="#{img.id}" />
+                </pou:graphicImage>
+            </pou:galleria>
+            <h:panelGrid columns="2" >
+                <pou:fileUpload value="#{imageController.file}" mode="simple"/>
+                <h:commandButton value="Save" action="#{imageController.saveLocationImage}"/>
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

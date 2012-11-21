@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:panel header="#{labels.reports}" >
+
+                <p:panelGrid columns="1" >
+                    <f:facet name="header" >
+                        <h:outputLabel value="#{postLabels.financeReports}" />
+                    </f:facet>
+                    <h:commandLink value="#{postLabels.institutionExpensesEntered}" action="finance_view_institution_expenses_entered"></h:commandLink>
+                    <h:commandLink value="#{postLabels.institutionExpensesCalculated}" action="finance_view_institution_expenses_calculated"></h:commandLink>
+                    <h:outputLabel value="" />
+                    <h:commandLink value="#{postLabels.institutionExpensesByMonth}" action="finance_view_institution_expenses"></h:commandLink>
+                    <h:commandLink value="#{postLabels.institutionExpensesByMonthLineChart}" action="finance_view_institution_expenses_line_chart"></h:commandLink>
+                    <h:commandLink value="#{postLabels.institutionExpensesPerHeadByMonthLineChart}" action="finance_view_institution_expenses_line_chart_per_head"></h:commandLink>
+                    <h:commandLink value="#{postLabels.institutionHeadCountByMonthLineChart}" action="finance_view_institution_head_count_line_chart"></h:commandLink>
+                </p:panelGrid>
+            </p:panel>
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

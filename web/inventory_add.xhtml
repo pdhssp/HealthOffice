@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+        <h:outputStylesheet library="css" name="pdhssp1.css"/>
+
+        <p:growl autoUpdate="true"/>
+
+        <h:form >
+
+
+
+
+            <p:panel id="gpPurchase" header="#{postLabels.addItemsToInventory}">
+                <p:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
+                    
+                    #{labels.Institution}
+                    <h:selectOneListbox id="cmbToIns" value="#{inventoryItemUnitAlterController.bill.toInstitution}"  size="4">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.toInstitutions}" var="toIns" itemValue="#{toIns}" itemLabel="#{toIns.name}"></f:selectItems>
+                        <f:ajax execute="cmbToIns" render="cmbToUnit cmbToPerson" event="change" />
+                    </h:selectOneListbox>
+                    
+                    #{postLabels.unit}
+                    <h:selectOneListbox id="cmbToUnit" value="#{inventoryItemUnitAlterController.bill.toUnit}"  size="4">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
+                        <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
+                    </h:selectOneListbox>  
+                    
+                    #{labels.Locations}
+                    <h:selectOneListbox id="cmbToLocation" value="#{inventoryItemUnitAlterController.bill.toLocation}"  size="4">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
+                        <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
+                    </h:selectOneListbox> 
+                    
+                    #{labels.Persons}
+                    <h:selectOneListbox id="cmbToPerson" value="#{inventoryItemUnitAlterController.bill.toPerson}"  size="4">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
+                    </h:selectOneListbox>                      
+
+                    <h:outputLabel value="#{labels.item}" />
+                    <h:selectOneListbox id="lstItem" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.item}" styleClass="pdListBox" size="5">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
+                        </f:selectItems>
+                        <f:ajax execute="#{postLabels.lstItem}" render="txtTem"/>
+                    </h:selectOneListbox>
+
+                    <h:outputLabel value="#{labels.make}" />
+                    <h:selectOneListbox id="lstMake" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.make}" styleClass="pdListBox" size="5">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.makes}" var="myMake" itemLabel="#{myMake.name}" itemValue="#{myMake}"/>
+                    </h:selectOneListbox>
+
+                    <h:outputLabel value="#{labels.modal}" ></h:outputLabel>
+                    <h:inputText value="#{inventoryItemUnitAlterController.modalName}" styleClass="pdPageText" ></h:inputText>
+                    <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                    <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
+
+                    <h:outputLabel value="#{labels.id}" ></h:outputLabel>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.name}" styleClass="pdPageText" ></h:inputText>
+                    <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                    <h:outputLabel value="#{labels.descreption}" ></h:outputLabel>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.description}" ></h:inputText>
+
+                    <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
+                    <p:calendar value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.dateOfExpiary}" styleClass="pdPageText" ></p:calendar>
+                    <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                    <h:outputLabel value="#{labels.modalNo}" ></h:outputLabel>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.modalNo}" ></h:inputText>
+
+                    <h:outputLabel value="#{labels.country}" />
+                    <h:selectOneListbox id="lstCountry" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.country}" styleClass="pdListBox" size="5">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.countries}" var="myCon" itemLabel="#{myCon.name}" itemValue="#{myCon}"/>
+                    </h:selectOneListbox>
+
+                    <h:outputLabel value="#{labels.Suppliers}" />
+                    <h:selectOneListbox id="lstManu" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.supplier}" styleClass="pdListBox" size="5">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.suppliers}" var="mySup" itemLabel="#{mySup.name}" itemValue="#{mySup}"/>
+                    </h:selectOneListbox>
+
+                    <h:outputLabel value="#{labels.rate}"/>
+                    <h:inputText id="txtRate" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.netRate}">
+                        <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{inventoryItemUnitAlterController.calculateItemValue}" />
+                    </h:inputText>
+                    Supplied By
+                    <h:selectOneListbox value="#{inventoryItemUnitAlterController.bill.fromInstitution}" size="4">
+                        <f:selectItems value="#{inventoryItemUnitAlterController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
+                    </h:selectOneListbox>
+                    
+                    <h:outputLabel value=""></h:outputLabel>
+                    <h:commandButton value="#{postLabels.addItemsToInventory}" action="" >
+                        
+                    </h:commandButton>
+                    
+                </p:panelGrid>
+            </p:panel>
+
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+        <h:outputStylesheet library="css" name="pdhssp1.css"/>
+
+        <p:growl autoUpdate="true"/>
+
+        <h:form >
+
+            <h:inputHidden value="#{msPurchaseBillController.bill.id}" />
+
+
+            <p:panel id="gpPurchase" header="Purchase">
+
+                <p:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
+
+                    <p:panel id="gpItemAndList" style="vertical-align: text-top;">
+                        <p:panel id="gpItem" header="Item Details" rendered="#{msPurchaseBillController.newBill}" >
+
+
+                            <p:panelGrid  columnClasses = "pdTopAlign" styleClass="pdTopAlignNoBorder" >
+
+                                <p:row  >
+                                    <p:column  colspan="1">
+                                        <h:outputLabel value="Medicine Product" /><br/>
+                                        <h:selectOneListbox id="lstVmp" value="#{msPurchaseBillController.selectedVmp}" size="1">
+                                            <f:selectItems value="#{vmpController.items}" var="vmp" itemValue="#{vmp}" itemLabel="#{vmp.name}">
+                                            </f:selectItems>
+                                            <f:selectItems value="#{vmpController.items}" var="vmp" itemValue="#{vmp}" itemLabel="#{vmp.code}">
+                                            </f:selectItems>
+                                            <f:ajax execute="lstVmp" render="lstItem"/>
+                                        </h:selectOneListbox>
+                                        <h:outputLabel value="Item" /><br/>
+                                        <h:selectOneListbox id="lstItem" value="#{msPurchaseBillController.billItemEntry.billItem.itemUnit.item}" size="1" style="width: 400px; max-width: 400px;">
+                                            <f:selectItems value="#{msPurchaseBillController.selectedAmps}" var="amp" itemValue="#{amp}" itemLabel="#{amp.name}">
+                                            </f:selectItems>
+                                            <f:ajax execute="lstItem" render="txtTem"/>
+                                        </h:selectOneListbox>
+                                        <br/>
+                                        <h:outputLabel value="Batch" ></h:outputLabel>
+                                        <br/>
+                                        <h:inputText value="#{msPurchaseBillController.billItemEntry.billItem.itemUnit.name}" style="width: 400px;  max-width: 400px;" ></h:inputText>
+                                        <br/>
+                                        <h:outputLabel value="Expiary" ></h:outputLabel>
+                                        <br/>
+                                        <p:calendar value="#{msPurchaseBillController.billItemEntry.billItem.itemUnit.dateOfExpiary}" styleClass="pdPageText" ></p:calendar>
+
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputLabel value="Rate"/>
+                                        <br/>
+                                        <h:inputText id="txtRate" value="#{msPurchaseBillController.billItemEntry.billItem.netRate}" >
+                                            <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{msPurchaseBillController.calculateItemValue}" />
+                                        </h:inputText>
+                                        <br/>
+                                        <h:outputLabel value="Quentity"/>
+                                        <br/>
+                                        <h:inputText id="txtQty" value="#{msPurchaseBillController.billItemEntry.billItem.quentity}" >
+                                            <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{msPurchaseBillController.calculateItemValue}" />                                            
+                                        </h:inputText>
+                                        <br/>
+                                        <h:outputLabel value="Value"/>
+                                        <br/>
+                                        <h:inputText disabled="true" id="txtValue" value="#{msPurchaseBillController.billItemEntry.billItem.netValue}">
+                                        </h:inputText>
+                                        <h:commandButton id="btnAdd" value="Add" action="#{msPurchaseBillController.addItemToList}">
+                                            <f:ajax execute="gpItem btnAdd" render="gpItem gpList gpBillDetails"/>
+                                        </h:commandButton>                                        
+                                    </p:column>
+
+
+                                </p:row>
+
+                            </p:panelGrid>
+
+
+                            <h:outputLabel value="Selected is #{msPurchaseBillController.billItemEntry.billItem.itemUnit.item.name}" id="txtTem" />
+
+
+
+
+
+
+                        </p:panel>
+                        <p:panel id="gpList" header="Item List">
+
+                            <p:dataTable value="#{msPurchaseBillController.billItemEntrys}" var="temBillItem" selection="#{msPurchaseBillController.editBillItemEntry}" selectionMode="single" rowKey="#{temBillItem.id}" >
+
+                                <p:column headerText="Item" >
+                                    #{temBillItem.billItem.itemUnit.item.name}
+                                </p:column>
+
+                                <p:column headerText="Batch" >
+                                    #{temBillItem.billItem.itemUnit.name}
+                                </p:column>
+
+                                <p:column headerText="Expiry" >
+                                    <h:outputLabel value="#{temBillItem.billItem.itemUnit.dateOfExpiary}">
+                                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                                    </h:outputLabel>
+
+                                </p:column>                                
+
+                                <p:column headerText="Rate" >
+                                    <h:outputLabel value="#{temBillItem.billItem.netRate}" >
+                                        <f:convertNumber pattern="#,##0.00" />
+                                    </h:outputLabel>
+                                </p:column>
+
+                                <p:column headerText="Quentity" >
+                                    <h:outputLabel value="#{temBillItem.billItem.quentity}">
+<!--                                        <f:convertNumber pattern="#,##0.00" /> -->
+                                    </h:outputLabel>
+                                </p:column>
+
+                                <p:column headerText="Value" >
+                                    <h:outputLabel value="#{temBillItem.billItem.netValue}">
+                                        <f:convertNumber pattern="#,##0.00" /> 
+                                    </h:outputLabel>
+                                    
+                                </p:column>
+
+                            </p:dataTable> 
+
+
+
+
+                            <h:commandButton value="Delete" action="#{msPurchaseBillController.removeItemFromList}" >
+                                <f:ajax render="gpList gpItem" execute="gpList"/>
+                            </h:commandButton>
+
+
+
+
+                        </p:panel>
+                    </p:panel>
+                    <p:panel id="gpBillDetails" header="Bill Details">
+                        <p:panelGrid columns="2">
+                            Supplied By
+                            <h:selectOneListbox value="#{msPurchaseBillController.bill.fromInstitution}" size="4">
+                                <f:selectItems value="#{msPurchaseBillController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
+                            </h:selectOneListbox>
+                            Receiving Institution
+                            <h:selectOneListbox id="cmbToIns" value="#{msPurchaseBillController.bill.toInstitution}"  size="4">
+                                <f:selectItems value="#{msPurchaseBillController.toInstitutions}" var="toIns" itemValue="#{toIns}" itemLabel="#{toIns.name}"></f:selectItems>
+                                <f:ajax execute="cmbToIns" render="cmbToUnit cmbToPerson" event="change" />
+                            </h:selectOneListbox>
+                            Receiving Unit
+                            <h:selectOneListbox id="cmbToUnit" value="#{msPurchaseBillController.bill.toUnit}"  size="4">
+                                <f:selectItems value="#{msPurchaseBillController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
+                                <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
+                            </h:selectOneListbox>                      
+                            Receiving Location
+                            <h:selectOneListbox id="cmbToLocation" value="#{msPurchaseBillController.bill.toLocation}"  size="4">
+                                <f:selectItems value="#{msPurchaseBillController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
+                                <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
+                            </h:selectOneListbox>                      
+                            Receiving Person
+                            <h:selectOneListbox id="cmbToPerson" value="#{msPurchaseBillController.bill.toPerson}"  size="4">
+                                <f:selectItems value="#{msPurchaseBillController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
+                            </h:selectOneListbox>                      
+                            Gross Value
+                            <h:inputText disabled="true" value="#{msPurchaseBillController.bill.grossValue}" />
+                            Discount
+                            <h:inputText value="#{msPurchaseBillController.bill.discountValue}">
+
+                            </h:inputText>
+                            Net Value
+                            <h:inputText disabled="true" value="#{msPurchaseBillController.bill.netValue}"/> 
+
+
+                            <h:outputLabel value="Invoice"/>
+                            <h:inputText  id="txtInvoiceNo" value="#{msPurchaseBillController.bill.name}">
+                            </h:inputText>
+                            <h:outputLabel value="Bill Date"/>
+                            <p:calendar locale="en_UK"  id="txtBillDate" value="#{msPurchaseBillController.bill.billDate}">
+                            </p:calendar>
+
+
+
+                            <h:commandButton rendered="#{msPurchaseBillController.newBill}" value="Settle" action="#{msPurchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!msPurchaseBillController.newBill}" value="Cancel" action="#{msPurchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!msPurchaseBillController.newBill}" value="Reprint" action="#{msPurchaseBillController.settleBill}"/>
+
+
+                        </p:panelGrid>
+                    </p:panel>
+                </p:panelGrid>
+            </p:panel>
+
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

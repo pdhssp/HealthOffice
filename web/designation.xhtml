@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{labels.ManageDesignations}" >
+                <h:panelGrid id ="gpVeda" columns="2" >
+
+                    <h:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <h:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="#{labels.Designations}" >
+                                </h:outputText>
+
+                                <h:inputText id="txtSelect" value="#{designationController.selectText}" disabled="#{designationController.selectControlDisable}"  style="min-width: 200px" >
+                                    <f:ajax  event="keyup" render="lstSelect txtName" >
+                                    </f:ajax>
+                                </h:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+
+
+                                <h:selectOneListbox id="lstSelect"  disabled="#{designationController.selectControlDisable}" size="10" value="#{designationController.current}" style="min-width: 223px">
+                                    <f:selectItems value="#{designationController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:ajax render="txtName" execute="lstSelect" >                                
+                                    </f:ajax>
+                                </h:selectOneListbox>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid id="gpSelectButtons" columns="3"  >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{designationController.selectControlDisable}" action="#{designationController.prepareAdd()}" styleClass="buttons" >
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName detailFocus" execute="btnEdit" >                                
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{designationController.selectControlDisable}" action="#{designationController.prepareEdit()}"  styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName detailFocus" execute="lstSelect" >
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id="btnDelete" onclick="confirmation.show()" value="#{labels.delete}" disabled="#{designationController.selectControlDisable}" styleClass="buttons">
+                                </h:commandButton>
+                            </h:panelGrid>
+                            <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
+                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide()" action="#{designationController.delete()}" update="lstSelect txtName"  />  
+                                <p:commandButton value="#{labels.No}" onclick="confirmation.hide()" type="button" />   
+                            </p:confirmDialog>
+                        </p:panel>
+                    </h:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <h:panelGrid id="gpDetailText" columns="2">
+                                <h:outputText id="lblName" value="#{labels.Designation}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{designationController.current.name}" disabled="#{designationController.modifyControlDisable}" ></h:inputText>
+                            </h:panelGrid>
+                            <h:panelGrid id="gpDetailButtons" columns="2">
+                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{designationController.modifyControlDisable}" action="#{designationController.saveSelected()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName selectFocus"  execute="txtName    " >
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{designationController.modifyControlDisable}" action="#{designationController.cancelSelect()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName selectFocus" execute=" txtName    " >                                
+                                    </f:ajax>
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>        
+        
+        
+        
+    </ui:define>
+
+</ui:composition>

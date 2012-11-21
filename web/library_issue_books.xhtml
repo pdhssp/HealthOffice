@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{postLabels.manageBooks}" >
+
+
+                <h:panelGrid id ="gpVeda" columns="3" >
+                    <p:panelGrid columns="2">
+                        <h:outputText id="lblIns" value="#{labels.Institution}" ></h:outputText>
+                        <h:selectOneListbox id="cmbIns" value="#{bookController.institution}" size="4" style="width: 300px;">
+                            <f:selectItems value="#{bookController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}" />
+                            <f:ajax event="change" execute="cmbIns" render="cmbUnit"/>
+                        </h:selectOneListbox>
+                        <h:outputText id="lblUnit" value="#{postLabels.unit}" ></h:outputText>
+                        <h:selectOneListbox id="cmbUnit" value="#{bookController.unit}" size="4"  style="width: 300px;">
+                            <f:selectItems value="#{bookController.units}" var="unit" itemValue="#{unit}" itemLabel="#{unit.name}" />
+                            <f:ajax event="change" execute="cmbUnit" render="lstSelect"/>
+                        </h:selectOneListbox>
+                        <h:outputText  value="#{postLabels.searchByBookNumber}" >
+                        </h:outputText>
+                        <h:inputText value="#{bookController.selectText}" id="txtSelect"  style="width: 200px;">
+                            <f:ajax event="keyup" execute="txtSelect" render="lstSelect gpDetail"/>
+                        </h:inputText>
+
+                        <h:outputText  value="#{postLabels.searchByBookName}" >
+                        </h:outputText>
+                        <h:inputText value="#{bookController.selectName}" id="txtSelectName" style="width: 200px;">
+                            <f:ajax event="keyup" execute="txtSelectName" render="lstSelect gpDetail"/>
+                        </h:inputText>                                
+
+                        <h:outputText id="lblSelect" value="#{postLabels.books}" >
+                        </h:outputText>
+                        <h:selectOneListbox id="lstSelect"  disabled="#{bookController.selectControlDisable}" size="10" value="#{bookController.current}" style="min-width: 223px">
+                            <f:selectItems value="#{bookController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.description}" ></f:selectItems>
+                            <f:ajax render="gpDetail" execute="lstSelect" >                                
+                            </f:ajax>
+                        </h:selectOneListbox>
+                    </p:panelGrid>
+
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <h:panelGrid id="gpDetailText" columns="2">
+                                <h:outputText id="lblName" value="#{postLabels.number2}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{bookController.current.name}" disabled="#{bookController.modifyControlDisable}" style="width: 200px"></h:inputText>
+                                <h:outputText id="lblDes" value="#{postLabels.name2}" ></h:outputText>
+                                <h:inputText id="txtDes" value="#{bookController.current.description}" disabled="#{bookController.modifyControlDisable}" style="width: 300px"></h:inputText>
+                                <h:outputText id="lblPub" value="#{postLabels.publisher}" ></h:outputText>
+                                <h:selectOneListbox id="cmbPub" value="#{bookController.current.manufacturer}" rendered ="#{!bookController.modifyControlDisable}"   disabled="#{bookController.modifyControlDisable}" size="5" style="width: 300px">
+                                    <f:selectItems value="#{publisherController.items}" var="pub" itemValue="#{pub}" itemLabel="#{pub.name}"/>
+                                </h:selectOneListbox>
+                                <h:outputText id="txtPub" value="#{bookController.current.institution.name}" rendered ="#{bookController.modifyControlDisable}"   size="5" style="width: 300px">
+                                </h:outputText> 
+                                <h:outputText id="lblBox" value="#{postLabels.rack}" ></h:outputText>
+                                <h:selectOneListbox id="cmbLoc" value="#{bookController.current.location}" rendered ="#{!bookController.modifyControlDisable}"   disabled="#{bookController.modifyControlDisable}" size="5" style="width: 300px">
+                                    <f:selectItems value="#{bookController.locations}" var="loc" itemValue="#{loc}" itemLabel="#{loc.name}"/>
+                                </h:selectOneListbox>
+                                <h:outputText id="txtLoc" value="#{bookController.current.location.name}" rendered ="#{bookController.modifyControlDisable}"   size="5" style="width: 300px">
+                                </h:outputText>                                
+                                <h:outputText id="lblAuth" value="#{postLabels.auther}" ></h:outputText>
+                                <h:inputText id="txtAuth" value="#{bookController.current.modalNo }" disabled="#{bookController.modifyControlDisable}" style="width: 300px"></h:inputText>
+                                <h:outputText id="lblPrice" value="#{postLabels.price}" ></h:outputText>
+                                <h:inputText id="txtPrice" value="#{bookController.current.purchaseValue }" disabled="#{bookController.modifyControlDisable}" style="width: 300px">
+                                    <f:convertNumber pattern="#,##0.00"/>
+                                </h:inputText>
+                                <h:outputText id="lblIsbn" value="#{postLabels.iSBN}" ></h:outputText>
+                                <h:inputText id="txtIsbn" value="#{bookController.current.serial }" disabled="#{bookController.modifyControlDisable}" style="width: 300px"></h:inputText>
+
+                            </h:panelGrid>
+                            <h:panelGrid id="gpDetailButtons" columns="2">
+                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{bookController.modifyControlDisable}" action="#{bookController.saveSelected()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel  lstSelect gpDetail selectFocus"  execute="gpDetail" >
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{bookController.modifyControlDisable}" action="#{bookController.cancelSelect()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel  lstSelect gpDetail selectFocus" execute="gpDetail" >                                
+                                    </f:ajax>
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+
+
+
+
+                </h:panelGrid  >
+
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

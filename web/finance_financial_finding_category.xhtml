@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{postLabels.manageFinancialFindingCategories}" >
+                <p:panelGrid id ="gpVeda" columns="2" >
+
+                    <p:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <p:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="#{postLabels.financialFindingCategories}" >
+                                </h:outputText>
+
+                                <p:inputText id="txtSelect" value="#{financialFindingCategoryController.selectText}" disabled="#{financialFindingCategoryController.selectControlDisable}"  style="min-width: 200px" >
+                                    <p:ajax event="keyup" update="lstSelect gpDetail" >
+                                    </p:ajax>
+                                </p:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+                                
+
+
+                                <h:selectOneListbox  id="lstSelect"  disabled="#{financialFindingCategoryController.selectControlDisable}"  value="#{financialFindingCategoryController.current}" style="min-width: 223px; height: 250px;">
+                                    <f:selectItems value="#{financialFindingCategoryController.lstItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:ajax execute="lstSelect" render="gpDetail" event="change">                                
+                                    </f:ajax>
+                                </h:selectOneListbox>
+
+                            </p:panelGrid>
+
+                            <p:panelGrid id="gpSelectButtons" columns="3"  >
+                                <p:commandButton process="btnAdd" update="gpSelect gpDetail"  id="btnAdd" value="#{labels.add}" disabled="#{financialFindingCategoryController.selectControlDisable}" action="#{financialFindingCategoryController.prepareAdd}" />
+                                <p:commandButton process="gpSelect gpDetail" update="gpSelect gpDetail" id ="btnEdit" value="#{labels.edit}" disabled="#{financialFindingCategoryController.selectControlDisable}" actionListener="#{financialFindingCategoryController.prepareEdit}"  />
+                                <p:commandButton process="gpSelect gpDetail" update="gpSelect gpDetail"   id="btnDelete" value="#{labels.delete}" disabled="#{financialFindingCategoryController.selectControlDisable}" actionListener="#{financialFindingCategoryController.delete}" />
+                            </p:panelGrid>
+                        </p:panel>
+
+
+                        
+
+                    </p:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <p:panelGrid id="gpDetailText" columns="2">
+                                <h:outputText id="lblName" value="#{postLabels.financialFindingCategories}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{financialFindingCategoryController.current.name}" disabled="#{financialFindingCategoryController.modifyControlDisable}" >
+                                </h:inputText>
+                            </p:panelGrid>
+                            <p:panelGrid id="gpDetailButtons" columns="2">
+                                <p:commandButton process="gpDetail gpSelect" update="gpDetail gpSelect" id="btnSave" value="#{labels.save}" disabled="#{financialFindingCategoryController.modifyControlDisable}" actionListener="#{financialFindingCategoryController.saveSelected}" >
+                                </p:commandButton>
+                                <p:commandButton id ="btnCancel" process="gpDetail gpSelect" update="gpDetail gpSelect"  value="#{labels.cancel}" disabled="#{financialFindingCategoryController.modifyControlDisable}" actionListener="#{financialFindingCategoryController.cancelSelect}" >
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:panelGrid>
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

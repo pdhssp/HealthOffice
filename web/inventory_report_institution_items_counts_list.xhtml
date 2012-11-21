@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="image" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </pou:ajaxStatus>
+        <h:form>
+
+            <pou:growl id="g" autoUpdate="true"></pou:growl>
+
+            <h:outputLabel value="#{itemUnitController.institution.name}"></h:outputLabel>
+            <h:outputLabel value="#{itemUnitController.currentItem.name}"></h:outputLabel>
+
+            <pou:dataTable id="tblItems"  var="demo" value="#{itemUnitController.insItemsSingle}" emptyMessage="#{postLabels.noRecordsFoundInventory}">
+
+                <h:column>
+                    <f:facet name="header">
+                        #{labels.item}
+                    </f:facet>
+                    <h:outputText value="#{demo.item.name}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                       #{postLabels.unit}
+                    </f:facet>
+                    <h:outputText value="#{demo.unit.name}"/>
+                </h:column>                
+
+                <h:column>
+                    <f:facet name="header">
+                        #{labels.Persons}
+                    </f:facet>
+                    <h:outputText value="#{demo.person.name}"/>
+                </h:column> 
+
+                <h:column>
+                    <f:facet name="header">
+                        #{labels.make}
+                    </f:facet>
+                    <h:outputText value="#{demo.make.name}"/>
+                </h:column>                  
+                
+                <h:column>
+                    <f:facet name="header">
+                        #{labels.serial}
+                    </f:facet>
+                    <h:outputText value="#{demo.name}"/>
+                </h:column>                 
+                
+
+                
+
+
+            </pou:dataTable>
+
+            <pou:panel header="#{labels.exportAllData}">
+                <!--                <h:commandLink>
+                                    <h:graphicImage  library="image" name="excel.png" />
+                                    <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
+                                </h:commandLink>
+                
+                                <h:commandLink>
+                                    <h:graphicImage  library="image" name="pdf.png" />
+                                    <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
+                                </h:commandLink>-->
+
+                 <h:commandLink id="clCvs">
+                    <h:graphicImage  library="image" name="csv.png" />
+                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
+                    <pou:tooltip for="clCvs" >
+                        <h:outputLabel value="#{postLabels.exportAsCVS}" />
+                    </pou:tooltip>
+                </h:commandLink>
+                <h:commandLink id="clXml">
+                    <pou:tooltip for="clXml" >
+                        <h:outputLabel value="#{postLabels.exportAsXML}" />
+                    </pou:tooltip>
+                    <h:graphicImage  library="image" name="xml.png" />
+                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
+                </h:commandLink>
+
+
+                <h:commandLink id="clPrint" type="button">
+                    <pou:tooltip for="clPrint" >
+                        <h:outputLabel value="#{postLabels.printAllRecords}" />
+                    </pou:tooltip>
+                    <pou:printer target="tblItems" />
+                    <h:graphicImage  library="image" name="print.png" style="width: 30px;height: 30px;" />
+                </h:commandLink>
+
+                <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+
+                <h:commandLink  id="clRemove" value="" action="#{citizenCharterController.removeSelected}">
+                    <pou:tooltip for="clRemove" >
+                        <h:outputLabel value="#{postLabels.removeSelectedReports}" />
+                    </pou:tooltip>
+                    <h:graphicImage  library="image" name="remove.png" style="width: 30px;height: 30px;" />
+                </h:commandLink>                
+
+            </pou:panel>
+
+
+
+
+
+
+
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="image" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </pou:ajaxStatus>
+        <h:form>
+
+            <pou:growl id="g"></pou:growl>
+            #{postLabels.headCountLineChart}
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{labels.institution}"/>
+                <h:selectOneListbox id="lstIns" value="#{headCountController.institution}" size="5">
+                    <f:selectItems value="#{headCountController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                </h:selectOneListbox>
+                <h:outputLabel value="#{postLabels.fromFinance}"/>
+                <pou:calendar id="dtpFrom" pattern="dd MMMM yyyy" value="#{headCountController.fromDate}" >
+                </pou:calendar>
+                <h:outputLabel value="#{postLabels.toFinance}"/>
+                <pou:calendar id="dtpTo" pattern="dd MMMM yyyy"  value="#{headCountController.toDate}" ></pou:calendar>
+                <h:commandButton value="#{postLabels.drawGraph}" action="#{headCountController.createInsHeadCountGraph}"/>
+            </h:panelGrid>
+
+            <pou:lineChart id="chart"  legendPosition="e"  value="#{headCountController.categoryModel}" ></pou:lineChart>
+            <h:commandButton value="#{postLabels.print}" >
+                <pou:printer target="chart" />
+            </h:commandButton>
+            
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

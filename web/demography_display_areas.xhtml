@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="image" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </pou:ajaxStatus>
+        <h:form>
+
+            <pou:growl id="g"></pou:growl>
+
+            <h:panelGrid columns="3" >
+                <h:outputLabel value="#{labels.dpdhsArea}"/>
+                <h:selectOneListbox id="lstDPDHS" value="#{areaController.dpdhsId}" size="5">
+                    <f:selectItems value="#{areaController.dpdhsAreas}" var="dpdhs" itemValue="#{dpdhs.id}" itemLabel="#{dpdhs.name}"/>
+                    <!--                    <f:ajax execute="lstDPDHS" render="tblArea g" event="change"/>-->
+                </h:selectOneListbox>
+                <h:commandButton value="#{labels.displayAll}"/>
+            </h:panelGrid>
+
+
+
+
+            <pou:dataTable id="tblArea"  var="demo" value="#{areaController.listGnPopOfDPDHS()}" >
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.gnArea} 
+                    </f:facet>
+                    <h:outputText value="#{demo.gn.name}"/>
+                </pou:column>                
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.population}
+                    </f:facet>
+                    <h:outputText value="#{demo.gnPop.populationNumber}"/>
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.area}
+                    </f:facet>
+                    <h:outputText value="#{demo.gnPop.areaKm}"/>
+                </pou:column>
+
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.phmArea}
+                    </f:facet>
+                    <h:outputText value="#{demo.phm.name}"/>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.phiArea}
+                    </f:facet>
+                    <h:outputText value="#{demo.phi.name}"/>
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.mohArea}
+                    </f:facet>
+                    <h:outputText value="#{demo.moh.name}"/>
+                </pou:column>
+
+
+
+
+
+
+            </pou:dataTable>
+
+            <pou:panel header="#{labels.exportAllData}">
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="excel.png" />
+                    <pou:dataExporter type="xls" target="tblArea" fileName="cars" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="pdf.png" />
+                    <pou:dataExporter type="pdf" target="tblArea" fileName="cars"/>
+                </h:commandLink>
+
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="csv.png" />
+                    <pou:dataExporter type="csv" target="tblArea" fileName="cars" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="xml.png" />
+                    <pou:dataExporter type="xml" target="tblArea" fileName="cars" />
+                </h:commandLink>
+            </pou:panel>
+
+
+
+
+
+
+
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:panel header="#{labels.citizenCharterActivityRecord}" >
+
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="#{labels.Institution}" >
+                    </h:outputLabel>
+                    <h:outputLabel value="#{sessionController.loggedUser.webUserPerson.institution.name}" />
+                    
+                    <h:outputLabel value="#{postLabels.subject}">
+                    </h:outputLabel>
+                    <h:outputLabel value="#{sessionController.loggedUser.webUserPerson.givenName}" />
+
+                    
+                    <h:outputLabel value="#{postLabels.completedTask}" >
+                    </h:outputLabel>
+                    <h:selectOneListbox size="1" id="cmbCat" value="#{citizenCharterController.current.category}" >
+                        <f:selectItems value="#{citizenCharterCategoryController.items}" var="cat" itemValue="#{cat}" itemLabel="#{cat.name}"/>
+                    </h:selectOneListbox>              
+
+                    <h:outputLabel value="#{labels.Designation}" >
+                    </h:outputLabel>
+                    <h:selectOneListbox size="1" id="cmbDec" value="#{citizenCharterController.current.designation}" >
+                        <f:selectItems value="#{designationController.items}" var="des" itemValue="#{des}" itemLabel="#{des.name}"/>
+                    </h:selectOneListbox>  
+
+                    <h:outputLabel value="#{postLabels.comments}" >
+                    </h:outputLabel>
+                    <h:inputTextarea value="#{citizenCharterController.current.name}"/>
+
+
+                    <h:outputLabel value="#{postLabels.arrivedDate}" >
+                    </h:outputLabel>
+                    <p:calendar value="#{citizenCharterController.current.fromDate}" pattern="dd MMMM yyyy" />
+                    <h:outputLabel value="#{postLabels.arrivedTime}" >
+                    </h:outputLabel>
+                    <p:calendar value="#{citizenCharterController.current.fromTime}" pattern="hh:mm" timeOnly="true"  />
+
+                    <h:outputLabel value="#{postLabels.finishedDate}" >
+                    </h:outputLabel>
+                    <p:calendar value="#{citizenCharterController.current.toDate}" pattern="dd MMMM yyyy" />
+                    <h:outputLabel value="#{postLabels.finishedTime}" >
+                    </h:outputLabel>
+                    <p:calendar value="#{citizenCharterController.current.toTime}" pattern="hh:mm" timeOnly="true" />
+
+
+
+
+                    <h:commandButton value="#{labels.save}" action="#{citizenCharterController.addDirectly}" />
+                </p:panelGrid>
+            </p:panel>
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

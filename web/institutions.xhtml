@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{labels.ManageInstitutions}" >
+                <h:panelGrid id ="gpVeda" columns="2" >
+
+                    <h:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <h:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="#{labels.Institutions}" >
+                                </h:outputText>
+
+                                <h:inputText id="txtSelect" value="#{institutionController.selectText}" disabled="#{institutionController.selectControlDisable}"  style="min-width: 200px" >
+                                    <f:ajax execute="txtSelect"  event="keyup" render="lstSelect gpDetail" >
+                                    </f:ajax>
+                                </h:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+
+
+                                <h:selectOneListbox  id="lstSelect"  disabled="#{institutionController.selectControlDisable}" size="10" value="#{institutionController.current}" style="min-width: 223px">
+                                    <f:selectItems  value="#{institutionController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:ajax render="gpDetail" execute="lstSelect" >                                
+                                    </f:ajax>
+                                </h:selectOneListbox>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid id="gpSelectButtons" columns="3"  >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{institutionController.selectControlDisable}" action="#{institutionController.prepareAdd()}" styleClass="buttons" >
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="btnEdit" >                                
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{institutionController.selectControlDisable}" action="#{institutionController.prepareEdit()}"  styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="lstSelect" >
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id="btnDelete" value="#{labels.delete}" disabled="#{institutionController.selectControlDisable}" styleClass="buttons" action="#{institutionController.delete}">
+                                </h:commandButton>
+                            </h:panelGrid>
+                            <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
+                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide()" action="#{institutionController.delete()}" update="lstSelect gpDetail"  />  
+                                <p:commandButton value="#{labels.No}" onclick="confirmation.hide()" type="button" />   
+                            </p:confirmDialog>
+                        </p:panel>
+                    </h:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <h:panelGrid id="gpDetailText" columns="2">
+                                <h:outputText id="lblName" value="#{labels.Institution}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{institutionController.current.name}" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblCode" value="#{postLabels.code}" ></h:outputText>
+                                <h:inputText id="txtCode"  class="pdInputText" value="#{institutionController.current.code }" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblCat" value="#{labels.InstitutionType}" ></h:outputText>
+                                <h:selectOneListbox class="pdListAll" id="cmbCat1" value="#{institutionController.current.institutionType}"  disabled="#{institutionController.modifyControlDisable}" >
+                                    <f:selectItems value="#{institutionController.institutionTypes}" />
+                                </h:selectOneListbox>
+
+
+
+
+                                <h:selectOneListbox rendered="#{institutionController.current.id!=null}" id="cmbCon" value="#{personController.currentContact.contactType}" size="1">
+                                    <f:selectItems value="#{contactTypeController.items}"/>
+                                    <f:ajax execute="cmbCon" event="change"/>
+                                    <f:ajax execute="cmbCon" event="focus"/>
+                                </h:selectOneListbox>
+
+                                <h:panelGroup rendered="#{institutionController.current.id!=null}">
+                                    <h:inputText id="txtCon" value="#{institutionController.currentContact.name}">
+                                        <f:ajax execute="txtCon" event="keyup"/>
+                                    </h:inputText>
+                                    <h:commandButton id="btnCon" action="#{institutionController.addContact}" value="#{postLabels.addContact}" >
+                                        <f:ajax execute="btnCon" render="dtCon txtCon cmbCon" />
+                                    </h:commandButton> 
+                                </h:panelGroup>
+
+                                <h:outputLabel  rendered="#{institutionController.current.id!=null}"> </h:outputLabel>
+                                <p:dataTable emptyMessage="#{postLabels.noContactDetailsFound}"  rendered="#{institutionController.current.id!=null}" id="dtCon" value="#{institutionController.currentContacts}" var="con">
+                                    <p:column>
+                                        <h:outputLabel value="#{con.contactType.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputLabel value="#{con.name}"/>
+                                    </p:column>
+                                </p:dataTable>                                
+
+
+
+
+
+                                <h:outputText id="lblAddress" value="#{postLabels.address}" ></h:outputText>
+                                <h:inputText id="txtAddress"  class="pdInputText" value="#{institutionController.current.address}" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblTelephone" value="#{postLabels.telephone}" ></h:outputText>
+                                <h:inputText id="txtTelephone"  class="pdInputText" value="#{institutionController.current.telephone }" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblMobile" value="#{postLabels.telephone}" ></h:outputText>
+                                <h:inputText id="txtMobile"  class="pdInputText" value="#{institutionController.current.mobile }" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblFax" value="#{postLabels.fax}" ></h:outputText>
+                                <h:inputText id="txtFax"  class="pdInputText" value="#{institutionController.current.fax}" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblEmail" value="#{postLabels.email}" ></h:outputText>
+                                <h:inputText id="txtEmail"  class="pdInputText" value="#{institutionController.current.email}" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblWebsite" value="#{postLabels.website}" ></h:outputText>
+                                <h:inputText id="txtWebsite" class="pdInputText" value="#{institutionController.current.website}" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
+
+                            </h:panelGrid>
+                            <h:panelGrid id="gpDetailButtons" columns="2">
+                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{institutionController.modifyControlDisable}" action="#{institutionController.saveSelected()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
+                                    </f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{institutionController.modifyControlDisable}" action="#{institutionController.cancelSelect()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" execute="gpDetail" >                                
+                                    </f:ajax>
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

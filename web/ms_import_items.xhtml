@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <h:form enctype="multipart/form-data">
+            <pou:growl ></pou:growl>
+            <h:outputLabel value="#{labels.enterDOII}" ></h:outputLabel>
+            <h:panelGrid columns="2" >
+
+                <h:outputLabel value="#{labels.StartRowNo}" />
+                <h:inputText value="#{msExcelManager.startRow}"/>
+
+                <h:outputLabel value="Category Column" />
+                <h:inputText value="#{msExcelManager.itemCategoryCol}"/>
+                <h:outputLabel value="Wharehouse Column" />
+                <h:inputText value="#{msExcelManager.whareHouseCol}"/>
+                <h:outputLabel value="Level Column" />
+                <h:inputText value="#{msExcelManager.levelCol}"/>
+                <h:outputLabel value="SR No Column" />
+                <h:inputText value="#{msExcelManager.srNoCol}"/>
+                <h:outputLabel value="Medicine Column" />
+                <h:inputText value="#{msExcelManager.vmpCol}"/>
+                <h:outputLabel value="Issue Unit Column" />
+                <h:inputText value="#{msExcelManager.issueUnitCol}"/>
+                <h:outputLabel value="Generic Name Column" />
+                <h:inputText value="#{msExcelManager.vtmCol}"/>
+                <h:outputLabel value="Strength Column" />
+                <h:inputText value="#{msExcelManager.strengthOfIssueUnitCol}"/>
+                <h:outputLabel value="Strength Unit Column" />
+                <h:inputText value="#{msExcelManager.strengthUnitCol}"/>                
+                <pou:fileUpload value="#{msExcelManager.file}" mode="simple"/>
+                <h:commandButton value="Subit" action="#{msExcelManager.importToExcel}"/>
+
+            </h:panelGrid>
+        </h:form>
+
+        <h:form>
+
+            <pou:tabView id="tblLists" >
+
+                <pou:tab title="Generic Names" >
+
+                    <pou:dataTable id="tblVtm"  var="vtm" value="#{msExcelManager.vtms}" >
+                        <pou:column>
+                            <f:facet name="header">
+                                Item Category
+                            </f:facet>
+                            <h:outputText value="#{vtm.category.name}"/>
+                        </pou:column>
+
+
+                        <pou:column>
+                            <f:facet name="header">
+                                Item
+                            </f:facet>
+                            <h:outputText value="#{vtm.name}"/>
+                        </pou:column>
+                    </pou:dataTable>
+
+                </pou:tab>
+
+
+                <pou:tab title="Item Names" >
+
+                    <pou:dataTable id="tblAmp"  var="amp" value="#{msExcelManager.amps}" >
+                        <pou:column>
+                            <f:facet name="header">
+                                Item Name
+                            </f:facet>
+                            <h:outputText value="#{amp.name}"/>
+                        </pou:column>
+
+
+                        <pou:column>
+                            <f:facet name="header">
+                                Composition
+                            </f:facet>
+                            <h:outputText value="#{amp.vmp.name}"/>
+                        </pou:column>
+                    </pou:dataTable>
+
+                </pou:tab>
+
+
+                <pou:tab title="Generic Names" >
+
+                    <pou:dataTable id="tblAmpp"  var="ampp" value="#{msExcelManager.ampps}" >
+                        <pou:column>
+                            <f:facet name="header">
+                                Pack Name
+                            </f:facet>
+                            <h:outputText value="#{ampp.name}"/>
+                        </pou:column>
+                        <pou:column>
+                            <f:facet name="header">
+                                Item
+                            </f:facet>
+                            <h:outputText value="#{ampp.amp}"/>
+                        </pou:column>
+                        <pou:column>
+                            <f:facet name="header">
+                                Pack Size
+                            </f:facet>
+                            <h:outputText value="#{ampp.issueUnitsPerPack} &nbsp; #{ampp.amp.issueUnit.name} &nbsp;per #{ampp.packUnit.name} "/>
+                        </pou:column>
+
+                    </pou:dataTable>
+
+
+                </pou:tab>                
+
+
+            </pou:tabView>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

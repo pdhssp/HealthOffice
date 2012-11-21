@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{postLabels.manageCitizenCharterCategories}" >
+                <p:panelGrid id ="gpVeda" columns="2" >
+
+                    <p:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <p:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="#{postLabels.citizenCharterCategories}" >
+                                </h:outputText>
+
+                                <h:inputText id="txtSelect" value="#{citizenCharterCategoryController.selectText}" disabled="#{citizenCharterCategoryController.selectControlDisable}"  style="min-width: 200px" >
+                                    <f:ajax event="keyup" execute="lstSelect" render="gpDetail" />
+                                </h:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+
+
+                                <h:selectOneListbox  id="lstSelect"  disabled="#{citizenCharterCategoryController.selectControlDisable}"  value="#{citizenCharterCategoryController.current}" style="min-width: 223px; height: 250px;">
+                                    <f:selectItems value="#{citizenCharterCategoryController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:ajax execute="lstSelect" render="gpDetail" event="change">                                
+                                    </f:ajax>
+                                </h:selectOneListbox>
+
+                            </p:panelGrid>
+
+                            <p:panelGrid id="gpSelectButtons" columns="3"  >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{citizenCharterCategoryController.selectControlDisable}" action="#{citizenCharterCategoryController.prepareAdd}" />
+                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{citizenCharterCategoryController.selectControlDisable}" actionListener="#{citizenCharterCategoryController.prepareEdit}"  />
+                                <h:commandButton id="btnDelete" value="#{labels.delete}" disabled="#{citizenCharterCategoryController.selectControlDisable}" actionListener="#{citizenCharterCategoryController.delete}" />
+                            </p:panelGrid>
+                        </p:panel>
+
+
+
+
+                    </p:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <p:panelGrid id="gpDetailText" columns="2">
+                                <h:outputText id="lblName" value="#{postLabels.citizenCharterCategories}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{citizenCharterCategoryController.current.name}" disabled="#{citizenCharterCategoryController.modifyControlDisable}" >
+                                </h:inputText>
+                                <h:outputText id="lblName1" value="Expected Value in Hours" ></h:outputText>
+                                <h:inputText id="txtDbl" value="#{citizenCharterCategoryController.current.dblValue}"  disabled="#{citizenCharterCategoryController.modifyControlDisable}" ></h:inputText>
+
+                            </p:panelGrid>
+                            <p:panelGrid id="gpDetailButtons" columns="3">
+                                 <h:commandButton id="btnSave1" value="#{labels.save}" disabled="#{citizenCharterCategoryController.modifyControlDisable}" action="#{citizenCharterCategoryController.saveSelected}" >
+                                </h:commandButton>
+                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{citizenCharterCategoryController.modifyControlDisable}" action="#{citizenCharterCategoryController.saveSelected}" >
+                                </h:commandButton>
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{citizenCharterCategoryController.modifyControlDisable}" actionListener="#{citizenCharterCategoryController.cancelSelect}" >
+                                </h:commandButton>
+                            </p:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:panelGrid>
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

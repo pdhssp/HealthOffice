@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <ui:define name="login">
+        <h:form>
+            <table  width="400px" class="pdTable" align="center">
+                <tr>
+                    <td colspan="2"  class="pdTableHighlightRow">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="pdLabel">&nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td align="center" colspan="2">
+                        <span class="pdHeading1">#{postLabels.pleaseFillTheDetailsToRegister}</span>
+                    </td>
+                </tr>                  
+                <tr>
+                    <td colspan="2" class="pdLabel">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="pdLabel" align="right" width="40%">#{postLabels.name2}</td>
+                    <td align="left" width="60%"><h:inputText value="#{connetcionController.newPersonName}"/></td>
+                </tr>
+                <tr>
+                    <td class="pdLabel" align="right">#{labels.Designation}</td>
+                    <td align="left"><h:inputText value="#{connetcionController.newDesignation}"  /></td>
+                </tr>
+                <tr>
+                    <td class="pdLabel" align="right">#{labels.institution}</td>
+                    <td align="left">
+                        <h:selectOneListbox id="cmbIns" value="#{connetcionController.institution}" size="5">
+                            <f:selectItems value="#{connetcionController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                            <f:ajax event="change" execute="cmbIns" render="cmbUnit" />
+                        </h:selectOneListbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pdLabel" align="right">#{postLabels.unit}</td>
+                    <td align="left">
+                        <h:selectOneListbox id="cmbUnit" value="#{connetcionController.unit}" size="5">
+                            <f:selectItems value="#{connetcionController.units}" var="uni" itemValue="#{uni}" itemLabel="#{uni.name}"/>
+                        </h:selectOneListbox>
+                    </td>
+                </tr>                
+                <tr>
+                    <td class="pdLabel" align="right">#{labels.area}</td>
+                    <td align="left">
+                        <h:selectOneListbox value="#{connetcionController.current.webUserPerson.area}" size="5">
+                            <f:selectItems value="#{connetcionController.areas}" var="area" itemValue="#{area}" itemLabel="#{area.name}"/>
+                        </h:selectOneListbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pdLabel" align="right">#{labels.UserName}</td>
+                    <td align="left"><h:inputText value="#{connetcionController.newUserName}"  /></td>
+                </tr>                
+                <tr>
+                    <td class="pdLabel" align="right">#{labels.Password}</td>
+                    <td align="left"><h:inputSecret value="#{connetcionController.newPassword}"  /></td>
+                </tr>                
+                <tr>
+                    <td class="pdLabel" align="right">#{postLabels.reenterPassword}</td>
+                    <td align="left"><h:inputSecret value="#{connetcionController.newPasswordConfirm}"  /></td>
+                </tr>                
+                <tr>
+                    <td class="pdLabel" align="right">#{postLabels.passwordHint}</td>
+                    <td align="left"><h:inputText value="#{connetcionController.newPasswordHint}"  /></td>
+                </tr>                
+                <tr>
+                    <td align="left"></td>
+                    <td align="left">
+                        <h:commandButton id="btnReg" class="pdButton" type="submit" value="#{labels.Register}" action="#{connetcionController.registeUser}" /> 
+                    </td>
+                </tr>                  
+                <tr>
+                    <td colspan="2" class="pdLabel">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"  class="pdTableHighlightRow">&nbsp;
+                        <p:messages globalOnly="true"  ></p:messages>
+                    </td>
+                </tr>
+
+
+            </table>
+        </h:form>
+
+    </ui:define>
+
+
+</ui:composition>

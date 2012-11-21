@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:panel header="#{labels.msEdit}" >
+
+                <p:panelGrid columns="1">
+                    <h:commandLink value="#{labels.msGroups}" action="ms_medicine_group"></h:commandLink>
+                    <h:commandLink value="#{labels.msItemCat}" action="ms_item_category"></h:commandLink>
+                    <h:commandLink value="#{labels.msGenericNames}" action="ms_vtm"></h:commandLink>
+                    <h:commandLink value="#{labels.msTradeNames}" action="ms_atm"></h:commandLink>
+                    <h:commandLink value="#{labels.ItemsImportFromExcel}" action="ms_import_items"></h:commandLink>
+                    
+                    
+                    <h:commandLink value="Purchase" action="ms_purchase"></h:commandLink>
+                    
+                </p:panelGrid>
+            </p:panel>
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

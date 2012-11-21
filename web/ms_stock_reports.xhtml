@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <pou:panel header="Medical Supplies Management and Logistics Information System" >
+            <pou:panelGrid columns="1" style="width: 100%;">
+                <h:commandButton value="Institution Stock by Sr No" action="ms_report_institution_stocks" />
+                <h:commandButton value="Institution Stock by Warehose No" action="ms_report_institution_stocks_wh" />
+                
+            </pou:panelGrid>
+        </pou:panel>
+
+    </ui:define>
+
+</ui:composition>

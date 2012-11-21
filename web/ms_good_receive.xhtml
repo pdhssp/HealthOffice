@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./resources/template/pdhs_template_1.xhtml"  
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+
+        <h:outputStylesheet library="css" name="pdhssp1.css"/>
+
+        <pou:growl autoUpdate="true"/>
+
+        <h:form >
+
+            <h:inputHidden value="#{msGoodReceivelController.bill.id}" />
+
+
+            <pou:panel id="gpPurchase" header="Good Receive">
+
+                <pou:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
+
+                    <pou:panel id="gpItemAndList" style="vertical-align: text-top;">
+
+                        <pou:panelGrid  >
+
+                            <pou:row >
+                                <pou:column >
+                                    <h:outputLabel value="#{labels.item}" />
+                                    <h:selectOneListbox id="lstItem" value="#{msGoodReceivelController.billItemEntry.billItem.itemUnit.item}"  size="1">
+                                        <f:selectItems value="#{vmpController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
+                                        </f:selectItems>
+                                        <f:selectItems value="#{vmpController.items}" var="item" itemValue="#{item}" itemLabel="#{item.code}">
+                                        </f:selectItems>
+
+                                        <!--<f:ajax execute="lstItem" render="txtTem"/>-->
+                                    </h:selectOneListbox>
+                                </pou:column>
+                                <pou:column >
+                                    <h:outputLabel value="Product" />
+                                    <h:selectOneListbox id="lstAmp" value="#{msGoodReceivelController.billItemEntry.billItem.itemUnit.item}"  size="1">
+                                        <f:selectItems value="#{ampController.items}" var="amp" itemValue="#{amp}" itemLabel="#{amp.name}">
+                                        </f:selectItems>
+                                        <!--<f:ajax execute="lstItem" render="txtTem"/>-->
+                                    </h:selectOneListbox>
+                                </pou:column>
+                                <pou:column >
+                                    <h:outputLabel value="#{labels.Batch}" />
+                                    <h:inputText value="" />
+                                    <h:selectManyListbox >
+
+                                    </h:selectManyListbox>
+                                </pou:column>
+                                <pou:column >
+                                    <h:outputLabel value="#{labels.quentity}"/>
+                                    <h:inputText id="txtQty" value="#{msGoodReceivelController.billItemEntry.billItem.quentity}">
+                                        <!--<f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{msGoodReceivelController.calculateItemValue}" />-->                                            
+                                    </h:inputText>
+                                </pou:column>
+                            </pou:row>
+
+                        </pou:panelGrid>
+
+
+                        <h:outputLabel value="#{postLabels.selectedIs} #{msGoodReceivelController.billItemEntry.billItem.itemUnit.item.name}" id="txtTem" />
+
+                        <h:commandButton id="btnAdd" value="#{labels.add}" action="#{msGoodReceivelController.addItemToList}">
+                            <!--<f:ajax execute="gpItem btnAdd" render="gpItem gpList gpBillDetails"/>-->
+                        </h:commandButton>
+
+
+
+
+
+
+
+                        <pou:panel id="gpList" header="#{labels.itemList}">
+
+                            <pou:dataTable emptyMessage="#{postLabels.noRecordsFoundIn}" value="#{msGoodReceivelController.billItemEntrys}" var="temBillItem" selection="#{msGoodReceivelController.editBillItemEntry}" selectionMode="single" rowKey="#{temBillItem.id}" >
+
+                                <pou:column headerText="#{labels.item}" >
+                                    #{temBillItem.billItem.itemUnit.item.name}
+                                </pou:column>
+
+                                <pou:column headerText="#{labels.make}" >
+                                    #{temBillItem.billItem.itemUnit.make.name}
+                                </pou:column>
+
+                                <pou:column headerText="#{labels.expiry}" >
+                                    #{temBillItem.billItem.itemUnit.dateOfExpiary}
+                                </pou:column>                                
+
+                                <pou:column headerText="#{labels.rate}" >
+                                    #{temBillItem.billItem.netRate}
+                                </pou:column>
+
+                                <pou:column headerText="#{labels.quentity}" >
+                                    #{temBillItem.billItem.quentity}
+                                </pou:column>
+
+                                <pou:column headerText="#{labels.value}" >
+                                    #{temBillItem.billItem.netValue}
+                                </pou:column>
+
+                            </pou:dataTable> 
+
+
+
+
+                            <h:commandButton value="#{labels.delete}" action="#{msGoodReceivelController.removeItemFromList}" >
+                                <!--<f:ajax render="gpList gpItem" execute="gpList"/>-->
+                            </h:commandButton>
+
+
+
+
+                        </pou:panel>
+                    </pou:panel>
+                    <pou:panel id="gpBillDetails" header="#{labels.billDetails}">
+                        <pou:panelGrid columns="2">
+                            #{postLabels.suppliedBy}
+                            <h:selectOneListbox value="#{msGoodReceivelController.bill.fromInstitution}" size="4">
+                                <f:selectItems value="#{msGoodReceivelController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
+                            </h:selectOneListbox>
+                            #{postLabels.receivingInstitution}
+                            <h:selectOneListbox id="cmbToIns" value="#{msGoodReceivelController.bill.toInstitution}"  size="4">
+                                <f:selectItems value="#{msGoodReceivelController.toInstitutions}" var="toIns" itemValue="#{toIns}" itemLabel="#{toIns.name}"></f:selectItems>
+                                <f:ajax execute="cmbToIns" render="cmbToUnit cmbToPerson" event="change" />
+                            </h:selectOneListbox>
+                            #{postLabels.receivingUnit}
+                            <h:selectOneListbox id="cmbToUnit" value="#{msGoodReceivelController.bill.toUnit}"  size="4">
+                                <f:selectItems value="#{msGoodReceivelController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
+                                <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
+                            </h:selectOneListbox>                      
+                            #{postLabels.receivingLocation}
+                            <h:selectOneListbox id="cmbToLocation" value="#{msGoodReceivelController.bill.toLocation}"  size="4">
+                                <f:selectItems value="#{msGoodReceivelController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
+                                <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
+                            </h:selectOneListbox>                      
+                            #{postLabels.receivingPerson}
+                            <h:selectOneListbox id="cmbToPerson" value="#{msGoodReceivelController.bill.toPerson}"  size="4">
+                                <f:selectItems value="#{msGoodReceivelController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
+                            </h:selectOneListbox>                      
+                            #{postLabels.grossValue}
+                            <h:inputText disabled="true" value="#{msGoodReceivelController.bill.grossValue}" />
+                            #{postLabels.discount}
+                            <h:inputText value="#{msGoodReceivelController.bill.discountValue}">
+
+                            </h:inputText>
+                            #{postLabels.netValue}
+                            <h:inputText disabled="true" value="#{msGoodReceivelController.bill.netValue}"/> 
+
+
+                            <h:outputLabel value="#{labels.invoice}"/>
+                            <h:inputText  id="txtInvoiceNo" value="#{msGoodReceivelController.bill.name}">
+                            </h:inputText>
+                            <h:outputLabel value="#{labels.billDate}"/>
+                            <pou:calendar locale="en_UK"  id="txtBillDate" value="#{msGoodReceivelController.bill.billDate}">
+                            </pou:calendar>
+
+
+
+                            <h:commandButton rendered="#{msGoodReceivelController.newBill}" value="#{postLabels.settle}" action="#{msGoodReceivelController.settleBill}"/>
+                            <h:commandButton rendered="#{!msGoodReceivelController.newBill}" value="Cancel" action="#{msGoodReceivelController.settleBill}"/>
+                            <h:commandButton rendered="#{!msGoodReceivelController.newBill}" value="Reprint" action="#{msGoodReceivelController.settleBill}"/>
+
+
+                        </pou:panelGrid>
+                    </pou:panel>
+                </pou:panelGrid>
+            </pou:panel>
+
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

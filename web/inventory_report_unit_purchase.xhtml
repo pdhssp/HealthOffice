@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="image" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </pou:ajaxStatus>
+        <h:form>
+
+            <pou:growl id="g" autoUpdate="true"></pou:growl>
+
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{labels.institution}"/>
+                <h:selectOneListbox id="lstIns" value="#{unitController.institution}" size="5">
+                    <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                    <f:ajax execute="lstIns" render="lstUnit" event="change"/>
+                </h:selectOneListbox>
+
+                <h:outputLabel value="#{postLabels.unit}"/>
+                <h:selectOneListbox id="lstUnit" value="#{inventoryReportController.unit}" size="5">
+                    <f:selectItems value="#{unitController.items}" var="uni" itemValue="#{uni}" itemLabel="#{uni.name}"/>
+                </h:selectOneListbox>
+
+                <h:outputLabel value="#{postLabels.fromInventory}"/>
+                <pou:calendar id="dpFrom" value="#{inventoryReportController.fromDate}" pattern="dd MMMM yyyy">
+                </pou:calendar>
+
+
+                <h:outputLabel value="#{postLabels.fromInventory}"/>
+                <pou:calendar id="dpTo" value="#{inventoryReportController.toDate}"  pattern="dd MMMM yyyy">
+                </pou:calendar>
+
+
+                <h:commandButton value="#{labels.displayAll}"/>
+
+
+            </h:panelGrid>
+
+
+
+
+            <pou:dataTable id="tblItems"  var="demo" value="#{inventoryReportController.inInventoryBills}" emptyMessage="#{postLabels.noRecordsFoundInventory}">
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.billDate}
+                    </f:facet>
+                    <h:outputText value="#{demo.billDate}">
+                        <f:convertDateTime pattern="dd MMMM yyyy"/>
+                    </h:outputText>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.fromInventoryInstitution}
+                    </f:facet>
+                    <h:outputText value="#{demo.fromInstitution.name}"/>
+                </pou:column>                
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.invoice}
+                    </f:facet>
+                    <h:outputText value="#{demo.name}"/>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.value}
+                    </f:facet>
+                    <h:outputText value="#{demo.netValue}"/>
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.viewBill}
+                    </f:facet>
+                    <h:commandButton value="View" action="#{inventoryReportController.viewBill}">
+                        <f:setPropertyActionListener value="#{demo}" target="#{inventoryReportController.bill}" />
+                    </h:commandButton>
+                </pou:column>               
+
+            </pou:dataTable>
+
+            <pou:panel header="#{labels.exportAllData}">
+                <!--                <h:commandLink>
+                                    <h:graphicImage  library="image" name="excel.png" />
+                                    <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
+                                </h:commandLink>
+                
+                                <h:commandLink>
+                                    <h:graphicImage  library="image" name="pdf.png" />
+                                    <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
+                                </h:commandLink>-->
+
+                 <h:commandLink id="clCvs">
+                    <h:graphicImage  library="image" name="csv.png" />
+                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
+                    <pou:tooltip for="clCvs" >
+                        <h:outputLabel value="#{postLabels.exportAsCVS}" />
+                    </pou:tooltip>
+                </h:commandLink>
+                <h:commandLink id="clXml">
+                    <pou:tooltip for="clXml" >
+                        <h:outputLabel value="#{postLabels.exportAsXML}" />
+                    </pou:tooltip>
+                    <h:graphicImage  library="image" name="xml.png" />
+                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
+                </h:commandLink>
+
+
+                <h:commandLink id="clPrint" type="button">
+                    <pou:tooltip for="clPrint" >
+                        <h:outputLabel value="#{postLabels.printAllRecords}" />
+                    </pou:tooltip>
+                    <pou:printer target="tblItems" />
+                    <h:graphicImage  library="image" name="print.png" style="width: 30px;height: 30px;" />
+                </h:commandLink>
+
+                <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+
+                <h:commandLink  id="clRemove" value="" action="#{citizenCharterController.removeSelected}">
+                    <pou:tooltip for="clRemove" >
+                        <h:outputLabel value="#{postLabels.removeSelectedReports}" />
+                    </pou:tooltip>
+                    <h:graphicImage  library="image" name="remove.png" style="width: 30px;height: 30px;" />
+                </h:commandLink>                
+
+            </pou:panel>
+
+
+
+
+
+
+
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

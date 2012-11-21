@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <ui:define name="content">
+        <h:form>
+            <p:panelGrid columns="2">
+                <f:facet name="header" >
+                    Add Persons as users
+                </f:facet>
+                
+                <h:outputLabel value="Person" />
+                <h:selectOneListbox value="#{connetcionController.currentPerson}" size="10" >
+                    <f:selectItems value="#{personController.items}" var="per" itemValue="#{per}" itemLabel="#{per.name} ( #{per.institution.name} )"/>
+                </h:selectOneListbox>
+
+                <h:outputLabel value="#{labels.UserName}" />
+                <h:inputText value="#{connetcionController.newUserName}" />
+                
+                <h:outputLabel value="#{labels.Password}" />
+                <h:inputSecret value="#{connetcionController.newPassword}" />  
+                
+                <h:outputLabel value="#{postLabels.reenterPassword}" />
+                <h:inputSecret value="#{connetcionController.newPasswordConfirm}" />  
+                
+                <h:outputLabel value="" />
+                <h:commandButton id="btnReg" type="submit" value="#{labels.Register}" action="#{connetcionController.registePersonAsUser}" /> 
+                
+            </p:panelGrid>
+
+
+        </h:form>
+
+    </ui:define>
+
+
+</ui:composition>

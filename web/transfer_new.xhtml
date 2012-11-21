@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:panel header="Transfer" >
+
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="From" >
+                    </h:outputLabel>
+                    <h:selectOneListbox id="cmbFromIns" size="5"  value="#{transferController.fromInstitution}" >
+                        <f:selectItems value="#{transferController.institutions}" var="tins" itemValue="#{tins}" itemLabel="#{tins.name}"/>
+                    </h:selectOneListbox>
+                   <h:outputLabel value="To" >
+                    </h:outputLabel>
+                    <h:selectOneListbox id="cmbToIns" size="5"  value="#{transferController.toInstitution}" >
+                        <f:selectItems value="#{transferController.institutions}" var="tins" itemValue="#{tins}" itemLabel="#{tins.name}"/>
+                    </h:selectOneListbox>
+                    <h:outputLabel value="Patient Name" >
+                    </h:outputLabel>
+                    <h:inputText value="#{transferController.current.name}" />
+                    <h:commandButton value="#{labels.save}" action="#{transferController.addDirectly}" />
+                </p:panelGrid>
+            </p:panel>
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{postLabels.manageInventoryItemCategories}" >
+                <p:panelGrid id ="gpVeda" columns="2" >
+
+                    <p:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <p:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="#{postLabels.inventoryItemCategories}" >
+                                </h:outputText>
+
+                                <p:inputText id="txtSelect" value="#{inventoryItemCategoryController.selectText}" disabled="#{inventoryItemCategoryController.selectControlDisable}"  style="min-width: 200px" >
+                                    <p:ajax  event="keyup" update="lstSelect gpDetail" >
+                                    </p:ajax>
+                                </p:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+
+
+                                <p:selectOneListbox id="lstSelect"  disabled="#{inventoryItemCategoryController.selectControlDisable}"  value="#{inventoryItemCategoryController.current}" style="min-width: 223px; height: 250px;">
+                                    <f:selectItems value="#{inventoryItemCategoryController.lstItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <p:ajax update="gpDetail" process="lstSelect" >                                
+                                    </p:ajax>
+                                </p:selectOneListbox>
+
+                            </p:panelGrid>
+
+                            <p:panelGrid id="gpSelectButtons" columns="3"  >
+                                <p:commandButton  process="lstSelect btnAdd" update="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus  btnSave btnCancel txtName"  id="btnAdd" value="#{labels.add}" disabled="#{inventoryItemCategoryController.selectControlDisable}" actionListener="#{inventoryItemCategoryController.prepareAdd}"  >
+                                </p:commandButton>
+                                <p:commandButton process="lstSelect btnEdit" update="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail  detailFocus btnSave btnCancel txtName" id ="btnEdit" value="#{labels.edit}" disabled="#{inventoryItemCategoryController.selectControlDisable}" actionListener="#{inventoryItemCategoryController.prepareEdit}"  >
+                                </p:commandButton>
+                                <p:commandButton  id="btnDelete" value="#{labels.delete}" disabled="#{inventoryItemCategoryController.selectControlDisable}" action="#{inventoryItemCategoryController.delete}" update="lstSelect txtSelect gpDetail">
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </p:panel>
+
+
+                        
+
+                    </p:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <p:panelGrid id="gpDetailText" columns="2">
+                                <h:outputText id="lblName" value="#{postLabels.inventoryItemCategories}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{inventoryItemCategoryController.current.name}" disabled="#{inventoryItemCategoryController.modifyControlDisable}" ></h:inputText>
+                            </p:panelGrid>
+                            <p:panelGrid id="gpDetailButtons" columns="2">
+                                <p:commandButton process="gpDetail btnSave" update="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" id="btnSave" value="#{labels.save}" disabled="#{inventoryItemCategoryController.modifyControlDisable}" action="#{inventoryItemCategoryController.saveSelected()}" styleClass="buttons">
+                                </p:commandButton>
+                                <p:commandButton id ="btnCancel"  process="btnCancel" update="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" value="#{labels.cancel}" disabled="#{inventoryItemCategoryController.modifyControlDisable}" action="#{inventoryItemCategoryController.cancelSelect()}" styleClass="buttons">
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:panelGrid>
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+
+        <h:form>
+
+            <pou:growl id="g"></pou:growl>
+
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{labels.institution}"/>
+                <h:selectOneListbox id="lstIns" value="#{transferController.toInstitution}" size="5">
+                    <f:selectItems value="#{transferController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                </h:selectOneListbox>
+
+                <h:commandButton value="#{postLabels.displayAllTrnsfer}"/>
+            </h:panelGrid>
+
+
+
+            <pou:dataTable id="tblItems"  var="demo" value="#{transferController.itemsIns}" selection="#{transferController.current}" emptyMessage="#{postLabels.noRecordsFoundTrnsfer}"  >
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.date}
+                    </f:facet>
+                    <h:outputText value="#{demo.createdAt }">
+                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                    </h:outputText>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.patientName}
+                    </f:facet>
+                    <h:outputText value="#{demo.name}" >
+                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                    </h:outputText>  
+                </pou:column>                   
+
+    
+
+
+            </pou:dataTable>
+
+            
+
+
+
+
+
+
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="image" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </pou:ajaxStatus>
+        <h:form>
+
+            <pou:growl id="g"></pou:growl>
+
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{postLabels.from2}"/>
+                <pou:calendar id="dtpFrom" pattern="dd MMMM yyyy" value="#{letterController.fromDate}" >
+                </pou:calendar>
+                <h:outputLabel value="#{postLabels.to}"/>
+                <pou:calendar id="dtpTo" pattern="dd MMMM yyyy"  value="#{letterController.toDate}" ></pou:calendar>
+                <h:commandButton value="#{postLabels.displayAll}"/>
+            </h:panelGrid>
+
+
+
+            <pou:dataTable id="tblItems"  var="demo" value="#{letterController.myLetters}" selection="#{letterController.current}" emptyMessage="#{postLabels.noRecordsFound}"   >
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.receivedDate}
+                    </f:facet>
+                    <h:outputText value="#{demo.receivedDate}">
+                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                    </h:outputText>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.letterDate}
+                    </f:facet>
+                    <h:outputText value="#{demo.lettterDate}" >
+                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                    </h:outputText>  
+                </pou:column>                
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.fromInstitution}
+                    </f:facet>
+                    <h:outputText value="#{demo.fromInstitution.name}" />  
+                </pou:column>  
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.fromPerson}
+                    </f:facet>
+                    <h:outputText value="#{demo.fromPerson.name}" />  
+                </pou:column>  
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.registered}
+                    </f:facet>
+                    <h:outputText value="#{ (demo.registered) ? 'Regitered Post' : 'Normal Post' }"   />
+                    <h:inputText  rendered="#{demo.registered}"  value="#{demo.code}"/>                    
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.number}
+                    </f:facet>
+                    <h:outputText value="#{demo.name}" />  
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.topic}
+                    </f:facet>
+                    <h:outputText value="#{demo.description}" />  
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.content}
+                    </f:facet>
+                    <h:outputText value="#{demo.letterContent}" />  
+                </pou:column>                
+
+                
+                <pou:column >
+                    <h:commandButton value="#{postLabels.view}" action="#{letterController.toView()}">
+                        <f:setPropertyActionListener value="#{demo}" target="#{letterController.current}" />
+                    </h:commandButton>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        Collected
+                    </f:facet>
+                    <h:outputText value="#{ (demo.sent) ? 'Collected' : 'Yet to collect' }"   />
+                    <h:inputText  rendered="#{demo.registered}"  value="#{demo.code}"/>                    
+                </pou:column>                
+            </pou:dataTable>
+
+            <h:commandButton value="#{postLabels.print}" type="button">
+                <pou:printer target="tblItems" />
+            </h:commandButton>
+
+            <pou:panel header="#{labels.exportAllData}">
+                <!--                <h:commandLink>
+                                    <h:graphicImage  library="image" name="excel.png" />
+                                    <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
+                                </h:commandLink>
+                
+                                <h:commandLink>
+                                    <h:graphicImage  library="image" name="pdf.png" />
+                                    <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
+                                </h:commandLink>-->
+
+                 <h:commandLink id="clCvs">
+                    <h:graphicImage  library="image" name="csv.png" />
+                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
+                    <pou:tooltip for="clCvs" >
+                        <h:outputLabel value="#{postLabels.exportAsCVS}" />
+                    </pou:tooltip>
+                </h:commandLink>
+                <h:commandLink id="clXml">
+                    <pou:tooltip for="clXml" >
+                        <h:outputLabel value="#{postLabels.exportAsXML}" />
+                    </pou:tooltip>
+                    <h:graphicImage  library="image" name="xml.png" />
+                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
+                </h:commandLink>
+
+
+                <h:commandLink id="clPrint" type="button">
+                    <pou:tooltip for="clPrint" >
+                        <h:outputLabel value="#{postLabels.printAllRecords}" />
+                    </pou:tooltip>
+                    <pou:printer target="tblItems" />
+                    <h:graphicImage  library="image" name="print.png" style="width: 30px;height: 30px;" />
+                </h:commandLink>
+
+                <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+
+                <h:commandLink  id="clRemove" value="" action="#{citizenCharterController.removeSelected}">
+                    <pou:tooltip for="clRemove" >
+                        <h:outputLabel value="#{postLabels.removeSelectedReports}" />
+                    </pou:tooltip>
+                    <h:graphicImage  library="image" name="remove.png" style="width: 30px;height: 30px;" />
+                </h:commandLink>                
+
+            </pou:panel>
+
+
+
+
+
+
+
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

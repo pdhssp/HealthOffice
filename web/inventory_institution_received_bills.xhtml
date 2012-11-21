@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="#{postLabels.image}" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </pou:ajaxStatus>
+        <h:form>
+
+            <pou:growl id="g" autoUpdate="true"></pou:growl>
+
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{labels.Institution}"/>
+                <h:selectOneListbox id="lstIns" value="#{inventoryReceivedBillListController.toInstitution}" size="5">
+                    <f:selectItems value="#{inventoryReceivedBillListController.toInstitutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                    <f:ajax execute="lstIns" render="lstUnit" event="change"/>
+                </h:selectOneListbox>
+
+                <h:outputLabel value="#{labels.from}"/>
+                <pou:calendar id="dpFrom" value="#{inventoryReceivedBillListController.fromDate}" pattern="dd MMMM yyyy">
+                </pou:calendar>
+
+
+                <h:outputLabel value="#{postLabels.to}"/>
+                <pou:calendar id="dpTo" value="#{inventoryReceivedBillListController.toDate}"  pattern="dd MMMM yyyy">
+                </pou:calendar>
+
+
+                <h:commandButton value="#{labels.displayAll}"/>
+
+
+            </h:panelGrid>
+
+
+
+
+            <pou:dataTable id="tblItems"  var="demo" value="#{inventoryReceivedBillListController.inInventoryBills}" >
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.billDate}
+                    </f:facet>
+                    <h:outputText value="#{demo.billDate}">
+                        <f:convertDateTime pattern="dd MMMM yyyy"/>
+                    </h:outputText>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.from}
+                    </f:facet>
+                    <h:outputText value="#{demo.fromInstitution.name}"/>
+                </pou:column>                
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.invoice}
+                    </f:facet>
+                    <h:outputText value="#{demo.name}"/>
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.value}
+                    </f:facet>
+                    <h:outputText value="#{demo.netValue}"/>
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.viewBill}
+                    </f:facet>
+                    <h:commandButton value="#{postLabels.view}" action="#{inventoryReportController.viewBill}">
+                        <f:setPropertyActionListener value="#{demo}" target="#{inventoryReportController.bill}" />
+                    </h:commandButton>
+                </pou:column>               
+
+            </pou:dataTable>
+
+            <pou:panel header="#{labels.exportAllData}">
+                <!--                <h:commandLink>
+                                    <h:graphicImage  library="image" name="excel.png" />
+                                    <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
+                                </h:commandLink>
+                
+                                <h:commandLink>
+                                    <h:graphicImage  library="image" name="pdf.png" />
+                                    <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
+                                </h:commandLink>-->
+
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="csv.png" />
+                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="xml.png" />
+                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
+                </h:commandLink>
+            </pou:panel>
+
+
+
+
+
+
+
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

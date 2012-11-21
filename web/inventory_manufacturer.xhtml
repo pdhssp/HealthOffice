@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+            <h:form >
+                <p:growl autoUpdate="true" />
+                <p:focus id="selectFocus" context="gpSelect" />
+                <p:focus id="detailFocus" context="gpDetail" />
+                <p:panel header="#{postLabels.manageManufacturers}" >
+                    <h:panelGrid id ="gpVeda" columns="2" >
+
+                        <h:panelGrid id="gpSelect" columns="1"  >
+                            <p:panel >
+
+                                <h:panelGrid id="gpSelectText" columns="2" >
+
+                                    <h:outputText id="lblSelect" value="#{labels.Manufacturers}" >
+                                    </h:outputText>
+
+                                    <h:inputText id="txtSelect" value="#{manufacturerController.selectText}" disabled="#{manufacturerController.selectControlDisable}"  style="min-width: 200px" >
+                                        <f:ajax  event="keyup" render="lstSelect gpDetail" >
+                                        </f:ajax>
+                                    </h:inputText>
+
+                                    <h:outputLabel value="&#160;">
+                                    </h:outputLabel>
+
+
+
+                                    <h:selectOneListbox id="lstSelect"  disabled="#{manufacturerController.selectControlDisable}" size="10" value="#{manufacturerController.current}" style="min-width: 223px">
+                                        <f:selectItems value="#{manufacturerController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                        <f:ajax render="gpDetail" execute="lstSelect" >                                
+                                        </f:ajax>
+                                    </h:selectOneListbox>
+
+                                </h:panelGrid>
+
+                                <h:panelGrid id="gpSelectButtons" columns="3"  >
+                                    <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{manufacturerController.selectControlDisable}" action="#{manufacturerController.prepareAdd()}" styleClass="buttons" >
+                                        <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="btnEdit" >                                
+                                        </f:ajax>
+                                    </h:commandButton>
+                                    <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{manufacturerController.selectControlDisable}" action="#{manufacturerController.prepareEdit()}"  styleClass="buttons">
+                                        <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="lstSelect" >
+                                        </f:ajax>
+                                    </h:commandButton>
+                                    <h:commandButton id="btnDelete" onclick="confirmation.show()" value="#{labels.delete}" disabled="#{manufacturerController.selectControlDisable}" styleClass="buttons">
+                                    </h:commandButton>
+                                </h:panelGrid>
+                                <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
+                                    <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide()" action="#{manufacturerController.delete()}" update="lstSelect txtName"  />  
+                                    <p:commandButton value="#{labels.No}" onclick="confirmation.hide()" type="button" />   
+                                </p:confirmDialog>
+                            </p:panel>
+                        </h:panelGrid  >
+
+                        <p:panel>
+                            <h:panelGrid id="gpDetail" columns="1">
+                                <h:panelGrid id="gpDetailText" columns="2">
+                                    <h:outputText id="lblName" value="#{labels.Manufacturers}" ></h:outputText>
+                                    <h:inputText id="txtName" value="#{manufacturerController.current.name}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.code}" ></h:outputText>
+                                    <h:inputText value="#{manufacturerController.current.code}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.address}" ></h:outputText>
+                                    <h:inputText  value="#{manufacturerController.current.address}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.telephone}" ></h:outputText>
+                                    <h:inputText value="#{manufacturerController.current.telephone}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.mobile}" ></h:outputText>
+                                    <h:inputText value="#{manufacturerController.current.mobile}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.telephone}" ></h:outputText>
+                                    <h:inputText value="#{manufacturerController.current.telephone}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.fax}" ></h:outputText>
+                                    <h:inputText value="#{manufacturerController.current.fax}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.email}" ></h:outputText>
+                                    <h:inputText  value="#{manufacturerController.current.email}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+                                    <h:outputText  value="#{postLabels.website}" ></h:outputText>
+                                    <h:inputText value="#{manufacturerController.current.website}" disabled="#{manufacturerController.modifyControlDisable}" ></h:inputText>
+
+
+
+
+
+                                </h:panelGrid>
+                                <h:panelGrid id="gpDetailButtons" columns="2">
+                                    <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{manufacturerController.modifyControlDisable}" action="#{manufacturerController.saveSelected()}" styleClass="buttons">
+                                        <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
+                                        </f:ajax>
+                                    </h:commandButton>
+                                    <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{manufacturerController.modifyControlDisable}" action="#{manufacturerController.cancelSelect()}" styleClass="buttons">
+                                        <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" execute="gpDetail" >                                
+                                        </f:ajax>
+                                    </h:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>        
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <ui:define name="content">
+        <h:form>
+
+
+
+            <table class="register-table">
+                <tr>
+                    <td class="pdLabel"> DPDHS Aria:</td>
+                    <td>  
+                        <h:selectOneListbox class="pdListBox" value="#{areaController.dpdhsID}"> 
+                            <f:selectItems value="#{areaController.getdPDHSAreas()}" var="itemD" itemValue="#{itemD.id}" itemLabel="#{itemD.name}" />
+                        </h:selectOneListbox>
+                    </td>
+                    <td>
+                        <h:inputText value="#{areaController.getdPDHSArea().name}"  size="20" maxlength="20"/>
+                    </td>
+                    <td>
+                        <h:commandButton class="pdLabel" value="Add DPDHS" action="#{areaController.addDPDHS}" /><br/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="pdLabel"> MOH Aria:</td>
+                    <td>  
+                        <h:selectOneListbox class="pdListBox" value="#{areaController.mohID}"> 
+                            <f:selectItems value="#{areaController.getmOHAreas()}" var="itemD" itemValue="#{itemD.id}" itemLabel="#{itemD.name}" />
+                        </h:selectOneListbox>
+                    </td>
+                    <td>
+                        <h:inputText value="#{areaController.getmOHArea().name}"  size="20" maxlength="20"/>
+                    </td>
+                    <td>
+                        <h:commandButton class="pdLabel" value="Add DPDHS" action="#{areaController.addMOH}" /><br/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="pdLabel"> PHI Aria:</td>
+                    <td>  
+                        <h:selectOneListbox class="pdListBox" value="#{areaController.phiID}"> 
+                            <f:selectItems value="#{areaController.getpHIAreas()}" var="itemD" itemValue="#{itemD.id}" itemLabel="#{itemD.name}" />
+                        </h:selectOneListbox>
+                    </td>
+                    <td>
+                        <h:inputText value="#{areaController.getpHIArea().name}"  size="20" maxlength="20"/>
+                    </td>
+                    <td>
+                        <h:commandButton class="pdLabel" value="Add DPDHS" action="#{areaController.addPHI}" /><br/>
+                    </td>
+                </tr>
+
+
+            </table>
+
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

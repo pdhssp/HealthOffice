@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:panel header="#{postLabels.finance}" >
+
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="#{labels.Institution}" >
+                    </h:outputLabel>
+                    <h:selectOneListbox size="5"  id="cmbFromIns" value="#{headCountController.institution}" >
+                        <f:selectItems value="#{institutionController.items}" var="fins" itemValue="#{fins}" itemLabel="#{fins.name}"/>
+                    </h:selectOneListbox>
+                    <h:outputLabel value="#{postLabels.date}" >
+                    </h:outputLabel>
+                    <p:calendar value="#{headCountController.current.theDate}" pattern="dd MMMM yyyy" />
+                    <h:outputLabel value="#{postLabels.count}" >
+                    </h:outputLabel>
+                    <h:inputText value="#{headCountController.value}"/>
+                    
+                    <h:commandButton value="#{labels.save}" action="#{headCountController.addDirectly}" />
+                </p:panelGrid>
+            </p:panel>
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

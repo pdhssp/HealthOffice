@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:panel header="Manage Item Suppliers" >
+                <p:panelGrid  >
+                    <p:row>
+                        <p:column >
+                            <h:outputLabel value="Item" />
+                        </p:column>
+                        <p:column >
+                            <h:selectOneListbox id="cmbItem" value="#{itemSupplierController.currentItem}" >
+                                <f:selectItems value="#{itemController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}" />
+                            </h:selectOneListbox>
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column >
+                            <h:outputLabel value="Supplier" />
+                        </p:column>
+                        <p:column >
+                            <h:selectOneListbox id="cmbSup" value="#{itemSupplierController.currentSupplier}" >
+                                <f:selectItems value="#{supplierController.items}" var="supp" itemValue="#{supp}" itemLabel="#{supp.name}" />
+                            </h:selectOneListbox>
+                        </p:column>                        
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2" >
+                            <h:commandButton id="btnAdd" value="Add" action="#{itemSupplierController.addSupplierItem}" >
+                                <f:ajax execute="cmbItem cmbSup btnAdd" render="tblSupItem tblItemSup" />
+                            </h:commandButton>
+                        </p:column>
+                    </p:row> 
+                    <p:row>
+                        <p:column colspan="2" >
+                            <h:outputLabel value="Suppliers of the Item" />
+                        </p:column>
+                    </p:row>                    
+                    <p:row>
+                        <p:column colspan="2" >
+                            <p:dataTable id="tblItemSup" value="#{itemSupplierController.supplierItems}" var="isForItem" rowKey="#{isForItem.id}" selection="#{itemSupplierController.selectedItemSuppliers}" selectionMode="multiple" >
+                                <p:column >
+                                    <h:outputLabel value="#{isForItem.name}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:column>
+                    </p:row>                                        
+                    <p:row>
+                        <p:column colspan="2" >
+                            <h:outputLabel value="Items by the Supplier" />
+                        </p:column>
+                    </p:row>  
+                    <p:row>
+                        <p:column colspan="2" >
+                            <p:dataTable id="tblSupItem" value="#{itemSupplierController.supplierItems}" var="isForSup" rowKey="#{isForSup.id}" selection="#{itemSupplierController.selectedItemSuppliers}" selectionMode="multiple" >
+                                <p:column >
+                                    <h:outputLabel value="#{isForSup.name}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:column>
+                    </p:row>                       
+                </p:panelGrid>
+            </p:panel>
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

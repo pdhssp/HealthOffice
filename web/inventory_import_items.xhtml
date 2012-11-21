@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <h:form enctype="multipart/form-data">
+            <pou:growl ></pou:growl>
+            <h:outputLabel value="#{labels.enterDOII}" ></h:outputLabel>
+            <h:panelGrid columns="2" >
+
+
+
+                <h:outputLabel value="#{labels.selectItemCategory}"/>
+                <h:selectOneListbox value="#{inventoryExcelManager.inventoryItemCategory}" size="5">
+                    <f:selectItems value="#{inventoryItemCategoryController.items}" var="c" itemValue="#{c}" itemLabel="#{c.name}"/>
+                </h:selectOneListbox>
+
+
+                <h:outputLabel value="#{labels.StartRowNo}" />
+                <h:inputText value="#{inventoryExcelManager.startRow}"/>
+
+                <h:outputLabel value="#{labels.itemColumnNo}" />
+                <h:inputText value="#{inventoryExcelManager.iiCol}"/>
+
+
+                <pou:fileUpload value="#{inventoryExcelManager.file}" mode="simple" label="#{postLabels.chooseFile}"  uploadLabel="#{postLabels.noFileChosen}"   />
+                <h:commandButton value="#{labels.Subit}" action="#{inventoryExcelManager.importToExcel}"/>
+
+            </h:panelGrid>
+        </h:form>
+
+        <h:form>
+            <pou:dataTable id="tblArea"  var="demo" value="#{inventoryExcelManager.inventoryItems}" emptyMessage="#{postLabels.noRecordsFoundInventory}" >
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.ItemCategories}
+                    </f:facet>
+                    <h:outputText value="#{demo.category.name}"/>
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{labels.item}
+                    </f:facet>
+                    <h:outputText value="#{demo.name}"/>
+                </pou:column>
+            </pou:dataTable>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

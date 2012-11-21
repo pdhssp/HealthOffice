@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form  enctype="multipart/form-data">
+            <p:growl autoUpdate="true" />
+            <p:panel header="Record Room" >
+
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="From" >
+                    </h:outputLabel>
+                    <h:outputLabel id="lblFromIns" value="#{letterController.fromInstitution.name}" />
+                    <h:outputLabel value="" >
+                    </h:outputLabel>
+                    <h:outputLabel id="cmbFromPer"  value="#{letterController.current.fromPerson.name}" />
+                    <h:outputLabel value="Received Date" >
+                    </h:outputLabel>
+                    <h:outputLabel value="#{letterController.current.receivedDate}" >
+                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                    </h:outputLabel>
+
+                    <h:outputLabel value="Letter Date" >
+                    </h:outputLabel>
+                    <h:outputLabel value="#{letterController.current.receivedDate}" >
+                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                    </h:outputLabel>
+                    <h:outputLabel value="Registered" >
+                    </h:outputLabel>
+                    <h:outputLabel value="#{ (letterController.current.registered) ? 'Regitered Post' : 'Normal Post' }" />
+                    <h:outputLabel rendered="#{letterController.current.registered}" value="Registration No" >
+                    </h:outputLabel>
+                    <h:inputText  rendered="#{letterController.current.registered}"  value="#{letterController.current.code}"/>                    
+                    <h:outputLabel value="Number" >
+                    </h:outputLabel>  
+                    <h:outputLabel value="#{letterController.current.name}"  style="width: 400px"/>
+                    <h:outputLabel value="Topic" >
+                    </h:outputLabel>
+                    <h:outputLabel value="#{letterController.current.description}" style="width: 400px"/>
+                    <h:outputLabel value="Content" >
+                    </h:outputLabel>
+                    <h:outputLabel value="#{letterController.current.letterContent}" />
+                    <h:outputLabel value="Subject" >
+                    </h:outputLabel>
+                    <h:outputLabel id="cmbSub" value="#{letterController.current.subject.name}" />
+                    <h:outputLabel value="Assigned to" >
+                    </h:outputLabel>
+                    <h:outputLabel id="txtToIns" value="#{letterController.toInstitution.name}" />
+                    <h:outputLabel value="" >
+                    </h:outputLabel>
+                    <h:outputLabel id="txtToPer" value="#{letterController.current.toPerson.givenName}" />
+                </p:panelGrid>
+                <p:dataGrid id="gal" value="#{imageController.appImages}" var="img">
+                    <p:column>
+                        <p:graphicImage value="#{imageController.scImageById}" >
+                            <f:param name="id" value="#{img.id}" />
+                        </p:graphicImage>
+                    </p:column>
+                </p:dataGrid>  
+                <h:panelGrid columns="2" >
+                    <p:fileUpload value="#{imageController.file}" mode="simple"/>
+                    <h:commandButton value="Save" action="#{imageController.saveLetterImage()}"/>
+                </h:panelGrid>                
+            </p:panel>
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>

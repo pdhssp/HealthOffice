@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pou="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="image" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </pou:ajaxStatus>
+        <h:form>
+
+            <pou:growl id="g"></pou:growl>
+
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="#{labels.institution}"/>
+                <h:selectOneListbox id="lstIns" value="#{expenseController.institution}" size="5">
+                    <f:selectItems value="#{expenseController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                </h:selectOneListbox>
+                <h:outputLabel value="#{labels.category}"/>
+                <h:selectOneListbox id="cmbCat" value="#{expenseController.category}" >
+                    <f:selectItems value="#{financialFindingCategoryController.items}" var="cat" itemValue="#{cat}" itemLabel="#{cat.name}"/>
+                </h:selectOneListbox>  
+                <h:outputLabel value=""/>
+                <pou:commandButton actionListener="#{expenseController.allCategories}" process="btnAll" id="btnAll" update="cmbCat" />
+                
+                <h:outputLabel value="#{postLabels.fromCitizen}"/>
+                <pou:calendar id="dtpFrom" pattern="dd MMMM yyyy" value="#{expenseController.fromDate}" >
+                </pou:calendar>
+                <h:outputLabel value="#{postLabels.toCitizen}"/>
+                <pou:calendar id="dtpTo" pattern="dd MMMM yyyy"  value="#{expenseController.toDate}" ></pou:calendar>
+                <h:commandButton value="#{postLabels.drawGraph}" action="#{expenseController.createInsExpenseGraph}"/>
+            </h:panelGrid>
+
+            <pou:lineChart id="chart"  legendPosition="e"  value="#{expenseController.categoryModel}" ></pou:lineChart>
+            <h:commandButton value="#{postLabels.print}" >
+                <pou:printer target="chart" />
+            </h:commandButton>
+            
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

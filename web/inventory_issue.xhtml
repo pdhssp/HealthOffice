@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+        <h:outputStylesheet library="css" name="pdhssp1.css"/>
+
+        <p:growl autoUpdate="true"/>
+
+        <h:form >
+            <p:panel id="gpPurchase" header="#{labels.issue}">
+
+                <p:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
+
+                    <p:panel id="gpItemAndList" style="vertical-align: text-top;">
+                        <p:panel id="gpItem" header="#{labels.itemDetails}" >
+
+
+                            <p:panelGrid  columnClasses = "pdTopAlign" styleClass="pdTopAlignNoBorder" >
+
+                                <p:row>
+                                    <p:column styleClass="pdTopAlign">
+                                        <h:outputLabel value="#{labels.selectInstitution}" ></h:outputLabel>
+                                        <h:selectOneListbox id="cmbFromIns" value="#{outBillController.institution}"  size="5" >
+                                            <f:selectItems value="#{outBillController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
+                                            <f:ajax event="change" render="cmbFromUnit" execute="cmbFromIns" />
+                                        </h:selectOneListbox>
+                                    </p:column>
+                                    <p:column  styleClass="pdTopAlign">
+                                        <h:outputLabel value="#{labels.selectUnit}" ></h:outputLabel>
+                                        <h:selectOneListbox id="cmbFromUnit" value="#{outBillController.unit}" size="5">
+                                            <f:selectItems value="#{outBillController.fromUnits}" var="fromUnit" itemValue="#{fromUnit}" itemLabel="#{fromUnit.name}"></f:selectItems>
+                                            <f:ajax event="change" render="gpItem" execute="cmbFromUnit" />
+                                        </h:selectOneListbox>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row >
+                                    <p:column styleClass="pdTopAlign">
+                                        <h:outputLabel value="#{labels.item}" />
+                                        <h:selectOneListbox id="lstItem" value="#{outBillController.billItemEntry.billItem.itemUnit}" styleClass="pdListBox" size="5">
+                                            <f:selectItems value="#{outBillController.itemUnits}" var="iu" itemValue="#{iu}" itemLabel="#{iu.item.name}">
+                                            </f:selectItems>
+                                            <f:ajax event="change"  execute="lstItem" render="gpItem"/>
+                                        </h:selectOneListbox>
+                                    </p:column>
+
+                                    <p:column styleClass="pdTopAlign">
+                                        <h:outputLabel value="#{labels.make}" />
+                                        <h:selectOneListbox id="lstMake"  rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"   value="#{outBillController.billItemEntry.billItem.itemUnit.make}" styleClass="pdListBox" size="5">
+                                            <f:selectItems value="#{outBillController.makes}" var="myMake" itemLabel="#{myMake.name}" itemValue="#{myMake}"/>
+                                        </h:selectOneListbox>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputLabel value="#{labels.modal}" ></h:outputLabel>
+                                        <h:inputText rendered="#{outBillController.billItemEntry.billItem.itemUnit.modal != null}"  value="#{outBillController.billItemEntry.billItem.itemUnit.modal.name}" styleClass="pdPageText"  size="5"></h:inputText>
+                                        <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                                        <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
+                                        <h:inputText   rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"    value="#{outBillController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputLabel value="#{labels.id}" ></h:outputLabel>
+                                        <h:inputText   rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"    value="#{outBillController.billItemEntry.billItem.itemUnit.name}" styleClass="pdPageText" ></h:inputText>
+                                        <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                                        <h:outputLabel value="#{labels.descreption}" ></h:outputLabel>
+                                        <h:inputText   rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"    value="#{outBillController.billItemEntry.billItem.itemUnit.description}" ></h:inputText>
+                                    </p:column>                                    
+                                    <p:column>
+                                        <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
+                                        <p:calendar   rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"    value="#{outBillController.billItemEntry.billItem.itemUnit.dateOfExpiary}" styleClass="pdPageText" ></p:calendar>
+                                        <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                                        <h:outputLabel value="#{labels.modalNo}" ></h:outputLabel>
+                                        <h:inputText   rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"   value="#{outBillController.billItemEntry.billItem.itemUnit.modalNo}" ></h:inputText>
+                                    </p:column>
+                                    <p:column styleClass="pdTopAlign">
+                                        <h:outputLabel value="#{labels.country}" />
+                                        <h:selectOneListbox  rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"    id="lstCountry" value="#{outBillController.billItemEntry.billItem.itemUnit.country}" styleClass="pdListBox" size="5">
+                                            <f:selectItems   value="#{outBillController.countries}" var="myCon" itemLabel="#{myCon.name}" itemValue="#{myCon}"/>
+                                        </h:selectOneListbox>
+                                    </p:column>
+                                    <p:column styleClass="pdTopAlign">
+                                        <h:outputLabel value="#{labels.supplier}" />
+                                        <h:selectOneListbox  rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"     id="lstManu" value="#{outBillController.billItemEntry.billItem.itemUnit.supplier}" styleClass="pdListBox" size="5">
+                                            <f:selectItems value="#{outBillController.suppliers}" var="mySup" itemLabel="#{mySup.name}" itemValue="#{mySup}"/>
+                                        </h:selectOneListbox>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column >
+                                        <h:outputLabel value="#{labels.rate}"/>
+                                        <h:inputText   rendered="#{outBillController.billItemEntry.billItem.itemUnit != null}"    id="txtRate" value="#{outBillController.billItemEntry.billItem.netRate}">
+                                            <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{outBillController.calculateItemValue}" />
+                                        </h:inputText>
+                                    </p:column>
+                                    <p:column >
+                                        <h:outputLabel value="#{labels.quentity}"/>
+                                        <h:inputText id="txtQty" value="#{outBillController.billItemEntry.billItem.quentity}">
+                                            <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{outBillController.calculateItemValue}" />                                            
+                                        </h:inputText>
+                                    </p:column>
+                                    <p:column >
+                                        <h:outputLabel value="#{labels.value}"/>
+                                        <h:inputText disabled="true" id="txtValue" value="#{outBillController.billItemEntry.billItem.netValue}">
+                                        </h:inputText>
+                                    </p:column>
+
+
+                                </p:row>
+
+                            </p:panelGrid>
+
+
+                            <h:outputLabel value="#{postLabels.selectedIs} #{outBillController.itemUnit.item.name}" id="txtTem" />
+
+                            <h:commandButton id="btnAdd" value="#{labels.add}" action="#{outBillController.addItemToList}">
+                                <f:ajax execute="gpItem btnAdd" render="gpItem gpList gpBillDetails"/>
+                            </h:commandButton>
+
+
+
+
+                        </p:panel>
+                        <p:panel id="gpList" header="#{labels.itemList}">
+
+                            <p:dataTable emptyMessage="#{postLabels.noRecordsFoundIn}" value="#{outBillController.billItemEntrys}" var="temBillItem" selection="#{outBillController.editBillItemEntry}" selectionMode="single" rowKey="#{temBillItem.id}" >
+
+                                <p:column headerText="#{labels.item}" >
+                                    #{temBillItem.billItem.itemUnit.item.name}
+                                </p:column>
+
+                                <p:column headerText="#{labels.make}" >
+                                    #{temBillItem.billItem.itemUnit.make.name}
+                                </p:column>
+
+                                <p:column headerText="#{labels.expiry}" >
+                                    #{temBillItem.billItem.itemUnit.dateOfExpiary}
+                                </p:column>                                
+
+                                <p:column headerText="#{labels.rate}" >
+                                    #{temBillItem.billItem.netRate}
+                                </p:column>
+
+                                <p:column headerText="#{labels.quentity}" >
+                                    #{temBillItem.billItem.quentity}
+                                </p:column>
+
+                                <p:column headerText="#{labels.value}" >
+                                    #{temBillItem.billItem.netValue}
+                                </p:column>
+
+                            </p:dataTable> 
+
+
+
+
+                            <h:commandButton value="#{labels.delete}" action="#{outBillController.removeItemFromList}" >
+                                <f:ajax render="gpList gpItem" execute="gpList"/>
+                            </h:commandButton>
+
+
+
+
+                        </p:panel>
+                    </p:panel>
+                    <p:panel id="gpBillDetails" header="#{labels.billDetails}">
+                        <p:panelGrid columns="2">
+
+
+                            #{postLabels.sendingTo}
+                            <h:selectOneListbox id="cmbToIns" value="#{outBillController.bill.toInstitution}"  size="5">
+                                <f:selectItems value="#{outBillController.toInstitutions}" var="toIns" itemValue="#{toIns}" itemLabel="#{toIns.name}"></f:selectItems>
+                            </h:selectOneListbox>
+                     
+                            #{postLabels.grossValue}
+                            <h:inputText disabled="true" value="#{outBillController.bill.grossValue}"/>
+                            #{postLabels.discount}
+                            <h:inputText value="#{outBillController.bill.discountValue}">
+
+                            </h:inputText>
+                            #{postLabels.netValue}
+                            <h:inputText disabled="true" value="#{outBillController.bill.netValue}"/> 
+
+
+                            <h:outputLabel value="#{labels.invoice}"/>
+                            <h:inputText  id="txtInvoiceNo" value="#{outBillController.bill.name}">
+                            </h:inputText>
+                            <h:outputLabel value="#{labels.billDate}"/>
+                            <p:calendar locale="en_UK"  id="txtBillDate" value="#{outBillController.bill.billDate}">
+                            </p:calendar>
+
+
+
+                            <h:commandButton value="#{postLabels.settle}" action="#{outBillController.settleBill}"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:panelGrid>
+            </p:panel>
+
+
+
+        </h:form>        
+
+
+
+    </ui:define>
+
+</ui:composition>
