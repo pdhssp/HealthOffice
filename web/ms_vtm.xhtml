@@ -51,6 +51,7 @@
                                     <f:ajax render="lstSelect gpDetail detailFocus" execute="btnAdd" >                                
                                     </f:ajax>
                                 </h:commandButton>
+                                <h:commandButton action="#{vtmController.createPdf()}" value="PDF">  </h:commandButton>
                                 <h:commandButton id="btnDelete" onclick="confirmation.show()" value="#{labels.delete}"  styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>

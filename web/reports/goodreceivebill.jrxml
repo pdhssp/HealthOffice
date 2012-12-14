@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d3a96e7-1706-48b1-9222-acb2781d1cd9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\ho\\web\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="name" class="java.lang.String"/>
+	<field name="id" class="java.lang.String"/>
+	<field name="billDate" class="java.util.Date"/>
+	<field name="billTime" class="java.util.Date"/>
+	<field name="fromInstitution" class="java.lang.Object"/>
+	<field name="toInstitution" class="java.lang.Object"/>
+	<field name="billItems" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="16" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="188" splitType="Stretch">
+			<textField>
+				<reportElement uuid="15558273-3a26-4fe0-9faf-341ad0721ac7" x="406" y="44" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f8e78143-bac8-4afc-8519-d0f74aa4b140" x="339" y="44" width="54" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STV No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f8e78143-bac8-4afc-8519-d0f74aa4b140" x="339" y="64" width="54" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f8e78143-bac8-4afc-8519-d0f74aa4b140" x="339" y="84" width="54" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Time]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="27343803-49ce-4a3a-bf79-cb4291675c0b" x="406" y="64" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{billDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ef60471b-ae92-4fbd-b18a-74a79fd94fe4" x="406" y="84" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{billTime}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f8e78143-bac8-4afc-8519-d0f74aa4b140" x="0" y="10" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK TRANSFER VOUCHER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f8e78143-bac8-4afc-8519-d0f74aa4b140" x="0" y="30" width="75" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3a03de6a-14f2-45f2-827b-b99b6c7ba8ac" x="97" y="30" width="225" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{fromInstitution}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f8e78143-bac8-4afc-8519-d0f74aa4b140" x="0" y="50" width="75" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Institution]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5dfea937-8412-46d8-94e0-96dfb61abdf5" x="97" y="50" width="225" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$F{toInstitution}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="730f1c7c-9c25-4296-8529-e6638850d43f" x="0" y="104" width="555" height="84"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{billItems})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "goodreceivebill_items.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

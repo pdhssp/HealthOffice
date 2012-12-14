@@ -15,23 +15,33 @@ import gov.sp.health.facade.ItemFacade;
 import gov.sp.health.facade.ItemUnitFacade;
 import gov.sp.health.facade.ItemUnitHistoryFacade;
 import gov.sp.health.facade.LocationFacade;
-import gov.sp.health.facade.MakeFacade;
 import gov.sp.health.facade.ManufacturerFacade;
-import gov.sp.health.facade.ModalFacade;
 import gov.sp.health.facade.PersonFacade;
 import gov.sp.health.facade.PharmaceuticalItemCategoryFacade;
 import gov.sp.health.facade.SupplierFacade;
 import gov.sp.health.facade.UnitFacade;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
@@ -106,6 +116,8 @@ public class MsPurchaseBillController implements Serializable {
     DataModel<Supplier> suppliers;
     DataModel<Manufacturer> manufacturers;
     //
+    List<Bill> lstBills;
+    //
     /*
      * Current Objects
      *
@@ -131,7 +143,47 @@ public class MsPurchaseBillController implements Serializable {
      * Entries
      */
     Boolean newBill;
+    JasperPrint jasperPrint;
 
+    public void init() throws JRException {
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(getLstBills());
+        String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/goodreceivebill.jasper");
+        jasperPrint = JasperFillManager.fillReport(reportPath, new HashMap(), beanCollectionDataSource);
+    }
+
+    /**
+     *
+     * @throws JRException
+     * @throws IOException
+     */
+    public void createPdf() throws JRException, IOException {
+        System.out.println("Creating PDF");
+        init();
+        System.out.println("Inited");
+        HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        System.out.println("got http response");
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=goodReceiveNote" + getBill().getId() + ".pdf");
+        System.out.println("Header added");
+        ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+        System.out.println("Got output stream");
+        JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
+        System.out.println("Exported PDF");
+        FacesContext.getCurrentInstance().responseComplete();
+        System.out.println("Response completed");
+    }
+
+    public List<Bill> getLstBills() {
+        lstBills = new ArrayList<Bill>();
+        lstBills.add(bill);
+        return lstBills;
+    }
+
+    public void setLstBills(List<Bill> lstBills) {
+        this.lstBills = lstBills;
+    }
+
+    
+    
     public Vmp getSelectedVmp() {
         return selectedVmp;
     }
@@ -204,21 +256,23 @@ public class MsPurchaseBillController implements Serializable {
     }
 
     public void settleBill() {
-        saveNewBill();
-        saveNewBillItems();
-        clearEntry();
-        clearBill();
-        createPdf();
-        JsfUtil.addSuccessMessage("Bill Settled successfully");
+        try {
+            saveNewBill();
+            saveNewBillItems();
+//            getLstBills();
+            createPdf();
+            clearEntry();
+            clearBill();
+            JsfUtil.addSuccessMessage("Bill Settled successfully");
+        } catch (JRException ex) {
+            Logger.getLogger(MsPurchaseBillController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MsPurchaseBillController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     
-    
-    public void createPdf(){
-        
-    }
-    
-    
+       
     private void clearEntry() {
         billItemEntry = new BillItemEntry();
         billItemEntry = null;

@@ -6,6 +6,7 @@ package gov.sp.health.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -72,6 +73,21 @@ public class Bill implements Serializable {
     @ManyToOne
     Person toPerson;
 
+    
+    @OneToMany(mappedBy = "bill")
+    List<BillItem> billItems;
+
+    public List<BillItem> getBillItems() {
+        return billItems;
+    }
+
+    public void setBillItems(List<BillItem> billItems) {
+        this.billItems = billItems;
+    }
+
+       
+    
+    
     public Institution getFromInstitution() {
         return fromInstitution;
     }
