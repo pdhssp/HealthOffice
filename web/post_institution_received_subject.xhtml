@@ -23,25 +23,35 @@
             <pou:growl id="g"></pou:growl>
 
             <h:panelGrid columns="2" >
-                <h:outputLabel value="#{labels.Institution}"/>
-                <h:selectOneListbox id="lstIns" value="#{letterController.toInstitution}" size="5">
-                    <f:selectItems value="#{letterController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
-                </h:selectOneListbox>
+
                 <h:outputLabel value="#{postLabels.date}"/>
                 <pou:calendar id="dtpFrom" pattern="dd MMMM yyyy" value="#{letterController.fromDate}" immediate="true">
                 </pou:calendar>
+
                 <h:outputLabel value="#{postLabels.subject}"/>
-                <h:selectOneListbox id="lstSub" value="#{letterController.subject}" size="5">
+                <h:selectOneListbox id="lstSub" value="#{letterController.subject}" size="1">
                     <f:selectItems value="#{subjectController.items}" var="subj" itemValue="#{subj}" itemLabel="#{subj.name}"/>
                 </h:selectOneListbox>
-                <h:outputLabel value=""/>
-                <h:commandButton value="#{postLabels.displayAll}"/>
-                <h:outputLabel value=""/>
-                <h:commandButton value="#{postLabels.print}" type="button">
-                    <pou:printer target="tblItems" />
-                </h:commandButton>
+
+
             </h:panelGrid>
 
+            <h:panelGrid columns="4">
+                <h:commandButton value="#{postLabels.displayAll}"/>
+                <h:commandButton value="#{postLabels.print}" type="button">
+                    <pou:printer target="tblItems"  />
+                </h:commandButton>
+                <h:commandButton value="Mark All as Printed" type="button" action="#{letterController.markPrintInsSub}">
+                </h:commandButton>
+                <h:commandButton value="Print Only Previously Not Printerd Ones" type="button">
+                    <pou:printer target="tblItemsToPrint"  />
+                </h:commandButton>
+
+            </h:panelGrid>
+
+
+
+                    
             <pou:dataTable id="tblItems"   var="demo" value="#{letterController.itemsInsSub}" selection="#{letterController.current}" emptyMessage="#{postLabels.noRecordsFound}">
                 <f:facet name="header">
                     <h:outputLabel rendered="#{!(letterController.subject==null)}" value="#{letterController.subject.name} - "/>
@@ -107,9 +117,76 @@
             </pou:dataTable>
 
 
+            
+            
+            <pou:dataTable  id="tblItemsToPrint"   var="demoP" value="#{letterController.itemsInsSubToPrint}" selection="#{letterController.current}" emptyMessage="#{postLabels.noRecordsFound}">
+                <f:facet name="header">
+                    <h:outputLabel rendered="#{!(letterController.subject==null)}" value="#{letterController.subject.name} - "/>
+                    <h:outputLabel rendered="#{(letterController.subject==null)}" value="#{letterController.toInstitution.name} - "/>
+                    <h:outputLabel value="#{letterController.fromDate }" >
+                        <f:convertDateTime pattern="dd MMMM yyyy"/>
+                    </h:outputLabel>
+                </f:facet>
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.letterDate}
+                    </f:facet>
+                    <h:outputText value="#{demoP.lettterDate}" >
+                        <f:convertDateTime pattern="dd MMM yy" />
+                    </h:outputText>  
+                </pou:column>                
 
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.from}
+                    </f:facet>
+                    <h:outputText value="#{demoP.fromInstitution.name}" />  <br/>
+                    <h:outputText value="#{demoP.fromPerson.name}" />  
+                </pou:column>  
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.registered}
+                    </f:facet>
+                    <h:outputText value="#{ (demoP.registered) ? 'Regitered' : 'Normal' }"   /><br/>
+                    <h:outputText  rendered="#{demoP.registered}"  value="#{demoP.code}"/>                    
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.number}
+                    </f:facet>
+                    <h:outputText value="#{demoP.name}" />  
+                </pou:column>
+
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.topic}
+                    </f:facet>
+                    <h:outputText value="#{demoP.description}" />  
+                </pou:column>
+
+                <pou:column>
+                    <f:facet name="header">
+                        #{postLabels.assignedTo}
+                    </f:facet>
+                    <h:outputText value="#{demoP.toPerson.givenName}" />  
+                </pou:column>  
+
+                <pou:column >
+                    <f:facet name="header">
+                        #{postLabels.signature}
+                    </f:facet>
+                </pou:column>
+
+            </pou:dataTable>
+            
+            
+            
             <pou:panel header="#{labels.exportAllData}">
-                 <h:commandLink id="clCvs">
+                <h:commandLink id="clCvs">
                     <h:graphicImage  library="image" name="csv.png" />
                     <pou:dataExporter type="csv" target="tblItems" fileName="items" />
                     <pou:tooltip for="clCvs" >

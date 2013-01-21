@@ -34,7 +34,7 @@
                     <h:panelGroup id="gpDetails" >
                         <h:panelGrid  columns="2" rendered="#{userApproveController.selectedUser!=null}">
                             <h:outputText value="#{labels.Institution}"/>
-                            <h:selectOneListbox id="cmbPerIns" value="#{userApproveController.selectedUser.webUserPerson.institution}" >
+                            <h:selectOneListbox id="cmbPerIns" value="#{userApproveController.selectedUser.webUserPerson.institution}" size="1" style="width:300px;">
                                 <f:selectItems value="#{userApproveController.institutions}" var="perIns" itemValue="#{perIns}" itemLabel="#{perIns.name}"/>
                                 <f:ajax event="change" execute="cmbPerIns" render="cmbPerUnit"/>
                             </h:selectOneListbox>
