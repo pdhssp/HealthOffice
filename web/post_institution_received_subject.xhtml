@@ -38,12 +38,12 @@
 
             <h:panelGrid columns="4">
                 <h:commandButton value="#{postLabels.displayAll}"/>
-                <h:commandButton value="#{postLabels.print}" type="button">
+                <h:commandButton value="#{postLabels.allprint}" type="button">
                     <pou:printer target="tblItems"  />
                 </h:commandButton>
-                <h:commandButton value="Mark All as Printed" type="button" action="#{letterController.markPrintInsSub}">
+                <h:commandButton value="#{postLabels.markAllAsPrinted}" type="button" action="#{letterController.markPrintInsSub}">
                 </h:commandButton>
-                <h:commandButton value="Print Only Previously Not Printerd Ones" type="button">
+                <h:commandButton value="#{postLabels.printOnlyPreviouslyNotPrinterdOnes}" type="button">
                     <pou:printer target="tblItemsToPrint"  />
                 </h:commandButton>
 
