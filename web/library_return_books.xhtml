@@ -91,7 +91,7 @@
                                 <h:selectOneListbox id="cmbLoc" value="#{bookController.current.location}" rendered ="#{!bookController.modifyControlDisable}"   disabled="#{bookController.modifyControlDisable}" size="5" style="width: 300px">
                                     <f:selectItems value="#{bookController.locations}" var="loc" itemValue="#{loc}" itemLabel="#{loc.name}"/>
                                 </h:selectOneListbox>
-                                <h:outputText id="txtLoc" value="#{bookController.current.location.name}" rendered ="#{bookController.modifyControlDisable}"   size="5" style="width: 300px">
+                                <h:outputText id="txtLoc" value="#{bookController.current.location.name}" rendered ="#{bookController.modifyControlDisable}"    style="width: 300px">
                                 </h:outputText>                                
 
                             </h:panelGrid>

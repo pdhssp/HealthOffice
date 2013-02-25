@@ -91,7 +91,7 @@
                                 <h:selectOneListbox id="cmbLoc" value="#{fileController.current.location}" rendered ="#{!fileController.modifyControlDisable}"   disabled="#{fileController.modifyControlDisable}" size="5" style="width: 300px">
                                     <f:selectItems value="#{fileController.locations}" var="loc" itemValue="#{loc}" itemLabel="#{loc.name}"/>
                                 </h:selectOneListbox>
-                                <h:outputText id="txtLoc" value="#{fileController.current.location.name}" rendered ="#{fileController.modifyControlDisable}"   size="5" style="width: 300px">
+                                <h:outputText id="txtLoc" value="#{fileController.current.location.name}" rendered ="#{fileController.modifyControlDisable}"  style="width: 300px">
                                 </h:outputText>                                
 
                             </h:panelGrid>
