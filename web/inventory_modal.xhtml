@@ -56,7 +56,7 @@
                                 </h:commandButton>
                             </h:panelGrid>
                             <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
-                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide();" actionListener ="#{modalController.delete()}" update="lstSelect txtName"  />  
+                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide();" actionListener ="#{modalController.deleteCurrent()}" update="lstSelect txtName"  />  
                                 <p:commandButton value="#{labels.No}" onclick="confirmation.hide();" type="button" />   
                             </p:confirmDialog>
                         </p:panel>

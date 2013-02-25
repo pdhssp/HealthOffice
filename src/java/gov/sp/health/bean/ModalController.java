@@ -211,7 +211,8 @@ public final class ModalController implements Serializable {
     public void cancelSelect() {
     }
 
-    public void delete() {
+    public void deleteCurrent() {
+        
         if (sessionController.getPrivilege().isInventoryDelete() == false) {
             JsfUtil.addErrorMessage("You are not autherized to delete any content");
             return;
