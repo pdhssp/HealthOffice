@@ -15,11 +15,11 @@
 
         <h:form >
             <p:growl autoUpdate="true" />
-            <p:panel header="Manage Item Suppliers" >
+            <p:panel header="#{postLabels.manageItemSuppliers}" >
                 <p:panelGrid  >
                     <p:row>
                         <p:column >
-                            <h:outputLabel value="Item" />
+                            <h:outputLabel value="#{labels.item}" />
                         </p:column>
                         <p:column >
                             <h:selectOneListbox id="cmbItem" value="#{itemSupplierController.currentItem}" >
@@ -29,7 +29,7 @@
                     </p:row>
                     <p:row>
                         <p:column >
-                            <h:outputLabel value="Supplier" />
+                            <h:outputLabel value="#{labels.supplier}" />
                         </p:column>
                         <p:column >
                             <h:selectOneListbox id="cmbSup" value="#{itemSupplierController.currentSupplier}" >
@@ -39,19 +39,19 @@
                     </p:row>
                     <p:row>
                         <p:column colspan="2" >
-                            <h:commandButton id="btnAdd" value="Add" action="#{itemSupplierController.addSupplierItem}" >
+                            <h:commandButton id="btnAdd" value="#{labels.add}" action="#{itemSupplierController.addSupplierItem}" >
                                 <f:ajax execute="cmbItem cmbSup btnAdd" render="tblSupItem tblItemSup" />
                             </h:commandButton>
                         </p:column>
                     </p:row> 
                     <p:row>
                         <p:column colspan="2" >
-                            <h:outputLabel value="Suppliers of the Item" />
+                            <h:outputLabel value="#{postLabels.suppliersOfTheItem}" />
                         </p:column>
                     </p:row>                    
                     <p:row>
                         <p:column colspan="2" >
-                            <p:dataTable id="tblItemSup" value="#{itemSupplierController.supplierItems}" var="isForItem" rowKey="#{isForItem.id}" selection="#{itemSupplierController.selectedItemSuppliers}" selectionMode="multiple" >
+                            <p:dataTable id="tblItemSup" emptyMessage="#{postLabels.noRecordsFoundSupplier}" value="#{itemSupplierController.supplierItems}" var="isForItem" rowKey="#{isForItem.id}" selection="#{itemSupplierController.selectedItemSuppliers}" selectionMode="multiple"  >
                                 <p:column >
                                     <h:outputLabel value="#{isForItem.name}" />
                                 </p:column>
@@ -60,12 +60,12 @@
                     </p:row>                                        
                     <p:row>
                         <p:column colspan="2" >
-                            <h:outputLabel value="Items by the Supplier" />
+                            <h:outputLabel value="#{postLabels.itemsByTheSupplier}" />
                         </p:column>
                     </p:row>  
                     <p:row>
                         <p:column colspan="2" >
-                            <p:dataTable id="tblSupItem" value="#{itemSupplierController.supplierItems}" var="isForSup" rowKey="#{isForSup.id}" selection="#{itemSupplierController.selectedItemSuppliers}" selectionMode="multiple" >
+                            <p:dataTable id="tblSupItem" emptyMessage="#{postLabels.noRecordsFoundSupplier}" value="#{itemSupplierController.supplierItems}" var="isForSup" rowKey="#{isForSup.id}" selection="#{itemSupplierController.selectedItemSuppliers}" selectionMode="multiple" >
                                 <p:column >
                                     <h:outputLabel value="#{isForSup.name}" />
                                 </p:column>
