@@ -103,7 +103,7 @@ public class MessageProvider implements Serializable {
         try {
             result = getBundle().getString(key);
         } catch (MissingResourceException e) {
-            System.out.println("Error in Message Provider. getValue()\n" + e.getMessage());
+//            System.out.println("Error in Message Provider. getValue()\n" + e.getMessage());
         }
         return result;
     }

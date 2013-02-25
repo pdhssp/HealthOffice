@@ -8,11 +8,12 @@
  */
 package gov.sp.health.bean;
 
+import gov.sp.health.entity.Vtm;  
 import gov.sp.health.facade.VtmFacade;
-import gov.sp.health.entity.Vtm;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -22,8 +23,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
+import javax.faces.event.ActionEvent;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;  
 
 /**
  *
@@ -33,12 +40,12 @@ import javax.faces.model.ListDataModel;
 @ManagedBean
 @SessionScoped
 public final class VtmController implements Serializable {
-    
-/**
- *
- * EJBs for facade
- * 
- */    
+
+    /**
+     *
+     * EJBs for facade
+     *
+     */
     @EJB
     private VtmFacade ejbFacade;
     /**
@@ -54,19 +61,53 @@ public final class VtmController implements Serializable {
      * All Vtms
      */
     private List<Vtm> items = null;
-   
     String selectText = "";
+    JasperPrint jasperPrint;
 
+    public void init() throws JRException {
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(items);
+        String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/vtms.jasper");
+        jasperPrint = JasperFillManager.fillReport(reportPath, new HashMap(), beanCollectionDataSource);
+    }
+
+    /**
+     *
+     * @throws JRException
+     * @throws IOException
+     */
+    public void createPdf() throws JRException, IOException {
+        System.out.println("Creating PDF");
+        init();
+        System.out.println("Inited");
+        HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        System.out.println("got http response");
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=vtms.pdf");
+        System.out.println("Header added");
+        ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+        System.out.println("Got output stream");
+        JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
+        System.out.println("Exported PDF");
+        FacesContext.getCurrentInstance().responseComplete();
+        System.out.println("Response completed");
+    }
+
+    public void createPdf1(ActionEvent actionEvent){
+        System.out.println("pdf1");
+    }
+    
+    public void createPdf2(){
+        System.out.println("pdf2");
+        
+    }
+    
     public void setItems(List<Vtm> items) {
         this.items = items;
     }
 
-    
     public VtmController() {
     }
 
-    
-     public Vtm getCurrent() {
+    public Vtm getCurrent() {
         if (current == null) {
             current = new Vtm();
         }
@@ -89,7 +130,7 @@ public final class VtmController implements Serializable {
             temSql = "select p from Vtm p where p.retired=false and lower(p.name) like '%" + selectText.toLowerCase() + "%' order by p.name";
         }
         List<Vtm> temLstPer = getFacade().findBySQL(temSql);
-        items =temLstPer;
+        items = temLstPer;
         return items;
     }
 
@@ -102,26 +143,25 @@ public final class VtmController implements Serializable {
         return valueInt;
     }
 
-
     public void prepareAdd() {
         setCurrent(new Vtm());
-        
+
     }
 
     public void saveSelected() {
-        if (sessionController.getPrivilege().isInventoryEdit()==false){
+        if (sessionController.getPrivilege().isInventoryEdit() == false) {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
-        }            
-        if (current==null){
+        }
+        if (current == null) {
             JsfUtil.addErrorMessage("Nothing to save");
             return;
         }
-        if (current.getName().trim().equals("")){
+        if (current.getName().trim().equals("")) {
             JsfUtil.addErrorMessage("Please enter a name to save");
             return;
         }
-        if (current.getId()!=null  && current.getId() !=0) {
+        if (current.getId() != null && current.getId() != 0) {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
         } else {
@@ -135,7 +175,7 @@ public final class VtmController implements Serializable {
     }
 
     public void delete() {
-        if (sessionController.getPrivilege().isInventoryDelete()==false){
+        if (sessionController.getPrivilege().isInventoryDelete() == false) {
             JsfUtil.addErrorMessage("You are not autherized to delete any content");
             return;
         }

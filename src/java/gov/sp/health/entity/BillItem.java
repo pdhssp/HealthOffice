@@ -14,11 +14,12 @@ import javax.persistence.*;
  */
 @Entity
 public class BillItem implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-//Main Properties
+    //Main Properties
     String name;
     String code;
     String description;
@@ -34,16 +35,12 @@ public class BillItem implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date retiredAt;
     String retireComments;
-    
     @ManyToOne
     Bill bill;
     @ManyToOne
     ItemUnit itemUnit;
-    
     @ManyToOne
     Item item;
-    
-    
     double grossRate;
     double discountRate;
     double netRate;
@@ -52,11 +49,9 @@ public class BillItem implements Serializable {
     double discountCostRate;
     double netCostRate;
     double discountCostPercentRate;
-
     double quentity;
     double freeQuentity;
     double purchaseQuentity;
-
     double grossValue;
     double discountValue;
     double netValue;
@@ -65,15 +60,33 @@ public class BillItem implements Serializable {
     double discountCostValue;
     double netCostValue;
     double discountCostPercentValue;
-    
-    
     boolean cancelled;
     @ManyToOne
     BillItem cancelledBillItem;
     boolean returned;
     @ManyToOne
     BillItem returnedBillItem;
+    @Transient
+    int billOrderNo;
 
+    public Item getItem() {
+        return item;
+    }
+
+    
+    
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public int getBillOrderNo() {
+        return billOrderNo;
+    }
+
+    public void setBillOrderNo(int billOrderNo) {
+        this.billOrderNo = billOrderNo;
+    }
+    
     public Bill getBill() {
         return bill;
     }
@@ -234,8 +247,6 @@ public class BillItem implements Serializable {
         this.itemUnit = itemUnit;
     }
 
-   
-
     public String getName() {
         return name;
     }
@@ -347,11 +358,7 @@ public class BillItem implements Serializable {
     public void setPurchaseQuentity(double purchaseQuentity) {
         this.purchaseQuentity = purchaseQuentity;
     }
-    
-    
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -383,5 +390,4 @@ public class BillItem implements Serializable {
     public String toString() {
         return "gov.sp.health.entity.BillItem[ id=" + id + " ]";
     }
-    
 }
