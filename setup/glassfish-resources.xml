@@ -25,4 +25,5 @@
     <jdbc-resource enabled="true" jndi-name="dsHo" object-type="user" pool-name="derby_net_ho_hoPool"/>
     <jdbc-resource enabled="true" jndi-name="ds2013Feb" object-type="user" pool-name="connectionPoolHo"/>
     <jdbc-resource enabled="true" jndi-name="drHoBuddhikaDesktop1" object-type="user" pool-name="derby_net_ho_hoPool"/>
+    <jdbc-resource enabled="true" jndi-name="drHoBuddhikaLaptop1" object-type="user" pool-name="connectionPoolHo"/>
 </resources>
