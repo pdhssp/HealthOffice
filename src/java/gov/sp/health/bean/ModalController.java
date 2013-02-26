@@ -9,9 +9,9 @@
 package gov.sp.health.bean;
 
 import gov.sp.health.entity.Make;
-import gov.sp.health.facade.ModalFacade;
 import gov.sp.health.entity.Modal;
 import gov.sp.health.facade.MakeFacade;
+import gov.sp.health.facade.ModalFacade;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -23,8 +23,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -33,26 +31,22 @@ import javax.faces.model.ListDataModel;
  */
 @ManagedBean
 @SessionScoped
-public final class ModalController  implements Serializable {
+public final class ModalController implements Serializable {
 
     @EJB
     private ModalFacade ejbFacade;
     @EJB
-            MakeFacade makeFacade;
+    MakeFacade makeFacade;
     @ManagedProperty(value = "#{sessionController}")
     SessionController sessionController;
     List<Modal> lstItems;
     private Modal current;
     private Make currentMake;
-    private DataModel<Modal> items = null;
-    DataModel<Make> makes = null;
-    private int selectedItemIndex;
-    boolean selectControlDisable = false;
-    boolean modifyControlDisable = true;
+    private List<Modal> items = null;
+    List<Make> makes = null;
     String selectText = "";
 
     public Make getCurrentMake() {
-        if (currentMake==null) currentMake = new Make();
         return currentMake;
     }
 
@@ -60,19 +54,16 @@ public final class ModalController  implements Serializable {
         this.currentMake = currentMake;
     }
 
-    
-    
-    public DataModel<Make> getMakes() {
-        return new ListDataModel<Make>(getMakeFacade().findBySQL("SELECT m FROM Make m WHERE m.retired=false ORDER BY m.name"));
+    public List<Make> getMakes() {
+        makes = getMakeFacade().findBySQL("SELECT m FROM Make m WHERE m.retired=false ORDER BY m.name");
+        return makes;
+
     }
 
-    public void setMakes(DataModel<Make> makes) {
+    public void setMakes(List<Make> makes) {
         this.makes = makes;
     }
 
-    
-    
-    
     public ModalFacade getEjbFacade() {
         return ejbFacade;
     }
@@ -97,8 +88,6 @@ public final class ModalController  implements Serializable {
         this.sessionController = sessionController;
     }
 
-    
-    
     public ModalController() {
     }
 
@@ -110,18 +99,11 @@ public final class ModalController  implements Serializable {
         this.lstItems = lstItems;
     }
 
-    public int getSelectedItemIndex() {
-        return selectedItemIndex;
-    }
-
-    public void setSelectedItemIndex(int selectedItemIndex) {
-        this.selectedItemIndex = selectedItemIndex;
-    }
-
     public Modal getCurrent() {
         if (current == null) {
             current = new Modal();
         }
+        currentMake = current.getMake();
         return current;
     }
 
@@ -134,8 +116,8 @@ public final class ModalController  implements Serializable {
         return ejbFacade;
     }
 
-    public DataModel<Modal> getItems() {
-        items = new ListDataModel(getFacade().findBySQL("Select d From Modal d where d.retired = false ORDER BY d.name"));
+    public List<Modal> getItems() {
+        items = getFacade().findBySQL("Select d From Modal d where d.retired = false ORDER BY d.name");
         return items;
     }
 
@@ -148,22 +130,17 @@ public final class ModalController  implements Serializable {
         return valueInt;
     }
 
-    public DataModel searchItems() {
+    public List searchItems() {
         recreateModel();
         if (items == null) {
             if (selectText.equals("")) {
-                items = new ListDataModel(getFacade().findAll("name", true));
+                items = getFacade().findAll("name", true);
             } else {
-                items = new ListDataModel(getFacade().findAll("name", "%" + selectText + "%",
-                        true));
-                if (items.getRowCount() > 0) {
-                    items.setRowIndex(0);
-                    current = (Modal) items.getRowData();
-                    Long temLong = current.getId();
-                    selectedItemIndex = intValue(temLong);
+                items = getFacade().findAll("name", "%" + selectText + "%", true);
+                if (items.size() > 0) {
+                    current = (Modal) items.get(0);
                 } else {
-                    current = null;
-                    selectedItemIndex = -1;
+                    current = getCurrent();
                 }
             }
         }
@@ -173,10 +150,9 @@ public final class ModalController  implements Serializable {
 
     public Modal searchItem(String itemName, boolean createNewIfNotPresent) {
         Modal searchedItem = null;
-        items = new ListDataModel(getFacade().findAll("name", itemName, true));
-        if (items.getRowCount() > 0) {
-            items.setRowIndex(0);
-            searchedItem = (Modal) items.getRowData();
+        items = getFacade().findAll("name", itemName, true);
+        if (items.size() > 0) {
+            searchedItem = (Modal) items.get(0);
         } else if (createNewIfNotPresent) {
             searchedItem = new Modal();
             searchedItem.setName(itemName);
@@ -191,32 +167,18 @@ public final class ModalController  implements Serializable {
         items = null;
     }
 
-    public void prepareSelect() {
-        this.prepareModifyControlDisable();
-    }
-
-    public void prepareEdit() {
-        if (current != null) {
-            selectedItemIndex = intValue(current.getId());
-            this.prepareSelectControlDisable();
-        } else {
-            JsfUtil.addErrorMessage(new MessageProvider().getValue("nothingToEdit"));
-        }
-    }
-
     public void prepareAdd() {
-        selectedItemIndex = -1;
         current = new Modal();
         currentMake = new Make();
-        this.prepareSelectControlDisable();
     }
 
     public void saveSelected() {
-        if (sessionController.getPrivilege().isInventoryEdit()==false){
+        if (sessionController.getPrivilege().isInventoryEdit() == false) {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
-        }            
-        if (selectedItemIndex > 0) {
+        }
+        current.setMake(getCurrentMake());
+        if (getCurrent().getId() != null && getCurrent().getId() > 0) {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
         } else {
@@ -225,11 +187,9 @@ public final class ModalController  implements Serializable {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
         }
-        this.prepareSelect();
         recreateModel();
         getItems();
         selectText = "";
-        selectedItemIndex = intValue(current.getId());
     }
 
     public void addDirectly() {
@@ -249,11 +209,11 @@ public final class ModalController  implements Serializable {
     }
 
     public void cancelSelect() {
-        this.prepareSelect();
     }
 
-    public void delete() {
-        if (sessionController.getPrivilege().isInventoryDelete()==false){
+    public void deleteCurrent() {
+        
+        if (sessionController.getPrivilege().isInventoryDelete() == false) {
             JsfUtil.addErrorMessage("You are not autherized to delete any content");
             return;
         }
@@ -269,25 +229,7 @@ public final class ModalController  implements Serializable {
         recreateModel();
         getItems();
         selectText = "";
-        selectedItemIndex = -1;
         current = null;
-        this.prepareSelect();
-    }
-
-    public boolean isModifyControlDisable() {
-        return modifyControlDisable;
-    }
-
-    public void setModifyControlDisable(boolean modifyControlDisable) {
-        this.modifyControlDisable = modifyControlDisable;
-    }
-
-    public boolean isSelectControlDisable() {
-        return selectControlDisable;
-    }
-
-    public void setSelectControlDisable(boolean selectControlDisable) {
-        this.selectControlDisable = selectControlDisable;
     }
 
     public String getSelectText() {
@@ -297,16 +239,6 @@ public final class ModalController  implements Serializable {
     public void setSelectText(String selectText) {
         this.selectText = selectText;
         searchItems();
-    }
-
-    public void prepareSelectControlDisable() {
-        selectControlDisable = true;
-        modifyControlDisable = false;
-    }
-
-    public void prepareModifyControlDisable() {
-        selectControlDisable = false;
-        modifyControlDisable = true;
     }
 
     @FacesConverter(forClass = Modal.class)

@@ -9,16 +9,10 @@ package gov.sp.health.bean;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.inject.Inject;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
-import java.text.MessageFormat;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import org.primefaces.component.menuitem.MenuItem;

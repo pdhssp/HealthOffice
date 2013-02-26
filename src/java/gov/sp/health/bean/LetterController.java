@@ -9,14 +9,17 @@
 package gov.sp.health.bean;
 
 import gov.sp.health.entity.*;
-import gov.sp.health.facade.LetterFacade;
 import gov.sp.health.facade.InstitutionFacade;
-import gov.sp.health.facade.LocationFacade;
+import gov.sp.health.facade.LetterFacade;
 import gov.sp.health.facade.PersonFacade;
 import gov.sp.health.facade.SubjectFacade;
 import gov.sp.health.facade.UnitFacade;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -108,10 +111,10 @@ public final class LetterController implements Serializable {
     }
 
     public void markAsSent() {
-        if (lettersToMark == null || lettersToMark.length <= 0 ) {
+        if (lettersToMark == null || lettersToMark.length <= 0) {
             return;
         }
-        for (Letter markLetter:lettersToMark){
+        for (Letter markLetter : lettersToMark) {
             markLetter.setSent(true);
             markLetter.setSentDate(Calendar.getInstance().getTime());
             markLetter.setSentTime(Calendar.getInstance().getTime());
@@ -451,7 +454,7 @@ public final class LetterController implements Serializable {
             return null;
         }
         Map temMap = new HashMap();
-        String temSQL = "SELECT h FROM Letter h WHERE h.retired=false AND h.toInstitution.id=" + getToInstitution().getId() + " AND h.receivedDate BETWEEN :fromDate AND :toDate ORDER BY h.receivedDate  ";
+        String temSQL = "SELECT h FROM Letter h WHERE h.retired=false AND h.toInstitution.id=" + getSessionController().getPrivilege().getRestrictedInstitution().getId() + " AND h.receivedDate BETWEEN :fromDate AND :toDate ORDER BY h.receivedDate  ";
         temMap.put("fromDate", fromDate);
         temMap.put("toDate", toDate);
         System.out.println("From Date" + fromDate);
@@ -461,6 +464,7 @@ public final class LetterController implements Serializable {
     }
 
     public DataModel<Letter> getItemsInsSub() {
+        setToInstitution(getSessionController().getPrivilege().getRestrictedInstitution());
         if (getToInstitution() == null) {
             return null;
         }
@@ -473,7 +477,59 @@ public final class LetterController implements Serializable {
         }
         temMap.put("fromDate", fromDate);
         temMap.put("toDate", fromDate);
+        System.out.println(temSQL);
         return new ListDataModel<Letter>(getFacade().findBySQL(temSQL, temMap));
+    }
+
+    public DataModel<Letter> getItemsInsSubToPrint() {
+        setToInstitution(getSessionController().getPrivilege().getRestrictedInstitution());
+        if (getToInstitution() == null) {
+            return null;
+        }
+        String temSQL;
+        Map temMap = new HashMap();
+        if (subject == null) {
+            temSQL = "SELECT h FROM Letter h WHERE h.retired=false AND h.printed != true AND h.toInstitution.id=" + getToInstitution().getId() + " AND h.receivedDate BETWEEN :fromDate AND :toDate ORDER BY h.toPerson.givenName  ";
+        } else {
+            temSQL = "SELECT h FROM Letter h WHERE h.retired=false AND h.printed != true AND h.toInstitution.id=" + getToInstitution().getId() + " AND h.subject.id = " + getSubject().getId() + " AND h.receivedDate BETWEEN :fromDate AND :toDate ORDER BY h.toPerson.givenName  ";
+        }
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(fromDate);
+        } catch (Exception e) {
+            
+        }
+        c.add(Calendar.DATE, 1);  // number of days to add
+        temMap.put("fromDate", fromDate);
+        temMap.put("toDate", c.getTime());
+        System.out.println(temSQL);
+        return new ListDataModel<Letter>(getFacade().findBySQL(temSQL, temMap));
+    }
+
+    public void markPrintInsSub() {
+        String temSQL;
+        setToInstitution(getSessionController().getPrivilege().getRestrictedInstitution());
+        if (getToInstitution() == null) {
+            return;
+        }
+        Map temMap = new HashMap();
+        if (subject == null) {
+            temSQL = "SELECT h FROM Letter h WHERE h.retired=false AND h.toInstitution.id=" + getSessionController().getPrivilege().getRestrictedInstitution().getId() + " AND h.receivedDate BETWEEN :fromDate AND :toDate ORDER BY h.toPerson.givenName  ";
+        } else {
+            temSQL = "SELECT h FROM Letter h WHERE h.retired=false AND h.toInstitution.id=" + getSessionController().getPrivilege().getRestrictedInstitution().getId() + " AND h.subject.id = " + getSubject().getId() + " AND h.receivedDate BETWEEN :fromDate AND :toDate ORDER BY h.toPerson.givenName  ";
+        }
+
+        System.out.println(temSQL);
+
+        temMap.put("fromDate", fromDate);
+        temMap.put("toDate", fromDate);
+
+        List<Letter> markLetters = getFacade().findBySQL(temSQL, temMap);
+
+        for (Letter markLetter : markLetters) {
+            markLetter.setPrinted(true);
+            getFacade().edit(markLetter);
+        }
     }
 
     public void setItemsIns(DataModel<Letter> itemsIns) {
@@ -623,24 +679,19 @@ public final class LetterController implements Serializable {
 
     public String addDirectly() {
         try {
+            current.setPrinted(false);
             current.setFromInstitution(fromInstitution);
-            System.out.println("Letter. Add Direct. 01");
             current.setToInstitution(toInstitution);
-            System.out.println("Letter. Add Direct. 02");
             current.setCreatedAt(Calendar.getInstance().getTime());
-            System.out.println("Letter. Add Direct. 03");
             current.setCreater(sessionController.loggedUser);
-            System.out.println("Letter. Add Direct. 04");
             getFacade().create(current);
-            System.out.println("Letter. Add Direct. 05");
+            
             JsfUtil.addSuccessMessage("savedNewSuccessfully");
-            System.out.println("Letter. Add Direct. 06");
+
             setFromDate(current.getReceivedDate());
-            System.out.println("Letter. Add Direct. 07");
             setToDate(current.getReceivedDate());
-            System.out.println("Letter. Add Direct. 08");
             current = new Letter();
-            System.out.println("Letter. Add Direct. 09");
+
             return "post_institution_received";
 
         } catch (Exception e) {

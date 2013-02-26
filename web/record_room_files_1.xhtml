@@ -69,12 +69,12 @@
                                 <h:commandButton id="btnViewBox" value="Images" action="#{fileController.viewBoxImages()}" disabled="#{fileController.selectControlDisable}" styleClass="buttons">
                                 </h:commandButton>
 
-                                <h:commandButton id="btnDelete" onclick="confirmation.show()" value="Delete" disabled="#{fileController.selectControlDisable}" styleClass="buttons">
+                                <h:commandButton id="btnDelete" onclick="confirmation.show();" value="Delete" disabled="#{fileController.selectControlDisable}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
                             <p:confirmDialog appendToBody="true" message="Are you sure you want to delete" header="Initiating destroy process" severity="alert" widgetVar="confirmation">  
                                 <p:commandButton value="Yes" oncomplete="confirmation.hide()" action="#{fileController.delete()}" update="lstSelect gpDetail"  />  
-                                <p:commandButton value="No" onclick="confirmation.hide()" type="button" />   
+                                <p:commandButton value="No" onclick="confirmation.hide();" type="button" />   
                             </p:confirmDialog>
                         </p:panel>
                     </h:panelGrid  >
@@ -91,7 +91,7 @@
                                 <h:selectOneListbox id="cmbLoc" value="#{fileController.current.location}" rendered ="#{!fileController.modifyControlDisable}"   disabled="#{fileController.modifyControlDisable}" size="5" style="width: 300px">
                                     <f:selectItems value="#{fileController.locations}" var="loc" itemValue="#{loc}" itemLabel="#{loc.name}"/>
                                 </h:selectOneListbox>
-                                <h:outputText id="txtLoc" value="#{fileController.current.location.name}" rendered ="#{fileController.modifyControlDisable}"   size="5" style="width: 300px">
+                                <h:outputText id="txtLoc" value="#{fileController.current.location.name}" rendered ="#{fileController.modifyControlDisable}"   style="width: 300px">
                                 </h:outputText>                                
 
                             </h:panelGrid>

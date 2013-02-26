@@ -10,20 +10,20 @@
     <ui:define name="content">
         <h:form >
             <p:growl autoUpdate="true" />
-            <p:panel header="Transfer" >
+            <p:panel header="#{postLabels.transfer}" >
 
                 <p:panelGrid columns="2">
-                    <h:outputLabel value="From" >
+                    <h:outputLabel value="#{postLabels.fromtransfer}" >
                     </h:outputLabel>
                     <h:selectOneListbox id="cmbFromIns" size="5"  value="#{transferController.fromInstitution}" >
                         <f:selectItems value="#{transferController.institutions}" var="tins" itemValue="#{tins}" itemLabel="#{tins.name}"/>
                     </h:selectOneListbox>
-                   <h:outputLabel value="To" >
+                    <h:outputLabel value="#{postLabels.totransfer}" >
                     </h:outputLabel>
                     <h:selectOneListbox id="cmbToIns" size="5"  value="#{transferController.toInstitution}" >
                         <f:selectItems value="#{transferController.institutions}" var="tins" itemValue="#{tins}" itemLabel="#{tins.name}"/>
                     </h:selectOneListbox>
-                    <h:outputLabel value="Patient Name" >
+                    <h:outputLabel value="#{postLabels.patientName}" >
                     </h:outputLabel>
                     <h:inputText value="#{transferController.current.name}" />
                     <h:commandButton value="#{labels.save}" action="#{transferController.addDirectly}" />

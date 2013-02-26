@@ -6,13 +6,13 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="content">
-        <pou:panel header="Post" >
+        <pou:panel header="#{postLabels.post}" >
             <pou:panelGrid columns="2" style="width: 100%;">
                 <pou:panelGrid  columns="1" style="width: 30%;">
-                    <pou:commandButton value="New Post" action="post_new_letter" style="width: 100px;height: 50px;"></pou:commandButton>
-                    <pou:commandButton value="New Post" action="post_institution_received.xhtml" ></pou:commandButton>
+                    <pou:commandButton value="#{postLabels.newPost}" action="post_new_letter" style="width: 100px;height: 50px;"></pou:commandButton>
+                    <pou:commandButton value="#{postLabels.postInstitutionReceived}" action="post_institution_received.xhtml" ></pou:commandButton>
                 </pou:panelGrid> 
-                <pou:panel header="Image" style="width: 70%" >
+                <pou:panel header="#{postLabels.image}" style="width: 70%" >
                     <h:graphicImage library="image" name="post1.JPG" style="width: 300px;height: 200px;" ></h:graphicImage>
                 </pou:panel> 
             </pou:panelGrid>

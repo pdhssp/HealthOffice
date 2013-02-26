@@ -83,7 +83,18 @@ public class Letter implements Serializable {
     Category category;
     @ManyToOne
     Subject subject;
+    Boolean printed;
 
+    public Boolean getPrinted() {
+        return printed;
+    }
+
+    public void setPrinted(Boolean printed) {
+        this.printed = printed;
+    }
+    
+    
+    
     public Boolean getSent() {
         return sent;
     }

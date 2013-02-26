@@ -28,7 +28,7 @@
                                 <h:outputText id="lblSelect" value="#{labels.Modals}" >
                                 </h:outputText>
 
-                                <h:inputText id="txtSelect" value="#{modalController.selectText}" disabled="#{modalController.selectControlDisable}"  style="min-width: 200px" >
+                                <h:inputText id="txtSelect" value="#{modalController.selectText}"   style="min-width: 200px" >
                                     <f:ajax  event="keyup" render="lstSelect txtName" >
                                     </f:ajax>
                                 </h:inputText>
@@ -38,7 +38,7 @@
 
 
 
-                                <h:selectOneListbox id="lstSelect"  disabled="#{modalController.selectControlDisable}" size="10" value="#{modalController.current}" style="min-width: 223px">
+                                <h:selectOneListbox id="lstSelect"   size="10" value="#{modalController.current}" style="min-width: 223px">
                                     <f:selectItems value="#{modalController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
                                     <f:ajax render="gpDetail" execute="lstSelect" >                                
                                     </f:ajax>
@@ -47,20 +47,17 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
-                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{modalController.selectControlDisable}" action="#{modalController.prepareAdd()}" styleClass="buttons" >
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="btnEdit" >                                
+                                <h:commandButton id="btnAdd" value="#{labels.add}"  action="#{modalController.prepareAdd()}" styleClass="buttons" >
+                                    <f:ajax render="btnAdd  btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="" >                                
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{modalController.selectControlDisable}" action="#{modalController.prepareEdit()}"  styleClass="buttons">
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="lstSelect" >
-                                    </f:ajax>
-                                </h:commandButton>
-                                <h:commandButton id="btnDelete" onclick="confirmation.show()" value="#{labels.delete}" disabled="#{modalController.selectControlDisable}" styleClass="buttons">
+                                
+                                <h:commandButton id="btnDelete" onclick="confirmation.show();" value="#{labels.delete}"  styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
                             <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
-                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide()" action="#{modalController.delete()}" update="lstSelect txtName"  />  
-                                <p:commandButton value="#{labels.No}" onclick="confirmation.hide()" type="button" />   
+                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide();" actionListener ="#{modalController.deleteCurrent()}" update="lstSelect txtName"  />  
+                                <p:commandButton value="#{labels.No}" onclick="confirmation.hide();" type="button" />   
                             </p:confirmDialog>
                         </p:panel>
                     </h:panelGrid  >
@@ -69,20 +66,20 @@
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
                                 <h:outputText id="lblName" value="#{labels.modal}" ></h:outputText>
-                                <h:inputText id="txtName" value="#{modalController.current.name}" disabled="#{modalController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText id="txtName" value="#{modalController.current.name}"  ></h:inputText>
                                 <h:outputText id="lblMake" value="#{labels.make}" ></h:outputText>
-                                <h:selectOneListbox id="txtMake" value="#{modalController.currentMake}" disabled="#{modalController.modifyControlDisable}" >
+                                <h:selectOneListbox id="txtMake" value="#{modalController.currentMake}" size="1" >
                                     <f:selectItems value="#{modalController.makes}" var="make" itemValue="#{make}" itemLabel="#{make.name}"/>
                                 </h:selectOneListbox>
                                 
                             </h:panelGrid>
                             <h:panelGrid id="gpDetailButtons" columns="2">
-                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{modalController.modifyControlDisable}" action="#{modalController.saveSelected()}" styleClass="buttons">
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
+                                <h:commandButton id="btnSave" value="#{labels.save}"  action="#{modalController.saveSelected()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd  btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{modalController.modifyControlDisable}" action="#{modalController.cancelSelect()}" styleClass="buttons">
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" execute="gpDetail" >                                
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}"  action="#{modalController.cancelSelect()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd  btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" execute="gpDetail" >                                
                                     </f:ajax>
                                 </h:commandButton>
                             </h:panelGrid>

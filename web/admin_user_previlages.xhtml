@@ -104,18 +104,20 @@
                     <h:panelGrid columns="2">
 
                         <h:outputLabel value="#{labels.area}" rendered="#{sessionController.privilege.restrictedArea==null}"/>
-                        <h:selectOneListbox  rendered="#{sessionController.privilege.restrictedArea==null}" value="#{userApproveController.privilege.restrictedArea}"  size="5">
+                        <h:selectOneListbox  rendered="#{sessionController.privilege.restrictedArea==null}" value="#{userApproveController.privilege.restrictedArea}"  size="1">                           
                             <f:selectItems value="#{userApproveController.areas}"  var="ra" itemLabel="#{ra.name}" itemValue="#{ra}" />
                         </h:selectOneListbox>
 
-                        <h:outputLabel rendered="#{sessionController.privilege.restrictedInstitution==null}"  value="#{labels.institution}" />
-                        <h:selectOneListbox id="cmbIns" rendered="#{sessionController.privilege.restrictedInstitution==null}" value="#{userApproveController.privilege.restrictedInstitution}"  size="5">
-                            <f:selectItems value="#{userApproveController.institutions}" var="ri" itemValue="#{ri}" itemLabel="#{ri.name}" />
+                        <h:outputLabel   value="#{labels.institution}" />
+                        <h:selectOneListbox id="cmbIns"  value="#{userApproveController.privilege.restrictedInstitution}"  size="1">
+                           
+                            <f:selectItems value="#{institutionController.items}" var="ri" itemValue="#{ri}" itemLabel="#{ri.name}" />
                             <f:ajax event="change" execute="cmbIns" render="cmbUnit" />
                         </h:selectOneListbox>
 
                         <h:outputLabel   rendered="#{sessionController.privilege.restrictedUnit==null}"  value="#{postLabels.unit}" />
-                        <h:selectOneListbox id="cmbUnit"  rendered="#{sessionController.privilege.restrictedUnit==null}"  value="#{userApproveController.privilege.restrictedUnit}"  size="5">
+                        <h:selectOneListbox id="cmbUnit"  rendered="#{sessionController.privilege.restrictedUnit==null}"  value="#{userApproveController.privilege.restrictedUnit}"  size="1">
+                           
                             <f:selectItems value="#{userApproveController.units}" var="ru" itemValue="#{ru}" itemLabel="#{ru.name}" />
                         </h:selectOneListbox>
 
