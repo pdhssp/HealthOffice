@@ -47,9 +47,10 @@
                             </p:panelGrid>
 
                             <p:panelGrid id="gpSelectButtons" columns="3"  >
-                                <p:commandButton  process="lstSelect btnAdd" update="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus  btnSave  txtName"  id="btnAdd" value="#{labels.add}"  actionListener="#{inventoryItemCategoryController.prepareAdd}"  >
+                                <p:commandButton  process="btnAdd" update="gpDetail detailFocus"  id="btnAdd" value="#{labels.add}"  actionListener="#{inventoryItemCategoryController.prepareAdd}"  >
                                 </p:commandButton>
-                                <p:commandButton  id="btnDelete" value="#{labels.delete}"  action="#{inventoryItemCategoryController.delete}" update="lstSelect txtSelect gpDetail">
+                                <p:commandButton  id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
+                                            return false;" value="#{labels.delete}"  action="#{inventoryItemCategoryController.delete}" update="lstSelect txtSelect gpDetail">
                                 </p:commandButton>
                             </p:panelGrid>
                         </p:panel>
