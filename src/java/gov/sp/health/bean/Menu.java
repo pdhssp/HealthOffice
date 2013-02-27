@@ -966,10 +966,10 @@ public class Menu implements Serializable {
         editMenu.getChildren().add(item);
 
 
-        item = new MenuItem();
-        item.setValue(getLabel("model"));
-        item.setUrl("inventory_modal.xhtml");
-        editMenu.getChildren().add(item);
+//        item = new MenuItem();
+//        item.setValue(getLabel("model"));
+//        item.setUrl("inventory_modal.xhtml");
+//        editMenu.getChildren().add(item);
 
         item = new MenuItem();
         item.setValue(getLabel("Items"));
