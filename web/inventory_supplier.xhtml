@@ -28,7 +28,7 @@
                                 <h:outputText id="lblSelect" value="#{labels.Suppliers}" >
                                 </h:outputText>
 
-                                <h:inputText id="txtSelect" value="#{supplierController.selectText}" disabled="#{supplierController.selectControlDisable}"  style="min-width: 200px" >
+                                <h:inputText id="txtSelect" value="#{supplierController.selectText}"  style="min-width: 200px" >
                                     <f:ajax  event="keyup" render="lstSelect gpDetail" >
                                     </f:ajax>
                                 </h:inputText>
@@ -38,30 +38,24 @@
 
 
 
-                                <h:selectOneListbox id="lstSelect"  disabled="#{supplierController.selectControlDisable}" size="10" value="#{supplierController.current}" style="min-width: 223px">
+                                <h:selectOneListbox id="lstSelect"  size="10" value="#{supplierController.current}" style="min-width: 223px">
                                     <f:selectItems value="#{supplierController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
-                                    <f:ajax render="gpDetail" execute="lstSelect" >                                
+                                    <f:ajax render="gpDetail" execute="lstSelect" >
                                     </f:ajax>
                                 </h:selectOneListbox>
 
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
-                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{supplierController.selectControlDisable}" action="#{supplierController.prepareAdd()}" styleClass="buttons" >
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="btnEdit" >                                
+                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{supplierController.prepareAdd()}" styleClass="buttons" >
+                                    <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus" execute="" >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{supplierController.selectControlDisable}" action="#{supplierController.prepareEdit()}"  styleClass="buttons">
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="lstSelect" >
-                                    </f:ajax>
-                                </h:commandButton>
-                                <h:commandButton id="btnDelete" onclick="confirmation.show()" value="#{labels.delete}" disabled="#{supplierController.selectControlDisable}" styleClass="buttons">
+
+                                <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
+                                            return false" value="#{labels.delete}" action="#{supplierController.delete()}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
-                            <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
-                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide()" action="#{supplierController.delete()}" update="lstSelect txtName"  />  
-                                <p:commandButton value="#{labels.No}" onclick="confirmation.hide()" type="button" />   
-                            </p:confirmDialog>
                         </p:panel>
                     </h:panelGrid  >
 
@@ -69,55 +63,52 @@
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
                                 <h:outputText id="lblName" value="#{labels.supplier}" ></h:outputText>
-                                <h:inputText id="txtName" value="#{supplierController.current.name}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText id="txtName" value="#{supplierController.current.name}"  ></h:inputText>
 
                                 <h:outputText  value="#{postLabels.code}" ></h:outputText>
-                                <h:inputText value="#{supplierController.current.code}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
-                                
+                                <h:inputText value="#{supplierController.current.code}"  ></h:inputText>
+
                                 <h:outputText  value="#{postLabels.address}" ></h:outputText>
-                                <h:inputText  value="#{supplierController.current.address}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText  value="#{supplierController.current.address}"  ></h:inputText>
 
                                 <h:outputText  value="#{postLabels.telephone}" ></h:outputText>
-                                <h:inputText value="#{supplierController.current.telephone}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText value="#{supplierController.current.telephone}"  ></h:inputText>
 
                                 <h:outputText  value="#{postLabels.mobile}" ></h:outputText>
-                                <h:inputText value="#{supplierController.current.mobile}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText value="#{supplierController.current.mobile}"  ></h:inputText>
 
                                 <h:outputText  value="#{postLabels.telephone}" ></h:outputText>
-                                <h:inputText value="#{supplierController.current.telephone}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText value="#{supplierController.current.telephone}"  ></h:inputText>
 
                                 <h:outputText  value="#{postLabels.fax}" ></h:outputText>
-                                <h:inputText value="#{supplierController.current.fax}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText value="#{supplierController.current.fax}"  ></h:inputText>
 
                                 <h:outputText  value="#{postLabels.email}" ></h:outputText>
-                                <h:inputText  value="#{supplierController.current.email}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
+                                <h:inputText  value="#{supplierController.current.email}"  ></h:inputText>
 
                                 <h:outputText  value="#{postLabels.website}" ></h:outputText>
-                                <h:inputText value="#{supplierController.current.website}" disabled="#{supplierController.modifyControlDisable}" ></h:inputText>
-                                
-                                
-                                
-                                
-                                
+                                <h:inputText value="#{supplierController.current.website}"  ></h:inputText>
+
+
+
+
+
                             </h:panelGrid>
                             <h:panelGrid id="gpDetailButtons" columns="2">
-                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{supplierController.modifyControlDisable}" action="#{supplierController.saveSelected()}" styleClass="buttons">
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
+                                <h:commandButton id="btnSave" value="#{labels.save}"  action="#{supplierController.saveSelected()}" styleClass="buttons">
+                                    <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{supplierController.modifyControlDisable}" action="#{supplierController.cancelSelect()}" styleClass="buttons">
-                                    <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" execute="gpDetail" >                                
-                                    </f:ajax>
-                                </h:commandButton>
+
                             </h:panelGrid>
                         </h:panelGrid>
                     </p:panel>
                 </h:panelGrid>
             </p:panel>
-        </h:form>        
-        
-        
-        
+        </h:form>
+
+
+
     </ui:define>
 
 </ui:composition>
