@@ -36,7 +36,7 @@ import javax.faces.model.ListDataModel;
  */
 @ManagedBean
 @ViewScoped
-public class PurchaseBillController  implements Serializable {
+public class PurchaseBillController implements Serializable {
 
     /**
      *
@@ -55,60 +55,61 @@ public class PurchaseBillController  implements Serializable {
     @EJB
     private BillItemFacade billItemFacade;
     @EJB
-    InstitutionFacade institutionFacade;
+    private InstitutionFacade institutionFacade;
     @EJB
-    UnitFacade unitFacade;
+    private UnitFacade unitFacade;
     @EJB
-    LocationFacade locationFacade;
+    private LocationFacade locationFacade;
     @EJB
-    PersonFacade personFacade;
+    private PersonFacade personFacade;
     @EJB
-    CountryFacade countryFacade;
+    private CountryFacade countryFacade;
     @EJB
-    ManufacturerFacade manufacturerFacade;
+    private ManufacturerFacade manufacturerFacade;
     @EJB
-    SupplierFacade supplierFacade;
+    private SupplierFacade supplierFacade;
     @EJB
-    ItemUnitFacade itemUnitFacade;
+    private ItemUnitFacade itemUnitFacade;
     @EJB
-    ItemUnitHistoryFacade itemUnitHistoryFacade;
+    private ItemUnitHistoryFacade itemUnitHistoryFacade;
     /**
      * Managed Properties
      */
     @ManagedProperty(value = "#{sessionController}")
-    SessionController sessionController;
+    private SessionController sessionController;
     @ManagedProperty(value = "#{transferBean}")
-    TransferBean transferBean;
+    private TransferBean transferBean;
     /**
      * Collections
      */
-    DataModel<Item> items;
-    DataModel<Make> makes;
+    private DataModel<Item> items;
+    private DataModel<Make> makes;
+    private List<Modal> modals;
     //
-    DataModel<BillItemEntry> billItemEntrys;
-    List<BillItemEntry> lstBillItemEntrys;
+    private DataModel<BillItemEntry> billItemEntrys;
+    private List<BillItemEntry> lstBillItemEntrys;
     //
-    DataModel<Institution> fromInstitutions;
-    DataModel<Unit> fromUnits;
-    DataModel<Location> fromLocations;
-    DataModel<Person> fromPersons;
+    private DataModel<Institution> fromInstitutions;
+    private DataModel<Unit> fromUnits;
+    private DataModel<Location> fromLocations;
+    private DataModel<Person> fromPersons;
     //
-    DataModel<Institution> toInstitutions;
-    DataModel<Unit> toUnits;
-    DataModel<Location> toLocations;
-    DataModel<Person> toPersons;
+    private DataModel<Institution> toInstitutions;
+    private DataModel<Unit> toUnits;
+    private DataModel<Location> toLocations;
+    private DataModel<Person> toPersons;
     //
-    DataModel<Country> countries;
-    DataModel<Supplier> suppliers;
-    DataModel<Manufacturer> manufacturers;
+    private DataModel<Country> countries;
+    private DataModel<Supplier> suppliers;
+    private DataModel<Manufacturer> manufacturers;
     //
     /*
      * Current Objects
      *
      */
-    Bill bill;
-    BillItemEntry billItemEntry;
-    BillItemEntry editBillItemEntry;
+    private Bill bill;
+    private BillItemEntry billItemEntry;
+    private BillItemEntry editBillItemEntry;
     //Controllers
     //
 //    Institution fromInstitution;
@@ -123,23 +124,34 @@ public class PurchaseBillController  implements Serializable {
     /**
      * Entries
      */
-    String modalName;
-    Boolean newBill;
+    private String modalName;
+    private Boolean newBill;
 
     /**
      *
      * Methods
      *
      */
+    public List<Modal> getModals() {
+        if (modals == null) {
+            modals = new ArrayList<Modal>();
+        }
+        return modals;
+    }
+
+    public void setModals(List<Modal> modals) {
+        this.modals = modals;
+    }
+
     public void addItemToList() {
         orderBillItemEntries();
-        if (billItemEntry == null) {
+        if (getBillItemEntry() == null) {
             JsfUtil.addErrorMessage("Hothing to add");
             return;
         }
-        // TODO: Warning - Need to add logic to search and save model        
-        addLastBillEntryNumber(billItemEntry);
-        getLstBillItemEntrys().add(billItemEntry);
+        // TODO: Warning - Need to add logic to search and save model
+        addLastBillEntryNumber(getBillItemEntry());
+        getLstBillItemEntrys().add(getBillItemEntry());
         calculateBillValue();
         clearEntry();
 
@@ -147,19 +159,19 @@ public class PurchaseBillController  implements Serializable {
 
     private void orderBillItemEntries() {
         long l = 1l;
-        for (BillItemEntry entry : lstBillItemEntrys) {
+        for (BillItemEntry entry : getLstBillItemEntrys()) {
             entry.setId(l);
             l++;
         }
     }
 
     public void removeItemFromList() {
-        if (editBillItemEntry == null) {
+        if (getEditBillItemEntry() == null) {
             JsfUtil.addErrorMessage("Nothing to Delete. Please select one");
         }
-        getLstBillItemEntrys().remove(editBillItemEntry);
+        getLstBillItemEntrys().remove(getEditBillItemEntry());
         orderBillItemEntries();
-        editBillItemEntry = null;
+        setEditBillItemEntry(null);
         JsfUtil.addSuccessMessage("Removed From List");
     }
 
@@ -172,15 +184,15 @@ public class PurchaseBillController  implements Serializable {
     }
 
     private void clearEntry() {
-        modalName = null;
-        billItemEntry = new BillItemEntry();
-        billItemEntry = null;
-        billItemEntry = getBillItemEntry();
+        setModalName(null);
+        setBillItemEntry(new BillItemEntry());
+        setBillItemEntry(null);
+        setBillItemEntry(getBillItemEntry());
     }
 
     private void clearBill() {
-        bill = new Bill();
-        lstBillItemEntrys = new ArrayList<BillItemEntry>();
+        setBill(new Bill());
+        setLstBillItemEntrys(new ArrayList<BillItemEntry>());
 
 
     }
@@ -235,7 +247,7 @@ public class PurchaseBillController  implements Serializable {
     private void saveNewBill() {
         Bill temBill = getBill();
         temBill.setCreatedAt(Calendar.getInstance().getTime());
-        temBill.setCreater(sessionController.getLoggedUser());
+        temBill.setCreater(getSessionController().getLoggedUser());
         temBill.setDiscountCost(temBill.getDiscountValue());
         temBill.setDiscountValuePercent(temBill.getDiscountValue() * 100 / temBill.getNetValue());
         temBill.setDiscountCostPercent(temBill.getDiscountValuePercent());
@@ -245,7 +257,7 @@ public class PurchaseBillController  implements Serializable {
     }
 
     private void saveNewBillItems() {
-        for (BillItemEntry temEntry : lstBillItemEntrys) {
+        for (BillItemEntry temEntry : getLstBillItemEntrys()) {
             settleBillItem(temEntry);
         }
     }
@@ -284,7 +296,7 @@ public class PurchaseBillController  implements Serializable {
 
         newItemUnit.setBulkUnit(newItemUnit.getItem().getBulkUnit());
         newItemUnit.setCreatedAt(Calendar.getInstance().getTime());
-        newItemUnit.setCreater(sessionController.getLoggedUser());
+        newItemUnit.setCreater(getSessionController().getLoggedUser());
         newItemUnit.setInstitution(getBill().getToInstitution());
         newItemUnit.setLocation(getBill().getToLocation());
         newItemUnit.setLooseUnit(newItemUnit.getItem().getLooseUnit());
@@ -304,7 +316,7 @@ public class PurchaseBillController  implements Serializable {
 
         hxIns.setBeforeQty(calculateStock(newItemUnit.getItem(), newItemUnit.getInstitution()));
         hxIns.setCreatedAt(Calendar.getInstance().getTime());
-        hxIns.setCreater(sessionController.loggedUser);
+        hxIns.setCreater(getSessionController().loggedUser);
         hxIns.setInstitution(newItemUnit.getInstitution());
         hxIns.setItem(newItemUnit.getItem());
         hxIns.setQuentity(newItemUnit.getQuentity());
@@ -314,7 +326,7 @@ public class PurchaseBillController  implements Serializable {
 
         hxUnit.setBeforeQty(calculateStock(newItemUnit.getItem(), newItemUnit.getUnit()));
         hxUnit.setCreatedAt(Calendar.getInstance().getTime());
-        hxUnit.setCreater(sessionController.loggedUser);
+        hxUnit.setCreater(getSessionController().loggedUser);
         hxUnit.setUnit(newItemUnit.getUnit());
         hxUnit.setItem(newItemUnit.getItem());
         hxUnit.setQuentity(newItemUnit.getQuentity());
@@ -323,7 +335,7 @@ public class PurchaseBillController  implements Serializable {
 
         hxLoc.setBeforeQty(calculateStock(newItemUnit.getItem(), newItemUnit.getLocation()));
         hxLoc.setCreatedAt(Calendar.getInstance().getTime());
-        hxLoc.setCreater(sessionController.loggedUser);
+        hxLoc.setCreater(getSessionController().loggedUser);
         hxLoc.setLocation(newItemUnit.getLocation());
         hxLoc.setItem(newItemUnit.getItem());
         hxLoc.setQuentity(newItemUnit.getQuentity());
@@ -332,7 +344,7 @@ public class PurchaseBillController  implements Serializable {
 
         hxPer.setBeforeQty(calculateStock(newItemUnit.getItem(), newItemUnit.getPerson()));
         hxPer.setCreatedAt(Calendar.getInstance().getTime());
-        hxPer.setCreater(sessionController.loggedUser);
+        hxPer.setCreater(getSessionController().loggedUser);
         hxPer.setPerson(newItemUnit.getPerson());
         hxPer.setItem(newItemUnit.getItem());
         hxPer.setQuentity(newItemUnit.getQuentity());
@@ -360,7 +372,7 @@ public class PurchaseBillController  implements Serializable {
 
         temBillItem.setBill(getBill());
         temBillItem.setCreatedAt(Calendar.getInstance().getTime());
-        temBillItem.setCreater(sessionController.loggedUser);
+        temBillItem.setCreater(getSessionController().loggedUser);
         //
         temBillItem.setDiscountCostPercentRate(getBill().getDiscountValuePercent());
         temBillItem.setDiscountCostPercentValue(getBill().getDiscountValuePercent());
@@ -440,7 +452,7 @@ public class PurchaseBillController  implements Serializable {
 //        hxIns.setQuentity(newItemUnit.getQuentity());
 //        hxIns.setToIn(Boolean.TRUE);
 //        hxIns.setToOut(Boolean.FALSE);
-//        
+//
 //
 //        hxUnit.setBeforeQty(calculateStock(newItemUnit.getItem(), newItemUnit.getUnit()));
 //        hxUnit.setCreatedAt(Calendar.getInstance().getTime());
@@ -554,7 +566,7 @@ public class PurchaseBillController  implements Serializable {
         this.lstBillItemEntrys = lstBillItemEntrys;
     }
 
-//  
+//
 //        public Bill getBill() {
 //        if (bill != null) {
 //            JsfUtil.addErrorMessage(bill.toString());
@@ -572,22 +584,22 @@ public class PurchaseBillController  implements Serializable {
 //            JsfUtil.addErrorMessage("Null");
 //        }
 //    }
-//    
+//
     public void prepareForNewBill() {
         setNewBill(Boolean.TRUE);
-        bill = new InInventoryBill();
-        bill.setBillDate(Calendar.getInstance().getTime());
+        setBill(new InInventoryBill());
+        getBill().setBillDate(Calendar.getInstance().getTime());
 
     }
 
     public void prepareForOldBill() {
         setNewBill(Boolean.FALSE);
-        bill = getTransferBean().getBill();
-        String temStr = "SELECT e FROM BillItem e WHERE e.retired=false AND e.bill.id = " + bill.getId();
+        setBill(getTransferBean().getBill());
+        String temStr = "SELECT e FROM BillItem e WHERE e.retired=false AND e.bill.id = " + getBill().getId();
         List<BillItem> temLstBillItems = new ArrayList<BillItem>(getBillItemFacade().findBySQL(temStr));
         System.out.println(temLstBillItems.toString());
         long i = 1;
-        for (BillItem bi:temLstBillItems){
+        for (BillItem bi : temLstBillItems) {
             BillItemEntry bie = new BillItemEntry();
             bie.setBillItem(bi);
             bie.setId(i);
@@ -702,7 +714,7 @@ public class PurchaseBillController  implements Serializable {
     }
 
     public DataModel<Institution> getToInstitutions() {
-        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM Institution i WHERE i.retired=false ORDER by i.name"));
+        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM HealthInstitution i WHERE i.retired=false ORDER by i.name"));
     }
 
     public void setToInstitutions(DataModel<Institution> institutions) {
@@ -710,7 +722,7 @@ public class PurchaseBillController  implements Serializable {
     }
 
     public DataModel<Institution> getFromInstitutions() {
-        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM Institution i WHERE i.retired=false ORDER by i.name"));
+        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM Supplier i WHERE i.retired=false ORDER by i.name"));
     }
 
     public void setFromInstitutions(DataModel<Institution> institutions) {

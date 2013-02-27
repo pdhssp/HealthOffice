@@ -49,7 +49,7 @@
 
                                 <h:outputText id="lblSelect" value="#{postLabels.books}" >
                                 </h:outputText>
-                                <h:selectOneListbox id="lstSelect"  Booksdisabled="#{bookController.selectControlDisable}" size="10" value="#{bookController.current}" style="min-width: 223px">
+                                <h:selectOneListbox id="lstSelect"  disabled="#{bookController.selectControlDisable}" size="10" value="#{bookController.current}" style="min-width: 223px">
                                     <f:selectItems value="#{bookController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.description}" ></f:selectItems>
                                     <f:ajax render="gpDetail" execute="lstSelect" >                                
                                     </f:ajax>
@@ -92,13 +92,13 @@
                                 <h:selectOneListbox id="cmbPub" value="#{bookController.current.manufacturer}" rendered ="#{!bookController.modifyControlDisable}"   disabled="#{bookController.modifyControlDisable}" size="5" style="width: 300px">
                                     <f:selectItems value="#{publisherController.items}" var="pub" itemValue="#{pub}" itemLabel="#{pub.name}"/>
                                 </h:selectOneListbox>
-                                <h:outputText id="txtPub" value="#{bookController.current.manufacturer.name}" rendered ="#{bookController.modifyControlDisable}"   size="5" style="width: 300px">
+                                <h:outputText id="txtPub" value="#{bookController.current.manufacturer.name}" rendered ="#{bookController.modifyControlDisable}"    style="width: 300px">
                                 </h:outputText> 
                                 <h:outputText id="lblBox" value="#{postLabels.rack}" ></h:outputText>
                                 <h:selectOneListbox id="cmbLoc" value="#{bookController.current.location}" rendered ="#{!bookController.modifyControlDisable}"   disabled="#{bookController.modifyControlDisable}" size="5" style="width: 300px">
                                     <f:selectItems value="#{bookController.locations}" var="loc" itemValue="#{loc}" itemLabel="#{loc.name}"/>
                                 </h:selectOneListbox>
-                                <h:outputText id="txtLoc" value="#{bookController.current.location.name}" rendered ="#{bookController.modifyControlDisable}"   size="5" style="width: 300px">
+                                <h:outputText id="txtLoc" value="#{bookController.current.location.name}" rendered ="#{bookController.modifyControlDisable}"   style="width: 300px">
                                 </h:outputText>                                
                                 <h:outputText id="lblAuth" value="#{postLabels.auther}" ></h:outputText>
                                 <h:inputText id="txtAuth" value="#{bookController.current.modalNo }" disabled="#{bookController.modifyControlDisable}" style="width: 300px"></h:inputText>

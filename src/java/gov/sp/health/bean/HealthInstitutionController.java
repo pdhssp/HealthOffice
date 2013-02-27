@@ -9,7 +9,7 @@
 package gov.sp.health.bean;
 
 import gov.sp.health.entity.*;
-import gov.sp.health.facade.SupplierFacade;
+import gov.sp.health.facade.HealthInstitutionFacade;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -29,41 +29,41 @@ import javax.faces.convert.FacesConverter;
  */
 @ManagedBean
 @SessionScoped
-public final class SupplierController implements Serializable {
+public final class HealthInstitutionController implements Serializable {
 
     @EJB
-    private SupplierFacade ejbFacade;
+    private HealthInstitutionFacade ejbFacade;
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
-    private List<Supplier> lstItems;
-    private Supplier current;
-    private List<Supplier> items = null;
+    private List<HealthInstitution> lstItems;
+    private HealthInstitution current;
+    private List<HealthInstitution> items = null;
     private String selectText = "";
 
-    public SupplierController() {
+    public HealthInstitutionController() {
     }
 
-    public List<Supplier> getLstItems() {
-        lstItems = getFacade().findBySQL("Select d From Supplier d where d.retired = false order by d.name");
+    public List<HealthInstitution> getLstItems() {
+        lstItems = getFacade().findBySQL("Select d From HealthInstitution d where d.retired = false order by d.name");
         return lstItems;
     }
 
-    public Supplier getCurrent() {
+    public HealthInstitution getCurrent() {
         if (current == null) {
-            current = new Supplier();
+            current = new HealthInstitution();
         }
         return current;
     }
 
-    public void setCurrent(Supplier current) {
+    public void setCurrent(HealthInstitution current) {
         this.current = current;
     }
 
-    private SupplierFacade getFacade() {
+    private HealthInstitutionFacade getFacade() {
         return getEjbFacade();
     }
 
-    public List<Supplier> getItems() {
+    public List<HealthInstitution> getItems() {
         items = getFacade().findAll("name", true);
         return items;
     }
@@ -95,13 +95,13 @@ public final class SupplierController implements Serializable {
 
     }
 
-    public Supplier searchItem(String itemName, boolean createNewIfNotPresent) {
-        Supplier searchedItem = null;
+    public HealthInstitution searchItem(String itemName, boolean createNewIfNotPresent) {
+        HealthInstitution searchedItem = null;
         setItems(getFacade().findAll("name", itemName, true));
         if (getItems().size() > 0) {
             searchedItem = getItems().get(0);
         } else if (createNewIfNotPresent) {
-            searchedItem = new Supplier();
+            searchedItem = new HealthInstitution();
             searchedItem.setName(itemName);
             searchedItem.setCreatedAt(Calendar.getInstance().getTime());
             searchedItem.setCreater(getSessionController().loggedUser);
@@ -115,14 +115,14 @@ public final class SupplierController implements Serializable {
     }
 
     public void prepareAdd() {
-        setCurrent(new Supplier());
+        setCurrent(new HealthInstitution());
     }
 
-    public SupplierFacade getEjbFacade() {
+    public HealthInstitutionFacade getEjbFacade() {
         return ejbFacade;
     }
 
-    public void setEjbFacade(SupplierFacade ejbFacade) {
+    public void setEjbFacade(HealthInstitutionFacade ejbFacade) {
         this.ejbFacade = ejbFacade;
     }
 
@@ -165,7 +165,7 @@ public final class SupplierController implements Serializable {
 
             getFacade().create(getCurrent());
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
-            setCurrent(new Supplier());
+            setCurrent(new HealthInstitution());
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "Error");
         }
@@ -251,19 +251,19 @@ public final class SupplierController implements Serializable {
     /**
      * @param items the items to set
      */
-    public void setItems(List<Supplier> items) {
+    public void setItems(List<HealthInstitution> items) {
         this.items = items;
     }
 
-    @FacesConverter(forClass = Supplier.class)
-    public static class SupplierControllerConverter implements Converter {
+    @FacesConverter(forClass = HealthInstitution.class)
+    public static class HealthInstitutionControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SupplierController controller = (SupplierController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "supplierController");
+            HealthInstitutionController controller = (HealthInstitutionController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "healthInstitutionController");
             return controller.getEjbFacade().find(getKey(value));
         }
 
@@ -283,12 +283,12 @@ public final class SupplierController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Supplier) {
-                Supplier o = (Supplier) object;
+            if (object instanceof HealthInstitution) {
+                HealthInstitution o = (HealthInstitution) object;
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type "
-                        + object.getClass().getName() + "; expected type: " + SupplierController.class.getName());
+                        + object.getClass().getName() + "; expected type: " + HealthInstitutionController.class.getName());
             }
         }
     }
