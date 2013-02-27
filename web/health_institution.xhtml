@@ -89,6 +89,10 @@
                                 <h:outputText  value="#{postLabels.website}" ></h:outputText>
                                 <h:inputText value="#{healthInstitutionController.current.website}"  ></h:inputText>
 
+                                <h:outputText id="lblCat" value="#{labels.InstitutionType}" ></h:outputText>
+                                <h:selectOneListbox class="pdListAll" id="cmbCat1" value="#{healthInstitutionController.current.institutionType}"  >
+                                    <f:selectItems value="#{institutionTypeController.items}" />
+                                </h:selectOneListbox>
 
 
 

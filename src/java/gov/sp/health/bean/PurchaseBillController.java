@@ -714,7 +714,7 @@ public class PurchaseBillController implements Serializable {
     }
 
     public DataModel<Institution> getToInstitutions() {
-        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM Institution i WHERE i.retired=false ORDER by i.name"));
+        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM HealthInstitution i WHERE i.retired=false ORDER by i.name"));
     }
 
     public void setToInstitutions(DataModel<Institution> institutions) {
