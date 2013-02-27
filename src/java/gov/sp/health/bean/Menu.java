@@ -237,7 +237,7 @@ public class Menu implements Serializable {
 
         item = new MenuItem();
         item.setValue(getLabel("institutions"));
-        item.setUrl("institutions.xhtml");
+        item.setUrl("health_institution.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
