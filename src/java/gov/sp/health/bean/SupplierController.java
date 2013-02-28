@@ -38,8 +38,12 @@ public final class SupplierController implements Serializable {
     private List<Supplier> lstItems;
     private Supplier current;
     private List<Supplier> items = null;
+    private List<Supplier> searchItems;
     private String selectText = "";
 
+    
+    
+    
     public SupplierController() {
     }
 
@@ -77,23 +81,23 @@ public final class SupplierController implements Serializable {
         return valueInt;
     }
 
-    public List searchItems() {
-        recreateModel();
-        if (getItems() == null) {
-            if (getSelectText().equals("")) {
-                setItems(getFacade().findAll("name", true));
-            } else {
-                setItems(getFacade().findAll("name", "%" + getSelectText() + "%", true));
-                if (getItems().size() > 0) {
-                    setCurrent(getItems().get(0));
-                } else {
-                    setCurrent(null);
-                }
-            }
-        }
-        return getItems();
-
-    }
+//    public List searchItems() {
+//        recreateModel();
+//        if (getItems() == null) {
+//            if (getSelectText().equals("")) {
+//                setItems(getFacade().findAll("name", true));
+//            } else {
+//                setItems(getFacade().findAll("name", "%" + getSelectText() + "%", true));
+//                if (getItems().size() > 0) {
+//                    setCurrent(getItems().get(0));
+//                } else {
+//                    setCurrent(null);
+//                }
+//            }
+//        }
+//        return getItems();
+//
+//    }
 
     public Supplier searchItem(String itemName, boolean createNewIfNotPresent) {
         Supplier searchedItem = null;
@@ -198,7 +202,6 @@ public final class SupplierController implements Serializable {
 
     public void setSelectText(String selectText) {
         this.selectText = selectText;
-        searchItems();
     }
 
     public Double calculateStock(Item item) {
@@ -255,9 +258,25 @@ public final class SupplierController implements Serializable {
         this.items = items;
     }
 
+    public List<Supplier> getSearchItems() {
+        String sql;
+        if(getSelectText().trim().equals("")){
+            sql = "select s from Supplier s where s.retired = false order by s.name";
+        }else{
+            sql = "select s from Supplier s where s.retired = false and lower(s.name) like '%" + getSelectText().toLowerCase() + "%' order by s.name";
+        }
+        searchItems=getFacade().findBySQL(sql);
+        return searchItems;
+    }
+
+    public void setSearchItems(List<Supplier> searchItems) {
+        this.searchItems = searchItems;
+    }
+
     @FacesConverter(forClass = Supplier.class)
     public static class SupplierControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
@@ -274,11 +293,19 @@ public final class SupplierController implements Serializable {
         }
 
         String getStringKey(java.lang.Long value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param object
+         * @return
+         */
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;

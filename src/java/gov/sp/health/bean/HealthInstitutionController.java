@@ -36,6 +36,7 @@ public final class HealthInstitutionController implements Serializable {
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
     private List<HealthInstitution> lstItems;
+    private List<HealthInstitution> searchItems;
     private HealthInstitution current;
     private List<HealthInstitution> items = null;
     private String selectText = "";
@@ -75,24 +76,6 @@ public final class HealthInstitutionController implements Serializable {
                     "The long value " + value + " is not within range of the int type");
         }
         return valueInt;
-    }
-
-    public List searchItems() {
-        recreateModel();
-        if (getItems() == null) {
-            if (getSelectText().equals("")) {
-                setItems(getFacade().findAll("name", true));
-            } else {
-                setItems(getFacade().findAll("name", "%" + getSelectText() + "%", true));
-                if (getItems().size() > 0) {
-                    setCurrent(getItems().get(0));
-                } else {
-                    setCurrent(null);
-                }
-            }
-        }
-        return getItems();
-
     }
 
     public HealthInstitution searchItem(String itemName, boolean createNewIfNotPresent) {
@@ -198,7 +181,6 @@ public final class HealthInstitutionController implements Serializable {
 
     public void setSelectText(String selectText) {
         this.selectText = selectText;
-        searchItems();
     }
 
     public Double calculateStock(Item item) {
@@ -255,6 +237,27 @@ public final class HealthInstitutionController implements Serializable {
         this.items = items;
     }
 
+    public List<HealthInstitution> getSearchItems() {
+        String sql;
+        if (getSelectText().trim().equals("")) {
+            sql = "select i from HealthInstitution i where i.retired = false order by i.name";
+        } else {
+            sql = "select i from HealthInstitution i where i.retired = false and lower(i.name) like '%" + getSelectText().toLowerCase() + "%' order by i.name";
+        }
+        System.out.println(sql);
+        searchItems = getFacade().findBySQL(sql);
+        if (searchItems.size() > 0) {
+            setCurrent(searchItems.get(0));
+        } else {
+            setCurrent(null);
+        }
+        return searchItems;
+    }
+
+    public void setSearchItems(List<HealthInstitution> searchItems) {
+        this.searchItems = searchItems;
+    }
+
     @FacesConverter(forClass = HealthInstitution.class)
     public static class HealthInstitutionControllerConverter implements Converter {
 
@@ -274,11 +277,19 @@ public final class HealthInstitutionController implements Serializable {
         }
 
         String getStringKey(java.lang.Long value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param object
+         * @return
+         */
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;

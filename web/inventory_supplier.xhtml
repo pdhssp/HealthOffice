@@ -39,7 +39,7 @@
 
 
                                 <h:selectOneListbox id="lstSelect"  size="10" value="#{supplierController.current}" style="min-width: 223px">
-                                    <f:selectItems value="#{supplierController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:selectItems value="#{supplierController.searchItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
                                     <f:ajax render="gpDetail" execute="lstSelect" >
                                     </f:ajax>
                                 </h:selectOneListbox>

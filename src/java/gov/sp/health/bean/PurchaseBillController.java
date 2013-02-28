@@ -149,6 +149,18 @@ public class PurchaseBillController implements Serializable {
             JsfUtil.addErrorMessage("Hothing to add");
             return;
         }
+        if(getBillItemEntry().getBillItem().getItemUnit().getItem() ==null){
+            JsfUtil.addErrorMessage("Please select an item");
+            return;
+        }
+        if(getBillItemEntry().getBillItem().getQuentity() ==0){
+            JsfUtil.addErrorMessage("Please enter a quantity");
+            return;
+        }
+        if(getBillItemEntry().getBillItem().getNetRate() ==0){
+            JsfUtil.addErrorMessage("Please enter a rate");
+            return;
+        }
         // TODO: Warning - Need to add logic to search and save model
         addLastBillEntryNumber(getBillItemEntry());
         getLstBillItemEntrys().add(getBillItemEntry());

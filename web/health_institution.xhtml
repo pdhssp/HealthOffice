@@ -29,7 +29,7 @@
                                 </h:outputText>
 
                                 <h:inputText id="txtSelect" value="#{healthInstitutionController.selectText}"  style="min-width: 200px" >
-                                    <f:ajax  event="keyup" render="lstSelect gpDetail" >
+                                    <f:ajax  event="keyup" render="lstSelect gpDetail" execute="txtSelect" >
                                     </f:ajax>
                                 </h:inputText>
 
@@ -39,7 +39,7 @@
 
 
                                 <h:selectOneListbox id="lstSelect"  size="10" value="#{healthInstitutionController.current}" style="min-width: 223px">
-                                    <f:selectItems value="#{healthInstitutionController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:selectItems value="#{healthInstitutionController.searchItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
                                     <f:ajax render="gpDetail" execute="lstSelect" >
                                     </f:ajax>
                                 </h:selectOneListbox>
