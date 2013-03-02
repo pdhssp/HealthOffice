@@ -50,43 +50,25 @@
                 </pou:layoutUnit>
 
                 <pou:layoutUnit position="south" resizable="false" closable="false" collapsible="false">
-                    <pou:panelGrid columns="3" >
+                    <pou:panelGrid columns="12" rendered="#{connetcionController.logged}" >
 
-                        <pou:panel rendered="#{connetcionController.logged}" header="#{labels.Login}" style="margin: 2px; padding: 2px; border: 0px;">
-                            <h:form>
-                                <pou:panel id="divActivated" rendered="#{connetcionController.activated}" style="margin:2px; padding: 0px; border: 0px;">
-                                    #{postLabels.youAreLoggedAs} #{connetcionController.displayName}
-                                    <pou:commandButton value="#{postLabels.logout}" action="#{connetcionController.logout}" ajax="false"></pou:commandButton>
-                                </pou:panel>
-                                <pou:panel id="divNotActivated" rendered="#{!connetcionController.activated}" style="margin: 2px; padding: 0px; border: 0px;">
-                                    #{postLabels.accountActivate}
-                                    <pou:commandButton value="#{postLabels.logout}" action="#{connetcionController.logout}" ajax="false"></pou:commandButton>
-                                </pou:panel>
-                            </h:form>
-                        </pou:panel>
-
-
-                        <pou:panel header="#{postLabels.theme}" style="margin: 2px; padding: 2px; border: 0px;">
-                            <h:form>
-                                <pou:themeSwitcher style="width:165px" id="defaultSwitcher" value="#{themeSwitcherBean.theme}">
-                                    <f:selectItem itemLabel="#{postLabels.chooseTheme}" itemValue="" />
-                                    <f:selectItems value="#{themeSwitcherBean.themes}" />
-                                </pou:themeSwitcher>
-                                <pou:commandButton value="#{postLabels.set}" action="#{themeSwitcherBean.saveTheme}"></pou:commandButton>
-                            </h:form>
-                        </pou:panel>
-
-                        <pou:panel  header="#{postLabels.language}" style="margin: 2px; padding: 2px; border: 0px;">
-
-                            <h:form>
-                                <h:selectOneMenu value="#{languageBean.localeCode}" >
-                                    <f:selectItems value="#{languageBean.countriesInMap}" />
-                                </h:selectOneMenu>
-                                <h:commandButton value="#{postLabels.set}" action="#{languageBean.changeLocale()}"></h:commandButton>
-                            </h:form>
-
-                        </pou:panel>
-
+                        <h:form>
+                            <h:outputLabel value="#{postLabels.youAreLoggedAs} &nbsp;&ndash;&nbsp; #{connetcionController.displayName}" />
+                            <h:commandButton value="#{postLabels.logout}" action="#{connetcionController.logout}" ></h:commandButton>
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
+                            <h:selectOneMenu value="#{languageBean.localeCode}" >
+                                <f:selectItems value="#{languageBean.countriesInMap}" />
+                            </h:selectOneMenu>
+                            <h:commandButton value="#{postLabels.set}" action="#{languageBean.changeLocale()}"></h:commandButton>
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
+                            <pou:themeSwitcher id="defaultSwitcher" value="#{themeSwitcherBean.theme}" >
+                                <f:selectItem itemLabel="#{postLabels.chooseTheme}" itemValue="" />
+                                <f:selectItems value="#{themeSwitcherBean.themes}" />
+                            </pou:themeSwitcher>
+                            <h:commandButton value="#{postLabels.set}" action="#{themeSwitcherBean.saveTheme}"/>
+                        </h:form>
 
                     </pou:panelGrid>
 

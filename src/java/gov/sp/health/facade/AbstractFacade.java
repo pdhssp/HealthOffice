@@ -215,6 +215,16 @@ public abstract class AbstractFacade<T> {
         }
     }
     
+    public Long findAggregateLong(String strJQL) {
+        Query q = getEntityManager().createQuery(strJQL);
+        try {
+            return (Long) q.getSingleResult();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0l;
+        }
+    }
+    
     public List<String> findString(String strJQL) {
         Query q = getEntityManager().createQuery(strJQL);
         try {

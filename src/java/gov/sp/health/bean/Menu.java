@@ -204,7 +204,7 @@ public class Menu implements Serializable {
         }
 
         if (sessionController.privilege.isInventoryView()) {
-            model.addSubmenu(suppliesSubmenu());
+            model.addSubmenu(inventorySubmenu());
         }
 
         if (sessionController.privilege.isLibraryView()) {
@@ -948,42 +948,40 @@ public class Menu implements Serializable {
 
 
 
-        Submenu editMenu = new Submenu();
-        editMenu.setLabel(getLabel("edit"));
-
-
-
-        item = new MenuItem();
-        item.setValue(getLabel("ItemCategories"));
-        item.setUrl("inventory_item_category.xhtml");
-        editMenu.getChildren().add(item);
-
-
-
-        item = new MenuItem();
-        item.setValue(getLabel("make"));
-        item.setUrl("inventory_make.xhtml");
-        editMenu.getChildren().add(item);
-
-
+//
+//
 //        item = new MenuItem();
-//        item.setValue(getLabel("model"));
-//        item.setUrl("inventory_modal.xhtml");
+//        item.setValue(getLabel("make"));
+//        item.setUrl("inventory_make.xhtml");
 //        editMenu.getChildren().add(item);
+//
+//
+////        item = new MenuItem();
+////        item.setValue(getLabel("model"));
+////        item.setUrl("inventory_modal.xhtml");
+////        editMenu.getChildren().add(item);
+//
+//        item = new MenuItem();
+//        item.setValue(getLabel("Items"));
+//        item.setUrl("inventory_item.xhtml");
+//        editMenu.getChildren().add(item);
+//
+//
+//        item = new MenuItem();
+//        item.setValue(getLabel("ItemsImportFromExcel"));
+//        item.setUrl("inventory_import_items.xhtml");
+//        editMenu.getChildren().add(item);
+//
+//        submenu.getChildren().add(editMenu);
+//
 
+        
         item = new MenuItem();
-        item.setValue(getLabel("Items"));
-        item.setUrl("inventory_item.xhtml");
-        editMenu.getChildren().add(item);
+        item.setValue(getLabel("reports"));
+        item.setUrl("inventory_reports.xhtml");
+        submenu.getChildren().add(item);
 
-
-        item = new MenuItem();
-        item.setValue(getLabel("ItemsImportFromExcel"));
-        item.setUrl("inventory_import_items.xhtml");
-        editMenu.getChildren().add(item);
-
-        submenu.getChildren().add(editMenu);
-
+        
         item = new MenuItem();
         item.setValue(getLabel("purchase"));
         item.setUrl("inventory_purchase.xhtml");
@@ -1000,24 +998,25 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
 
-        item = new MenuItem();
-        item.setValue(getLabel("requests"));
-        item.setUrl("designation_category.xhtml");
-        submenu.getChildren().add(item);
-
-        item = new MenuItem();
-        item.setValue(getLabel("estimates"));
-        item.setUrl("designation_level.xhtml");
-        submenu.getChildren().add(item);
+//        item = new MenuItem();
+//        item.setValue(getLabel("requests"));
+//        item.setUrl("designation_category.xhtml");
+//        submenu.getChildren().add(item);
+//
+//        item = new MenuItem();
+//        item.setValue(getLabel("estimates"));
+//        item.setUrl("designation_level.xhtml");
+//        submenu.getChildren().add(item);
 
         item = new MenuItem();
         item.setValue(getLabel("adjust"));
         item.setUrl("inventory_adjust.xhtml");
         submenu.getChildren().add(item);
 
+        
         item = new MenuItem();
-        item.setValue(getLabel("reports"));
-        item.setUrl("inventory_reports.xhtml");
+        item.setValue(getLabel("edit"));
+        item.setUrl("inventory_edit.xhtml");
         submenu.getChildren().add(item);
 
 
