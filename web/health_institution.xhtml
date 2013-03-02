@@ -47,13 +47,13 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
-                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{healthInstitutionController.prepareAdd()}" styleClass="buttons" >
-                                    <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus" execute="" >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{healthInstitutionController.prepareAdd}" styleClass="buttons" >
+                                    <f:ajax render="gpDetail detailFocus" execute="btnAdd" >
                                     </f:ajax>
                                 </h:commandButton>
 
                                 <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
-                                            return false" value="#{labels.delete}" action="#{healthInstitutionController.delete()}" styleClass="buttons">
+                                            return false;" value="#{labels.delete}" action="#{healthInstitutionController.delete()}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
                         </p:panel>
@@ -90,7 +90,8 @@
                                 <h:inputText value="#{healthInstitutionController.current.website}"  ></h:inputText>
 
                                 <h:outputText id="lblCat" value="#{labels.InstitutionType}" ></h:outputText>
-                                <h:selectOneListbox class="pdListAll" id="cmbCat1" value="#{healthInstitutionController.current.institutionType}"  >
+                                <h:selectOneListbox id="cmbCat1" value="#{healthInstitutionController.current.institutionType}"  size="1">
+                                    <f:selectItem itemLabel="Select Institution Type"/>
                                     <f:selectItems value="#{institutionTypeController.items}" />
                                 </h:selectOneListbox>
 

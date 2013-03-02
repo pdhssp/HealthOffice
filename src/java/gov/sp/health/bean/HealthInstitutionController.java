@@ -57,6 +57,7 @@ public final class HealthInstitutionController implements Serializable {
     }
 
     public void setCurrent(HealthInstitution current) {
+        System.out.println("Setting current");
         this.current = current;
     }
 
@@ -98,6 +99,7 @@ public final class HealthInstitutionController implements Serializable {
     }
 
     public void prepareAdd() {
+        System.out.println("Prepar Add");
         setCurrent(new HealthInstitution());
     }
 

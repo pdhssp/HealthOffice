@@ -204,7 +204,7 @@ public class Menu implements Serializable {
         }
 
         if (sessionController.privilege.isInventoryView()) {
-            model.addSubmenu(suppliesSubmenu());
+            model.addSubmenu(inventorySubmenu());
         }
 
         if (sessionController.privilege.isLibraryView()) {
