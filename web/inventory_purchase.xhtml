@@ -9,8 +9,7 @@
 
     <ui:define name="content">
 
-        <h:outputStylesheet library="css" name="pdhssp1.css"/>
-
+        <h:outputStylesheet library="css" name="pdhscss1.css"   />
         <pou:growl autoUpdate="true"/>
 
         <h:form >
@@ -26,48 +25,40 @@
                         <pou:panel id="gpItem" header="#{labels.itemDetails}" rendered="#{purchaseBillController.newBill}" >
 
 
-                            <pou:panelGrid columns="8" >
+                            <pou:panelGrid columns="6" >
 
                                 <h:outputLabel value="#{labels.item}" />
                                 <h:selectOneListbox id="lstItem" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.item}"  size="1">
+                                    <f:selectItem  itemLabel="Select an Item" />
                                     <f:selectItems value="#{purchaseBillController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
                                     </f:selectItems>
                                 </h:selectOneListbox>
 
                                 <h:outputLabel value="#{labels.make}" />
                                 <h:selectOneListbox id="lstMake" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.make}"  size="1">
+                                    <f:selectItem itemLabel="Select a make"/>
                                     <f:selectItems value="#{purchaseBillController.makes}" var="myMake" itemLabel="#{myMake.name}" itemValue="#{myMake}"/>
                                 </h:selectOneListbox>
-
-                                <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
-                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
-
-                                <h:outputLabel value="#{labels.id}" ></h:outputLabel>
-                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.name}"  ></h:inputText>
-
-                                <h:outputLabel value="#{labels.descreption}" ></h:outputLabel>
-                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.description}" ></h:inputText>
-
-                                <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
-                                <pou:calendar value="#{purchaseBillController.billItemEntry.billItem.itemUnit.dateOfExpiary}"  ></pou:calendar>
 
                                 <h:outputLabel value="#{labels.modal}" ></h:outputLabel>
                                 <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.modalNo}" ></h:inputText>
 
-                                <h:outputLabel value="#{labels.country}" />
-                                <h:selectOneListbox id="lstCountry" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.country}" size="1">
-                                    <f:selectItems value="#{purchaseBillController.countries}" var="myCon" itemLabel="#{myCon.name}" itemValue="#{myCon}"/>
-                                </h:selectOneListbox>
+                                <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
+                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
+
+                                <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
+                                <pou:calendar value="#{purchaseBillController.billItemEntry.billItem.itemUnit.dateOfExpiary}"  ></pou:calendar>
+
+                                <h:outputLabel value="#{labels.quentity}"/>
+                                <h:inputText id="txtQty" value="#{purchaseBillController.billItemEntry.billItem.quentity}">
+                                    <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
+                                </h:inputText>
 
                                 <h:outputLabel value="#{labels.rate}"/>
                                 <h:inputText id="txtRate" value="#{purchaseBillController.billItemEntry.billItem.netRate}">
                                     <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
                                 </h:inputText>
 
-                                <h:outputLabel value="#{labels.quentity}"/>
-                                <h:inputText id="txtQty" value="#{purchaseBillController.billItemEntry.billItem.quentity}">
-                                    <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
-                                </h:inputText>
 
                                 <h:outputLabel value="#{labels.value}"/>
                                 <h:inputText disabled="true" id="txtValue" value="#{purchaseBillController.billItemEntry.billItem.netValue}">
@@ -134,45 +125,49 @@
                     </pou:panel>
                     <pou:panel id="gpBillDetails" header="#{labels.billDetails}">
                         <pou:panelGrid columns="2">
-                            #{postLabels.suppliedBy}
-                            <h:selectOneListbox value="#{purchaseBillController.bill.fromInstitution}" size="4">
+                            <h:outputLabel value="#{postLabels.suppliedBy}"/>
+                            <h:selectOneListbox value="#{purchaseBillController.bill.fromInstitution}" size="1">
+                                <f:selectItem itemLabel="Select the Supplier" />
                                 <f:selectItems value="#{purchaseBillController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
                             </h:selectOneListbox>
-                            #{postLabels.receivingInstitution}
-                            <h:selectOneListbox id="cmbToIns" value="#{purchaseBillController.bill.toInstitution}"  size="4">
-                                <f:selectItems value="#{purchaseBillController.toInstitutions}" var="toIns" itemValue="#{toIns}" itemLabel="#{toIns.name}"></f:selectItems>
-                                <f:ajax execute="cmbToIns" render="cmbToUnit cmbToPerson" event="change" />
-                            </h:selectOneListbox>
-                            #{postLabels.receivingUnit}
-                            <h:selectOneListbox id="cmbToUnit" value="#{purchaseBillController.bill.toUnit}"  size="4">
-                                <f:selectItems value="#{purchaseBillController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
-                                <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
-                            </h:selectOneListbox>
-                            #{postLabels.receivingLocation}
-                            <h:selectOneListbox id="cmbToLocation" value="#{purchaseBillController.bill.toLocation}"  size="4">
-                                <f:selectItems value="#{purchaseBillController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
-                                <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
-                            </h:selectOneListbox>
-                            #{postLabels.receivingPerson}
-                            <h:selectOneListbox id="cmbToPerson" value="#{purchaseBillController.bill.toPerson}"  size="4">
-                                <f:selectItems value="#{purchaseBillController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
-                            </h:selectOneListbox>
-                            #{postLabels.grossValue}
-                            <h:inputText disabled="true" value="#{purchaseBillController.bill.grossValue}" />
-                            #{postLabels.discount}
-                            <h:inputText value="#{purchaseBillController.bill.discountValue}">
-
-                            </h:inputText>
-                            #{postLabels.netValue}
-                            <h:inputText disabled="true" value="#{purchaseBillController.bill.netValue}"/>
-
-
                             <h:outputLabel value="#{labels.invoice}"/>
                             <h:inputText  id="txtInvoiceNo" value="#{purchaseBillController.bill.name}">
                             </h:inputText>
                             <h:outputLabel value="#{labels.billDate}"/>
                             <pou:calendar locale="en_UK"  id="txtBillDate" value="#{purchaseBillController.bill.billDate}">
                             </pou:calendar>
+                            <h:outputLabel value="#{postLabels.grossValue}"/>
+                            <h:inputText disabled="true" value="#{purchaseBillController.bill.grossValue}" />
+                            <h:outputLabel value="#{postLabels.discount}"/>
+                            <h:inputText value="#{purchaseBillController.bill.discountValue}">
+
+                            </h:inputText>
+                            <h:outputLabel value="#{postLabels.netValue}"/>
+                            <h:inputText disabled="true" value="#{purchaseBillController.bill.netValue}"/>
+
+                            <h:outputLabel value="&nbsp;"/>
+                            <h:outputLabel value="&nbsp;"/>
+
+                            <h:outputLabel value="#{postLabels.receivingUnit}"/>
+                            <h:selectOneListbox id="cmbToUnit" value="#{purchaseBillController.bill.toUnit}"  size="1">
+                                <f:selectItem itemLabel="Select a Unit"/>
+                                <f:selectItems value="#{purchaseBillController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
+                                <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
+                            </h:selectOneListbox>
+                            <h:outputLabel value="#{postLabels.receivingLocation}"/>
+                            <h:selectOneListbox id="cmbToLocation" value="#{purchaseBillController.bill.toLocation}"  size="1">
+                                <f:selectItem itemLabel="Select a location"/>
+                                <f:selectItems value="#{purchaseBillController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
+                                <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
+                            </h:selectOneListbox>
+                            <h:outputLabel value="#{postLabels.receivingPerson}"/>
+                            <h:selectOneListbox id="cmbToPerson" value="#{purchaseBillController.bill.toPerson}"  size="1">
+                                <f:selectItem itemLabel="Select a person" />
+                                <f:selectItems value="#{purchaseBillController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
+                            </h:selectOneListbox>
+
+
+
 
 
 

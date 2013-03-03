@@ -4,11 +4,13 @@
  */
 package gov.sp.health.entity;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Buddhika
  */
-public class BillItemEntry {
+public class BillItemEntry implements Serializable {
 
     public BillItemEntry() {
     }

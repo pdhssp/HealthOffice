@@ -368,6 +368,6 @@ public class Bill implements Serializable {
 
     @Override
     public String toString() {
-        return "gov.sp.health.entity.Transaction[ id=" + id + " ]";
+        return "Bill (" + id + ")";
     }
 }

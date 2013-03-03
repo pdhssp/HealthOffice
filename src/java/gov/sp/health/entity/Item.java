@@ -47,7 +47,11 @@ public class Item implements Serializable {
     @ManyToOne
     MeasurementUnit itemUnit;
     double looseUnitsPerBulkUnit;
+    private String itemPrefix;
 
+
+    
+    
     public Double getItemQuantity() {
         return itemQuantity;
     }
@@ -210,5 +214,13 @@ public class Item implements Serializable {
         } else {
             return name + "(" + getName() + ")";
         }
+    }
+
+    public String getItemPrefix() {
+        return itemPrefix;
+    }
+
+    public void setItemPrefix(String itemPrefix) {
+        this.itemPrefix = itemPrefix;
     }
 }

@@ -29,7 +29,7 @@
                                 </h:outputText>
 
                                 <h:inputText id="txtSelect" value="#{healthInstitutionController.selectText}"  style="min-width: 200px" >
-                                    <f:ajax  event="keyup" render="lstSelect gpDetail" >
+                                    <f:ajax  event="keyup" render="lstSelect gpDetail" execute="txtSelect" >
                                     </f:ajax>
                                 </h:inputText>
 
@@ -39,7 +39,7 @@
 
 
                                 <h:selectOneListbox id="lstSelect"  size="10" value="#{healthInstitutionController.current}" style="min-width: 223px">
-                                    <f:selectItems value="#{healthInstitutionController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:selectItems value="#{healthInstitutionController.searchItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
                                     <f:ajax render="gpDetail" execute="lstSelect" >
                                     </f:ajax>
                                 </h:selectOneListbox>
@@ -47,13 +47,13 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
-                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{healthInstitutionController.prepareAdd()}" styleClass="buttons" >
-                                    <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus" execute="" >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{healthInstitutionController.prepareAdd}" styleClass="buttons" >
+                                    <f:ajax render="gpDetail detailFocus" execute="btnAdd" >
                                     </f:ajax>
                                 </h:commandButton>
 
                                 <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
-                                            return false" value="#{labels.delete}" action="#{healthInstitutionController.delete()}" styleClass="buttons">
+                                            return false;" value="#{labels.delete}" action="#{healthInstitutionController.delete()}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
                         </p:panel>
@@ -90,7 +90,8 @@
                                 <h:inputText value="#{healthInstitutionController.current.website}"  ></h:inputText>
 
                                 <h:outputText id="lblCat" value="#{labels.InstitutionType}" ></h:outputText>
-                                <h:selectOneListbox class="pdListAll" id="cmbCat1" value="#{healthInstitutionController.current.institutionType}"  >
+                                <h:selectOneListbox id="cmbCat1" value="#{healthInstitutionController.current.institutionType}"  size="1">
+                                    <f:selectItem itemLabel="Select Institution Type"/>
                                     <f:selectItems value="#{institutionTypeController.items}" />
                                 </h:selectOneListbox>
 

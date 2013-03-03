@@ -23,8 +23,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -33,19 +31,16 @@ import javax.faces.model.ListDataModel;
  */
 @ManagedBean
 @SessionScoped
-public final class InventoryItemController  implements Serializable {
+public final class InventoryItemController implements Serializable {
 
     @EJB
     private InventoryItemFacade ejbFacade;
     @ManagedProperty(value = "#{sessionController}")
     SessionController sessionController;
-    List<InventoryItem> lstItems;
+    List<InventoryItem> searchItems;
     private InventoryItem current;
     ItemCategory currentCat;
-    private DataModel<InventoryItem>  items = null;
-    private int selectedItemIndex;
-    boolean selectControlDisable = false;
-    boolean modifyControlDisable = true;
+    private List<InventoryItem> items = null;
     String selectText = "";
 
     public InventoryItemController() {
@@ -59,25 +54,25 @@ public final class InventoryItemController  implements Serializable {
         this.currentCat = currentCat;
     }
 
-    
-    
-    public List<InventoryItem> getLstItems() {
-        return getFacade().findBySQL("Select d From InventoryItem d where d.retired=false order by i.name");
+    public List<InventoryItem> getSearchItems() {
+        String sql;
+        if (getSelectText().trim().equals("")) {
+            sql = "Select d From InventoryItem d where d.retired=false order by d.name";
+        } else {
+            sql = "Select d From InventoryItem d where d.retired=false and lower(d.name)like '%" + getSelectText().trim().toLowerCase() + "%' order by d.name";
+        }
+        searchItems = getFacade().findBySQL(sql);
+        return searchItems;
     }
 
-    public void setLstItems(List<InventoryItem> lstItems) {
-        this.lstItems = lstItems;
-    }
-
-    public int getSelectedItemIndex() {
-        return selectedItemIndex;
-    }
-
-    public void setSelectedItemIndex(int selectedItemIndex) {
-        this.selectedItemIndex = selectedItemIndex;
+    public void setSearchItems(List<InventoryItem> searchItems) {
+        this.searchItems = searchItems;
     }
 
     public InventoryItem getCurrent() {
+        if (current == null) {
+            current = new InventoryItem();
+        }
         if (current != null) {
             currentCat = current.getCategory();
         }
@@ -86,7 +81,7 @@ public final class InventoryItemController  implements Serializable {
 
     public void setCurrent(InventoryItem current) {
         this.current = current;
-        if (current != null){
+        if (current != null) {
             currentCat = current.getCategory();
         }
     }
@@ -95,8 +90,8 @@ public final class InventoryItemController  implements Serializable {
         return ejbFacade;
     }
 
-    public DataModel<InventoryItem>  getItems() {
-        items = new ListDataModel(getFacade().findAll("name", true));
+    public List<InventoryItem> getItems() {
+        items = getFacade().findAll("name", true);
         return items;
     }
 
@@ -109,35 +104,11 @@ public final class InventoryItemController  implements Serializable {
         return valueInt;
     }
 
-    public DataModel searchItems() {
-        recreateModel();
-        if (items == null) {
-            if (selectText.equals("")) {
-                items = new ListDataModel(getFacade().findAll("name", true));
-            } else {
-                items = new ListDataModel(getFacade().findAll("name", "%" + selectText + "%",
-                        true));
-                if (items.getRowCount() > 0) {
-                    items.setRowIndex(0);
-                    current = (InventoryItem) items.getRowData();
-                    Long temLong = current.getId();
-                    selectedItemIndex = intValue(temLong);
-                } else {
-                    current = null;
-                    selectedItemIndex = -1;
-                }
-            }
-        }
-        return items;
-
-    }
-
     public InventoryItem searchItem(String itemName, boolean createNewIfNotPresent) {
         InventoryItem searchedItem = null;
-        items = new ListDataModel(getFacade().findAll("name", itemName, true));
-        if (items.getRowCount() > 0) {
-            items.setRowIndex(0);
-            searchedItem = (InventoryItem) items.getRowData();
+        items = getFacade().findAll("name", itemName, true);
+        if (items.size() > 0) {
+            searchedItem = (InventoryItem) items.get(0);
         } else if (createNewIfNotPresent) {
             searchedItem = new InventoryItem();
             searchedItem.setName(itemName);
@@ -152,31 +123,16 @@ public final class InventoryItemController  implements Serializable {
         items = null;
     }
 
-    public void prepareSelect() {
-        this.prepareModifyControlDisable();
-    }
-
-    public void prepareEdit() {
-        if (current != null) {
-            selectedItemIndex = intValue(current.getId());
-            this.prepareSelectControlDisable();
-        } else {
-            JsfUtil.addErrorMessage(new MessageProvider().getValue("nothingToEdit"));
-        }
-    }
-
     public void prepareAdd() {
-        selectedItemIndex = -1;
         current = new InventoryItem();
-        this.prepareSelectControlDisable();
     }
 
     public void saveSelected() {
-        if (sessionController.getPrivilege().isInventoryEdit()==false){
+        if (sessionController.getPrivilege().isInventoryEdit() == false) {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
-        }            
-        if (selectedItemIndex > 0) {
+        }
+        if (getCurrent().getId() != null && getCurrent().getId() > 0) {
             current.setCategory(currentCat);
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
@@ -187,19 +143,13 @@ public final class InventoryItemController  implements Serializable {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
         }
-        this.prepareSelect();
         recreateModel();
         getItems();
         selectText = "";
-        selectedItemIndex = intValue(current.getId());
-    }
-
-       public void cancelSelect() {
-        this.prepareSelect();
     }
 
     public void delete() {
-        if (sessionController.getPrivilege().isInventoryDelete()==false){
+        if (sessionController.getPrivilege().isInventoryDelete() == false) {
             JsfUtil.addErrorMessage("You are not autherized to delete any content");
             return;
         }
@@ -215,25 +165,7 @@ public final class InventoryItemController  implements Serializable {
         recreateModel();
         getItems();
         selectText = "";
-        selectedItemIndex = -1;
         current = null;
-        this.prepareSelect();
-    }
-
-    public boolean isModifyControlDisable() {
-        return modifyControlDisable;
-    }
-
-    public void setModifyControlDisable(boolean modifyControlDisable) {
-        this.modifyControlDisable = modifyControlDisable;
-    }
-
-    public boolean isSelectControlDisable() {
-        return selectControlDisable;
-    }
-
-    public void setSelectControlDisable(boolean selectControlDisable) {
-        this.selectControlDisable = selectControlDisable;
     }
 
     public String getSelectText() {
@@ -242,17 +174,6 @@ public final class InventoryItemController  implements Serializable {
 
     public void setSelectText(String selectText) {
         this.selectText = selectText;
-        searchItems();
-    }
-
-    public void prepareSelectControlDisable() {
-        selectControlDisable = true;
-        modifyControlDisable = false;
-    }
-
-    public void prepareModifyControlDisable() {
-        selectControlDisable = false;
-        modifyControlDisable = true;
     }
 
     public InventoryItemFacade getEjbFacade() {
@@ -271,11 +192,10 @@ public final class InventoryItemController  implements Serializable {
         this.sessionController = sessionController;
     }
 
-    
-    
     @FacesConverter(forClass = InventoryItem.class)
     public static class InventoryItemControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
@@ -292,11 +212,19 @@ public final class InventoryItemController  implements Serializable {
         }
 
         String getStringKey(java.lang.Long value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param object
+         * @return
+         */
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
