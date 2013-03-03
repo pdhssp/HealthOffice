@@ -157,7 +157,22 @@ public class PurchaseBillController implements Serializable {
             JsfUtil.addErrorMessage("Please enter a rate");
             return;
         }
-        // TODO: Warning - Need to add logic to search and save model
+        getBillItemEntry().getBillItem().getItemUnit().setName(itemSerial);
+        getBillItemEntry().getBillItem().getItemUnit().setPurchaseCostRate(getBillItemEntry().getBillItem().getNetRate());
+        getBillItemEntry().getBillItem().getItemUnit().setPurchaseRate(getBillItemEntry().getBillItem().getNetRate());
+        getBillItemEntry().getBillItem().getItemUnit().setPurchaseCostValue(getBillItemEntry().getBillItem().getNetValue());
+        
+        getBillItemEntry().getBillItem().getItemUnit().setRetailSaleCostRate(getBillItemEntry().getBillItem().getNetValue());
+        getBillItemEntry().getBillItem().getItemUnit().setRetailSaleRate(getBillItemEntry().getBillItem().getNetRate());
+        
+        getBillItemEntry().getBillItem().getItemUnit().setRetailSaleValue(getBillItemEntry().getBillItem().getNetValue());
+        getBillItemEntry().getBillItem().getItemUnit().setRetailSaleCostValue(getBillItemEntry().getBillItem().getNetValue());
+        
+        getBillItemEntry().getBillItem().getItemUnit().setWholesaleCostValue(getBillItemEntry().getBillItem().getNetValue());
+        getBillItemEntry().getBillItem().getItemUnit().setWholesaleCostRate(getBillItemEntry().getBillItem().getNetValue());
+        
+        getBillItemEntry().getBillItem().getItemUnit().setRetailSaleRate(getBillItemEntry().getBillItem().getNetRate());
+        
         addLastBillEntryNumber(getBillItemEntry());
         getBillItemEntrys().add(getBillItemEntry());
         calculateBillValue();
@@ -890,7 +905,7 @@ public class PurchaseBillController implements Serializable {
     }
 
     public String getItemSerial() {
-        if (getBillItemEntry().getBillItem().getItemUnit().getItem() == null) {
+        if (getBillItemEntry().getBillItem().getItemUnit()==null || getBillItemEntry().getBillItem().getItemUnit().getItem() == null) {
             return "";
         }
         if (getToInstitution() == null) {
