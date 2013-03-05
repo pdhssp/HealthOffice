@@ -33,6 +33,19 @@
             </bookmark>
         </file>
         <file>
+            <url>src/java/Labels.properties</url>
+            <bookmark id="2">
+                <name/>
+                <line>274</line>
+                <key/>
+            </bookmark>
+            <bookmark id="3">
+                <name/>
+                <line>275</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>src/java/gov/sp/health/bean/ItemUnitController.java</url>
             <bookmark id="4">
                 <name/>
