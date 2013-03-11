@@ -304,24 +304,82 @@ public class PurchaseBillController implements Serializable {
 //        getBillItemFacade().create(temItem);
 //
 //    }
+    private ItemUnit getExistingItemUnit(Institution exIns, Unit exUnit, Person exPerson, Item exItem, String exSerial, Make exMake, Location exLoc) {
+        ItemUnit myIu;
+        String sql;
+        Long insId;
+        Long unitId;
+        Long perId;
+        Long makeId;
+        Long locId;
+        Long itemId;
+
+        if (exIns == null) {
+            insId = 0L;
+        } else {
+            insId = exIns.getId();
+        }
+        if (exUnit == null) {
+            unitId = 0l;
+        } else {
+            unitId = exUnit.getId();
+        }
+        if (exPerson == null) {
+            perId = 0l;
+        } else {
+            perId = exPerson.getId();
+        }
+        if (exItem == null) {
+            itemId = 0l;
+        } else {
+            itemId = exItem.getId();
+        }
+        if (exMake == null) {
+            makeId = 0l;
+        } else {
+            makeId = exMake.getId();
+        }
+        if (exLoc == null) {
+            locId = 0l;
+        } else {
+            locId = exLoc.getId();
+        }
+        if (exSerial == null) {
+            exSerial = "";
+        }
+        sql = "Select iu from ItemUnit iu where iu.item.id = " + itemId + " and iu.name = '" + exSerial + "' and iu.institution.id = " + insId + " and iu.unit.id = " + unitId + " and iu.person.id = " + perId + " and iu.make.id = " + makeId + " and iu.location.id = " + locId;
+        myIu = getItemUnitFacade().findFirstBySQL(sql);
+        if (myIu == null) {
+            myIu = new ItemUnit();
+            myIu.setInstitution(exIns);
+            myIu.setUnit(exUnit);
+            myIu.setPerson(exPerson);
+            myIu.setItem(exItem);
+            myIu.setMake(exMake);
+            myIu.setName(exSerial);
+            myIu.setLocation(exLoc);
+            myIu.setCreatedAt(Calendar.getInstance().getTime());
+            myIu.setCreater(getSessionController().getLoggedUser());
+            getItemUnitFacade().create(myIu);
+        }
+        return myIu;
+
+    }
+
     private void settleBillItem(BillItemEntry temEntry) {
+
         BillItem temBillItem = temEntry.getBillItem();
         ItemUnit newItemUnit = temBillItem.getItemUnit();
 
-        newItemUnit.setBulkUnit(newItemUnit.getItem().getBulkUnit());
-        newItemUnit.setCreatedAt(Calendar.getInstance().getTime());
-        newItemUnit.setCreater(getSessionController().getLoggedUser());
-        newItemUnit.setInstitution(getToInstitution());
-        newItemUnit.setLocation(getBill().getToLocation());
-        newItemUnit.setLooseUnit(newItemUnit.getItem().getLooseUnit());
-        newItemUnit.setLooseUnitsPerBulkUnit(newItemUnit.getItem().getLooseUnitsPerBulkUnit());
         newItemUnit.setOwner(getBill().getToPerson());
         newItemUnit.setWarrantyExpiary(newItemUnit.getDateOfExpiary());
         newItemUnit.setSupplier(null);
         newItemUnit.setUnit(getBill().getToUnit());
-        newItemUnit.setPerson(getBill().getToPerson());
-        newItemUnit.setQuentity(temBillItem.getQuentity());
+        newItemUnit.setQuentity(newItemUnit.getQuentity() + temBillItem.getQuentity());
 
+
+
+        System.out.println("Saving Bill Item " + temBillItem.getQuentity());
         ItemUnitHistory hxUnit = new ItemUnitHistory();
         ItemUnitHistory hxLoc = new ItemUnitHistory();
         ItemUnitHistory hxIns = new ItemUnitHistory();
@@ -365,7 +423,7 @@ public class PurchaseBillController implements Serializable {
         hxPer.setToIn(Boolean.TRUE);
         hxPer.setToOut(Boolean.FALSE);
 
-        getItemUnitFacade().create(newItemUnit);
+        getItemUnitFacade().edit(newItemUnit);
 
         hxIns.setAfterQty(calculateStock(newItemUnit.getItem(), newItemUnit.getInstitution()));
         hxIns.setItemUnit(newItemUnit);
@@ -382,6 +440,7 @@ public class PurchaseBillController implements Serializable {
         hxPer.setAfterQty(calculateStock(newItemUnit.getItem(), newItemUnit.getPerson()));
         hxPer.setItemUnit(newItemUnit);
         getItemUnitHistoryFacade().create(hxPer);
+
 
 
         temBillItem.setBill(getBill());
@@ -407,7 +466,11 @@ public class PurchaseBillController implements Serializable {
         temBillItem.setPurchaseQuentity(temBillItem.getQuentity());
         temBillItem.setFreeQuentity(0l);
         //
-        getBillItemFacade().create(temBillItem);
+        if (temBillItem.getId() != 0) {
+            getBillItemFacade().edit(temBillItem);
+        } else {
+            getBillItemFacade().create(temBillItem);
+        }
         //
         hxIns.setBillItem(temBillItem);
         hxIns.setHistoryDate(getBill().getBillDate());
@@ -655,7 +718,7 @@ public class PurchaseBillController implements Serializable {
     }
 
     public List<Item> getItems() {
-        items = getItemFacade().findBySQL("SELECT i FROM Item i WHERE i.retired=false AND type(i) = InventoryItem ORDER By i.name");
+        items = getItemFacade().findBySQL("SELECT i FROM Item i WHERE i.retired=false AND (type(i) = InventoryItem or type(i) = ConsumableItem)  ORDER By i.name");
         return items;
     }
 
