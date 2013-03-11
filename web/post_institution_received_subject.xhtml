@@ -52,7 +52,7 @@
 
 
                     
-            <pou:dataTable id="tblItems"   var="demo" value="#{letterController.itemsInsSub}" selection="#{letterController.current}" emptyMessage="#{postLabels.noRecordsFound}">
+            <pou:dataTable id="tblItems"   var="demo" value="#{letterController.itemsInsSub}" selection="#{letterController.current}" emptyMessage="#{postLabels.noRecordsFound}" >
                 <f:facet name="header">
                     <h:outputLabel rendered="#{!(letterController.subject==null)}" value="#{letterController.subject.name} - "/>
                     <h:outputLabel rendered="#{(letterController.subject==null)}" value="#{letterController.toInstitution.name} - "/>
@@ -60,17 +60,17 @@
                         <f:convertDateTime pattern="dd MMMM yyyy"/>
                     </h:outputLabel>
                 </f:facet>
-                <pou:column>
+                <pou:column style="max-width:30px!important; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
-                        #{postLabels.letterDate}
+                        <h:outputLabel value="#{postLabels.letterDate}"  />
                     </f:facet>
                     <h:outputText value="#{demo.lettterDate}" >
-                        <f:convertDateTime pattern="dd MMM yy" />
+                        <f:convertDateTime pattern="dd MM yy" />
                     </h:outputText>  
                 </pou:column>                
 
-                <pou:column>
-                    <f:facet name="header">
+                <pou:column style="max-width:100px!important; text-wrap:normal; padding:1px; margin: 1px; ">
+                    <f:facet name="header" >
                         #{postLabels.from}
                     </f:facet>
                     <h:outputText value="#{demo.fromInstitution.name}" />  <br/>
@@ -78,15 +78,15 @@
                 </pou:column>  
 
 
-                <pou:column>
+                <pou:column style="max-width:20px!important; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
                         #{postLabels.registered}
                     </f:facet>
-                    <h:outputText value="#{ (demo.registered) ? 'Regitered' : 'Normal' }"   /><br/>
+                    <h:outputText value="#{ (demo.registered) ? 'Reg' : 'N' }"   /><br/>
                     <h:outputText  rendered="#{demo.registered}"  value="#{demo.code}"/>                    
                 </pou:column>
 
-                <pou:column>
+                <pou:column style="max-width:70px!important; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
                         #{postLabels.number}
                     </f:facet>
@@ -94,21 +94,21 @@
                 </pou:column>
 
 
-                <pou:column>
+                <pou:column style="max-width:200px!important; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
                         #{postLabels.topic}
                     </f:facet>
                     <h:outputText value="#{demo.description}" />  
                 </pou:column>
 
-                <pou:column>
+                <pou:column style="max-width:30px; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
                         #{postLabels.assignedTo}
                     </f:facet>
                     <h:outputText value="#{demo.toPerson.givenName}" />  
                 </pou:column>  
 
-                <pou:column >
+                <pou:column style="max-width:30px; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
                         #{postLabels.signature}
                     </f:facet>
@@ -127,16 +127,16 @@
                         <f:convertDateTime pattern="dd MMMM yyyy"/>
                     </h:outputLabel>
                 </f:facet>
-                <pou:column>
+                <pou:column style="max-width:70px; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
                         #{postLabels.letterDate}
                     </f:facet>
                     <h:outputText value="#{demoP.lettterDate}" >
-                        <f:convertDateTime pattern="dd MMM yy" />
+                        <f:convertDateTime pattern="dd MM yy" />
                     </h:outputText>  
                 </pou:column>                
 
-                <pou:column>
+                <pou:column style="max-width:150px; text-wrap:normal; padding:1px; margin: 1px; ">
                     <f:facet name="header">
                         #{postLabels.from}
                     </f:facet>
@@ -145,7 +145,7 @@
                 </pou:column>  
 
 
-                <pou:column>
+                <pou:column style="max-width:50px; text-wrap:normal; padding:5px; margin: 5px; ">
                     <f:facet name="header">
                         #{postLabels.registered}
                     </f:facet>

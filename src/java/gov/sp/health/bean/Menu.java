@@ -211,8 +211,13 @@ public class Menu implements Serializable {
             model.addSubmenu(librarySubmenu());
         }
 
-        model.addSubmenu(transferSubmenu());
+//        model.addSubmenu(transferSubmenu());
 
+        if (sessionController.privilege.isCaderView() ) {
+            model.addSubmenu(humanSubmenu());
+        }
+
+        
         if (sessionController.privilege.isBmeView()) {
             model.addSubmenu(biomedSubmenu());
         }
@@ -237,7 +242,7 @@ public class Menu implements Serializable {
 
         item = new MenuItem();
         item.setValue(getLabel("institutions"));
-        item.setUrl("health_institution.xhtml");
+        item.setUrl("institutions.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
@@ -617,8 +622,13 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
+        item.setValue(getLabel("OldInstitutionTypes"));
+        item.setUrl("institution_type_old.xhtml");
+        submenu.getChildren().add(item);
+
+        item = new MenuItem();
         item.setValue(getLabel("Institutions"));
-        item.setUrl("institutions.xhtml");
+        item.setUrl("health_institution.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
@@ -627,7 +637,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Designations"));
+        item.setValue(getLabel("DesignationLevel"));
         item.setUrl("designation_level.xhtml");
         submenu.getChildren().add(item);
 
@@ -975,13 +985,13 @@ public class Menu implements Serializable {
 //        submenu.getChildren().add(editMenu);
 //
 
-        
+
         item = new MenuItem();
         item.setValue(getLabel("reports"));
         item.setUrl("inventory_reports.xhtml");
         submenu.getChildren().add(item);
 
-        
+
         item = new MenuItem();
         item.setValue(getLabel("purchase"));
         item.setUrl("inventory_purchase.xhtml");
@@ -1013,7 +1023,7 @@ public class Menu implements Serializable {
         item.setUrl("inventory_adjust.xhtml");
         submenu.getChildren().add(item);
 
-        
+
         item = new MenuItem();
         item.setValue(getLabel("edit"));
         item.setUrl("inventory_edit.xhtml");

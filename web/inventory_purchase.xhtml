@@ -27,6 +27,10 @@
 
                             <pou:panelGrid columns="8" >
 
+                                <pou:autoComplete value="#{purchaseBillController.billItemEntry.billItem.itemUnit.item}" var="di" itemLabel="#{di.name}" itemValue="#{di}" completeMethod="#{purchaseBillController.search}">
+                                </pou:autoComplete>
+
+
                                 <h:outputLabel value="#{labels.item}" />
                                 <h:selectOneListbox id="lstItem" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.item}"  size="1">
                                     <f:selectItem  itemLabel="Select an Item" />
