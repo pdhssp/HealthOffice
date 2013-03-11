@@ -28,5 +28,8 @@ a:link:hover, a:visited:hover  {
   text-decoration : underline;
 }
 
+.letterTbl td:nth-child(1){
+    width: 20px;
+}
 
 
