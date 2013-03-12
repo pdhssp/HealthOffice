@@ -25,7 +25,7 @@
                         <pou:panel id="gpItem" header="#{labels.itemDetails}" rendered="#{purchaseBillController.newBill}" >
 
 
-                            <pou:panelGrid columns="6" >
+                            <pou:panelGrid columns="8" >
 
                                 <pou:autoComplete value="#{purchaseBillController.billItemEntry.billItem.itemUnit.item}" var="di" itemLabel="#{di.name}" itemValue="#{di}" completeMethod="#{purchaseBillController.search}">
                                 </pou:autoComplete>
@@ -36,6 +36,7 @@
                                     <f:selectItem  itemLabel="Select an Item" />
                                     <f:selectItems value="#{purchaseBillController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
                                     </f:selectItems>
+                                    <f:ajax event="change" render="txtItemNo" execute="lstItem" />
                                 </h:selectOneListbox>
 
                                 <h:outputLabel value="#{labels.make}" />
@@ -47,17 +48,23 @@
                                 <h:outputLabel value="#{labels.modal}" ></h:outputLabel>
                                 <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.modalNo}" ></h:inputText>
 
-                                <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
-                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
-
-                                <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
+                                  <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
                                 <pou:calendar value="#{purchaseBillController.billItemEntry.billItem.itemUnit.dateOfExpiary}"  ></pou:calendar>
 
+                                
+                                
+                              
                                 <h:outputLabel value="#{labels.quentity}"/>
                                 <h:inputText id="txtQty" value="#{purchaseBillController.billItemEntry.billItem.quentity}">
                                     <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
                                 </h:inputText>
 
+                                <h:outputLabel value="#{labels.freeQuentity}"/>
+                                <h:inputText id="txtFreeQty" value="#{purchaseBillController.billItemEntry.billItem.freeQuentity}">
+                                    <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
+                                </h:inputText>
+                                
+                                
                                 <h:outputLabel value="#{labels.rate}"/>
                                 <h:inputText id="txtRate" value="#{purchaseBillController.billItemEntry.billItem.netRate}">
                                     <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
@@ -68,6 +75,15 @@
                                 <h:inputText disabled="true" id="txtValue" value="#{purchaseBillController.billItemEntry.billItem.netValue}">
                                 </h:inputText>
 
+                                
+                                <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
+                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
+
+                                
+                                <h:outputLabel value="#{labels.itemNo}"/>
+                                <h:inputText id="txtItemNo" value="#{purchaseBillController.itemSerial}">
+                                </h:inputText>
+                                
                                 <h:commandButton id="btnAdd" value="#{labels.add}" action="#{purchaseBillController.addItemToList}">
                                     <f:ajax execute="gpItem btnAdd" render="gpItem gpList gpBillDetails"/>
                                 </h:commandButton>
@@ -98,7 +114,9 @@
                                 </pou:column>
 
                                 <pou:column headerText="#{labels.expiry}" >
-                                    #{temBillItem.billItem.itemUnit.dateOfExpiary}
+                                    <h:outputLabel value="#{temBillItem.billItem.itemUnit.dateOfExpiary}" >
+                                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                                    </h:outputLabel>
                                 </pou:column>
 
                                 <pou:column headerText="#{labels.rate}" >
