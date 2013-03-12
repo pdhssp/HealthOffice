@@ -68,6 +68,9 @@
                                 <h:outputText  value="#{postLabels.code}" ></h:outputText>
                                 <h:inputText value="#{healthInstitutionController.current.code}"  ></h:inputText>
 
+                                
+       
+                                
                                 <h:outputText  value="#{postLabels.address}" ></h:outputText>
                                 <h:inputText  value="#{healthInstitutionController.current.address}"  ></h:inputText>
 
@@ -95,8 +98,25 @@
                                     <f:selectItems value="#{institutionTypeController.items}" />
                                 </h:selectOneListbox>
 
+                              <h:outputText id="lblMoh" value="#{labels.mohArea}" ></h:outputText>
+                                <h:selectOneListbox id="cmbMoh" value="#{healthInstitutionController.current.mohArea}"  size="1">
+                                    <f:selectItem itemLabel="Select MOA Area"/>
+                                    <f:selectItems value="#{mohController.items}" var="moh" itemLabel="#{moh.name}" itemValue="#{moh}" />
+                                    <f:ajax event="click" execute="cmbMoh" render="lblMohDpdhs lblMohProvince" />
+                                </h:selectOneListbox>
 
-
+                              <h:outputText  value="#{labels.dpdhsArea}" ></h:outputText>
+                              <h:outputText id="lblMohDpdhs" value="#{healthInstitutionController.current.mohArea.superArea.name}" ></h:outputText>
+                              
+                              <h:outputText  value="#{labels.province}" ></h:outputText>
+                              <h:outputText id="lblMohProvince" value="#{healthInstitutionController.current.mohArea.superArea.superArea.name}" ></h:outputText>
+                              
+                              <h:outputText id="lblOldCat" value="#{labels.oldCategory}" ></h:outputText>
+                              <h:selectOneListbox id="cmbOldCat" value="#{healthInstitutionController.current.oldCategory}"  size="1">
+                                    <f:selectItem itemLabel="Select Old Institution Type"/>
+                                    <f:selectItems value="#{oldInstitutionCategoryController.items}" />
+                                </h:selectOneListbox>
+                              
 
                             </h:panelGrid>
                             <h:panelGrid id="gpDetailButtons" columns="2">

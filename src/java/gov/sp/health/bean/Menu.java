@@ -415,6 +415,12 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
+        item.setValue(getLabel("OldInstitutionTypes"));
+        item.setUrl("old_institution_category.xhtml");
+        submenu.getChildren().add(item);
+        
+        
+        item = new MenuItem();
         item.setValue(getLabel("Institutions"));
         item.setUrl("institutions.xhtml");
         submenu.getChildren().add(item);
@@ -425,7 +431,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Designations"));
+        item.setValue(getLabel("DesignationLevels"));
         item.setUrl("designation_level.xhtml");
         submenu.getChildren().add(item);
 
@@ -623,7 +629,7 @@ public class Menu implements Serializable {
 
         item = new MenuItem();
         item.setValue(getLabel("OldInstitutionTypes"));
-        item.setUrl("institution_type_old.xhtml");
+        item.setUrl("old_institution_category.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();

@@ -54,6 +54,7 @@ public class Institution implements Serializable {
     @ManyToOne
     Province province;
     
+    
        
     boolean outSide;
     
@@ -65,9 +66,43 @@ public class Institution implements Serializable {
     String email;
     String website;
     String comments;
+    @ManyToOne
+    Area mohArea;
+    @ManyToOne
+    Area dpdhsArea;
+    @ManyToOne
+    Category oldCategory;
     
+    
+    @ManyToOne
     Country country;
 
+    public Area getMohArea() {
+        return mohArea;
+    }
+
+    public void setMohArea(Area mohArea) {
+        this.mohArea = mohArea;
+    }
+
+    public Area getDpdhsArea() {
+        return dpdhsArea;
+    }
+
+    public void setDpdhsArea(Area dpdhsArea) {
+        this.dpdhsArea = dpdhsArea;
+    }
+
+    public Category getOldCategory() {
+        return oldCategory;
+    }
+
+    public void setOldCategory(Category oldCategory) {
+        this.oldCategory = oldCategory;
+    }
+
+    
+    
     public Country getCountry() {
         return country;
     }
