@@ -25,7 +25,7 @@
 
                             <h:panelGrid id="gpSelectText" columns="2" >
 
-                                <h:outputText id="lblSelect" value="#{labels.HealthInstitutions}" >
+                                <h:outputText id="lblSelect" value="#{labels.healthInstitutions}" >
                                 </h:outputText>
 
                                 <h:inputText id="txtSelect" value="#{healthInstitutionController.selectText}"  style="min-width: 200px" >
@@ -65,6 +65,14 @@
                                 <h:outputText id="lblName" value="#{labels.healthInstitution}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{healthInstitutionController.current.name}"  ></h:inputText>
 
+                                <h:outputText id="lblsName" value="#{labels.healthInstitutionS}" ></h:outputText>
+                                <h:inputText id="txtsName" value="#{healthInstitutionController.current.sname}"  ></h:inputText>
+
+                                <h:outputText id="lbltName" value="#{labels.healthInstitutionT}" ></h:outputText>
+                                <h:inputText id="txttName" value="#{healthInstitutionController.current.tname}"  ></h:inputText>
+
+                                
+                                
                                 <h:outputText  value="#{postLabels.code}" ></h:outputText>
                                 <h:inputText value="#{healthInstitutionController.current.code}"  ></h:inputText>
 

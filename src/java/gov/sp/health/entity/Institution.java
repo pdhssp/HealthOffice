@@ -76,6 +76,24 @@ public class Institution implements Serializable {
     
     @ManyToOne
     Country country;
+    private String sname;
+    private String tname;
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
+    public String getTname() {
+        return tname;
+    }
+
+    public void setTname(String tname) {
+        this.tname = tname;
+    }
 
     public Area getMohArea() {
         return mohArea;
