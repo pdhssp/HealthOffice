@@ -37,4 +37,5 @@
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="dsHiLap2" object-type="user" pool-name="derby_net_ho1_ho1Pool"/>
+    <jdbc-resource enabled="true" jndi-name="dsSrv2013Mar" object-type="user" pool-name="connectionPoolHo"/>
 </resources>

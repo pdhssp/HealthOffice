@@ -14,6 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 public class Area implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +38,24 @@ public class Area implements Serializable {
     //
     @ManyToOne
     Area superArea;
+    private String sname;
+    private String tname;
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
+    public String getTname() {
+        return tname;
+    }
+
+    public void setTname(String tname) {
+        this.tname = tname;
+    }
 
     public String getCode() {
         return code;
@@ -117,10 +136,7 @@ public class Area implements Serializable {
     public void setSuperArea(Area superArea) {
         this.superArea = superArea;
     }
-    
-    
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -152,5 +168,4 @@ public class Area implements Serializable {
     public String toString() {
         return "gov.sp.health.entity.Area[ id=" + id + " ]";
     }
-    
 }
