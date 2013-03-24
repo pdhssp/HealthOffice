@@ -99,8 +99,8 @@ public class MsPurchaseBillController implements Serializable {
      */
     DataModel<Item> items;
     //
-    DataModel<BillItemEntry> billItemEntrys;
-    List<BillItemEntry> lstBillItemEntrys;
+    DataModel<BillItem> billItemEntrys;
+    List<BillItem> lstBillItems;
     //
     DataModel<Institution> fromInstitutions;
     DataModel<Unit> fromUnits;
@@ -123,8 +123,8 @@ public class MsPurchaseBillController implements Serializable {
      *
      */
     Bill bill;
-    BillItemEntry billItemEntry;
-    BillItemEntry editBillItemEntry;
+    BillItem billItemEntry;
+    BillItem editBillItem;
     //Controllers
     //
 //    Institution fromInstitution;
@@ -182,8 +182,6 @@ public class MsPurchaseBillController implements Serializable {
         this.lstBills = lstBills;
     }
 
-    
-    
     public Vmp getSelectedVmp() {
         return selectedVmp;
     }
@@ -229,9 +227,9 @@ public class MsPurchaseBillController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        // TODO: Warning - Need to add logic to search and save model        
+        // TODO: Warning - Need to add logic to search and save model
         addLastBillEntryNumber(billItemEntry);
-        getLstBillItemEntrys().add(billItemEntry);
+        getLstBillItems().add(billItemEntry);
         calculateBillValue();
         clearEntry();
 
@@ -239,19 +237,19 @@ public class MsPurchaseBillController implements Serializable {
 
     private void orderBillItemEntries() {
         long l = 1l;
-        for (BillItemEntry entry : lstBillItemEntrys) {
+        for (BillItem entry : lstBillItems) {
             entry.setId(l);
             l++;
         }
     }
 
     public void removeItemFromList() {
-        if (editBillItemEntry == null) {
+        if (editBillItem == null) {
             JsfUtil.addErrorMessage("Nothing to Delete. Please select one");
         }
-        getLstBillItemEntrys().remove(editBillItemEntry);
+        getLstBillItems().remove(editBillItem);
         orderBillItemEntries();
-        editBillItemEntry = null;
+        editBillItem = null;
         JsfUtil.addSuccessMessage("Removed From List");
     }
 
@@ -271,17 +269,15 @@ public class MsPurchaseBillController implements Serializable {
         }
     }
 
-    
-       
     private void clearEntry() {
-        billItemEntry = new BillItemEntry();
+        billItemEntry = new BillItem();
         billItemEntry = null;
-        billItemEntry = getBillItemEntry();
+        billItemEntry = getBillItem();
     }
 
     private void clearBill() {
         bill = new Bill();
-        lstBillItemEntrys = new ArrayList<BillItemEntry>();
+        lstBillItems = new ArrayList<BillItem>();
     }
 
     public Double calculateStock(Item item) {
@@ -344,12 +340,12 @@ public class MsPurchaseBillController implements Serializable {
     }
 
     private void saveNewBillItems() {
-        for (BillItemEntry temEntry : lstBillItemEntrys) {
+        for (BillItem temEntry : lstBillItems) {
             settleBillItem(temEntry);
         }
     }
 
-//    private void saveNewBillItem(BillItemEntry temEntry) {
+//    private void saveNewBillItem(BillItem temEntry) {
 //        BillItem temItem = temEntry.getBillItem();
 //        temItem.setBill(getBill());
 //        temItem.setCreatedAt(Calendar.getInstance().getTime());
@@ -377,12 +373,13 @@ public class MsPurchaseBillController implements Serializable {
 //        getBillItemFacade().create(temItem);
 //
 //    }
-    private void settleBillItem(BillItemEntry temEntry) {
-        BillItem temBillItem = temEntry.getBillItem();
+    private void settleBillItem(BillItem temEntry) {
+        BillItem temBillItem = temEntry;
 
 
 
-        ItemUnit newItemUnit = temBillItem.getItemUnit();
+        ItemUnit newItemUnit = new ItemUnit();
+        //TODO : Create Logic
 
         Amp billAmp;
         Ampp billAmpp;
@@ -402,10 +399,10 @@ public class MsPurchaseBillController implements Serializable {
             newItemUnit.setBulkUnit(billAmpp.getItemUnit());
             newItemUnit.setLooseUnit(billAmp.getLooseUnit());
             newItemUnit.setLooseUnitsPerBulkUnit(billAmpp.getItemQuantity());
-        }else{
-            ampQty=0.0;
-            billAmp=null;
-            billAmpp=null;
+        } else {
+            ampQty = 0.0;
+            billAmp = null;
+            billAmpp = null;
         }
 
 
@@ -428,7 +425,7 @@ public class MsPurchaseBillController implements Serializable {
         ItemUnitHistory hxLoc = new ItemUnitHistory();
         ItemUnitHistory hxIns = new ItemUnitHistory();
         ItemUnitHistory hxPer = new ItemUnitHistory();
-        
+
         hxIns.setBeforeQty(calculateStock(billAmp, newItemUnit.getInstitution()));
         hxIns.setCreatedAt(Calendar.getInstance().getTime());
         hxIns.setCreater(sessionController.loggedUser);
@@ -535,17 +532,17 @@ public class MsPurchaseBillController implements Serializable {
     }
 
     public void calculateItemValue() {
-        getBillItemEntry().getBillItem().setNetValue(getBillItemEntry().getBillItem().getNetRate() * getBillItemEntry().getBillItem().getQuentity());
+        getBillItem().setNetValue(getBillItem().getNetRate() * getBillItem().getQuentity());
     }
 
     public void calculateBillValue() {
         double netBillValue = 0l;
         double grossBillValue = 0l;
         double discountBillValue = 0l;
-        for (BillItemEntry temEntry : getBillItemEntrys()) {
-            netBillValue += temEntry.getBillItem().getNetValue();
-            grossBillValue += temEntry.getBillItem().getGrossValue();
-            discountBillValue += temEntry.getBillItem().getDiscountValue();
+        for (BillItem temEntry : getBillItems()) {
+            netBillValue += temEntry.getNetValue();
+            grossBillValue += temEntry.getGrossValue();
+            discountBillValue += temEntry.getDiscountValue();
         }
         getBill().setNetValue(netBillValue - getBill().getDiscountValue());
         getBill().setGrossValue(netBillValue);
@@ -560,41 +557,39 @@ public class MsPurchaseBillController implements Serializable {
     /**
      * Getters and Setters
      */
-    private void addLastBillEntryNumber(BillItemEntry entry) {
-        entry.setId((long) getLstBillItemEntrys().size() + 1);
+    private void addLastBillEntryNumber(BillItem entry) {
+        entry.setId((long) getLstBillItems().size() + 1);
     }
 
-    public BillItemEntry getBillItemEntry() {
+    public BillItem getBillItem() {
         if (billItemEntry == null) {
-            billItemEntry = new BillItemEntry();
-            billItemEntry.setBillItem(new BillItem());
-            billItemEntry.getBillItem().setItemUnit(new ItemUnit());
+            billItemEntry = new BillItem();
             addLastBillEntryNumber(billItemEntry);
         }
         return billItemEntry;
     }
 
-    public void setBillItemEntry(BillItemEntry billItemEntry) {
+    public void setBillItem(BillItem billItemEntry) {
         this.billItemEntry = billItemEntry;
     }
 
-    public DataModel<BillItemEntry> getBillItemEntrys() {
-        return new ListDataModel<BillItemEntry>(getLstBillItemEntrys());
+    public DataModel<BillItem> getBillItems() {
+        return new ListDataModel<BillItem>(getLstBillItems());
     }
 
-    public void setBillItemEntrys(DataModel<BillItemEntry> billItemEntrys) {
+    public void setBillItems(DataModel<BillItem> billItemEntrys) {
         this.billItemEntrys = billItemEntrys;
     }
 
-    public List<BillItemEntry> getLstBillItemEntrys() {
-        if (lstBillItemEntrys == null) {
-            lstBillItemEntrys = new ArrayList<BillItemEntry>();
+    public List<BillItem> getLstBillItems() {
+        if (lstBillItems == null) {
+            lstBillItems = new ArrayList<BillItem>();
         }
-        return lstBillItemEntrys;
+        return lstBillItems;
     }
 
-    public void setLstBillItemEntrys(List<BillItemEntry> lstBillItemEntrys) {
-        this.lstBillItemEntrys = lstBillItemEntrys;
+    public void setLstBillItems(List<BillItem> lstBillItems) {
+        this.lstBillItems = lstBillItems;
     }
 
     public void prepareForNewBill() {
@@ -612,10 +607,9 @@ public class MsPurchaseBillController implements Serializable {
         System.out.println(temLstBillItems.toString());
         long i = 1;
         for (BillItem bi : temLstBillItems) {
-            BillItemEntry bie = new BillItemEntry();
-            bie.setBillItem(bi);
-            bie.setId(i);
-            getLstBillItemEntrys().add(bie);
+            BillItem bie = new BillItem();
+            bie.setBillSerial(i);
+            getLstBillItems().add(bie);
             i++;
         }
         getTransferBean().setBill(null);
@@ -669,12 +663,12 @@ public class MsPurchaseBillController implements Serializable {
         this.sessionController = sessionController;
     }
 
-    public BillItemEntry getEditBillItemEntry() {
-        return editBillItemEntry;
+    public BillItem getEditBillItem() {
+        return editBillItem;
     }
 
-    public void setEditBillItemEntry(BillItemEntry editBillItemEntry) {
-        this.editBillItemEntry = editBillItemEntry;
+    public void setEditBillItem(BillItem editBillItem) {
+        this.editBillItem = editBillItem;
     }
 
     public InstitutionFacade getInstitutionFacade() {

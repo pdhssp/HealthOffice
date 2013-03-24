@@ -40,7 +40,7 @@
 
                                 <h:selectOneListbox id="lstSelect"  size="10" value="#{inventoryItemController.current}" style="min-width: 223px">
                                     <f:selectItems value="#{inventoryItemController.searchItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
-                                    <f:ajax render="gpDetail" execute="lstSelect" >                                
+                                    <f:ajax render="gpDetail" execute="lstSelect" >
                                     </f:ajax>
                                 </h:selectOneListbox>
 
@@ -48,7 +48,7 @@
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
                                 <h:commandButton id="btnAdd" value="#{labels.add}" action="#{inventoryItemController.prepareAdd()}" styleClass="buttons" >
-                                    <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus" execute="" >                                
+                                    <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus" execute="" >
                                     </f:ajax>
                                 </h:commandButton>
                                 <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
@@ -63,9 +63,15 @@
                             <h:panelGrid id="gpDetailText" columns="2">
                                 <h:outputText id="lblName" value="#{postLabels.inventoryItems}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{inventoryItemController.current.name}"  ></h:inputText>
+
                                 <h:outputText id="lblPrefix" value="#{postLabels.itemPrefix}" ></h:outputText>
                                 <h:inputText id="txtPrefix" value="#{inventoryItemController.current.itemPrefix}"  ></h:inputText>
-                                
+
+                                <h:outputText id="lblCode" value="#{postLabels.code}" ></h:outputText>
+                                <h:inputText id="txtCode" value="#{inventoryItemController.current.code}"  ></h:inputText>
+
+
+
                                 <h:outputText id="lblCatName" value="#{postLabels.category}" ></h:outputText>
                                 <h:selectOneListbox id="cmbCat" value="#{inventoryItemController.currentCat}"  >
                                     <f:selectItems value="#{inventoryItemCategoryController.items}" var="iCat" itemValue="#{iCat}" itemLabel="#{iCat.name}"></f:selectItems>
@@ -84,7 +90,7 @@
                     </p:panel>
                 </h:panelGrid>
             </p:panel>
-        </h:form>        
+        </h:form>
 
 
 
