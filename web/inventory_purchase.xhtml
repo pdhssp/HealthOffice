@@ -29,40 +29,40 @@
 
 
                                 <h:outputLabel value="#{labels.item}" />
-                                <h:selectOneListbox id="lstItem" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.item}"  size="1">
+                                <h:selectOneListbox id="lstItem" value="#{purchaseBillController.billItem.item}"  size="1">
                                     <f:selectItem  itemLabel="Select an Item" />
                                     <f:selectItems value="#{purchaseBillController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
                                     </f:selectItems>
                                 </h:selectOneListbox>
 
                                 <h:outputLabel value="#{labels.make}" />
-                                <h:selectOneListbox id="lstMake" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.make}"  size="1">
+                                <h:selectOneListbox id="lstMake" value="#{purchaseBillController.billItem.make}"  size="1">
                                     <f:selectItem itemLabel="Select a make"/>
                                     <f:selectItems value="#{purchaseBillController.makes}" var="myMake" itemLabel="#{myMake.name}" itemValue="#{myMake}"/>
                                 </h:selectOneListbox>
 
                                 <h:outputLabel value="#{labels.modal}" ></h:outputLabel>
-                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.modalNo}" ></h:inputText>
+                                <h:inputText value="#{purchaseBillController.billItem.modalNo}" ></h:inputText>
 
                                 <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
-                                <h:inputText value="#{purchaseBillController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
+                                <h:inputText value="#{purchaseBillController.billItem.serialName}" ></h:inputText>
 
                                 <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
-                                <pou:calendar value="#{purchaseBillController.billItemEntry.billItem.itemUnit.dateOfExpiary}"  ></pou:calendar>
+                                <pou:calendar value="#{purchaseBillController.billItem.dateOfExpiary}"  ></pou:calendar>
 
                                 <h:outputLabel value="#{labels.quentity}"/>
-                                <h:inputText id="txtQty" value="#{purchaseBillController.billItemEntry.billItem.quentity}">
+                                <h:inputText id="txtQty" value="#{purchaseBillController.billItem.quentity}">
                                     <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
                                 </h:inputText>
 
                                 <h:outputLabel value="#{labels.rate}"/>
-                                <h:inputText id="txtRate" value="#{purchaseBillController.billItemEntry.billItem.netRate}">
+                                <h:inputText id="txtRate" value="#{purchaseBillController.billItem.netRate}">
                                     <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{purchaseBillController.calculateItemValue}" />
                                 </h:inputText>
 
 
                                 <h:outputLabel value="#{labels.value}"/>
-                                <h:inputText disabled="true" id="txtValue" value="#{purchaseBillController.billItemEntry.billItem.netValue}">
+                                <h:inputText disabled="true" id="txtValue" value="#{purchaseBillController.billItem.netValue}">
                                 </h:inputText>
 
                                 <h:commandButton id="btnAdd" value="#{labels.add}" action="#{purchaseBillController.addItemToList}">
@@ -84,33 +84,58 @@
 
                         <pou:panel id="gpList" header="#{labels.itemList}">
 
-                            <pou:dataTable emptyMessage="#{postLabels.noRecordsFoundIn}" value="#{purchaseBillController.billItemEntrys}" var="temBillItem" selection="#{purchaseBillController.editBillItemEntry}" selectionMode="single" rowKey="#{temBillItem.id}" >
+                            <h:dataTable value="#{purchaseBillController.billItems}" var="temBillItem"  >
 
-                                <pou:column headerText="#{labels.item}" >
-                                    #{temBillItem.billItem.itemUnit.item.name}
-                                </pou:column>
+                                <h:column  >
+                                    <f:facet name="header">
+                                        #{labels.number}
+                                    </f:facet>
+                                    #{temBillItem.billSerial}
+                                </h:column>
 
-                                <pou:column headerText="#{labels.make}" >
-                                    #{temBillItem.billItem.itemUnit.make.name}
-                                </pou:column>
+                                <h:column  >
+                                    <f:facet name="header">
+                                        #{labels.item}
+                                    </f:facet>
+                                    #{temBillItem.item.name}
+                                </h:column>
 
-                                <pou:column headerText="#{labels.expiry}" >
-                                    #{temBillItem.billItem.itemUnit.dateOfExpiary}
-                                </pou:column>
+                                <h:column  >
+                                    <f:facet name="header">
+                                        #{labels.make}
+                                    </f:facet>
+                                    #{temBillItem.make.name}
+                                </h:column>
 
-                                <pou:column headerText="#{labels.rate}" >
-                                    #{temBillItem.billItem.netRate}
-                                </pou:column>
+                                <h:column  >
+                                    <f:facet name="header">
+                                        #{labels.expiry}
+                                    </f:facet>
+                                    #{temBillItem.dateOfExpiary}
+                                </h:column>
 
-                                <pou:column headerText="#{labels.quentity}" >
-                                    #{temBillItem.billItem.quentity}
-                                </pou:column>
+                                <h:column  >
+                                    <f:facet name="header">
+                                        #{labels.rate}
+                                    </f:facet>
+                                    #{temBillItem.netRate}
+                                </h:column>
 
-                                <pou:column headerText="#{labels.value}" >
-                                    #{temBillItem.billItem.netValue}
-                                </pou:column>
+                                <h:column  >
+                                    <f:facet name="header">
+                                        #{labels.quentity}
+                                    </f:facet>
+                                    #{temBillItem.quentity}
+                                </h:column>
 
-                            </pou:dataTable>
+                                <h:column >
+                                    <f:facet name="header">
+                                        #{labels.value}
+                                    </f:facet>
+                                    #{temBillItem.netValue}
+                                </h:column>
+
+                            </h:dataTable>
 
 
 
