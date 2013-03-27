@@ -39,4 +39,5 @@
     <jdbc-resource enabled="true" jndi-name="dsHiLap2" object-type="user" pool-name="derby_net_ho1_ho1Pool"/>
     <jdbc-resource enabled="true" jndi-name="dsSrv2013Mar" object-type="user" pool-name="connectionPoolHo"/>
     <jdbc-resource enabled="true" jndi-name="dsBuddyLaptopMarch" object-type="user" pool-name="derby_net_ho_hoPool"/>
+    <jdbc-resource enabled="true" jndi-name="dsBuddyLaptopMarch2" object-type="user" pool-name="connectionPoolHo"/>
 </resources>
