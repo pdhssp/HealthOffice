@@ -313,6 +313,14 @@ public final class UnitController implements Serializable {
     @FacesConverter(forClass = Unit.class)
     public static class UnitControllerConverter implements Converter {
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param value
+         * @return
+         */
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
@@ -324,7 +332,11 @@ public final class UnitController implements Serializable {
 
         java.lang.Long getKey(String value) {
             java.lang.Long key;
-            key = Long.valueOf(value);
+            try {
+                key = Long.valueOf(value);
+            } catch (Exception e) {
+                key = 0l;
+            }
             return key;
         }
 

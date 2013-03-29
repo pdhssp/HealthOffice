@@ -253,3 +253,10 @@ html, body{
 }
 
 .commandButtonImage { height: 30px; width: 30px; background: lightblue; border-style: outset; border-width: 2px; float: left; padding: 6px 8px; margin: 0px; }
+
+
+.indexCol{
+    width: 300%;
+    min-width: 300%!important;
+    background-image:url('resources\image\2columnblog-000-Page-1.jpg');}
+   

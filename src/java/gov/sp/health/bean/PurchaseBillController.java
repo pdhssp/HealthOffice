@@ -27,8 +27,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -82,34 +80,32 @@ public class PurchaseBillController implements Serializable {
     /**
      * Collections
      */
-    private DataModel<Item> items;
-    private DataModel<Make> makes;
+    private List<Item> items;
+    private List<Make> makes;
     private List<Modal> modals;
     //
-    private DataModel<BillItemEntry> billItemEntrys;
-    private List<BillItemEntry> lstBillItemEntrys;
+    private List<BillItem> billItems;
     //
-    private DataModel<Institution> fromInstitutions;
-    private DataModel<Unit> fromUnits;
-    private DataModel<Location> fromLocations;
-    private DataModel<Person> fromPersons;
+    private List<Institution> fromInstitutions;
     //
-    private DataModel<Institution> toInstitutions;
-    private DataModel<Unit> toUnits;
-    private DataModel<Location> toLocations;
-    private DataModel<Person> toPersons;
+    private List<Institution> toInstitutions;
+    private List<Unit> toUnits;
+    private List<Location> toLocations;
+    private List<Person> toPersons;
     //
-    private DataModel<Country> countries;
-    private DataModel<Supplier> suppliers;
-    private DataModel<Manufacturer> manufacturers;
+    private List<Country> countries;
+    private List<Supplier> suppliers;
+    private List<Manufacturer> manufacturers;
     //
     /*
      * Current Objects
      *
      */
     private Bill bill;
-    private BillItemEntry billItemEntry;
-    private BillItemEntry editBillItemEntry;
+    private BillItem billItem;
+    private BillItem editBillItem;
+    private String itemSerial;
+    private Institution toInstitution;
     //Controllers
     //
 //    Institution fromInstitution;
@@ -131,6 +127,7 @@ public class PurchaseBillController implements Serializable {
      *
      * Methods
      *
+     * @return
      */
     public List<Modal> getModals() {
         if (modals == null) {
@@ -139,44 +136,76 @@ public class PurchaseBillController implements Serializable {
         return modals;
     }
 
+    /**
+     *
+     * @param modals
+     */
     public void setModals(List<Modal> modals) {
         this.modals = modals;
     }
 
+    /**
+     *
+     */
     public void addItemToList() {
         orderBillItemEntries();
-        if (getBillItemEntry() == null) {
+        if (getBillItem() == null) {
             JsfUtil.addErrorMessage("Hothing to add");
             return;
         }
+        if (getBillItem().getItem() == null) {
+            JsfUtil.addErrorMessage("Please select an item");
+            return;
+        }
+        if (getBillItem().getQuentity() == 0) {
+            JsfUtil.addErrorMessage("Please enter a quantity");
+            return;
+        }
+        if (getBillItem().getNetRate() == 0) {
+            JsfUtil.addErrorMessage("Please enter a rate");
+            return;
+        }
         // TODO: Warning - Need to add logic to search and save model
-        addLastBillEntryNumber(getBillItemEntry());
-        getLstBillItemEntrys().add(getBillItemEntry());
+        System.out.println("going to ad last bill number");
+        addLastBillEntryNumber(getBillItem());
+        System.out.println("before adding bill items. Size is " + getBillItems().size());
+
+        getBillItems().add(getBillItem());
+
+        System.out.println("before adding bill items. Size is " + getBillItems().size());
         calculateBillValue();
+
         clearEntry();
 
     }
 
     private void orderBillItemEntries() {
         long l = 1l;
-        for (BillItemEntry entry : getLstBillItemEntrys()) {
-            entry.setId(l);
+        for (BillItem entry : getBillItems()) {
+            entry.setBillSerial(l);
             l++;
         }
     }
 
+    /**
+     *
+     */
     public void removeItemFromList() {
-        if (getEditBillItemEntry() == null) {
+        if (getEditBillItem() == null) {
             JsfUtil.addErrorMessage("Nothing to Delete. Please select one");
         }
-        getLstBillItemEntrys().remove(getEditBillItemEntry());
+        getBillItems().remove(getEditBillItem());
         orderBillItemEntries();
-        setEditBillItemEntry(null);
+        setEditBillItem(null);
         JsfUtil.addSuccessMessage("Removed From List");
     }
 
+    /**
+     *
+     */
     public void settleBill() {
-        saveNewBill();
+
+        saveBill();
         saveNewBillItems();
         clearEntry();
         clearBill();
@@ -185,18 +214,22 @@ public class PurchaseBillController implements Serializable {
 
     private void clearEntry() {
         setModalName(null);
-        setBillItemEntry(new BillItemEntry());
-        setBillItemEntry(null);
-        setBillItemEntry(getBillItemEntry());
+        setBillItem(null);
+        setBillItem(getBillItem());
     }
 
     private void clearBill() {
         setBill(new Bill());
-        setLstBillItemEntrys(new ArrayList<BillItemEntry>());
+        setBillItems(new ArrayList<BillItem>());
 
 
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     public Double calculateStock(Item item) {
         if (item != null) {
             return calculateStock("SELECT SUM(i.quentity) FROM ItemUnit i WHERE i.retired=false AND i.item.id = " + item.getId() + "");
@@ -205,6 +238,12 @@ public class PurchaseBillController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param item
+     * @param institution
+     * @return
+     */
     public Double calculateStock(Item item, Institution institution) {
         if (item != null && institution != null) {
             return calculateStock("SELECT SUM(i.quentity) FROM ItemUnit i WHERE i.retired=false AND i.item.id = " + item.getId() + " AND i.institution.id = " + institution.getId());
@@ -213,6 +252,12 @@ public class PurchaseBillController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param item
+     * @param location
+     * @return
+     */
     public Double calculateStock(Item item, Location location) {
         if (item != item && location != null) {
             return calculateStock("SELECT SUM(i.quentity) FROM ItemUnit i WHERE i.retired=false AND i.item.id = " + item.getId() + " AND i.location.id = " + location.getId());
@@ -221,6 +266,12 @@ public class PurchaseBillController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param item
+     * @param unit
+     * @return
+     */
     public Double calculateStock(Item item, Unit unit) {
         if (item != null && unit != null) {
             return calculateStock("SELECT SUM(i.quentity) FROM ItemUnit i WHERE i.retired=false AND i.item.id = " + item.getId() + " AND i.unit.id = " + unit.getId());
@@ -229,6 +280,12 @@ public class PurchaseBillController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param item
+     * @param person
+     * @return
+     */
     public Double calculateStock(Item item, Person person) {
         if (item != null && person != null) {
             return calculateStock("SELECT SUM(i.quentity) FROM ItemUnit i WHERE i.retired=false AND i.item.id = " + item.getId() + " AND i.person.id = " + person.getId());
@@ -237,6 +294,11 @@ public class PurchaseBillController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param strJQL
+     * @return
+     */
     public Double calculateStock(String strJQL) {
         System.out.println(strJQL);
         System.out.println(getBillFacade().toString());
@@ -244,70 +306,111 @@ public class PurchaseBillController implements Serializable {
         return getBillFacade().findAggregateDbl(strJQL);
     }
 
-    private void saveNewBill() {
+    private void saveBill() {
         Bill temBill = getBill();
-        temBill.setCreatedAt(Calendar.getInstance().getTime());
-        temBill.setCreater(getSessionController().getLoggedUser());
         temBill.setDiscountCost(temBill.getDiscountValue());
         temBill.setDiscountValuePercent(temBill.getDiscountValue() * 100 / temBill.getNetValue());
         temBill.setDiscountCostPercent(temBill.getDiscountValuePercent());
         temBill.setGrossCost(temBill.getGrossValue());
         temBill.setNetCost(temBill.getNetValue());
-        getBillFacade().create(temBill);
-    }
-
-    private void saveNewBillItems() {
-        for (BillItemEntry temEntry : getLstBillItemEntrys()) {
-            settleBillItem(temEntry);
+        if (getBill().getId() != null && getBill().getId() > 0) {
+            getBillFacade().edit(temBill);
+        } else {
+            temBill.setToInstitution(getToInstitution());
+            temBill.setCreatedAt(Calendar.getInstance().getTime());
+            temBill.setCreater(getSessionController().getLoggedUser());
+            getBillFacade().create(temBill);
         }
     }
 
-//    private void saveNewBillItem(BillItemEntry temEntry) {
-//        BillItem temItem = temEntry.getBillItem();
-//        temItem.setBill(getBill());
-//        temItem.setCreatedAt(Calendar.getInstance().getTime());
-//        temItem.setCreater(sessionController.loggedUser);
-//        //
-//        temItem.setDiscountCostPercentRate(getBill().getDiscountValuePercent());
-//        temItem.setDiscountCostPercentValue(getBill().getDiscountValuePercent());
-//        temItem.setDiscountCostValue(temItem.getNetValue() * getBill().getDiscountValue() / 100);
-//        temItem.setDiscountCostRate(temItem.getNetRate() * getBill().getDiscountValue() / 100);
-//        //
-//        temItem.setDiscountRate(temItem.getNetRate() * getBill().getDiscountValuePercent() / 100);
-//        temItem.setDiscountRatePercent(getBill().getDiscountValuePercent());
-//        temItem.setDiscountValue(temItem.getNetValue() * getBill().getDiscountValuePercent() / 100);
-//        temItem.setDiscountValuePercent(getBill().getDiscountValuePercent());
-//        //
-//        temItem.setGrossCostRate(temItem.getNetRate());
-//        temItem.setGrossCostValue(temItem.getNetValue());
-//        temItem.setGrossRate(temItem.getNetRate());
-//        temItem.setGrossCostValue(temItem.getNetValue());
-//        temItem.setNetCostRate(temItem.getNetRate());
-//        temItem.setNetCostValue(temItem.getNetValue());
-//        temItem.setPurchaseQuentity(temItem.getQuentity());
-//        temItem.setFreeQuentity(0l);
-//        //
-//        getBillItemFacade().create(temItem);
-//
-//    }
-    private void settleBillItem(BillItemEntry temEntry) {
-        BillItem temBillItem = temEntry.getBillItem();
-        ItemUnit newItemUnit = temBillItem.getItemUnit();
+    private void saveNewBillItems() {
+        for (BillItem temEntry : getBillItems()) {
+            if (temEntry != null) {
+                settleBillItem(temEntry);
+            }
+        }
+    }
 
-        newItemUnit.setBulkUnit(newItemUnit.getItem().getBulkUnit());
-        newItemUnit.setCreatedAt(Calendar.getInstance().getTime());
-        newItemUnit.setCreater(getSessionController().getLoggedUser());
-        newItemUnit.setInstitution(getBill().getToInstitution());
-        newItemUnit.setLocation(getBill().getToLocation());
-        newItemUnit.setLooseUnit(newItemUnit.getItem().getLooseUnit());
-        newItemUnit.setLooseUnitsPerBulkUnit(newItemUnit.getItem().getLooseUnitsPerBulkUnit());
+    private ItemUnit getExistingItemUnit(Institution exIns, Unit exUnit, Person exPerson, Item exItem, String exSerial, Make exMake, Location exLoc) {
+        ItemUnit myIu;
+        String sql;
+        Long insId;
+        Long unitId;
+        Long perId;
+        Long makeId;
+        Long locId;
+        Long itemId;
+
+        if (exIns == null) {
+            insId = 0L;
+        } else {
+            insId = exIns.getId();
+        }
+        if (exUnit == null) {
+            unitId = 0l;
+        } else {
+            unitId = exUnit.getId();
+        }
+        if (exPerson == null) {
+            perId = 0l;
+        } else {
+            perId = exPerson.getId();
+        }
+        if (exItem == null) {
+            itemId = 0l;
+        } else {
+            itemId = exItem.getId();
+        }
+        if (exMake == null) {
+            makeId = 0l;
+        } else {
+            makeId = exMake.getId();
+        }
+        if (exLoc == null) {
+            locId = 0l;
+        } else {
+            locId = exLoc.getId();
+        }
+        if (exSerial == null) {
+            exSerial = "";
+        }
+        sql = "Select iu from ItemUnit iu where iu.item.id = " + itemId + " and iu.name = '" + exSerial + "' and iu.institution.id = " + insId + " and iu.unit.id = " + unitId + " and iu.person.id = " + perId + " and iu.make.id = " + makeId + " and iu.location.id = " + locId;
+        System.out.println(sql);
+
+        myIu = getItemUnitFacade().findFirstBySQL(sql);
+
+        if (myIu == null) {
+            System.out.println("my IU is null");
+            myIu = new ItemUnit();
+            myIu.setInstitution(exIns);
+            myIu.setUnit(exUnit);
+            myIu.setPerson(exPerson);
+            myIu.setItem(exItem);
+            myIu.setMake(exMake);
+            myIu.setName(exSerial);
+            myIu.setLocation(exLoc);
+            myIu.setCreatedAt(Calendar.getInstance().getTime());
+            myIu.setCreater(getSessionController().getLoggedUser());
+            getItemUnitFacade().create(myIu);
+        }
+        return myIu;
+
+    }
+
+    private void settleBillItem(BillItem temEntry) {
+
+        BillItem temBillItem = temEntry;
+        ItemUnit newItemUnit = getExistingItemUnit(toInstitution, getBill().getToUnit(), getBill().getToPerson(), temBillItem.getItem(), temBillItem.getName(), null, null);
+
         newItemUnit.setOwner(getBill().getToPerson());
         newItemUnit.setWarrantyExpiary(newItemUnit.getDateOfExpiary());
         newItemUnit.setSupplier(null);
         newItemUnit.setUnit(getBill().getToUnit());
-        newItemUnit.setPerson(getBill().getToPerson());
-        newItemUnit.setQuentity(temBillItem.getQuentity());
+        newItemUnit.setQuentity(newItemUnit.getQuentity() + temBillItem.getQuentity());
 
+
+
+        System.out.println("Saving Bill Item " + temBillItem.getQuentity());
         ItemUnitHistory hxUnit = new ItemUnitHistory();
         ItemUnitHistory hxLoc = new ItemUnitHistory();
         ItemUnitHistory hxIns = new ItemUnitHistory();
@@ -351,7 +454,7 @@ public class PurchaseBillController implements Serializable {
         hxPer.setToIn(Boolean.TRUE);
         hxPer.setToOut(Boolean.FALSE);
 
-        getItemUnitFacade().create(newItemUnit);
+        getItemUnitFacade().edit(newItemUnit);
 
         hxIns.setAfterQty(calculateStock(newItemUnit.getItem(), newItemUnit.getInstitution()));
         hxIns.setItemUnit(newItemUnit);
@@ -368,6 +471,7 @@ public class PurchaseBillController implements Serializable {
         hxPer.setAfterQty(calculateStock(newItemUnit.getItem(), newItemUnit.getPerson()));
         hxPer.setItemUnit(newItemUnit);
         getItemUnitHistoryFacade().create(hxPer);
+
 
 
         temBillItem.setBill(getBill());
@@ -393,7 +497,11 @@ public class PurchaseBillController implements Serializable {
         temBillItem.setPurchaseQuentity(temBillItem.getQuentity());
         temBillItem.setFreeQuentity(0l);
         //
-        getBillItemFacade().create(temBillItem);
+        if (temBillItem.getId() == null || temBillItem.getId() == 0) {
+            getBillItemFacade().create(temBillItem);
+        } else {
+            getBillItemFacade().edit(temBillItem);
+        }
         //
         hxIns.setBillItem(temBillItem);
         hxIns.setHistoryDate(getBill().getBillDate());
@@ -427,7 +535,7 @@ public class PurchaseBillController implements Serializable {
 //        newItemUnit.setBulkUnit(newItemUnit.getItem().getBulkUnit());
 //        newItemUnit.setCreatedAt(Calendar.getInstance().getTime());
 //        newItemUnit.setCreater(sessionController.getLoggedUser());
-//        newItemUnit.setInstitution(getBill().getToInstitution());
+//        newItemUnit.setInstitution(getToInstitution());
 //        newItemUnit.setLocation(getBill().getToLocation());
 //        newItemUnit.setLooseUnit(newItemUnit.getItem().getLooseUnit());
 //        newItemUnit.setLooseUnitsPerBulkUnit(newItemUnit.getItem().getLooseUnitsPerBulkUnit());
@@ -503,18 +611,24 @@ public class PurchaseBillController implements Serializable {
 //    }
 //    private void addToLocation() {
 //    }
+    /**
+     *
+     */
     public void calculateItemValue() {
-        getBillItemEntry().getBillItem().setNetValue(getBillItemEntry().getBillItem().getNetRate() * getBillItemEntry().getBillItem().getQuentity());
+        getBillItem().setNetValue(getBillItem().getNetRate() * getBillItem().getQuentity());
     }
 
+    /**
+     *
+     */
     public void calculateBillValue() {
         double netBillValue = 0l;
         double grossBillValue = 0l;
         double discountBillValue = 0l;
-        for (BillItemEntry temEntry : getBillItemEntrys()) {
-            netBillValue += temEntry.getBillItem().getNetValue();
-            grossBillValue += temEntry.getBillItem().getGrossValue();
-            discountBillValue += temEntry.getBillItem().getDiscountValue();
+        for (BillItem temEntry : getBillItems()) {
+            netBillValue += temEntry.getNetValue();
+            grossBillValue += temEntry.getGrossValue();
+            discountBillValue += temEntry.getDiscountValue();
         }
         getBill().setNetValue(netBillValue - getBill().getDiscountValue());
         getBill().setGrossValue(netBillValue);
@@ -529,41 +643,49 @@ public class PurchaseBillController implements Serializable {
     /**
      * Getters and Setters
      */
-    private void addLastBillEntryNumber(BillItemEntry entry) {
-        entry.setId((long) getLstBillItemEntrys().size() + 1);
+    private void addLastBillEntryNumber(BillItem entry) {
+        entry.setBillSerial((long) getBillItems().size() + 1);
     }
 
-    public BillItemEntry getBillItemEntry() {
-        if (billItemEntry == null) {
-            billItemEntry = new BillItemEntry();
-            billItemEntry.setBillItem(new BillItem());
-            billItemEntry.getBillItem().setItemUnit(new ItemUnit());
-            addLastBillEntryNumber(billItemEntry);
+    /**
+     *
+     * @return
+     */
+    public BillItem getBillItem() {
+        if (billItem == null) {
+            billItem = new BillItem();
+            addLastBillEntryNumber(billItem);
         }
-        return billItemEntry;
+        return billItem;
     }
 
-    public void setBillItemEntry(BillItemEntry billItemEntry) {
-        this.billItemEntry = billItemEntry;
+    /**
+     *
+     * @param billItemEntry
+     */
+    public void setBillItem(BillItem billItem) {
+        this.billItem = billItem;
     }
 
-    public DataModel<BillItemEntry> getBillItemEntrys() {
-        return new ListDataModel<BillItemEntry>(getLstBillItemEntrys());
-    }
-
-    public void setBillItemEntrys(DataModel<BillItemEntry> billItemEntrys) {
-        this.billItemEntrys = billItemEntrys;
-    }
-
-    public List<BillItemEntry> getLstBillItemEntrys() {
-        if (lstBillItemEntrys == null) {
-            lstBillItemEntrys = new ArrayList<BillItemEntry>();
+    /**
+     *
+     * @return
+     */
+    public List<BillItem> getBillItems() {
+        System.out.println("getting bill items");
+        if (billItems == null) {
+            System.out.println("bill items are null");
+            billItems = new ArrayList<BillItem>();
         }
-        return lstBillItemEntrys;
+        return billItems;
     }
 
-    public void setLstBillItemEntrys(List<BillItemEntry> lstBillItemEntrys) {
-        this.lstBillItemEntrys = lstBillItemEntrys;
+    /**
+     *
+     * @param lstBillItemEntrys
+     */
+    public void setBillItems(List<BillItem> lstBillItems) {
+        this.billItems = lstBillItems;
     }
 
 //
@@ -585,6 +707,9 @@ public class PurchaseBillController implements Serializable {
 //        }
 //    }
 //
+    /**
+     *
+     */
     public void prepareForNewBill() {
         setNewBill(Boolean.TRUE);
         setBill(new InInventoryBill());
@@ -592,6 +717,9 @@ public class PurchaseBillController implements Serializable {
 
     }
 
+    /**
+     *
+     */
     public void prepareForOldBill() {
         setNewBill(Boolean.FALSE);
         setBill(getTransferBean().getBill());
@@ -600,15 +728,18 @@ public class PurchaseBillController implements Serializable {
         System.out.println(temLstBillItems.toString());
         long i = 1;
         for (BillItem bi : temLstBillItems) {
-            BillItemEntry bie = new BillItemEntry();
-            bie.setBillItem(bi);
+            BillItem bie = new BillItem();
             bie.setId(i);
-            getLstBillItemEntrys().add(bie);
+            getBillItems().add(bie);
             i++;
         }
         getTransferBean().setBill(null);
     }
 
+    /**
+     *
+     * @return
+     */
     public Bill getBill() {
         if (bill == null) {
             if (getTransferBean().getBill() != null) {
@@ -620,282 +751,560 @@ public class PurchaseBillController implements Serializable {
         return bill;
     }
 
+    /**
+     *
+     * @param bill
+     */
     public void setBill(Bill bill) {
         this.bill = bill;
-        JsfUtil.addSuccessMessage(bill.toString());
     }
 
+    /**
+     *
+     * @return
+     */
     public BillFacade getBillFacade() {
         return billFacade;
     }
 
+    /**
+     *
+     * @param billFacade
+     */
     public void setBillFacade(BillFacade billFacade) {
         this.billFacade = billFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public BillItemFacade getBillItemFacade() {
         return billItemFacade;
     }
 
+    /**
+     *
+     * @param billItemFacade
+     */
     public void setBillItemFacade(BillItemFacade billItemFacade) {
         this.billItemFacade = billItemFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public ItemFacade getItemFacade() {
         return itemFacade;
     }
 
+    /**
+     *
+     * @param itemFacade
+     */
     public void setItemFacade(ItemFacade itemFacade) {
         this.itemFacade = itemFacade;
     }
 
-    public DataModel<Item> getItems() {
-        return new ListDataModel<Item>(getItemFacade().findBySQL("SELECT i FROM Item i WHERE i.retired=false AND type(i) = InventoryItem ORDER By i.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Item> getItems() {
+        items = getItemFacade().findBySQL("SELECT i FROM Item i WHERE i.retired=false AND (type(i) = InventoryItem or type(i) = ConsumableItem)  ORDER By i.name");
+        return items;
     }
 
-    public void setItems(DataModel<Item> items) {
+    /**
+     *
+     * @param items
+     */
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
+    /**
+     *
+     * @return
+     */
     public MakeFacade getMakeFacade() {
         return makeFacade;
     }
 
+    /**
+     *
+     * @param makeFacade
+     */
     public void setMakeFacade(MakeFacade makeFacade) {
         this.makeFacade = makeFacade;
     }
 
-    public DataModel<Make> getMakes() {
-        return new ListDataModel(getMakeFacade().findBySQL("SELECT m FROM Make m WHERE m.retired=false ORDER BY m.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Make> getMakes() {
+        makes = getMakeFacade().findBySQL("SELECT m FROM Make m WHERE m.retired=false ORDER BY m.name");
+        return makes;
     }
 
-    public void setMakes(DataModel<Make> makes) {
+    /**
+     *
+     * @param makes
+     */
+    public void setMakes(List<Make> makes) {
         this.makes = makes;
     }
 
+    /**
+     *
+     * @return
+     */
     public ModalFacade getModalFacade() {
         return modalFacade;
     }
 
+    /**
+     *
+     * @param modalFacade
+     */
     public void setModalFacade(ModalFacade modalFacade) {
         this.modalFacade = modalFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public SessionController getSessionController() {
         return sessionController;
     }
 
+    /**
+     *
+     * @param sessionController
+     */
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getModalName() {
         return modalName;
     }
 
+    /**
+     *
+     * @param modalName
+     */
     public void setModalName(String modalName) {
         this.modalName = modalName;
     }
 
-    public BillItemEntry getEditBillItemEntry() {
-        return editBillItemEntry;
+    /**
+     *
+     * @return
+     */
+    public BillItem getEditBillItem() {
+        return editBillItem;
     }
 
-    public void setEditBillItemEntry(BillItemEntry editBillItemEntry) {
-        this.editBillItemEntry = editBillItemEntry;
+    /**
+     *
+     * @param editBillItemEntry
+     */
+    public void setEditBillItem(BillItem editBillItemEntry) {
+        this.editBillItem = editBillItemEntry;
     }
 
+    /**
+     *
+     * @return
+     */
     public InstitutionFacade getInstitutionFacade() {
         return institutionFacade;
     }
 
+    /**
+     *
+     * @param institutionFacade
+     */
     public void setInstitutionFacade(InstitutionFacade institutionFacade) {
         this.institutionFacade = institutionFacade;
     }
 
-    public DataModel<Institution> getToInstitutions() {
-        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM HealthInstitution i WHERE i.retired=false ORDER by i.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Institution> getToInstitutions() {
+        if (getSessionController().getPrivilege().getRestrictedInstitution() == null) {
+            toInstitutions = getInstitutionFacade().findBySQL("SELECT i FROM HealthInstitution i WHERE i.retired=false ORDER by i.name");
+        } else {
+            toInstitutions = new ArrayList<Institution>();
+            toInstitutions.add(getSessionController().getPrivilege().getRestrictedInstitution());
+        }
+        return toInstitutions;
     }
 
-    public void setToInstitutions(DataModel<Institution> institutions) {
+    /**
+     *
+     * @param institutions
+     */
+    public void setToInstitutions(List<Institution> institutions) {
         this.toInstitutions = institutions;
     }
 
-    public DataModel<Institution> getFromInstitutions() {
-        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT i FROM Supplier i WHERE i.retired=false ORDER by i.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Institution> getFromInstitutions() {
+        fromInstitutions = getInstitutionFacade().findBySQL("SELECT i FROM Supplier i WHERE i.retired=false ORDER by i.name");
+        return fromInstitutions;
     }
 
-    public void setFromInstitutions(DataModel<Institution> institutions) {
+    /**
+     *
+     * @param institutions
+     */
+    public void setFromInstitutions(List<Institution> institutions) {
         this.fromInstitutions = institutions;
     }
 
-    public DataModel<Unit> getFromUnits() {
-        return new ListDataModel<Unit>(getUnitFacade().findBySQL("SELECT u FROM Unit u WHERE u.retired=false AND u.institution.id = " + getBill().getFromInstitution().getId()));
-    }
-
-    public void setFromUnits(DataModel<Unit> fromUnits) {
-        this.fromUnits = fromUnits;
-    }
-
-    public DataModel<Location> getFromLocations() {
-        if (getBill().getFromUnit() != null) {
-            return new ListDataModel<Location>(getLocationFacade().findBySQL("SELECT l FROM Location l WHERE l.retired=false AND l.unit.id = " + getBill().getFromUnit().getId() + " ORDER BY l.name"));
-        }
-        return null;
-    }
-
-    public void setFromLocations(DataModel<Location> locations) {
-        this.fromLocations = locations;
-    }
-
-    public DataModel<Location> getToLocations() {
-//        System.out.println("Getting ToLocations");
+    /**
+     *
+     * @return
+     */
+    public List<Location> getToLocations() {
         if (getBill().getToUnit() != null) {
-            System.out.println("Got Null while getting toLocations");
-            return new ListDataModel<Location>(getLocationFacade().findBySQL("SELECT l FROM Location l WHERE l.retired=false AND l.unit.id = " + getBill().getToUnit().getId() + " ORDER BY l.name"));
+            toLocations = getLocationFacade().findBySQL("SELECT l FROM Location l WHERE l.retired=false AND l.unit.id = " + getBill().getToUnit().getId() + " ORDER BY l.name");
+        } else {
+            toLocations = new ArrayList<Location>();
         }
-//        System.out.println("Got Null while getting toLocations");
-        return null;
+        return toLocations;
     }
 
-    public void setToLocations(DataModel<Location> locations) {
+    /**
+     *
+     * @param locations
+     */
+    public void setToLocations(List<Location> locations) {
         this.toLocations = locations;
     }
 
-    public DataModel<Unit> getToUnits() {
-        if (getBill().getToInstitution() != null) {
-            return new ListDataModel<Unit>(getUnitFacade().findBySQL("SELECT u FROM Unit u WHERE u.retired=false AND u.institution.id=" + getBill().getToInstitution().getId() + " ORDER BY u.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Unit> getToUnits() {
+        if (getToInstitution() == null) {
+            toUnits = new ArrayList<Unit>();
+        } else {
+            toUnits = getUnitFacade().findBySQL("SELECT u FROM Unit u WHERE u.retired=false AND u.institution.id=" + getToInstitution().getId() + " ORDER BY u.name");
         }
-        return null;
+        return toUnits;
     }
 
-    public void setToUnits(DataModel<Unit> toUnits) {
+    /**
+     *
+     * @param toUnits
+     */
+    public void setToUnits(List<Unit> toUnits) {
         this.toUnits = toUnits;
     }
 
+    /**
+     *
+     * @return
+     */
     public UnitFacade getUnitFacade() {
         return unitFacade;
     }
 
+    /**
+     *
+     * @param unitFacade
+     */
     public void setUnitFacade(UnitFacade unitFacade) {
         this.unitFacade = unitFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public LocationFacade getLocationFacade() {
         return locationFacade;
     }
 
+    /**
+     *
+     * @param locationFacade
+     */
     public void setLocationFacade(LocationFacade locationFacade) {
         this.locationFacade = locationFacade;
     }
 
-    public DataModel<Person> getFromPersons() {
-        if (getBill().getFromInstitution() != null) {
-            return new ListDataModel<Person>(getPersonFacade().findBySQL("SELECT p FROM Person p WHERE p.retired=false AND p.institution.id=" + getBill().getFromInstitution().getId() + " ORDER BY p.name"));
-        }
-        return null;
-    }
-
-    public void setFromPersons(DataModel<Person> fromPersons) {
-        this.fromPersons = fromPersons;
-    }
-
+    /**
+     *
+     * @return
+     */
     public PersonFacade getPersonFacade() {
         return personFacade;
     }
 
+    /**
+     *
+     * @param personFacade
+     */
     public void setPersonFacade(PersonFacade personFacade) {
         this.personFacade = personFacade;
     }
 
-    public DataModel<Person> getToPersons() {
-        if (getBill().getToInstitution() != null) {
-            return new ListDataModel<Person>(getPersonFacade().findBySQL("SELECT p FROM Person p WHERE p.retired=false AND p.institution.id=" + getBill().getToInstitution().getId() + " ORDER BY p.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Person> getToPersons() {
+        if (getToInstitution() == null) {
+            toPersons = new ArrayList<Person>();
+        } else {
+            toPersons = getPersonFacade().findBySQL("SELECT p FROM Person p WHERE p.retired=false AND p.institution.id=" + getToInstitution().getId() + " ORDER BY p.name");
         }
-        return null;
+        return toPersons;
     }
 
-    public void setToPersons(DataModel<Person> toPersons) {
+    /**
+     *
+     * @param toPersons
+     */
+    public void setToPersons(List<Person> toPersons) {
         this.toPersons = toPersons;
     }
 
-    public DataModel<Country> getCountries() {
-        return new ListDataModel<Country>(getCountryFacade().findBySQL("SELECT c FROM Country c WHERE c.retired=false ORDER BY c.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Country> getCountries() {
+        countries = getCountryFacade().findBySQL("SELECT c FROM Country c WHERE c.retired=false ORDER BY c.name");
+        return countries;
     }
 
-    public void setCountries(DataModel<Country> countries) {
+    /**
+     *
+     * @param countries
+     */
+    public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
 
+    /**
+     *
+     * @return
+     */
     public CountryFacade getCountryFacade() {
         return countryFacade;
     }
 
+    /**
+     *
+     * @param countryFacade
+     */
     public void setCountryFacade(CountryFacade countryFacade) {
         this.countryFacade = countryFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public ManufacturerFacade getManufacturerFacade() {
         return manufacturerFacade;
     }
 
+    /**
+     *
+     * @param manufacturerFacade
+     */
     public void setManufacturerFacade(ManufacturerFacade manufacturerFacade) {
         this.manufacturerFacade = manufacturerFacade;
     }
 
-    public DataModel<Manufacturer> getManufacturers() {
-        return new ListDataModel<Manufacturer>(getManufacturerFacade().findBySQL("SELECT m FROM Manufacturer m WHERE m.retired=false ORDER BY m.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Manufacturer> getManufacturers() {
+        manufacturers = getManufacturerFacade().findBySQL("SELECT m FROM Manufacturer m WHERE m.retired=false ORDER BY m.name");
+        return manufacturers;
     }
 
-    public void setManufacturers(DataModel<Manufacturer> manufacturers) {
+    /**
+     *
+     * @param manufacturers
+     */
+    public void setManufacturers(List<Manufacturer> manufacturers) {
         this.manufacturers = manufacturers;
     }
 
+    /**
+     *
+     * @return
+     */
     public SupplierFacade getSupplierFacade() {
         return supplierFacade;
     }
 
+    /**
+     *
+     * @param supplierFacade
+     */
     public void setSupplierFacade(SupplierFacade supplierFacade) {
         this.supplierFacade = supplierFacade;
     }
 
-    public DataModel<Supplier> getSuppliers() {
-        return new ListDataModel<Supplier>(getSupplierFacade().findBySQL("SELECT s FROM Supplier s WHERE s.retired=false ORDER BY s.name"));
+    /**
+     *
+     * @return
+     */
+    public List<Supplier> getSuppliers() {
+        suppliers = getSupplierFacade().findBySQL("SELECT s FROM Supplier s WHERE s.retired=false ORDER BY s.name");
+        return suppliers;
     }
 
-    public void setSuppliers(DataModel<Supplier> suppliers) {
+    /**
+     *
+     * @param suppliers
+     */
+    public void setSuppliers(List<Supplier> suppliers) {
         this.suppliers = suppliers;
     }
 
+    /**
+     *
+     * @return
+     */
     public ItemUnitFacade getItemUnitFacade() {
         return itemUnitFacade;
     }
 
+    /**
+     *
+     * @param itemUnitFacade
+     */
     public void setItemUnitFacade(ItemUnitFacade itemUnitFacade) {
         this.itemUnitFacade = itemUnitFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public ItemUnitHistoryFacade getItemUnitHistoryFacade() {
         return itemUnitHistoryFacade;
     }
 
+    /**
+     *
+     * @param itemUnitHistoryFacade
+     */
     public void setItemUnitHistoryFacade(ItemUnitHistoryFacade itemUnitHistoryFacade) {
         this.itemUnitHistoryFacade = itemUnitHistoryFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public TransferBean getTransferBean() {
         return transferBean;
     }
 
+    /**
+     *
+     * @param transferBean
+     */
     public void setTransferBean(TransferBean transferBean) {
         this.transferBean = transferBean;
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getNewBill() {
         return newBill;
     }
 
+    /**
+     *
+     * @param newBill
+     */
     public void setNewBill(Boolean newBill) {
         this.newBill = newBill;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getItemSerial() {
+        if (getBillItem().getItem() == null) {
+            return "";
+        }
+        if (getToInstitution() == null) {
+            return "";
+        }
+        if (getToInstitution().getCode().trim().equals("")) {
+            itemSerial = getToInstitution().getCode().trim().toUpperCase();
+        } else {
+            itemSerial = getToInstitution().getCode().trim().toUpperCase();
+        }
+        if (getBillItem().getItem().getName().trim().equals("")) {
+            itemSerial += "/" + getBillItem().getItem().getName().trim().toUpperCase();
+        } else {
+            itemSerial += "/" + getBillItem().getItem().getCode().trim().toUpperCase();
+
+        }
+        Long temNo = getItemUnitFacade().findAggregateLong("select count(iu) from ItemUnit where iu.retired = false and iu.institute.id =" + getToInstitution().getId() + " and iu.item.id =" + getBillItem().getItem().getId());
+        itemSerial += "/" + temNo;
+        return itemSerial;
+    }
+
+    /**
+     *
+     * @param itemSerial
+     */
+    public void setItemSerial(String itemSerial) {
+        this.itemSerial = itemSerial;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Institution getToInstitution() {
+        if (toInstitution == null) {
+            if (sessionController.getPrivilege().getRestrictedInstitution() != null) {
+                toInstitution = sessionController.getPrivilege().getRestrictedInstitution();
+            } else {
+                toInstitution = sessionController.getLoggedUser().getWebUserPerson().getInstitution();
+            }
+        }
+        return toInstitution;
+    }
+
+    /**
+     *
+     * @param toInstitution
+     */
+    public void setToInstitution(Institution toInstitution) {
+        this.toInstitution = toInstitution;
     }
 }

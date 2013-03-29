@@ -204,15 +204,20 @@ public class Menu implements Serializable {
         }
 
         if (sessionController.privilege.isInventoryView()) {
-            model.addSubmenu(suppliesSubmenu());
+            model.addSubmenu(inventorySubmenu());
         }
 
         if (sessionController.privilege.isLibraryView()) {
             model.addSubmenu(librarySubmenu());
         }
 
-        model.addSubmenu(transferSubmenu());
+//        model.addSubmenu(transferSubmenu());
 
+        if (sessionController.privilege.isCaderView() ) {
+            model.addSubmenu(humanSubmenu());
+        }
+
+        
         if (sessionController.privilege.isBmeView()) {
             model.addSubmenu(biomedSubmenu());
         }
@@ -237,7 +242,7 @@ public class Menu implements Serializable {
 
         item = new MenuItem();
         item.setValue(getLabel("institutions"));
-        item.setUrl("health_institution.xhtml");
+        item.setUrl("institutions.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
@@ -410,6 +415,12 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
+        item.setValue(getLabel("OldInstitutionTypes"));
+        item.setUrl("old_institution_category.xhtml");
+        submenu.getChildren().add(item);
+        
+        
+        item = new MenuItem();
         item.setValue(getLabel("Institutions"));
         item.setUrl("institutions.xhtml");
         submenu.getChildren().add(item);
@@ -420,7 +431,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Designations"));
+        item.setValue(getLabel("DesignationLevels"));
         item.setUrl("designation_level.xhtml");
         submenu.getChildren().add(item);
 
@@ -617,8 +628,13 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
+        item.setValue(getLabel("OldInstitutionTypes"));
+        item.setUrl("old_institution_category.xhtml");
+        submenu.getChildren().add(item);
+
+        item = new MenuItem();
         item.setValue(getLabel("Institutions"));
-        item.setUrl("institutions.xhtml");
+        item.setUrl("health_institution.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
@@ -627,7 +643,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Designations"));
+        item.setValue(getLabel("DesignationLevel"));
         item.setUrl("designation_level.xhtml");
         submenu.getChildren().add(item);
 
@@ -948,41 +964,39 @@ public class Menu implements Serializable {
 
 
 
-        Submenu editMenu = new Submenu();
-        editMenu.setLabel(getLabel("edit"));
-
-
-
-        item = new MenuItem();
-        item.setValue(getLabel("ItemCategories"));
-        item.setUrl("inventory_item_category.xhtml");
-        editMenu.getChildren().add(item);
-
-
-
-        item = new MenuItem();
-        item.setValue(getLabel("make"));
-        item.setUrl("inventory_make.xhtml");
-        editMenu.getChildren().add(item);
-
-
+//
+//
 //        item = new MenuItem();
-//        item.setValue(getLabel("model"));
-//        item.setUrl("inventory_modal.xhtml");
+//        item.setValue(getLabel("make"));
+//        item.setUrl("inventory_make.xhtml");
 //        editMenu.getChildren().add(item);
+//
+//
+////        item = new MenuItem();
+////        item.setValue(getLabel("model"));
+////        item.setUrl("inventory_modal.xhtml");
+////        editMenu.getChildren().add(item);
+//
+//        item = new MenuItem();
+//        item.setValue(getLabel("Items"));
+//        item.setUrl("inventory_item.xhtml");
+//        editMenu.getChildren().add(item);
+//
+//
+//        item = new MenuItem();
+//        item.setValue(getLabel("ItemsImportFromExcel"));
+//        item.setUrl("inventory_import_items.xhtml");
+//        editMenu.getChildren().add(item);
+//
+//        submenu.getChildren().add(editMenu);
+//
+
 
         item = new MenuItem();
-        item.setValue(getLabel("Items"));
-        item.setUrl("inventory_item.xhtml");
-        editMenu.getChildren().add(item);
+        item.setValue(getLabel("reports"));
+        item.setUrl("inventory_reports.xhtml");
+        submenu.getChildren().add(item);
 
-
-        item = new MenuItem();
-        item.setValue(getLabel("ItemsImportFromExcel"));
-        item.setUrl("inventory_import_items.xhtml");
-        editMenu.getChildren().add(item);
-
-        submenu.getChildren().add(editMenu);
 
         item = new MenuItem();
         item.setValue(getLabel("purchase"));
@@ -1000,24 +1014,25 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
 
-        item = new MenuItem();
-        item.setValue(getLabel("requests"));
-        item.setUrl("designation_category.xhtml");
-        submenu.getChildren().add(item);
-
-        item = new MenuItem();
-        item.setValue(getLabel("estimates"));
-        item.setUrl("designation_level.xhtml");
-        submenu.getChildren().add(item);
+//        item = new MenuItem();
+//        item.setValue(getLabel("requests"));
+//        item.setUrl("designation_category.xhtml");
+//        submenu.getChildren().add(item);
+//
+//        item = new MenuItem();
+//        item.setValue(getLabel("estimates"));
+//        item.setUrl("designation_level.xhtml");
+//        submenu.getChildren().add(item);
 
         item = new MenuItem();
         item.setValue(getLabel("adjust"));
         item.setUrl("inventory_adjust.xhtml");
         submenu.getChildren().add(item);
 
+
         item = new MenuItem();
-        item.setValue(getLabel("reports"));
-        item.setUrl("inventory_reports.xhtml");
+        item.setValue(getLabel("edit"));
+        item.setUrl("inventory_edit.xhtml");
         submenu.getChildren().add(item);
 
 
