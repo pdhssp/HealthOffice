@@ -17,7 +17,7 @@
             <p:growl autoUpdate="true" />
             <p:focus id="selectFocus" context="gpSelect" />
             <p:focus id="detailFocus" context="gpDetail" />
-            <p:panel header="#{postLabels.manageInventoryItems}" >
+            <p:panel header="#{postLabels.manageConsumableItems}" >
                 <h:panelGrid id ="gpVeda" columns="2" >
 
                     <h:panelGrid id="gpSelect" columns="1"  >
@@ -25,10 +25,10 @@
 
                             <h:panelGrid id="gpSelectText" columns="2" >
 
-                                <h:outputText id="lblSelect" value="#{postLabels.inventoryItems}" >
+                                <h:outputText id="lblSelect" value="#{postLabels.consumableItems}" >
                                 </h:outputText>
 
-                                <h:inputText id="txtSelect" value="#{inventoryItemController.selectText}"  style="min-width: 200px" >
+                                <h:inputText id="txtSelect" value="#{consumableItemController.selectText}"  style="min-width: 200px" >
                                     <f:ajax  event="keyup" render="lstSelect gpDetail" >
                                     </f:ajax>
                                 </h:inputText>
@@ -38,8 +38,8 @@
 
 
 
-                                <h:selectOneListbox id="lstSelect"  size="10" value="#{inventoryItemController.current}" style="min-width: 223px">
-                                    <f:selectItems value="#{inventoryItemController.searchItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                <h:selectOneListbox id="lstSelect"  size="10" value="#{consumableItemController.current}" style="min-width: 223px">
+                                    <f:selectItems value="#{consumableItemController.searchItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
                                     <f:ajax render="gpDetail" execute="lstSelect" >
                                     </f:ajax>
                                 </h:selectOneListbox>
@@ -47,12 +47,12 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
-                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{inventoryItemController.prepareAdd()}" styleClass="buttons" >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{consumableItemController.prepareAdd()}" styleClass="buttons" >
                                     <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus" execute="" >
                                     </f:ajax>
                                 </h:commandButton>
                                 <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
-                                            return false;"  action="#{inventoryItemController.delete()}"  value="#{labels.delete}" styleClass="buttons">
+                                            return false;"  action="#{consumableItemController.delete()}"  value="#{labels.delete}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
                         </p:panel>
@@ -62,33 +62,33 @@
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
 
-                                <h:outputText id="lblName" value="#{postLabels.inventoryItems}" ></h:outputText>
-                                <h:inputText id="txtName" value="#{inventoryItemController.current.name}"  ></h:inputText>
+                                <h:outputText id="lblName" value="#{postLabels.consumableItems}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{consumableItemController.current.name}"  ></h:inputText>
 
-                                <h:outputText id="lblNameS" value="#{postLabels.inventoryItems}" ></h:outputText>
-                                <h:inputText id="txtNameS" value="#{inventoryItemController.current.sname}"  ></h:inputText>
+                                <h:outputText id="lblNameS" value="#{postLabels.consumableItems}" ></h:outputText>
+                                <h:inputText id="txtNameS" value="#{consumableItemController.current.sname}"  ></h:inputText>
 
-                                <h:outputText id="lblNameT" value="#{postLabels.inventoryItems}" ></h:outputText>
-                                <h:inputText id="txtNameT" value="#{inventoryItemController.current.tname}"  ></h:inputText>
+                                <h:outputText id="lblNameT" value="#{postLabels.consumableItems}" ></h:outputText>
+                                <h:inputText id="txtNameT" value="#{consumableItemController.current.tname}"  ></h:inputText>
 
 
                                 <h:outputText id="lblPrefix" value="#{postLabels.itemPrefix}" ></h:outputText>
-                                <h:inputText id="txtPrefix" value="#{inventoryItemController.current.itemPrefix}"  ></h:inputText>
+                                <h:inputText id="txtPrefix" value="#{consumableItemController.current.itemPrefix}"  ></h:inputText>
 
                                 <h:outputText id="lblCode" value="#{postLabels.code}" ></h:outputText>
-                                <h:inputText id="txtCode" value="#{inventoryItemController.current.code}"  ></h:inputText>
+                                <h:inputText id="txtCode" value="#{consumableItemController.current.code}"  ></h:inputText>
 
 
 
                                 <h:outputText id="lblCatName" value="#{postLabels.category}" ></h:outputText>
-                                <h:selectOneListbox id="cmbCat" value="#{inventoryItemController.currentCat}"  >
-                                    <f:selectItems value="#{inventoryItemCategoryController.items}" var="iCat" itemValue="#{iCat}" itemLabel="#{iCat.name}"></f:selectItems>
+                                <h:selectOneListbox id="cmbCat" value="#{consumableItemController.currentCat}"  >
+                                    <f:selectItems value="#{consumableItemCategoryController.items}" var="iCat" itemValue="#{iCat}" itemLabel="#{iCat.name}"></f:selectItems>
                                 </h:selectOneListbox>
 
                             </h:panelGrid>
 
                             <h:panelGrid id="gpDetailButtons" columns="2">
-                                <h:commandButton id="btnSave" value="#{labels.save}"  action="#{inventoryItemController.saveSelected()}" styleClass="buttons">
+                                <h:commandButton id="btnSave" value="#{labels.save}"  action="#{consumableItemController.saveSelected()}" styleClass="buttons">
                                     <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
                                     </f:ajax>
                                 </h:commandButton>

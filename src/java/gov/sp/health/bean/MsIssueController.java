@@ -84,8 +84,8 @@ public class MsIssueController implements Serializable {
     DataModel<Make> makes;
     DataModel<ItemUnit> itemUnits;
     //
-    DataModel<BillItemEntry> billItemEntrys;
-    List<BillItemEntry> lstBillItemEntrys;
+    DataModel<BillItem> billItemEntrys;
+    List<BillItem> lstBillItems;
     //
     DataModel<Institution> fromInstitutions;
     DataModel<Unit> fromUnits;
@@ -107,8 +107,8 @@ public class MsIssueController implements Serializable {
      */
     Bill bill;
     BillItem billItem;
-    BillItemEntry billItemEntry;
-    BillItemEntry editBillItemEntry;
+    BillItem billItemEntry;
+    BillItem editBillItem;
     Institution institution;
     Unit unit;
     ItemUnit itemUnit;
@@ -133,7 +133,7 @@ public class MsIssueController implements Serializable {
             return null;
         }
         String temSql;
-        
+
         return getItemUnitFacade().findBySQL("SELECT i FROM ItemUnit i WHERE i.retired=false ORDER By i.name");
 
     }
@@ -147,8 +147,8 @@ public class MsIssueController implements Serializable {
         return getItemUnitFacade().findBySQL("SELECT i FROM ItemUnit i WHERE i.retired=false AND i.unit.id = "
                 + getUnit().getId() + " ORDER By i.name");
 
-    }    
-    
+    }
+
     public void setSelectedItems(List<ItemUnit> selectedItems) {
         this.selectedItems = selectedItems;
     }
@@ -167,7 +167,7 @@ public class MsIssueController implements Serializable {
         /* TODO: Warning : CorrectLogic Here */
 
         addLastBillEntryNumber(billItemEntry);
-        getLstBillItemEntrys().add(billItemEntry);
+        getLstBillItems().add(billItemEntry);
         calculateBillValue();
         clearEntry();
 
@@ -175,19 +175,19 @@ public class MsIssueController implements Serializable {
 
     private void orderBillItemEntries() {
         long l = 1l;
-        for (BillItemEntry entry : lstBillItemEntrys) {
+        for (BillItem entry : lstBillItems) {
             entry.setId(l);
             l++;
         }
     }
 
     public void removeItemFromList() {
-        if (editBillItemEntry == null) {
+        if (editBillItem == null) {
             JsfUtil.addErrorMessage("Nothing to Delete. Please select one");
         }
-        getLstBillItemEntrys().remove(editBillItemEntry);
+        getLstBillItems().remove(editBillItem);
         orderBillItemEntries();
-        editBillItemEntry = null;
+        editBillItem = null;
         JsfUtil.addSuccessMessage("Removed From List");
     }
 
@@ -201,14 +201,14 @@ public class MsIssueController implements Serializable {
 
     private void clearEntry() {
         modalName = null;
-        billItemEntry = new BillItemEntry();
+        billItemEntry = new BillItem();
         billItemEntry = null;
-        billItemEntry = getBillItemEntry();
+        billItemEntry = getBillItem();
     }
 
     private void clearBill() {
         bill = new Bill();
-        lstBillItemEntrys = new ArrayList<BillItemEntry>();
+        lstBillItems = new ArrayList<BillItem>();
 
 
     }
@@ -273,14 +273,15 @@ public class MsIssueController implements Serializable {
     }
 
     private void saveNewBillItems() {
-        for (BillItemEntry temEntry : lstBillItemEntrys) {
+        for (BillItem temEntry : lstBillItems) {
             settleBillItem(temEntry);
         }
     }
 
-    private void settleBillItem(BillItemEntry temEntry) {
-        BillItem temBillItem = temEntry.getBillItem();
-        ItemUnit goingOutItemUnit = temBillItem.getItemUnit();
+    private void settleBillItem(BillItem temEntry) {
+        BillItem temBillItem = temEntry;
+        ItemUnit goingOutItemUnit = new ItemUnit();
+        //TODO : Need to add Logic
 
 
 
@@ -410,17 +411,17 @@ public class MsIssueController implements Serializable {
     }
 
     public void calculateItemValue() {
-        getBillItemEntry().getBillItem().setNetValue(getBillItemEntry().getBillItem().getNetRate() * getBillItemEntry().getBillItem().getQuentity());
+        getBillItem().setNetValue(getBillItem().getNetRate() * getBillItem().getQuentity());
     }
 
     public void calculateBillValue() {
         double netBillValue = 0l;
         double grossBillValue = 0l;
         double discountBillValue = 0l;
-        for (BillItemEntry temEntry : getBillItemEntrys()) {
-            netBillValue += temEntry.getBillItem().getNetValue();
-            grossBillValue += temEntry.getBillItem().getGrossValue();
-            discountBillValue += temEntry.getBillItem().getDiscountValue();
+        for (BillItem temEntry : getBillItems()) {
+            netBillValue += temEntry.getNetValue();
+            grossBillValue += temEntry.getGrossValue();
+            discountBillValue += temEntry.getDiscountValue();
         }
         getBill().setNetValue(netBillValue - getBill().getDiscountValue());
         getBill().setGrossValue(netBillValue);
@@ -435,41 +436,39 @@ public class MsIssueController implements Serializable {
     /**
      * Getters and Setters
      */
-    private void addLastBillEntryNumber(BillItemEntry entry) {
-        entry.setId((long) getLstBillItemEntrys().size() + 1);
+    private void addLastBillEntryNumber(BillItem entry) {
+        entry.setId((long) getLstBillItems().size() + 1);
     }
 
-    public BillItemEntry getBillItemEntry() {
+    public BillItem getBillItem() {
         if (billItemEntry == null) {
-            billItemEntry = new BillItemEntry();
-            billItemEntry.setBillItem(new BillItem());
-            billItemEntry.getBillItem().setItemUnit(new ItemUnit());
+            billItemEntry = new BillItem();
             addLastBillEntryNumber(billItemEntry);
         }
         return billItemEntry;
     }
 
-    public void setBillItemEntry(BillItemEntry billItemEntry) {
+    public void setBillItem(BillItem billItemEntry) {
         this.billItemEntry = billItemEntry;
     }
 
-    public DataModel<BillItemEntry> getBillItemEntrys() {
-        return new ListDataModel<BillItemEntry>(getLstBillItemEntrys());
+    public DataModel<BillItem> getBillItems() {
+        return new ListDataModel<BillItem>(getLstBillItems());
     }
 
-    public void setBillItemEntrys(DataModel<BillItemEntry> billItemEntrys) {
+    public void setBillItems(DataModel<BillItem> billItemEntrys) {
         this.billItemEntrys = billItemEntrys;
     }
 
-    public List<BillItemEntry> getLstBillItemEntrys() {
-        if (lstBillItemEntrys == null) {
-            lstBillItemEntrys = new ArrayList<BillItemEntry>();
+    public List<BillItem> getLstBillItems() {
+        if (lstBillItems == null) {
+            lstBillItems = new ArrayList<BillItem>();
         }
-        return lstBillItemEntrys;
+        return lstBillItems;
     }
 
-    public void setLstBillItemEntrys(List<BillItemEntry> lstBillItemEntrys) {
-        this.lstBillItemEntrys = lstBillItemEntrys;
+    public void setLstBillItems(List<BillItem> lstBillItems) {
+        this.lstBillItems = lstBillItems;
     }
 
     public Bill getBill() {
@@ -559,12 +558,12 @@ public class MsIssueController implements Serializable {
         this.modalName = modalName;
     }
 
-    public BillItemEntry getEditBillItemEntry() {
-        return editBillItemEntry;
+    public BillItem getEditBillItem() {
+        return editBillItem;
     }
 
-    public void setEditBillItemEntry(BillItemEntry editBillItemEntry) {
-        this.editBillItemEntry = editBillItemEntry;
+    public void setEditBillItem(BillItem editBillItem) {
+        this.editBillItem = editBillItem;
     }
 
     public InstitutionFacade getInstitutionFacade() {
@@ -790,16 +789,5 @@ public class MsIssueController implements Serializable {
 
     public void setItemUnit(ItemUnit itemUnit) {
         this.itemUnit = itemUnit;
-    }
-
-    public BillItem getBillItem() {
-        if (billItem == null) {
-            billItem = new BillItem();
-        }
-        return billItem;
-    }
-
-    public void setBillItem(BillItem billItem) {
-        this.billItem = billItem;
     }
 }

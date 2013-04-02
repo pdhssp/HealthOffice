@@ -38,9 +38,11 @@ public class BillItem implements Serializable {
     @ManyToOne
     Bill bill;
     @ManyToOne
-    ItemUnit itemUnit;
-    @ManyToOne
     Item item;
+    @ManyToOne
+    Make make;
+    @ManyToOne
+    Modal modal;
     double grossRate;
     double discountRate;
     double netRate;
@@ -68,13 +70,64 @@ public class BillItem implements Serializable {
     BillItem returnedBillItem;
     @Transient
     int billOrderNo;
+    String serialName;
+    String modalNo;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    Date dateOfExpiary;
+    Long billSerial;
+
+    public Long getBillSerial() {
+        return billSerial;
+    }
+
+    public void setBillSerial(Long billSerial) {
+        this.billSerial = billSerial;
+    }
+
+    public Date getDateOfExpiary() {
+        return dateOfExpiary;
+    }
+
+    public void setDateOfExpiary(Date dateOfExpiary) {
+        this.dateOfExpiary = dateOfExpiary;
+    }
+
+    public String getModalNo() {
+        return modalNo;
+    }
+
+    public void setModalNo(String modalNo) {
+        this.modalNo = modalNo;
+    }
+
+    public String getSerialName() {
+        return serialName;
+    }
+
+    public void setSerialName(String serialName) {
+        this.serialName = serialName;
+    }
+
+    public Make getMake() {
+        return make;
+    }
+
+    public void setMake(Make make) {
+        this.make = make;
+    }
+
+    public Modal getModal() {
+        return modal;
+    }
+
+    public void setModal(Modal modal) {
+        this.modal = modal;
+    }
 
     public Item getItem() {
         return item;
     }
 
-    
-    
     public void setItem(Item item) {
         this.item = item;
     }
@@ -86,7 +139,7 @@ public class BillItem implements Serializable {
     public void setBillOrderNo(int billOrderNo) {
         this.billOrderNo = billOrderNo;
     }
-    
+
     public Bill getBill() {
         return bill;
     }
@@ -237,14 +290,6 @@ public class BillItem implements Serializable {
 
     public void setGrossValue(double grossValue) {
         this.grossValue = grossValue;
-    }
-
-    public ItemUnit getItemUnit() {
-        return itemUnit;
-    }
-
-    public void setItemUnit(ItemUnit itemUnit) {
-        this.itemUnit = itemUnit;
     }
 
     public String getName() {
