@@ -81,7 +81,7 @@
 
 
                                 <h:outputText id="lblCatName" value="#{postLabels.category}" ></h:outputText>
-                                <h:selectOneListbox id="cmbCat" value="#{inventoryItemController.currentCat}"  >
+                                <h:selectOneListbox id="cmbCat" value="#{inventoryItemController.currentCat}" size="1"  >
                                     <f:selectItems value="#{inventoryItemCategoryController.items}" var="iCat" itemValue="#{iCat}" itemLabel="#{iCat.name}"></f:selectItems>
                                 </h:selectOneListbox>
 
