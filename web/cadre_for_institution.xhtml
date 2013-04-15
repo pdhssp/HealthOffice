@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+            <ui:define name="content">
+
+                <h:panelGrid columns="3" >
+                    <h:outputLabel value="Institution Type" />
+                    <h:selectOneListbox id="lstType" value="#{institutionTypeCadreController.institutionType}" >
+                        <f:selectItems value="#{institutionTypeController.items}" var="it" itemLabel="#{it.name}" itemValue="#{it}"/>
+                    </h:selectOneListbox>
+                    <h:outputLabel value="" />
+
+                    <h:outputLabel value="Cader Postions" />
+                    <h:panelGroup >
+                        <h:selectOneListbox value="#{institutionTypeCadreController.designation}" >
+                            <f:selectItems value="#{designationController.items}" var="d" itemLabel="#{d.name}" itemValue="#{d}" />
+                        </h:selectOneListbox>
+                        <h:inputText value="#{institutionTypeCadreController.caderCount }" />
+                    </h:panelGroup>
+                    <h:commandButton value="Add" action="#{institutionTypeCadreController.addDesignationToInstitutionType()}" />
+                </h:panelGrid>
+
+                <h:dataTable value="#{institutionTypeCadreController.items}" var="itc" >
+                    <h:column >
+                        <f:facet name="header" >
+                            <h:outputLabel value="Designation" />
+                        </f:facet>
+                        <h:outputLabel value="#{itc.designation.name}" />
+                    </h:column>
+                    <h:column >
+                        <f:facet name="header" >
+                            <h:outputLabel value="Count" />
+                        </f:facet>
+                        <h:outputLabel value="#{itc.designation.name}" />
+                    </h:column>
+                    <h:column >
+                        <f:facet name="header" >
+                            <h:outputLabel value="Remove" />
+                        </f:facet>
+                        <h:commandButton value="Remove" action="#{institutionTypeCadreController.removeDesignationFromInstitutionType()}" >
+                            <f:setPropertyActionListener target="#{institutionTypeCadreController.current}" value="#{itc}" />
+                        </h:commandButton>
+                    </h:column>
+                
+                </h:dataTable>
+                
+
+
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

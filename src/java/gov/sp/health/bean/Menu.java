@@ -622,49 +622,26 @@ public class Menu implements Serializable {
         submenu = new Submenu();
         submenu.setLabel(getLabel("hr"));
 
+        
+        
         item = new MenuItem();
-        item.setValue(getLabel("InstitutionTypes"));
-        item.setUrl("institution_type.xhtml");
+        item.setValue(getLabel("EditMetaData"));
+        item.setUrl("cadre_edit.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("oldInstitutionCategory"));
-        item.setUrl("old_institution_category.xhtml");
+        item.setValue(getLabel("CaderForInstitutionTypes"));
+        item.setUrl("cadre_for_institution_type.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Institutions"));
-        item.setUrl("health_institution.xhtml");
-        submenu.getChildren().add(item);
-
-        item = new MenuItem();
-        item.setValue(getLabel("designationsCategory"));
-        item.setUrl("designation_category.xhtml");
-        submenu.getChildren().add(item);
-
-        item = new MenuItem();
-        item.setValue(getLabel("DesignationLevel"));
-        item.setUrl("designation_level.xhtml");
-        submenu.getChildren().add(item);
-
-        item = new MenuItem();
-        item.setValue(getLabel("Designations"));
-        item.setUrl("designation.xhtml");
-        submenu.getChildren().add(item);
-
-        item = new MenuItem();
-        item.setValue(getLabel("institutionDesignations"));
-        item.setUrl("institution_designation.xhtml");
-        submenu.getChildren().add(item);
-
-        item = new MenuItem();
-        item.setValue(getLabel("cadrePositions"));
-        item.setUrl("cadre_positions.xhtml");
+        item.setValue(getLabel("CarderForInstitutions"));
+        item.setUrl("cadre_for_institution.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
         item.setValue(getLabel("reports"));
-        item.setUrl("reports.xhtml");
+        item.setUrl("cadre_reports.xhtml");
         submenu.getChildren().add(item);
 
         return submenu;

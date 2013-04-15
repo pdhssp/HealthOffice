@@ -53,6 +53,19 @@ public class InstitutionTypeCadre implements Serializable {
     @ManyToOne
     Designation designation;
 
+    
+    Long cadreCount;
+
+    public Long getCadreCount() {
+        return cadreCount;
+    }
+
+    public void setCadreCount(Long cadreCount) {
+        this.cadreCount = cadreCount;
+    }
+    
+    
+    
     public Date getCreatedAt() {
         return createdAt;
     }
