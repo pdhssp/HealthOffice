@@ -18,7 +18,7 @@ import javax.persistence.*;
  */
 @Entity
 public class InstitutionCadre implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,13 +37,55 @@ public class InstitutionCadre implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date retiredAt;
     String retireComments;
+    @ManyToOne
+    Designation designation;
+    @ManyToOne
+    Institution institution;
+    
+    
+    Integer intYear;
+    Integer intMonth;
+    
+    
+    Long maleAndFemaleIn;
+    Long maleIn;
+    Long femaleIn;
+    Long approved;
+    Long vac;
+
+    public Integer getIntYear() {
+        return intYear;
+    }
+
+    public void setIntYear(Integer intYear) {
+        this.intYear = intYear;
+    }
+
+    public Integer getIntMonth() {
+        return intMonth;
+    }
+
+    public void setIntMonth(Integer intMonth) {
+        this.intMonth = intMonth;
+    }
 
     
-    long maleAndFemaleIn;
-    long maleIn;
-    long femaleIn;
-    long approved;
-    long vac;
+    
+    public Designation getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(Designation designation) {
+        this.designation = designation;
+    }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
     
     
     
@@ -120,44 +162,53 @@ public class InstitutionCadre implements Serializable {
         this.retirer = retirer;
     }
 
-    public long getApproved() {
+    public Long getApproved() {
         return approved;
     }
 
-    public void setApproved(long approved) {
+    public void setApproved(Long approved) {
         this.approved = approved;
+        calculateCarders();
     }
 
-    public long getFemaleIn() {
+    public Long getFemaleIn() {
         return femaleIn;
     }
 
-    public void setFemaleIn(long femaleIn) {
+    public void setFemaleIn(Long femaleIn) {
         this.femaleIn = femaleIn;
+        calculateCarders();
     }
 
-    public long getMaleAndFemaleIn() {
+    public Long getMaleAndFemaleIn() {
         return maleAndFemaleIn;
     }
 
-    public void setMaleAndFemaleIn(long maleAndFemaleIn) {
+    public void setMaleAndFemaleIn(Long maleAndFemaleIn) {
         this.maleAndFemaleIn = maleAndFemaleIn;
+        setVac(getApproved() - getMaleAndFemaleIn());
     }
 
-    public long getMaleIn() {
+    public void calculateCarders(){
+        setMaleAndFemaleIn(getMaleIn() + getFemaleIn());
+    }
+    
+    public Long getMaleIn() {
         return maleIn;
     }
 
-    public void setMaleIn(long maleIn) {
+    public void setMaleIn(Long maleIn) {
         this.maleIn = maleIn;
+        calculateCarders();
     }
 
-    public long getVac() {
+    public Long getVac() {
         return vac;
     }
 
-    public void setVac(long vac) {
+    public void setVac(Long vac) {
         this.vac = vac;
+        calculateCarders();
     }
 
     

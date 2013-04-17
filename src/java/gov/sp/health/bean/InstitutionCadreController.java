@@ -8,20 +8,24 @@
  */
 package gov.sp.health.bean;
 
+import gov.sp.health.entity.Designation;
+import gov.sp.health.entity.Institution;
 import gov.sp.health.facade.InstitutionCadreFacade;
 import gov.sp.health.entity.InstitutionCadre;
+import gov.sp.health.entity.ItemCategory;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -30,36 +34,157 @@ import javax.faces.model.ListDataModel;
  */
 @ManagedBean
 @SessionScoped
-public final class InstitutionCadreController  implements Serializable {
+public final class InstitutionCadreController implements Serializable {
 
     @EJB
     private InstitutionCadreFacade ejbFacade;
-    SessionController sessionController = new SessionController();
-    List<InstitutionCadre> lstItems;
+    @ManagedProperty(value = "#{sessionController}")
+    SessionController sessionController;
     private InstitutionCadre current;
-    private DataModel<InstitutionCadre> items = null;
-    private int selectedItemIndex;
-    boolean selectControlDisable = false;
-    boolean modifyControlDisable = true;
-    String selectText = "";
+    private List<InstitutionCadre> items = null;
+    Institution institution;
+    Designation designation;
+    Long caderCount;
+    Long maleIn;
+    Long femaleIn;
+    Long totalIn;
+    Long vacantCount;
+    Date carderDate;
+    Integer carderYear;
+    Integer carderMonth;
+
+    public Integer getCarderYear() {
+        return carderYear;
+    }
+
+    public void setCarderYear(Integer carderYear) {
+        this.carderYear = carderYear;
+    }
+
+    public Integer getCarderMonth() {
+        return carderMonth;
+    }
+
+    public void setCarderMonth(Integer carderMonth) {
+        this.carderMonth = carderMonth;
+    }
+
+    public Date getCarderDate() {
+        return carderDate;
+    }
+
+    public void setCarderDate(Date carderDate) {
+        this.carderDate = carderDate;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(carderDate);
+        setCarderYear(cal.get(Calendar.YEAR));
+        setCarderMonth(cal.get(Calendar.MONTH));
+        recreateItems();
+    }
+
+    public Long getMaleIn() {
+        return maleIn;
+    }
+
+    public void setMaleIn(Long maleIn) {
+        this.maleIn = maleIn;
+    }
+
+    public Long getFemaleIn() {
+        return femaleIn;
+    }
+
+    public void setFemaleIn(Long femaleIn) {
+        this.femaleIn = femaleIn;
+    }
+
+    public Long getTotalIn() {
+        return totalIn;
+    }
+
+    public void setTotalIn(Long totalIn) {
+        this.totalIn = totalIn;
+    }
+
+    public Long getVacantCount() {
+        return vacantCount;
+    }
+
+    public void setVacantCount(Long vacantCount) {
+        this.vacantCount = vacantCount;
+    }
+
+    public void addDesignationToInstitution() {
+        System.out.println("Adding");
+        if (getDesignation() == null) {
+            JsfUtil.addErrorMessage("Please select a designation");
+            return;
+        }
+        if (getInstitution() == null) {
+            JsfUtil.addErrorMessage("Please select an institution type");
+            return;
+        }
+        if (caderCount == null || caderCount == 0) {
+            JsfUtil.addErrorMessage("Please enter the count");
+            return;
+        }
+        System.out.println("all variables ok to add");
+        InstitutionCadre itc = new InstitutionCadre();
+        itc.setDesignation(getDesignation());
+        itc.setInstitution(getInstitution());
+        itc.setMaleIn(getMaleIn());
+        itc.setFemaleIn(getFemaleIn());
+        itc.setMaleAndFemaleIn(getTotalIn());
+        itc.setApproved(getCaderCount());
+        itc.setVac(getVacantCount());
+        itc.setIntMonth(carderMonth);
+        itc.setIntYear(carderYear);
+        itc.setCreatedAt(Calendar.getInstance().getTime());
+        itc.setCreater(sessionController.loggedUser);
+        getEjbFacade().create(itc);
+        JsfUtil.addSuccessMessage("Added Successfully");
+        setDesignation(null);
+        setCaderCount(null);
+
+    }
+
+    public void removeDesignationFromInstitution() {
+        if (current == null) {
+            JsfUtil.addErrorMessage("Nothing to delete");
+            return;
+        }
+        current.setRetired(Boolean.TRUE);
+        current.setRetiredAt(Calendar.getInstance().getTime());
+        current.setRetirer(sessionController.loggedUser);
+        getEjbFacade().edit(current);
+    }
 
     public InstitutionCadreController() {
     }
 
-    public List<InstitutionCadre> getLstItems() {
-        return getFacade().findBySQL("Select d From InstitutionCadre d");
+    public Institution getInstitution() {
+        return institution;
     }
 
-    public void setLstItems(List<InstitutionCadre> lstItems) {
-        this.lstItems = lstItems;
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+        recreateItems();
     }
 
-    public int getSelectedItemIndex() {
-        return selectedItemIndex;
+    public Designation getDesignation() {
+        return designation;
     }
 
-    public void setSelectedItemIndex(int selectedItemIndex) {
-        this.selectedItemIndex = selectedItemIndex;
+    public void setDesignation(Designation designation) {
+        this.designation = designation;
+    }
+
+    public Long getCaderCount() {
+        return caderCount;
+    }
+
+    public void setCaderCount(Long caderCount) {
+        this.caderCount = caderCount;
     }
 
     public InstitutionCadre getCurrent() {
@@ -77,178 +202,54 @@ public final class InstitutionCadreController  implements Serializable {
         return ejbFacade;
     }
 
-    public DataModel<InstitutionCadre> getItems() {
-        items = new ListDataModel(getFacade().findAll("name", true));
-        return items;
-    }
-
-    public static int intValue(long value) {
-        int valueInt = (int) value;
-        if (valueInt != value) {
-            throw new IllegalArgumentException(
-                    "The long value " + value + " is not within range of the int type");
-        }
-        return valueInt;
-    }
-
-    public DataModel searchItems() {
-        recreateModel();
-        if (items == null) {
-            if (selectText.equals("")) {
-                items = new ListDataModel(getFacade().findAll("name", true));
-            } else {
-                items = new ListDataModel(getFacade().findAll("name", "%" + selectText + "%",
-                        true));
-                if (items.getRowCount() > 0) {
-                    items.setRowIndex(0);
-                    current = (InstitutionCadre) items.getRowData();
-                    Long temLong = current.getId();
-                    selectedItemIndex = intValue(temLong);
+    public String saveAll() {
+        for (InstitutionCadre ic : items) {
+            if (ic != null) {
+                if (ic.getId() == null || ic.getId() == 0) {
+                    getFacade().create(ic);
                 } else {
-                    current = null;
-                    selectedItemIndex = -1;
+                    getFacade().edit(ic);
                 }
+                JsfUtil.addSuccessMessage("All Saved");
+            } else {
+                JsfUtil.addErrorMessage("Nothing to Save");
             }
+
+        }
+        recreateItems();
+        return "";
+    }
+
+    public List<InstitutionCadre> getItems() {
+        if (items == null) {
+            String sql;
+            if (getInstitution() == null) {
+                return new ArrayList<InstitutionCadre>();
+            }
+            sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.name";
+            items = getFacade().findBySQL(sql);
         }
         return items;
-
     }
 
-    public InstitutionCadre searchItem(String itemName, boolean createNewIfNotPresent) {
-        InstitutionCadre searchedItem = null;
-        items = new ListDataModel(getFacade().findAll("name", itemName, true));
-        if (items.getRowCount() > 0) {
-            items.setRowIndex(0);
-            searchedItem = (InstitutionCadre) items.getRowData();
-        } else if (createNewIfNotPresent) {
-            searchedItem = new InstitutionCadre();
-            searchedItem.setName(itemName);
-            searchedItem.setCreatedAt(Calendar.getInstance().getTime());
-            searchedItem.setCreater(sessionController.loggedUser);
-            getFacade().create(searchedItem);
-        }
-        return searchedItem;
-    }
-
-    private void recreateModel() {
+    public void recreateItems() {
         items = null;
     }
 
-    public void prepareSelect() {
-        this.prepareModifyControlDisable();
+    public InstitutionCadreFacade getEjbFacade() {
+        return ejbFacade;
     }
 
-    public void prepareEdit() {
-        if (current != null) {
-            selectedItemIndex = intValue(current.getId());
-            this.prepareSelectControlDisable();
-        } else {
-            JsfUtil.addErrorMessage(new MessageProvider().getValue("nothingToEdit"));
-        }
+    public void setEjbFacade(InstitutionCadreFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
     }
 
-    public void prepareAdd() {
-        selectedItemIndex = -1;
-        current = new InstitutionCadre();
-        this.prepareSelectControlDisable();
+    public SessionController getSessionController() {
+        return sessionController;
     }
 
-    public void saveSelected() {
-        if (sessionController.getPrivilege().isInventoryEdit()==false){
-            JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
-            return;
-        }            
-        if (selectedItemIndex > 0) {
-            getFacade().edit(current);
-            JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
-        } else {
-            current.setCreatedAt(Calendar.getInstance().getTime());
-            current.setCreater(sessionController.loggedUser);
-            getFacade().create(current);
-            JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
-        }
-        this.prepareSelect();
-        recreateModel();
-        getItems();
-        selectText = "";
-        selectedItemIndex = intValue(current.getId());
-    }
-
-    public void addDirectly() {
-        JsfUtil.addSuccessMessage("1");
-        try {
-
-            current.setCreatedAt(Calendar.getInstance().getTime());
-            current.setCreater(sessionController.loggedUser);
-
-            getFacade().create(current);
-            JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
-            current = new InstitutionCadre();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "Error");
-        }
-
-    }
-
-    public void cancelSelect() {
-        this.prepareSelect();
-    }
-
-    public void delete() {
-        if (sessionController.getPrivilege().isInventoryDelete()==false){
-            JsfUtil.addErrorMessage("You are not autherized to delete any content");
-            return;
-        }
-        if (current != null) {
-            current.setRetired(true);
-            current.setRetiredAt(Calendar.getInstance().getTime());
-            current.setRetirer(sessionController.loggedUser);
-            getFacade().edit(current);
-            JsfUtil.addSuccessMessage(new MessageProvider().getValue("deleteSuccessful"));
-        } else {
-            JsfUtil.addErrorMessage(new MessageProvider().getValue("nothingToDelete"));
-        }
-        recreateModel();
-        getItems();
-        selectText = "";
-        selectedItemIndex = -1;
-        current = null;
-        this.prepareSelect();
-    }
-
-    public boolean isModifyControlDisable() {
-        return modifyControlDisable;
-    }
-
-    public void setModifyControlDisable(boolean modifyControlDisable) {
-        this.modifyControlDisable = modifyControlDisable;
-    }
-
-    public boolean isSelectControlDisable() {
-        return selectControlDisable;
-    }
-
-    public void setSelectControlDisable(boolean selectControlDisable) {
-        this.selectControlDisable = selectControlDisable;
-    }
-
-    public String getSelectText() {
-        return selectText;
-    }
-
-    public void setSelectText(String selectText) {
-        this.selectText = selectText;
-        searchItems();
-    }
-
-    public void prepareSelectControlDisable() {
-        selectControlDisable = true;
-        modifyControlDisable = false;
-    }
-
-    public void prepareModifyControlDisable() {
-        selectControlDisable = false;
-        modifyControlDisable = true;
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
     }
 
     @FacesConverter(forClass = InstitutionCadre.class)

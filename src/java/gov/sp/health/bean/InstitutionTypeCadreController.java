@@ -45,13 +45,17 @@ public final class InstitutionTypeCadreController implements Serializable {
     Designation designation;
     Long caderCount;
 
+    public void fillInsTypeCarder(){
+        
+    }
+    
     public void addDesignationToInstitutionType() {
         System.out.println("Adding");
-        if (designation == null) {
+        if (getDesignation() == null) {
             JsfUtil.addErrorMessage("Please select a designation");
             return;
         }
-        if (current == null) {
+        if (getInstitutionType() == null) {
             JsfUtil.addErrorMessage("Please select an institution type");
             return;
         }
@@ -61,13 +65,15 @@ public final class InstitutionTypeCadreController implements Serializable {
         }
         System.out.println("all variables ok to add");
         InstitutionTypeCadre itc = new InstitutionTypeCadre();
-        itc.setDesignation(designation);
-        itc.setInstitutionType(institutionType);
-        itc.setCadreCount(caderCount);
+        itc.setDesignation(getDesignation());
+        itc.setInstitutionType(getInstitutionType());
+        itc.setCadreCount(getCaderCount());
         itc.setCreatedAt(Calendar.getInstance().getTime());
         itc.setCreater(sessionController.loggedUser);
         getEjbFacade().create(itc);
         JsfUtil.addSuccessMessage("Added Successfully");
+        setDesignation(null);
+        setCaderCount(null);
 
     }
 

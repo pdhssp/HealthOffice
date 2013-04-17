@@ -3,56 +3,112 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:template="http://java.sun.com/jsf/composite/template"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./resources/template/pdhs_template_1.xhtml">
             <ui:define name="content">
 
-                <h:panelGrid columns="3" >
-                    <h:outputLabel value="Institution Type" />
-                    <h:selectOneListbox id="lstType" value="#{institutionTypeCadreController.institutionType}" >
-                        <f:selectItems value="#{institutionTypeController.items}" var="it" itemLabel="#{it.name}" itemValue="#{it}"/>
-                    </h:selectOneListbox>
-                    <h:outputLabel value="" />
+                <p:panel header="Add Carder Details to Institution" >
 
-                    <h:outputLabel value="Cader Postions" />
+                    <table>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="Institution" />
+                            </td>
+                            <td>
+                                <h:selectOneListbox id="lstType" value="#{institutionCadreController.institution}" >
+                                    <f:selectItems value="#{healthInstitutionController.items}" var="it" itemLabel="#{it.name}" itemValue="#{it}"/>
+                                    <f:ajax event="change"  render="tblC" execute="lstType" />
+                                </h:selectOneListbox>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+
+<tr>
+                            <td>
+                                <h:outputLabel value="Institution" />
+                            </td>
+                            <td>
+                                <p:calendar id="calDate" value="#{institutionCadreController.carderDate}" pattern="dd MMMM yyyy" >
+                                    <f:ajax event="dateSelect"  render="tblC" execute="calDate" />
+                                </p:calendar>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>                        
+                        
+                        <tr>
+                            <td colspan="3">
+                                <p:panel header="Add New Carder Position" >
+                                    <p:panelGrid columns="2" >
+                                        <h:outputLabel value="Cader Postion" />
+                                        <h:selectOneListbox value="#{institutionCadreController.designation}" >
+                                            <f:selectItems value="#{designationController.items}" var="d" itemLabel="#{d.name}" itemValue="#{d}" />
+                                        </h:selectOneListbox>
+                                        <h:outputLabel value="Approved" />
+                                        <h:inputText value="#{institutionCadreController.caderCount}" />
+                                        <h:outputLabel value="Male In" />
+                                        <h:inputText value="#{institutionCadreController.maleIn}" />
+                                        <h:outputLabel value="Female In" />
+                                        <h:inputText value="#{institutionCadreController.maleIn}" />
+                                        <h:commandButton value="Add" action="#{institutionTypeCadreController.addDesignationToInstitutionType()}" />
+                                    </p:panelGrid>
+                                </p:panel>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3">
+                                <p:panel header="Replace with Carder according to the Institution Type" >
+                                        <h:commandButton value="Fill" action="#{institutionTypeCadreController.addDesignationToInstitutionType()}" />
+                                </p:panel>
+                            </td>
+                        </tr>
+                        
+                        
+                    </table>
+
                     <h:panelGroup >
-                        <h:selectOneListbox value="#{institutionTypeCadreController.designation}" >
-                            <f:selectItems value="#{designationController.items}" var="d" itemLabel="#{d.name}" itemValue="#{d}" />
-                        </h:selectOneListbox>
-                        <h:inputText value="#{institutionTypeCadreController.caderCount }" />
+
+
+
+
+
+                        <h:dataTable id="tblC" value="#{institutionTypeCadreController.items}" var="itc" >
+                            <h:column >
+                                <f:facet name="header" >
+                                    <h:outputLabel value="Designation" />
+                                </f:facet>
+                                <h:outputLabel value="#{itc.designation.name}" />
+                            </h:column>
+                            <h:column >
+                                <f:facet name="header" >
+                                    <h:outputLabel value="Count" />
+                                </f:facet>
+                                <h:outputLabel value="#{itc.designation.name}" />
+                            </h:column>
+                            <h:column >
+                                <f:facet name="header" >
+                                    <h:outputLabel value="Remove" />
+                                </f:facet>
+                                <h:commandButton value="Remove" action="#{institutionTypeCadreController.removeDesignationFromInstitutionType()}" >
+                                    <f:setPropertyActionListener target="#{institutionTypeCadreController.current}" value="#{itc}" />
+                                </h:commandButton>
+                            </h:column>
+
+                        </h:dataTable>
+
+
                     </h:panelGroup>
-                    <h:commandButton value="Add" action="#{institutionTypeCadreController.addDesignationToInstitutionType()}" />
-                </h:panelGrid>
-
-                <h:dataTable value="#{institutionTypeCadreController.items}" var="itc" >
-                    <h:column >
-                        <f:facet name="header" >
-                            <h:outputLabel value="Designation" />
-                        </f:facet>
-                        <h:outputLabel value="#{itc.designation.name}" />
-                    </h:column>
-                    <h:column >
-                        <f:facet name="header" >
-                            <h:outputLabel value="Count" />
-                        </f:facet>
-                        <h:outputLabel value="#{itc.designation.name}" />
-                    </h:column>
-                    <h:column >
-                        <f:facet name="header" >
-                            <h:outputLabel value="Remove" />
-                        </f:facet>
-                        <h:commandButton value="Remove" action="#{institutionTypeCadreController.removeDesignationFromInstitutionType()}" >
-                            <f:setPropertyActionListener target="#{institutionTypeCadreController.current}" value="#{itc}" />
-                        </h:commandButton>
-                    </h:column>
-                
-                </h:dataTable>
-                
-
-
+                    
+                </p:panel>
             </ui:define>
         </ui:composition>
 
