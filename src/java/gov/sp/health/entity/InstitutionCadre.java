@@ -18,6 +18,7 @@ import javax.persistence.*;
  */
 @Entity
 public class InstitutionCadre implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,12 +42,8 @@ public class InstitutionCadre implements Serializable {
     Designation designation;
     @ManyToOne
     Institution institution;
-    
-    
     Integer intYear;
     Integer intMonth;
-    
-    
     Long maleAndFemaleIn;
     Long maleIn;
     Long femaleIn;
@@ -69,8 +66,6 @@ public class InstitutionCadre implements Serializable {
         this.intMonth = intMonth;
     }
 
-    
-    
     public Designation getDesignation() {
         return designation;
     }
@@ -86,10 +81,7 @@ public class InstitutionCadre implements Serializable {
     public void setInstitution(Institution institution) {
         this.institution = institution;
     }
-    
-    
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -186,13 +178,30 @@ public class InstitutionCadre implements Serializable {
 
     public void setMaleAndFemaleIn(Long maleAndFemaleIn) {
         this.maleAndFemaleIn = maleAndFemaleIn;
+    }
+
+    private void removeNullValues() {
+        if (approved == null) {
+            approved = 0L;
+        }
+        if (maleIn == null) {
+            maleIn = 0L;
+        }
+        if (femaleIn == null) {
+            femaleIn = 0L;
+        }
+        if (vac == null) {
+            vac = 0L;
+        }
+
+    }
+
+    public void calculateCarders() {
+        removeNullValues();
+        setMaleAndFemaleIn(getMaleIn() + getFemaleIn());
         setVac(getApproved() - getMaleAndFemaleIn());
     }
 
-    public void calculateCarders(){
-        setMaleAndFemaleIn(getMaleIn() + getFemaleIn());
-    }
-    
     public Long getMaleIn() {
         return maleIn;
     }
@@ -208,11 +217,8 @@ public class InstitutionCadre implements Serializable {
 
     public void setVac(Long vac) {
         this.vac = vac;
-        calculateCarders();
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -236,5 +242,4 @@ public class InstitutionCadre implements Serializable {
     public String toString() {
         return name;
     }
-    
 }

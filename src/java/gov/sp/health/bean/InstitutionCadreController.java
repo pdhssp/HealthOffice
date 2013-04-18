@@ -12,7 +12,9 @@ import gov.sp.health.entity.Designation;
 import gov.sp.health.entity.Institution;
 import gov.sp.health.facade.InstitutionCadreFacade;
 import gov.sp.health.entity.InstitutionCadre;
+import gov.sp.health.entity.InstitutionTypeCadre;
 import gov.sp.health.entity.ItemCategory;
+import gov.sp.health.facade.InstitutionTypeCadreFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +40,8 @@ public final class InstitutionCadreController implements Serializable {
 
     @EJB
     private InstitutionCadreFacade ejbFacade;
+    @EJB
+    InstitutionTypeCadreFacade typeCarderFacade;
     @ManagedProperty(value = "#{sessionController}")
     SessionController sessionController;
     private InstitutionCadre current;
@@ -52,6 +56,91 @@ public final class InstitutionCadreController implements Serializable {
     Date carderDate;
     Integer carderYear;
     Integer carderMonth;
+    Integer carderYearLast;
+    Integer carderMonthLast;
+
+    public Integer getCarderYearLast() {
+        return carderYearLast;
+    }
+
+    public void setCarderYearLast(Integer carderYearLast) {
+        this.carderYearLast = carderYearLast;
+    }
+
+    public Integer getCarderMonthLast() {
+        return carderMonthLast;
+    }
+
+    public void setCarderMonthLast(Integer carderMonthLast) {
+        this.carderMonthLast = carderMonthLast;
+    }
+
+   
+
+    public InstitutionTypeCadreFacade getTypeCarderFacade() {
+        return typeCarderFacade;
+    }
+
+    public void setTypeCarderFacade(InstitutionTypeCadreFacade typeCarderFacade) {
+        this.typeCarderFacade = typeCarderFacade;
+    }
+
+    public void fillInsTypeCarder() {
+        String sql;
+        if (getInstitution() == null) {
+            items = new ArrayList<InstitutionCadre>();
+        }
+        for (InstitutionCadre ic : items) {
+            ic.setRetired(true);
+            //TODO:Add retireer properties
+            getFacade().edit(ic);
+        }
+        sql = "Select d From InstitutionTypeCadre d where d.retired=false and d.institutionType.id = " + getInstitution().getInstitutionType().getId() + " order by d.name";
+        List<InstitutionTypeCadre> typItems = getTypeCarderFacade().findBySQL(sql);
+        for (InstitutionTypeCadre itc : typItems) {
+            InstitutionCadre ic = new InstitutionCadre();
+            ic.setDesignation(itc.getDesignation());
+            ic.setInstitution(getInstitution());
+            ic.setMaleAndFemaleIn(itc.getCadreCount());
+            ic.setApproved(itc.getCadreCount());
+            ic.setIntMonth(carderMonth);
+            ic.setIntYear(carderYear);
+            ic.setCreatedAt(Calendar.getInstance().getTime());
+            ic.setCreater(sessionController.loggedUser);
+            getEjbFacade().create(ic);
+        }
+        recreateItems();
+    }
+
+    public void fillLastMonthCarder() {
+        String sql;
+        if (getInstitution() == null || getCarderYearLast()==null || getCarderMonthLast()==null) {
+            items = new ArrayList<InstitutionCadre>();
+        }
+        for (InstitutionCadre ic : items) {
+            ic.setRetired(true);
+            //TODO:Add retireer properties
+            getFacade().edit(ic);
+        }
+        sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYearLast()+ " and d.intMonth = " + getCarderMonthLast()+ " order by d.name";
+        List<InstitutionCadre> typItems = getFacade().findBySQL(sql);
+        for (InstitutionCadre itc : typItems) {
+            InstitutionCadre ic = new InstitutionCadre();
+            ic.setDesignation(itc.getDesignation());
+            ic.setInstitution(getInstitution());
+            ic.setMaleIn(itc.getMaleIn());
+            ic.setFemaleIn(itc.getFemaleIn());
+            ic.setVac(itc.getVac());
+            ic.setMaleAndFemaleIn(itc.getMaleAndFemaleIn());
+            ic.setApproved(itc.getApproved());
+            ic.setIntMonth(carderMonth);
+            ic.setIntYear(carderYear);
+            ic.setCreatedAt(Calendar.getInstance().getTime());
+            ic.setCreater(sessionController.loggedUser);
+            getEjbFacade().create(ic);
+        }
+        recreateItems();
+    }
 
     public Integer getCarderYear() {
         return carderYear;
@@ -74,11 +163,34 @@ public final class InstitutionCadreController implements Serializable {
     }
 
     public void setCarderDate(Date carderDate) {
+        System.out.println("1");
         this.carderDate = carderDate;
+        System.out.println("2");
         Calendar cal = Calendar.getInstance();
+        System.out.println("3");
         cal.setTime(carderDate);
-        setCarderYear(cal.get(Calendar.YEAR));
-        setCarderMonth(cal.get(Calendar.MONTH));
+        System.out.println("4");
+        Integer temY = cal.get(Calendar.YEAR);
+        System.out.println("5");
+        Integer temM = cal.get(Calendar.MONTH);
+        System.out.println("6");
+        setCarderYear(temY);
+        System.out.println("7");
+        setCarderMonth(temM);
+        System.out.println("8");
+        if (temM == 1) {
+            System.out.println("9");
+            temM = 12;
+            temY = temY - 1;
+        } else {
+            System.out.println("10");
+            temM = temM - 1;
+        }
+        System.out.println("11");
+        setCarderMonthLast(temM);
+        System.out.println("12");
+        setCarderYearLast(temY);
+        System.out.println("13");
         recreateItems();
     }
 
@@ -157,6 +269,7 @@ public final class InstitutionCadreController implements Serializable {
         current.setRetiredAt(Calendar.getInstance().getTime());
         current.setRetirer(sessionController.loggedUser);
         getEjbFacade().edit(current);
+        recreateItems();
     }
 
     public InstitutionCadreController() {
@@ -223,7 +336,7 @@ public final class InstitutionCadreController implements Serializable {
     public List<InstitutionCadre> getItems() {
         if (items == null) {
             String sql;
-            if (getInstitution() == null) {
+            if (getInstitution() == null || getCarderYear()==null || getCarderMonth()==null) {
                 return new ArrayList<InstitutionCadre>();
             }
             sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.name";

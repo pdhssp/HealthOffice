@@ -45,9 +45,7 @@ public final class InstitutionTypeCadreController implements Serializable {
     Designation designation;
     Long caderCount;
 
-    public void fillInsTypeCarder(){
-        
-    }
+   
     
     public void addDesignationToInstitutionType() {
         System.out.println("Adding");
