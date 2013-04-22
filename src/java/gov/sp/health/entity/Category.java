@@ -20,6 +20,7 @@ public class Category implements Serializable {
     private Long id;
 //Main Properties
     String name;
+    String code;
     String description;
     int orderNo;
     //Created Properties
@@ -50,6 +51,16 @@ public class Category implements Serializable {
         this.sname = sname;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    
+    
     public String getTname() {
         return tname;
     }

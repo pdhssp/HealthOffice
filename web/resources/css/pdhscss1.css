@@ -258,5 +258,6 @@ html, body{
 .indexCol{
     width: 300%;
     min-width: 300%!important;
-    background-image:url('resources\image\2columnblog-000-Page-1.jpg');}
+    /*background-image:url('resources\image\2columnblog-000-Page-1.jpg');*/
+}
    
