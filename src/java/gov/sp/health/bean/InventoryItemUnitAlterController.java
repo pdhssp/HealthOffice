@@ -1,8 +1,8 @@
 /*
  * MSc(Biomedical Informatics) Project
- * 
- * Development and Implementation of a Web-based Combined Data Repository of 
- Genealogical, Clinical, Laboratory and Genetic Data 
+ *
+ * Development and Implementation of a Web-based Combined Data Repository of
+ Genealogical, Clinical, Laboratory and Genetic Data
  * and
  * a Set of Related Tools
  */
@@ -31,8 +31,7 @@ import javax.faces.model.ListDataModel;
  */
 @ManagedBean
 @SessionScoped
-public final class InventoryItemUnitAlterController  implements Serializable {
-
+public final class InventoryItemUnitAlterController implements Serializable {
 
     /**
      *
@@ -81,8 +80,8 @@ public final class InventoryItemUnitAlterController  implements Serializable {
     DataModel<Item> items;
     DataModel<Make> makes;
     //
-    DataModel<BillItemEntry> billItemEntrys;
-    List<BillItemEntry> lstBillItemEntrys;
+    DataModel<BillItem> billItemEntrys;
+    List<BillItem> lstBillItems;
     //
     DataModel<Institution> fromInstitutions;
     DataModel<Unit> fromUnits;
@@ -103,8 +102,8 @@ public final class InventoryItemUnitAlterController  implements Serializable {
      *
      */
     Bill bill;
-    BillItemEntry billItemEntry;
-    BillItemEntry editBillItemEntry;
+    BillItem billItemEntry;
+    BillItem editBillItem;
     //Controllers
     //
 //    Institution fromInstitution;
@@ -121,7 +120,6 @@ public final class InventoryItemUnitAlterController  implements Serializable {
      */
     String modalName;
     Boolean newBill;
-
     ItemUnit itemUnit;
     Item item;
     Institution toInstitution;
@@ -165,11 +163,9 @@ public final class InventoryItemUnitAlterController  implements Serializable {
     public void setToUnit(Unit toUnit) {
         this.toUnit = toUnit;
     }
-    
-    
 
     public Item getItem() {
-        
+
         return item;
     }
 
@@ -217,19 +213,17 @@ public final class InventoryItemUnitAlterController  implements Serializable {
         this.supplier = supplier;
     }
 
-    
     public ItemUnit getItemUnit() {
-        if (itemUnit==null) itemUnit = new ItemUnit();
+        if (itemUnit == null) {
+            itemUnit = new ItemUnit();
+        }
         return itemUnit;
     }
 
     public void setItemUnit(ItemUnit itemUnit) {
         this.itemUnit = itemUnit;
     }
-    
-    
-    
-    
+
     /**
      *
      * Methods
@@ -241,9 +235,9 @@ public final class InventoryItemUnitAlterController  implements Serializable {
             JsfUtil.addErrorMessage("Hothing to add");
             return;
         }
-        // TODO: Warning - Need to add logic to search and save model        
+        // TODO: Warning - Need to add logic to search and save model
         addLastBillEntryNumber(billItemEntry);
-        getLstBillItemEntrys().add(billItemEntry);
+        getLstBillItems().add(billItemEntry);
         calculateBillValue();
         clearEntry();
 
@@ -251,19 +245,19 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 
     private void orderBillItemEntries() {
         long l = 1l;
-        for (BillItemEntry entry : lstBillItemEntrys) {
+        for (BillItem entry : lstBillItems) {
             entry.setId(l);
             l++;
         }
     }
 
     public void removeItemFromList() {
-        if (editBillItemEntry == null) {
+        if (editBillItem == null) {
             JsfUtil.addErrorMessage("Nothing to Delete. Please select one");
         }
-        getLstBillItemEntrys().remove(editBillItemEntry);
+        getLstBillItems().remove(editBillItem);
         orderBillItemEntries();
-        editBillItemEntry = null;
+        editBillItem = null;
         JsfUtil.addSuccessMessage("Removed From List");
     }
 
@@ -277,14 +271,14 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 
     private void clearEntry() {
         modalName = null;
-        billItemEntry = new BillItemEntry();
+        billItemEntry = new BillItem();
         billItemEntry = null;
-        billItemEntry = getBillItemEntry();
+        billItemEntry = getBillItem();
     }
 
     private void clearBill() {
         bill = new Bill();
-        lstBillItemEntrys = new ArrayList<BillItemEntry>();
+        lstBillItems = new ArrayList<BillItem>();
 
 
     }
@@ -349,12 +343,12 @@ public final class InventoryItemUnitAlterController  implements Serializable {
     }
 
     private void saveNewBillItems() {
-        for (BillItemEntry temEntry : lstBillItemEntrys) {
-//            addToItemUnits(temEntry);
+        for (BillItem temEntry : lstBillItems) {
+//           addToItemUnits(temEntry);
         }
     }
 
-//    private void saveNewBillItem(BillItemEntry temEntry) {
+//    private void saveNewBillItem(BillItem temEntry) {
 //        BillItem temItem = temEntry.getBillItem();
 //        temItem.setBill(getBill());
 //        temItem.setCreatedAt(Calendar.getInstance().getTime());
@@ -382,33 +376,30 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 //        getBillItemFacade().create(temItem);
 //
 //    }
-    
-    
-    
     private void addToItemUnits() {
-  
-        if (item==null){
+
+        if (item == null) {
             JsfUtil.addErrorMessage("Please select an Item");
             return;
         }
-        
-        if (toInstitution==null){
+
+        if (toInstitution == null) {
             JsfUtil.addErrorMessage("Please select an Institution");
             return;
         }
-         if (toUnit==null){
+        if (toUnit == null) {
             JsfUtil.addErrorMessage("Please select an Unit");
             return;
         }
-        
-        if (toPerson==null){
+
+        if (toPerson == null) {
             JsfUtil.addErrorMessage("Please select a Person");
             return;
         }
-        
-        
-       
-        
+
+
+
+
         ItemUnit newItemUnit = getItemUnit();
         newItemUnit.setBulkUnit(item.getBulkUnit());
         newItemUnit.setCountry(country);
@@ -428,7 +419,7 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 
         newItemUnit.setCreatedAt(Calendar.getInstance().getTime());
         newItemUnit.setCreater(sessionController.getLoggedUser());
-        
+
 
         ItemUnitHistory hxUnit = new ItemUnitHistory();
         ItemUnitHistory hxLoc = new ItemUnitHistory();
@@ -541,7 +532,7 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 
     }
 
-//    private void addNewToUnitStock(BillItemEntry temEntry) {
+//    private void addNewToUnitStock(BillItem temEntry) {
 //
 //        BillItem temBillItem = temEntry.getBillItem();
 //        ItemUnit newItemUnit = temBillItem.getItemUnit();
@@ -574,7 +565,7 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 //        hxIns.setQuentity(newItemUnit.getQuentity());
 //        hxIns.setToIn(Boolean.TRUE);
 //        hxIns.setToOut(Boolean.FALSE);
-//        
+//
 //
 //        hxUnit.setBeforeQty(calculateStock(item, newItemUnit.getUnit()));
 //        hxUnit.setCreatedAt(Calendar.getInstance().getTime());
@@ -626,17 +617,17 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 //    private void addToLocation() {
 //    }
     public void calculateItemValue() {
-        getBillItemEntry().getBillItem().setNetValue(getBillItemEntry().getBillItem().getNetRate() * getBillItemEntry().getBillItem().getQuentity());
+        getBillItem().setNetValue(getBillItem().getNetRate() * getBillItem().getQuentity());
     }
 
     public void calculateBillValue() {
         double netBillValue = 0l;
         double grossBillValue = 0l;
         double discountBillValue = 0l;
-        for (BillItemEntry temEntry : getBillItemEntrys()) {
-            netBillValue += temEntry.getBillItem().getNetValue();
-            grossBillValue += temEntry.getBillItem().getGrossValue();
-            discountBillValue += temEntry.getBillItem().getDiscountValue();
+        for (BillItem temEntry : getBillItems()) {
+            netBillValue += temEntry.getNetValue();
+            grossBillValue += temEntry.getGrossValue();
+            discountBillValue += temEntry.getDiscountValue();
         }
         getBill().setNetValue(netBillValue - getBill().getDiscountValue());
         getBill().setGrossValue(netBillValue);
@@ -648,49 +639,45 @@ public final class InventoryItemUnitAlterController  implements Serializable {
     /**
      * Creates a new instance of PurchaseBillController
      */
-  
-
     /**
      * Getters and Setters
      */
-    private void addLastBillEntryNumber(BillItemEntry entry) {
-        entry.setId((long) getLstBillItemEntrys().size() + 1);
+    private void addLastBillEntryNumber(BillItem entry) {
+        entry.setId((long) getLstBillItems().size() + 1);
     }
 
-    public BillItemEntry getBillItemEntry() {
+    public BillItem getBillItem() {
         if (billItemEntry == null) {
-            billItemEntry = new BillItemEntry();
-            billItemEntry.setBillItem(new BillItem());
-            billItemEntry.getBillItem().setItemUnit(new ItemUnit());
+            billItemEntry = new BillItem();
             addLastBillEntryNumber(billItemEntry);
         }
         return billItemEntry;
     }
 
-    public void setBillItemEntry(BillItemEntry billItemEntry) {
+    public void setBillItem(BillItem billItemEntry) {
         this.billItemEntry = billItemEntry;
     }
 
-    public DataModel<BillItemEntry> getBillItemEntrys() {
-        return new ListDataModel<BillItemEntry>(getLstBillItemEntrys());
+    public DataModel<BillItem> getBillItems() {
+        return new ListDataModel<BillItem>(getLstBillItems());
     }
 
-    public void setBillItemEntrys(DataModel<BillItemEntry> billItemEntrys) {
+    public void setBillItems(DataModel<BillItem> billItemEntrys) {
         this.billItemEntrys = billItemEntrys;
     }
 
-    public List<BillItemEntry> getLstBillItemEntrys() {
-        if (lstBillItemEntrys == null) {
-            lstBillItemEntrys = new ArrayList<BillItemEntry>();
+    public List<BillItem> getLstBillItems() {
+        if (lstBillItems == null) {
+            lstBillItems = new ArrayList<BillItem>();
         }
-        return lstBillItemEntrys;
+        return lstBillItems;
     }
 
-    public void setLstBillItemEntrys(List<BillItemEntry> lstBillItemEntrys) {
-        this.lstBillItemEntrys = lstBillItemEntrys;
+    public void setLstBillItems(List<BillItem> lstBillItems) {
+        this.lstBillItems = lstBillItems;
     }
 
-//  
+//
 //        public Bill getBill() {
 //        if (bill != null) {
 //            JsfUtil.addErrorMessage(bill.toString());
@@ -708,7 +695,7 @@ public final class InventoryItemUnitAlterController  implements Serializable {
 //            JsfUtil.addErrorMessage("Null");
 //        }
 //    }
-//    
+//
     public void prepareForNewBill() {
         setNewBill(Boolean.TRUE);
         bill = new InInventoryBill();
@@ -723,11 +710,10 @@ public final class InventoryItemUnitAlterController  implements Serializable {
         List<BillItem> temLstBillItems = new ArrayList<BillItem>(getBillItemFacade().findBySQL(temStr));
         System.out.println(temLstBillItems.toString());
         long i = 1;
-        for (BillItem bi:temLstBillItems){
-            BillItemEntry bie = new BillItemEntry();
-            bie.setBillItem(bi);
-            bie.setId(i);
-            getLstBillItemEntrys().add(bie);
+        for (BillItem bi : temLstBillItems) {
+            BillItem bie = new BillItem();
+            bie.setBillSerial(i);
+            getLstBillItems().add(bie);
             i++;
         }
         getTransferBean().setBill(null);
@@ -821,12 +807,12 @@ public final class InventoryItemUnitAlterController  implements Serializable {
         this.modalName = modalName;
     }
 
-    public BillItemEntry getEditBillItemEntry() {
-        return editBillItemEntry;
+    public BillItem getEditBillItem() {
+        return editBillItem;
     }
 
-    public void setEditBillItemEntry(BillItemEntry editBillItemEntry) {
-        this.editBillItemEntry = editBillItemEntry;
+    public void setEditBillItem(BillItem editBillItem) {
+        this.editBillItem = editBillItem;
     }
 
     public InstitutionFacade getInstitutionFacade() {
@@ -1022,5 +1008,4 @@ public final class InventoryItemUnitAlterController  implements Serializable {
     public void setNewBill(Boolean newBill) {
         this.newBill = newBill;
     }
-
 }
