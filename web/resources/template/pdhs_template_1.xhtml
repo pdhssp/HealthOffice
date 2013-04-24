@@ -50,25 +50,43 @@
                 </pou:layoutUnit>
 
                 <pou:layoutUnit position="south" resizable="false" closable="false" collapsible="false">
-                    <pou:panelGrid columns="12" rendered="#{connetcionController.logged}" >
+                    <pou:panelGrid columns="3" >
 
-                        <h:form>
-                            <h:outputLabel value="#{postLabels.youAreLoggedAs} &nbsp;&ndash;&nbsp; #{connetcionController.displayName}" />
-                            <h:commandButton value="#{postLabels.logout}" action="#{connetcionController.logout}" ></h:commandButton>
-                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
-                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
-                            <h:selectOneMenu value="#{languageBean.localeCode}" >
-                                <f:selectItems value="#{languageBean.countriesInMap}" />
-                            </h:selectOneMenu>
-                            <h:commandButton value="#{postLabels.set}" action="#{languageBean.changeLocale()}"></h:commandButton>
-                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
-                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;" />
-                            <pou:themeSwitcher id="defaultSwitcher" value="#{themeSwitcherBean.theme}" >
-                                <f:selectItem itemLabel="#{postLabels.chooseTheme}" itemValue="" />
-                                <f:selectItems value="#{themeSwitcherBean.themes}" />
-                            </pou:themeSwitcher>
-                            <h:commandButton value="#{postLabels.set}" action="#{themeSwitcherBean.saveTheme}"/>
-                        </h:form>
+                        <pou:panel rendered="#{connetcionController.logged}" header="#{labels.Login}" style="margin: 2px; padding: 2px; border: 0px;">
+                            <h:form>
+                                <pou:panel id="divActivated" rendered="#{connetcionController.activated}" style="margin:2px; padding: 0px; border: 0px;">
+                                    #{postLabels.youAreLoggedAs} #{connetcionController.displayName}
+                                    <pou:commandButton value="#{postLabels.logout}" action="#{connetcionController.logout}" ajax="false"></pou:commandButton>
+                                </pou:panel>
+                                <pou:panel id="divNotActivated" rendered="#{!connetcionController.activated}" style="margin: 2px; padding: 0px; border: 0px;">
+                                    #{postLabels.accountActivate}
+                                    <pou:commandButton value="#{postLabels.logout}" action="#{connetcionController.logout}" ajax="false"></pou:commandButton>
+                                </pou:panel>
+                            </h:form>
+                        </pou:panel>
+
+
+                        <pou:panel header="#{postLabels.theme}" style="margin: 2px; padding: 2px; border: 0px;">
+                            <h:form>
+                                <pou:themeSwitcher style="width:165px" id="defaultSwitcher" value="#{themeSwitcherBean.theme}">
+                                    <f:selectItem itemLabel="#{postLabels.chooseTheme}" itemValue="" />
+                                    <f:selectItems value="#{themeSwitcherBean.themes}" />
+                                </pou:themeSwitcher>
+                                <pou:commandButton value="#{postLabels.set}" action="#{themeSwitcherBean.saveTheme}"></pou:commandButton>
+                            </h:form>
+                        </pou:panel>
+
+                        <pou:panel  header="#{postLabels.language}" style="margin: 2px; padding: 2px; border: 0px;">
+
+                            <h:form>
+                                <h:selectOneMenu value="#{languageBean.localeCode}" >
+                                    <f:selectItems value="#{languageBean.countriesInMap}" />
+                                </h:selectOneMenu>
+                                <h:commandButton value="#{postLabels.set}" action="#{languageBean.changeLocale()}"></h:commandButton>
+                            </h:form>
+
+                        </pou:panel>
+
 
                     </pou:panelGrid>
 
@@ -81,138 +99,56 @@
 
                 <pou:layoutUnit position="center">
 
-
-<pou:panelGrid columns="1" >
-                                    <h:panelGroup rendered="#{!sessionController.logged}" >
-
-
-
-
-
-
+                    <h:panelGroup rendered="#{!sessionController.logged}" >
                         <ui:insert name="login"   >
+                            <h:form>
+                                <table render="false"  width="400px" class="pdTable" align="center">
+                                    <tr>
+                                        <td colspan="2" class="pdTableHighlightRow">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="pdLabel">&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center" colspan="2">
+
+                                            <span class="pdHeading1">#{labels.LogintotheApplication}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="pdLabel">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pdLabel" align="right" width="40%">#{labels.UserName}</td>
+                                        <td align="left" width="60%"><h:inputText value="#{connetcionController.userName}" autocomplete="off"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pdLabel" align="right">#{labels.Password}</td>
+                                        <td align="left"><h:inputSecret value="#{connetcionController.passord}"  autocomplete="off" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left"></td>
+                                        <td align="left">
+                                            <h:commandButton id="btnLogin" class="pdButton" type="submit" value="#{labels.Login}" action="#{connetcionController.loginAction()}"/>
+                                            <h:commandButton id="btnReg" class="pdButton" type="submit" value="#{labels.Register}" action="register" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="pdLabel">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"  class="pdTableHighlightRow">&nbsp;
+                                            <pou:messages globalOnly="true" ></pou:messages>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </h:form>
 
 
-                            <pou:panelGrid columns="3" columnClasses="indexCol, indexCol, indexCol">
-                                
-                                
-                                                              
-                         
-
-                                <pou:imageSwitch  effect="fade">
-                                    <pou:panel>
-                                        <h:graphicImage  class="pdPotraitImage" library="image" name="governer.jpg" ></h:graphicImage><br/>
-                                        <h:outputLabel class="pdPotraitTitle">#{labels.GovernerTitel}</h:outputLabel><br/>
-                                        <h:outputLabel class="pdPotraitName">#{labels.GovernerName}</h:outputLabel><br/>
-                                    </pou:panel>
-                                    <pou:panel >
-                                        <h:graphicImage  class="pdPotraitImage" library="image" name="minister.jpg" ></h:graphicImage><br/>
-                                        <h:outputLabel class="pdPotraitTitle"> #{labels.ChiefMinisterTitel}</h:outputLabel><br/>
-                                        <h:outputLabel class="pdPotraitName"> #{labels.ChiefMinisterName}</h:outputLabel><br/>
-
-                                    </pou:panel>
-                                    <pou:panel >
-                                        <h:graphicImage  class="pdPotraitImage" library="image" name="secretary.jpg" ></h:graphicImage><br/>
-                                        <h:outputLabel class="pdPotraitTitle">#{labels.Secretary}, #{labels.SecretaryTitel}</h:outputLabel><br></br>
-                                        <h:outputLabel class="pdPotraitName">#{labels.SecretaryName}</h:outputLabel><br></br>
-
-                                    </pou:panel >
-
-                                    <pou:panel>
-                                        <h:graphicImage  class="pdPotraitImage" library="image" name="director.jpg" ></h:graphicImage><br/>
-                                        <h:outputLabel class="pdPotraitTitle">#{labels.Director},#{labels.DirectorTitel}</h:outputLabel><br/> 
-                                        <h:outputLabel class="pdPotraitName">#{labels.DirectorName}</h:outputLabel><br/>
-
-                                    </pou:panel >
-                                </pou:imageSwitch>
-                                
-                                
-
-
-                                <pou:layoutUnit position="west" resizable="false" closable="false" collapsible="false" rendered="false">
-                               
-
-                                </pou:layoutUnit>
-
-
-
-
-
-
-                                <h:form>
-                                    <table render="false"  width="400px" class="pdTable" align="center">
-                                        <tr>
-                                            <td colspan="2" class="pdTableHighlightRow">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="pdLabel">&nbsp;</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td align="center" colspan="2">
-
-                                                <span class="pdHeading1">#{labels.LogintotheApplication}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="pdLabel">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pdLabel" align="right" width="40%">#{labels.UserName}</td>
-                                            <td align="left" width="60%"><h:inputText value="#{connetcionController.userName}" autocomplete="off"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pdLabel" align="right">#{labels.Password}</td>
-                                            <td align="left"><h:inputSecret value="#{connetcionController.passord}"  autocomplete="off" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left"></td>
-                                            <td align="left">
-                                                <h:commandButton id="btnLogin" class="pdButton" type="submit" value="#{labels.Login}" action="#{connetcionController.loginAction()}"/>
-                                                <h:commandButton id="btnReg" class="pdButton" type="submit" value="#{labels.Register}" action="register" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="pdLabel">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2"  class="pdTableHighlightRow">&nbsp;
-                                                <pou:messages globalOnly="true" ></pou:messages>
-                                            </td>
-                                        </tr>
-
-                                    </table>
-                                </h:form>
-
-                                <pou:panel >
-                                    
-                                    
-
-                                    <pou:panel>
-                                        <h:graphicImage  class="pdPotraitImage" library="image" name="director.jpg" ></h:graphicImage><br/>
-                                        <h:outputLabel class="pdPotraitTitle">#{labels.Director},#{labels.DirectorTitel}</h:outputLabel><br/> 
-                                        <h:outputLabel class="pdPotraitName">#{labels.DirectorName}</h:outputLabel><br/>
-
-                                    </pou:panel >
-                                    
-                                     <pou:panelGrid columns="1" >
-                                    <h:graphicImage  class="pdPotraitImage" library="image" name="flower_1.jpg" ></h:graphicImage><br/>
-                                    <h:graphicImage  class="pdPotraitImage" library="image" name="flag.jpg" ></h:graphicImage><br/>
-                                    <h:graphicImage  class="pdPotraitImage" library="image" name="logo.jpg" ></h:graphicImage><br/>
-                                </pou:panelGrid >
- 
-
-                                </pou:panel>
-
-
-                            </pou:panelGrid>
                         </ui:insert>
                     </h:panelGroup>
-                                </pou:panelGrid >
-
-
-
-                   
 
 
                     <h:panelGroup rendered="#{sessionController.logged}" >

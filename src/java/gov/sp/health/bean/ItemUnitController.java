@@ -1,8 +1,8 @@
 /*
  * MSc(Biomedical Informatics) Project
- * 
- * Development and Implementation of a Web-based Combined Data Repository of 
- Genealogical, Clinical, Laboratory and Genetic Data 
+ *
+ * Development and Implementation of a Web-based Combined Data Repository of
+ Genealogical, Clinical, Laboratory and Genetic Data
  * and
  * a Set of Related Tools
  */
@@ -67,6 +67,76 @@ public final class ItemUnitController implements Serializable {
     Institution institution;
     List<String> whNos;
     String whNo;
+    Boolean allItems;
+    Boolean selectedItems;
+    Integer intSelect;
+    List<Item> selectedConsumableOrInventoryItems;
+    List<ConsumableItem> selectedConsumableItems;
+    List<InventoryItem> selectedInventoryItems;
+
+    public Integer getIntSelect() {
+        return intSelect;
+    }
+
+    public void setIntSelect(Integer intSelect) {
+        this.intSelect = intSelect;
+        if (intSelect == 1) {
+            setSelectedItems(Boolean.TRUE);
+            setAllItems(Boolean.FALSE);
+        } else {
+            setSelectedItems(Boolean.FALSE);
+            setAllItems(Boolean.TRUE);
+        }
+    }
+
+    public Boolean getAllItems() {
+        return allItems;
+    }
+
+    public void setAllItems(Boolean allItems) {
+        this.allItems = allItems;
+    }
+
+    public Boolean getSelectedItems() {
+        return selectedItems;
+    }
+
+    public void setSelectedItems(Boolean selectedItems) {
+        this.selectedItems = selectedItems;
+    }
+
+    public List<Item> getSelectedConsumableOrInventoryItems() {
+        if (selectedConsumableOrInventoryItems == null) {
+            selectedConsumableOrInventoryItems = new ArrayList<Item>();
+        }
+        return selectedConsumableOrInventoryItems;
+    }
+
+    public void setSelectedConsumableOrInventoryItems(List<Item> selectedConsumableOrInventoryItems) {
+        this.selectedConsumableOrInventoryItems = selectedConsumableOrInventoryItems;
+    }
+
+    public List<ConsumableItem> getSelectedConsumableItems() {
+        if (selectedConsumableItems == null) {
+            selectedConsumableItems = new ArrayList<ConsumableItem>();
+        }
+        return selectedConsumableItems;
+    }
+
+    public void setSelectedConsumableItems(List<ConsumableItem> selectedConsumableItems) {
+        this.selectedConsumableItems = selectedConsumableItems;
+    }
+
+    public List<InventoryItem> getSelectedInventoryItems() {
+        if (selectedInventoryItems == null) {
+            selectedInventoryItems = new ArrayList<InventoryItem>();
+        }
+        return selectedInventoryItems;
+    }
+
+    public void setSelectedInventoryItems(List<InventoryItem> selectedInventoryItems) {
+        this.selectedInventoryItems = selectedInventoryItems;
+    }
 
     public String getWhNo() {
         return whNo;
@@ -75,9 +145,6 @@ public final class ItemUnitController implements Serializable {
     public void setWhNo(String whNo) {
         this.whNo = whNo;
     }
-    
-    
-     
 
     public List<String> getWhNos() {
         String temSql = "Select DISTINCT v.whNo From Vmp v where v.retired=false order by v.whNo";
@@ -87,8 +154,6 @@ public final class ItemUnitController implements Serializable {
     public void setWhNos(List<String> whNos) {
         this.whNos = whNos;
     }
-    
-    
 
     public ItemCount getCurrentItemCount() {
         return currentItemCount;
@@ -151,7 +216,7 @@ public final class ItemUnitController implements Serializable {
         }
 //        ItemUnit iu = new ItemUnit();
 //        iu.getQuentity();
-        List<ItemCount> temItemCounts = new ArrayList<ItemCount> ();
+        List<ItemCount> temItemCounts = new ArrayList<ItemCount>();
         String temSql;
         temSql = "SELECT i From Item i where i.retired=false and i.id in (select iu.item.id from ItemUnit iu where iu.institution.id = " + getInstitution().getId() + " ) order by i.name";
         List<Item> temItems = getItemFacade().findBySQL(temSql);
@@ -165,11 +230,11 @@ public final class ItemUnitController implements Serializable {
         return new ListDataModel<ItemCount>(temItemCounts);
     }
 
-        public DataModel<ItemCount> getInsWhItemSum() {
+    public DataModel<ItemCount> getInsWhItemSum() {
         if (getInstitution() == null) {
             return null;
         }
-        List<ItemCount> temItemCounts = new ArrayList<ItemCount> ();
+        List<ItemCount> temItemCounts = new ArrayList<ItemCount>();
         String temSql;
         temSql = "SELECT amp From Amp amp where amp.retired=false and amp.id in (select iu.item.id from ItemUnit iu where iu.institution.id = " + getInstitution().getId() + " and iu.item.whNo = " + whNo + " ) order by amp.name";
         List<Item> temItems = getItemFacade().findBySQL(temSql);
@@ -183,14 +248,13 @@ public final class ItemUnitController implements Serializable {
         return new ListDataModel<ItemCount>(temItemCounts);
     }
 
-    
     public DataModel<ItemCount> getUnitItemSum() {
         if (getUnit() == null) {
             return null;
         }
 //        ItemUnit iu = new ItemUnit();
 //        iu.getQuentity();
-        List<ItemCount> temItemCounts = new ArrayList<ItemCount> ();
+        List<ItemCount> temItemCounts = new ArrayList<ItemCount>();
         String temSql;
         temSql = "SELECT i From Item i where i.retired=false and i.id in (select iu.item.id from ItemUnit iu where iu.unit.id = " + getUnit().getId() + " ) order by i.name";
         List<Item> temItems = getItemFacade().findBySQL(temSql);
@@ -203,8 +267,7 @@ public final class ItemUnitController implements Serializable {
         }
         return new ListDataModel<ItemCount>(temItemCounts);
     }
-    
-    
+
     public void setInsItemCounts(DataModel<ItemCount> insItemCounts) {
         this.insItemCounts = insItemCounts;
     }
@@ -338,7 +401,7 @@ public final class ItemUnitController implements Serializable {
 
     public DataModel<ItemUnit> getItemsIns() {
         if (institution != null) {
-            return new ListDataModel<ItemUnit>(getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND type(i.item)=InventoryItem AND i.institution.id = " + institution.getId() + " order by i.item.name" ));
+            return new ListDataModel<ItemUnit>(getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND type(i.item)=InventoryItem AND i.institution.id = " + institution.getId() + " order by i.item.name"));
         } else {
             return null;
         }
@@ -372,9 +435,66 @@ public final class ItemUnitController implements Serializable {
         this.itemsPer = itemsPer;
     }
 
+    private String itemListToJql(List<Item> sqlItems, String itemVariable) {
+        String sql = "";
+        for (Item i : sqlItems) {
+            if (sql == "") {
+                sql = "(" + itemVariable + " = " + i.getId();
+            } else {
+                sql = sql + " or " + itemVariable + " = " + i.getId() + "";
+            }
+        }
+        sql = sql + ")";
+        return sql;
+    }
+
+    private String itemListToJqlC(List<ConsumableItem> sqlItems, String itemVariable) {
+        String sql = "";
+        for (Item i : sqlItems) {
+            if (sql == "") {
+                sql = "(" + itemVariable + " = " + i.getId();
+            } else {
+                sql = sql + " or " + itemVariable + " = " + i.getId() + "";
+            }
+        }
+        sql = sql + ")";
+        return sql;
+    }
+
+    private String itemListToJqlI(List<InventoryItem> sqlItems, String itemVariable) {
+        String sql = "";
+        for (InventoryItem i : sqlItems) {
+            if (sql == "") {
+                sql = "(" + itemVariable + " = " + i.getId();
+            } else {
+                sql = sql + " or " + itemVariable + " = " + i.getId() + "";
+            }
+        }
+        sql = sql + ")";
+        return sql;
+    }
+
     public DataModel<ItemUnit> getItemsUni() {
+        String sql;
         if (unit != null) {
-            return new ListDataModel<ItemUnit>(getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND i.unit.id = " + unit.getId() + " order by i.item.name" ));
+            if (getSelectedItems() == true) {
+                if (getSelectedInventoryItems().isEmpty()) {
+                    return null;
+                }
+                sql = "SELECT i From ItemUnit i WHERE i.retired=false AND i.unit.id = " + unit.getId() + " and " + itemListToJqlI(getSelectedInventoryItems(), "i.item.id") + " order by i.item.name";
+                System.out.println(sql);
+            } else {
+                sql = "SELECT i From ItemUnit i WHERE i.retired=false AND i.unit.id = " + unit.getId() + " and type(i.item) = InventoryItem order by i.item.name";
+            }
+            return new ListDataModel<ItemUnit>(getFacade().findBySQL(sql));
+        } else {
+            return null;
+        }
+    }
+
+    public DataModel<ItemUnit> getConsumableItemsUni() {
+        if (unit != null) {
+            return new ListDataModel<ItemUnit>(getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND i.unit.id = " + unit.getId() + "  and type(i.item) = ConsumableItem order by i.item.name"));
         } else {
             return null;
         }
