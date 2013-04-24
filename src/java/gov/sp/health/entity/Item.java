@@ -48,9 +48,7 @@ public class Item implements Serializable {
     MeasurementUnit itemUnit;
     double looseUnitsPerBulkUnit;
     private String itemPrefix;
-
-
-        private String sname;
+    private String sname;
     private String tname;
 
     public String getSname() {
@@ -69,7 +67,6 @@ public class Item implements Serializable {
         this.tname = tname;
     }
 
-    
     public Double getItemQuantity() {
         return itemQuantity;
     }
@@ -227,10 +224,10 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        if (getCode().equals("")) {
+        if (getCode() == null || getCode().equals("")) {
             return getName();
         } else {
-            return name + "(" + getName() + ")";
+            return name + "(" + getCode() + ")";
         }
     }
 

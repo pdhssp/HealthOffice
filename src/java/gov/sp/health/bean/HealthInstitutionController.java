@@ -41,6 +41,10 @@ public final class HealthInstitutionController implements Serializable {
     private List<HealthInstitution> items = null;
     private String selectText = "";
 
+    private List<HealthInstitution> allItems = null;
+    
+    
+    
     public HealthInstitutionController() {
     }
 
@@ -258,6 +262,15 @@ public final class HealthInstitutionController implements Serializable {
 
     public void setSearchItems(List<HealthInstitution> searchItems) {
         this.searchItems = searchItems;
+    }
+
+    public List<HealthInstitution> getAllItems() {
+        allItems = getFacade().findAll("name", true);
+        return allItems;
+    }
+
+    public void setAllItems(List<HealthInstitution> allItems) {
+        this.allItems = allItems;
     }
 
     @FacesConverter(forClass = HealthInstitution.class)

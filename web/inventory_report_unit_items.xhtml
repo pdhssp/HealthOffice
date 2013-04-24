@@ -8,101 +8,131 @@
 
     <ui:define name="content">
 
-        <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
-            <f:facet name="start">
-                <h:graphicImage library="image" name="ajaxloading.gif" />
-            </f:facet>
+        <pou:panel header="Sub-Inventory Report " >
 
-            <f:facet name="complete">
-                <h:outputText value="" />
-            </f:facet>
-        </pou:ajaxStatus>
-        <h:form>
+            <pou:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                <f:facet name="start">
+                    <h:graphicImage library="image" name="ajaxloading.gif" />
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </pou:ajaxStatus>
 
-            <pou:growl id="g"></pou:growl>
+            <h:form>
 
-            <h:panelGrid columns="2" >
-                <h:outputLabel value="#{labels.Institution}"/>
-                <h:selectOneListbox id="lstIns" value="#{unitController.institution}" size="5">
-                    <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
-                    <f:ajax execute="lstIns" render="lstUnit" event="change"/>
-                </h:selectOneListbox>
-                <h:outputLabel value="#{postLabels.unit}"/>
-                <h:selectOneListbox id="lstUnit" value="#{itemUnitController.unit}" size="5">
-                    <f:selectItems value="#{unitController.items}" var="uni" itemValue="#{uni}" itemLabel="#{uni.name}"/>
-                </h:selectOneListbox>
-                <pou:commandButton value="#{labels.displayAll}" ajax="false"  />
+                <pou:growl id="g"></pou:growl>
+                <h:outputLabel value="Detailed Sub-Inventory Report - All Items" style="font-size: large" />
 
-                <pou:commandButton value="#{postLabels.print}" ajax="false">
-                    <pou:printer target="tblItems"  />
-                </pou:commandButton>
-                 <h:commandLink id="clCvs">
-                    <h:graphicImage  library="image" name="csv.png" />
-                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
-                    <pou:tooltip for="clCvs" >
-                        <h:outputLabel value="#{postLabels.exportAsCVS}" />
-                    </pou:tooltip>
-                </h:commandLink>
-                <h:commandLink id="clXml">
-                    <pou:tooltip for="clXml" >
-                        <h:outputLabel value="#{postLabels.exportAsXML}" />
-                    </pou:tooltip>
-                    <h:graphicImage  library="image" name="xml.png" />
-                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
-                </h:commandLink>
+                <h:panelGrid columns="2" >
 
+                    <h:outputLabel value="#{labels.Institution}"/>
+                    <h:selectOneListbox id="lstIns" value="#{unitController.institution}" size="5">
+                        <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                        <f:ajax execute="lstIns" render="lstUnit" event="change"/>
+                    </h:selectOneListbox>
 
-                <h:commandLink id="clPrint" type="button">
-                    <pou:tooltip for="clPrint" >
-                        <h:outputLabel value="#{postLabels.printAllRecords}" />
-                    </pou:tooltip>
-                    <pou:printer target="tblItems" />
-                    <h:graphicImage  library="image" name="print.png" style="width: 30px;height: 30px;" />
-                </h:commandLink>
+                    <h:outputLabel value="#{postLabels.unit}"/>
+                    <h:selectOneListbox id="lstUnit" value="#{itemUnitController.unit}" size="5">
+                        <f:selectItems value="#{unitController.items}" var="uni" itemValue="#{uni}" itemLabel="#{uni.name}"/>
+                    </h:selectOneListbox>
 
-                <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+                    <h:selectOneRadio id="optSelect" value="#{itemUnitController.intSelect}" >
+                        <f:selectItem itemLabel="All Items" itemValue="0"/>
+                        <f:selectItem itemLabel="Selected Items" itemValue="1"/>
+                        <f:ajax event="click" execute="optSelect" render="chkSelect" />
+                    </h:selectOneRadio>
 
-                <h:commandLink  id="clRemove" value="" action="#{citizenCharterController.removeSelected}">
-                    <pou:tooltip for="clRemove" >
-                        <h:outputLabel value="#{postLabels.removeSelectedReports}" />
-                    </pou:tooltip>
-                    <h:graphicImage  library="image" name="remove.png" style="width: 30px;height: 30px;" />
-                </h:commandLink>                
-                
-            </h:panelGrid>
+                    <pou:selectManyCheckbox id="chkSelect"   value="#{itemUnitController.selectedInventoryItems}" >
+                        <f:selectItems value="#{inventoryItemController.items}" var="selItem" itemLabel="#{selItem.name}" itemValue="#{selItem}"/>
+                    </pou:selectManyCheckbox>
 
 
 
-            <pou:dataTable id="tblItems"  widgetVar="pouDataTable"  var="demo" value="#{itemUnitController.itemsUni}" emptyMessage="#{postLabels.noRecordsFoundInventory}" >
 
-                <pou:column sortBy="#{demo.item.name}">
+
+                </h:panelGrid>
+
+
+                <h:panelGrid columns="5" >
+                    <pou:commandButton value="Display" ajax="false"  />
+
+                    <pou:commandButton value="#{postLabels.print}" ajax="false">
+                        <pou:printer target="tblItems"  />
+                    </pou:commandButton>
+
+                    <h:commandLink id="clExcel">
+                        <h:graphicImage  library="image" name="excel.png" />
+                        <pou:dataExporter type="xls" target="tblItems" fileName="items" />
+                        <pou:tooltip for="clExcel" >
+                            <h:outputLabel value="Excel" />
+                        </pou:tooltip>
+                    </h:commandLink>
+
+                    <h:commandLink id="clPDF">
+                        <pou:tooltip for="clPDF" >
+                            <h:outputLabel value="PDF" />
+                        </pou:tooltip>
+                        <h:graphicImage  library="image" name="pdf.png" />
+                        <pou:dataExporter type="pdf" target="tblItems" fileName="items" />
+                    </h:commandLink>
+
+
+                    <h:commandLink id="clPrint" type="button">
+                        <pou:tooltip for="clPrint" >
+                            <h:outputLabel value="#{postLabels.printAllRecords}" />
+                        </pou:tooltip>
+                        <pou:printer target="tblItems" />
+                        <h:graphicImage  library="image" name="print.png" style="width: 30px;height: 30px;" />
+                    </h:commandLink>
+
+                    <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+
+                </h:panelGrid>
+
+
+                <pou:dataTable id="tblItems"  widgetVar="pouDataTable"  var="demo" value="#{itemUnitController.itemsUni}" emptyMessage="#{postLabels.noRecordsFoundInventory}" >
+
                     <f:facet name="header">
-                        #{labels.item}
+                        Detailed Sub-Inventory Report - All Items
                     </f:facet>
-                    <h:outputText value="#{demo.item.name}"/>
-                </pou:column>
-
-                <pou:column sortBy="#{demo.person.name}">
-                    <f:facet name="header">
-                        #{labels.Persons}
-                    </f:facet>
-                    <h:outputText rendered="#{demo.person !=null}" value="#{demo.person.name}" />  
-                </pou:column>
 
 
-                <pou:column sortBy="#{demo.serial}">
-                    <f:facet name="header">
-                        #{labels.serial}
-                    </f:facet>
-                    <h:outputText value="#{demo.serial}" />  
-                </pou:column>                
+                    <pou:column sortBy="#{demo.item.name}">
+                        <f:facet name="header">
+                            #{labels.item}
+                        </f:facet>
+                        <h:outputText value="#{demo.item.name}"/>
+                    </pou:column>
+
+                    <pou:column sortBy="#{demo.person.name}">
+                        <f:facet name="header">
+                            #{labels.Persons}
+                        </f:facet>
+                        <h:outputText rendered="#{demo.person !=null}" value="#{demo.person.name}" />
+                    </pou:column>
+
+
+                    <pou:column sortBy="#{demo.serial}">
+                        <f:facet name="header">
+                            #{labels.serial}
+                        </f:facet>
+                        <h:outputText value="#{demo.serial}" />
+                    </pou:column>
+
+                    <pou:column >
+                        <f:facet name="header">
+                            Item No
+                        </f:facet>
+                        <h:outputText value="#{demo.name}" />
+                    </pou:column>
 
 
 
-            </pou:dataTable>
+                </pou:dataTable>
 
 <!--            <pou:panel header="#{labels.exportAllData}">
-                 
+
             </pou:panel>-->
 
 
@@ -111,8 +141,9 @@
 
 
 
-        </h:form>
+            </h:form>
 
+        </pou:panel>
 
     </ui:define>
 
