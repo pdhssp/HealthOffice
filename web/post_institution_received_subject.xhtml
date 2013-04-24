@@ -47,11 +47,21 @@
                     <pou:printer target="tblItemsToPrint"  />
                 </h:commandButton>
 
+                <h:commandLink id="clExcel">
+                    <pou:tooltip for="clExcel" >
+                        <h:outputLabel value="#{postLabels.exportAsExcel}" />
+                    </pou:tooltip>
+                    <h:graphicImage  library="image" name="excel.png" />
+                    <pou:dataExporter type="xls" target="tblItems" fileName="items" />
+                </h:commandLink>
+
+
+
             </h:panelGrid>
 
 
 
-                    
+
             <pou:dataTable id="tblItems"   var="demo" value="#{letterController.itemsInsSub}" selection="#{letterController.current}" emptyMessage="#{postLabels.noRecordsFound}" >
                 <f:facet name="header">
                     <h:outputLabel rendered="#{!(letterController.subject==null)}" value="#{letterController.subject.name} - "/>
@@ -82,8 +92,8 @@
                     <f:facet name="header">
                         <h:outputLabel value="#{postLabels.registered}" style="font-size: medium;"/>
                     </f:facet>
-                    <h:outputText value="#{ (demo.registered) ? 'Reg' : 'N' }" style="font-size: 10px;"  /><br/>
-                    <h:outputText  rendered="#{demo.registered}"  value="#{demo.code}" style="font-size: 10px;"/>                    
+                     <h:outputText  rendered="#{!demo.registered}"  value="N" style="font-size: 10px;"/>
+                    <h:outputText  rendered="#{demo.registered}"  value="Reg #{demo.code}" style="font-size: 10px;"/>                    
                 </pou:column>
 
                 <pou:column style="max-width:120px!important; text-wrap:normal; padding:1px; margin: 1px; ">
@@ -114,11 +124,13 @@
                     </f:facet>
                 </pou:column>
 
+
+
             </pou:dataTable>
 
 
-            
-            
+
+
             <pou:dataTable  id="tblItemsToPrint"   var="demoP" value="#{letterController.itemsInsSubToPrint}" selection="#{letterController.current}" emptyMessage="#{postLabels.noRecordsFound}">
                 <f:facet name="header">
                     <h:outputLabel rendered="#{!(letterController.subject==null)}" value="#{letterController.subject.name} - "/>
@@ -182,48 +194,6 @@
                 </pou:column>
 
             </pou:dataTable>
-            
-            
-            
-            <pou:panel header="#{labels.exportAllData}">
-                <h:commandLink id="clCvs">
-                    <h:graphicImage  library="image" name="csv.png" />
-                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
-                    <pou:tooltip for="clCvs" >
-                        <h:outputLabel value="#{postLabels.exportAsCVS}" />
-                    </pou:tooltip>
-                </h:commandLink>
-                <h:commandLink id="clXml">
-                    <pou:tooltip for="clXml" >
-                        <h:outputLabel value="#{postLabels.exportAsXML}" />
-                    </pou:tooltip>
-                    <h:graphicImage  library="image" name="xml.png" />
-                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
-                </h:commandLink>
-
-
-                <h:commandLink id="clPrint" type="button">
-                    <pou:tooltip for="clPrint" >
-                        <h:outputLabel value="#{postLabels.printAllRecords}" />
-                    </pou:tooltip>
-                    <pou:printer target="tblItems" />
-                    <h:graphicImage  library="image" name="print.png" style="width: 30px;height: 30px;" />
-                </h:commandLink>
-
-                <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
-
-                <h:commandLink  id="clRemove" value="" action="#{citizenCharterController.removeSelected}">
-                    <pou:tooltip for="clRemove" >
-                        <h:outputLabel value="#{postLabels.removeSelectedReports}" />
-                    </pou:tooltip>
-                    <h:graphicImage  library="image" name="remove.png" style="width: 30px;height: 30px;" />
-                </h:commandLink>                
-
-            </pou:panel>
-
-
-
-
 
 
 

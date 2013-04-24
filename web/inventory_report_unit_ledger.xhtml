@@ -21,7 +21,7 @@
         <h:form>
             <!--ToDO:
             Align Top
-            
+
             -->
             <pou:growl id="g" autoUpdate="true"></pou:growl>
             <pou:panel id="gpDetail" style="vertical-align: text-top;">
@@ -71,7 +71,7 @@
                                 <f:facet name="complete">
                                     <h:outputText value="" />
                                 </f:facet>
-                            </pou:ajaxStatus>                            
+                            </pou:ajaxStatus>
                         </pou:column>
                     </pou:row>
                 </h:panelGrid>
@@ -93,23 +93,23 @@
                     <f:facet name="header">
                         #{labels.make}
                     </f:facet>
-                    <h:outputText value="#{demo.billItem.itemUnit.make.name}"/>
-                </pou:column>                
+                    <h:outputText value="#{demo.itemUnit.make.name}"/>
+                </pou:column>
 
 
                 <pou:column>
                     <f:facet name="header">
                         #{labels.model}
                     </f:facet>
-                    <h:outputText value="#{demo.billItem.itemUnit.modal.name}"/>
+                    <h:outputText value="#{demo.itemUnit.modal.name}"/>
                 </pou:column>
 
                 <pou:column>
                     <f:facet name="header">
-                        #{labels.id}
+                        Asset Code
                     </f:facet>
-                    <h:outputText value="#{demo.billItem.itemUnit.name}"/>
-                </pou:column>                   
+                    <h:outputText value="#{demo.itemUnit.name}"/>
+                </pou:column>
 
 
                 <pou:column>
@@ -118,14 +118,14 @@
                     </f:facet>
                     <h:outputText value="#{demo.bill.fromInstitution.name}"/>
                     <h:outputText value="#{demo.bill.toInstitution.name}"/>
-                </pou:column>                
+                </pou:column>
 
                 <pou:column>
                     <f:facet name="header">
                         #{labels.invoice}
                     </f:facet>
                     <h:outputText value="#{demo.billItem.bill.name}"/>
-                </pou:column>   
+                </pou:column>
 
 
 
@@ -134,7 +134,7 @@
                         #{postLabels.quentityIn}
                     </f:facet>
                     <h:outputText value="#{demo.inQty}"/>
-                </pou:column>                
+                </pou:column>
 
 
                 <pou:column>
@@ -142,7 +142,7 @@
                         #{postLabels.quentityOut}
                     </f:facet>
                     <h:outputText value="#{demo.outQty}"/>
-                </pou:column>                
+                </pou:column>
 
 
                 <pou:column>
@@ -150,7 +150,7 @@
                         #{postLabels.quentityBefore}
                     </f:facet>
                     <h:outputText value="#{demo.itemUnitHistory.beforeQty}"/>
-                </pou:column>                
+                </pou:column>
 
 
                 <pou:column>
@@ -158,52 +158,24 @@
                         #{postLabels.quentityAfter}
                     </f:facet>
                     <h:outputText value="#{demo.itemUnitHistory.afterQty}"/>
-                </pou:column>                
+                </pou:column>
 
-
-                <pou:column>
-                    <f:facet name="header">
-                        #{postLabels.monthIn}
-                    </f:facet>
-                    <h:outputText value="#{demo.monthInQty}"/>
-                </pou:column>                
-
-
-                <pou:column>
-                    <f:facet name="header">
-                       #{postLabels.monthOut}
-                    </f:facet>
-                    <h:outputText value="#{demo.monthOutQty}"/>
-                </pou:column>                
 
 
             </pou:dataTable>
 
             <pou:panel header="#{labels.exportAllData}">
-                <!--                <h:commandLink>
-                                    <h:graphicImage  library="image" name="excel.png" />
-                                    <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
-                                </h:commandLink>
-                
-                                <h:commandLink>
-                                    <h:graphicImage  library="image" name="pdf.png" />
-                                    <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
-                                </h:commandLink>-->
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="excel.png" />
+                    <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
+                </h:commandLink>
 
-                 <h:commandLink id="clCvs">
-                    <h:graphicImage  library="image" name="csv.png" />
-                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
-                    <pou:tooltip for="clCvs" >
-                        <h:outputLabel value="#{postLabels.exportAsCVS}" />
-                    </pou:tooltip>
+                <h:commandLink>
+                    <h:graphicImage  library="image" name="pdf.png" />
+                    <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
                 </h:commandLink>
-                <h:commandLink id="clXml">
-                    <pou:tooltip for="clXml" >
-                        <h:outputLabel value="#{postLabels.exportAsXML}" />
-                    </pou:tooltip>
-                    <h:graphicImage  library="image" name="xml.png" />
-                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
-                </h:commandLink>
+
+
 
 
                 <h:commandLink id="clPrint" type="button">
@@ -221,7 +193,7 @@
                         <h:outputLabel value="#{postLabels.removeSelectedReports}" />
                     </pou:tooltip>
                     <h:graphicImage  library="image" name="remove.png" style="width: 30px;height: 30px;" />
-                </h:commandLink>                
+                </h:commandLink>
 
             </pou:panel>
 
