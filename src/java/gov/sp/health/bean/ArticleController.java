@@ -8,14 +8,13 @@
  */
 package gov.sp.health.bean;
 
-import gov.sp.health.facade.CategoryFacade;
-import gov.sp.health.entity.Category;
+import gov.sp.health.facade.AtmFacade;
+import gov.sp.health.entity.Atm;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -26,51 +25,32 @@ import javax.faces.model.ListDataModel;
 
 /**
  *
- * @author A.C.M.Safrin(BIT)
+ * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
+ * Informatics)
  */
 @ManagedBean
 @SessionScoped
-public final class ArticlCategoryController  implements Serializable {
+public final class ArticleController  implements Serializable {
 
     @EJB
-    private CategoryFacade ejbFacade;
-    @ManagedProperty(value = "#{sessionController}")
-    SessionController sessionController;
-    List<Category> lstItems;
-    private Category current;
-    private DataModel<Category> items = null;
+    private AtmFacade ejbFacade;
+    SessionController sessionController = new SessionController();
+    List<Atm> lstItems;
+    private Atm current;
+    private DataModel<Atm> items = null;
     private int selectedItemIndex;
     boolean selectControlDisable = false;
     boolean modifyControlDisable = true;
     String selectText = "";
 
-    public ArticlCategoryController() {
+    public ArticleController() {
     }
 
-    public CategoryFacade getEjbFacade() {
-        return ejbFacade;
+    public List<Atm> getLstItems() {
+        return getFacade().findBySQL("Select d From Atm d");
     }
 
-    public void setEjbFacade(CategoryFacade ejbFacade) {
-        this.ejbFacade = ejbFacade;
-    }
-
-    public SessionController getSessionController() {
-        return sessionController;
-    }
-
-    public void setSessionController(SessionController sessionController) {
-        this.sessionController = sessionController;
-    }
-
-    
-    
-    
-    public List<Category> getLstItems() {
-        return getFacade().findBySQL("Select d From Category d");
-    }
-
-    public void setLstItems(List<Category> lstItems) {
+    public void setLstItems(List<Atm> lstItems) {
         this.lstItems = lstItems;
     }
 
@@ -82,22 +62,22 @@ public final class ArticlCategoryController  implements Serializable {
         this.selectedItemIndex = selectedItemIndex;
     }
 
-    public Category getCurrent() {
+    public Atm getCurrent() {
         if (current == null) {
-            current = new Category();
+            current = new Atm();
         }
         return current;
     }
 
-    public void setCurrent(Category current) {
+    public void setCurrent(Atm current) {
         this.current = current;
     }
 
-    private CategoryFacade getFacade() {
+    private AtmFacade getFacade() {
         return ejbFacade;
     }
 
-    public DataModel<Category> getItems() {
+    public DataModel<Atm> getItems() {
         items = new ListDataModel(getFacade().findAll("name", true));
         return items;
     }
@@ -121,7 +101,7 @@ public final class ArticlCategoryController  implements Serializable {
                         true));
                 if (items.getRowCount() > 0) {
                     items.setRowIndex(0);
-                    current = (Category) items.getRowData();
+                    current = (Atm) items.getRowData();
                     Long temLong = current.getId();
                     selectedItemIndex = intValue(temLong);
                 } else {
@@ -134,14 +114,14 @@ public final class ArticlCategoryController  implements Serializable {
 
     }
 
-    public Category searchItem(String itemName, boolean createNewIfNotPresent) {
-        Category searchedItem = null;
+    public Atm searchItem(String itemName, boolean createNewIfNotPresent) {
+        Atm searchedItem = null;
         items = new ListDataModel(getFacade().findAll("name", itemName, true));
         if (items.getRowCount() > 0) {
             items.setRowIndex(0);
-            searchedItem = (Category) items.getRowData();
+            searchedItem = (Atm) items.getRowData();
         } else if (createNewIfNotPresent) {
-            searchedItem = new Category();
+            searchedItem = new Atm();
             searchedItem.setName(itemName);
             searchedItem.setCreatedAt(Calendar.getInstance().getTime());
             searchedItem.setCreater(sessionController.loggedUser);
@@ -169,12 +149,12 @@ public final class ArticlCategoryController  implements Serializable {
 
     public void prepareAdd() {
         selectedItemIndex = -1;
-        current = new Category();
+        current = new Atm();
         this.prepareSelectControlDisable();
     }
 
     public void saveSelected() {
-        if (sessionController.getPrivilege().isDemographyEdit()==false){
+        if (sessionController.getPrivilege().isMsEdit()==false){
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
         }            
@@ -203,7 +183,7 @@ public final class ArticlCategoryController  implements Serializable {
 
             getFacade().create(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
-            current = new Category();
+            current = new Atm();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "Error");
         }
@@ -267,15 +247,15 @@ public final class ArticlCategoryController  implements Serializable {
         modifyControlDisable = true;
     }
 
-    @FacesConverter(forClass = Category.class)
-    public static class CategoryControllerConverter implements Converter {
+    @FacesConverter(forClass = Atm.class)
+    public static class AtmControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ArticlCategoryController controller = (ArticlCategoryController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "categoryController");
+            ArticleController controller = (ArticleController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "atmController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -295,12 +275,12 @@ public final class ArticlCategoryController  implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Category) {
-                Category o = (Category) object;
+            if (object instanceof Atm) {
+                Atm o = (Atm) object;
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type "
-                        + object.getClass().getName() + "; expected type: " + ArticlCategoryController.class.getName());
+                        + object.getClass().getName() + "; expected type: " + ArticleController.class.getName());
             }
         }
     }
