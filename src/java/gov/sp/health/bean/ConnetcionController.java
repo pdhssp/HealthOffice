@@ -714,7 +714,18 @@ public class ConnetcionController implements Serializable {
     }
 
     public String getDisplayName() {
-        return HOSecurity.decrypt(sessionController.getLoggedUser().getName());
+        if (getSessionController()==null){
+            System.out.println("Session Controller Null");
+            return "";
+        }
+        if (getSessionController().getLoggedUser()==null){
+            System.out.println("Logged User Null");
+            return "";
+        }
+        if(getSessionController().getLoggedUser().getName()==null){
+            System.out.println("Name is null");
+        }
+        return HOSecurity.decrypt(getSessionController().getLoggedUser().getName());
     }
 
     public Menu getMenu() {
