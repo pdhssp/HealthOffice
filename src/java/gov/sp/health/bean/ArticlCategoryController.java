@@ -26,12 +26,11 @@ import javax.faces.model.ListDataModel;
 
 /**
  *
- * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
- * Informatics)
+ * @author A.C.M.Safrin(BIT)
  */
 @ManagedBean
 @SessionScoped
-public final class CategoryController  implements Serializable {
+public final class ArticlCategoryController  implements Serializable {
 
     @EJB
     private CategoryFacade ejbFacade;
@@ -45,7 +44,7 @@ public final class CategoryController  implements Serializable {
     boolean modifyControlDisable = true;
     String selectText = "";
 
-    public CategoryController() {
+    public ArticlCategoryController() {
     }
 
     public CategoryFacade getEjbFacade() {
@@ -275,7 +274,7 @@ public final class CategoryController  implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CategoryController controller = (CategoryController) facesContext.getApplication().getELResolver().
+            ArticlCategoryController controller = (ArticlCategoryController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "categoryController");
             return controller.ejbFacade.find(getKey(value));
         }
@@ -301,7 +300,7 @@ public final class CategoryController  implements Serializable {
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type "
-                        + object.getClass().getName() + "; expected type: " + CategoryController.class.getName());
+                        + object.getClass().getName() + "; expected type: " + ArticlCategoryController.class.getName());
             }
         }
     }
