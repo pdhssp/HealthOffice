@@ -17,7 +17,7 @@
             <p:growl autoUpdate="true" />
             <p:panel header="#{labels.EditMetadata}" >
 
-                <p:panelGrid columns="3">
+                <p:panelGrid columns="4">
 
                     <p:panel header="Internal Institutions" >
                         <p:panelGrid columns="1">
@@ -35,16 +35,24 @@
                             <h:commandLink value="#{labels.Countries}" action="country"></h:commandLink>
                         </p:panelGrid>
                     </p:panel>
-                    <p:panel header="Item Details" >
+                    <p:panel header="Inventory Item Details" >
                         <p:panelGrid columns="1">
-                            <h:commandLink value="#{labels.ItemCategories}" action="inventory_item_category"></h:commandLink>
+                            <h:commandLink value="Inventory Item Categories" action="inventory_item_category"></h:commandLink>
                             <h:commandLink value="#{labels.Makes}" action="inventory_make"></h:commandLink>
                             <h:commandLink value="#{labels.Modals}" action="inventory_modal"></h:commandLink>
-                            <h:commandLink value="#{labels.Items}" action="inventory_item"></h:commandLink>
-                            <h:commandLink value="#{labels.Consumables}" action="inventory_item"></h:commandLink>
+                            <h:commandLink value="Inventory Item" action="inventory_item"></h:commandLink>
                             <h:commandLink value="#{labels.ItemsImportFromExcel}" action="inventory_import_items"></h:commandLink>
                         </p:panelGrid>
                     </p:panel>
+                    <p:panel header="Consumable Details" >
+                        <p:panelGrid columns="1">
+                            <h:commandLink value="Consuameble Item Categories" action="consumable_item_category"></h:commandLink>
+                            <h:commandLink value="Consumables" action="inventory_item"></h:commandLink>
+                        </p:panelGrid>
+                    </p:panel>
+
+
+
                 </p:panelGrid>
             </p:panel>
 
