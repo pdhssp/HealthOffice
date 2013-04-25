@@ -13,17 +13,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
-
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 
 /**
  *
  * @author Buddhika
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class LanguageBean implements Serializable {
 
     public LanguageBean() {
@@ -79,28 +76,31 @@ public class LanguageBean implements Serializable {
     }
 
     public void languageToSinhala() {
-        sessionController.loggedUser.setDefLocale("si_LK");
-        userFacade.edit(sessionController.loggedUser);
         Locale myLocale;
+        System.out.println("si");
         myLocale = new Locale("si", "LK");
+        setLocaleCode("si_LK");
+        getSessionController().setDefLocale(localeCode);
+        System.out.println(getLocaleCode().toString());
         FacesContext.getCurrentInstance().getViewRoot().setLocale(myLocale);
         menu.createMenu();
+        System.out.println(getLocaleCode().toString());
     }
 
     public void languageToTamil() {
-        sessionController.loggedUser.setDefLocale("ta_LK");
-        userFacade.edit(sessionController.loggedUser);
         Locale myLocale;
-        myLocale = new Locale("si", "LK");
+        myLocale = new Locale("ta", "LK");
+        setLocaleCode("ta_LK");
+        getSessionController().setDefLocale(localeCode);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(myLocale);
         menu.createMenu();
     }
 
     public void languageToEnglish() {
-        sessionController.loggedUser.setDefLocale("en");
-        userFacade.edit(sessionController.loggedUser);
         Locale myLocale;
         myLocale = new Locale("si", "LK");
+        setLocaleCode("en");
+        getSessionController().setDefLocale(localeCode);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(myLocale);
         menu.createMenu();
     }
@@ -109,9 +109,9 @@ public class LanguageBean implements Serializable {
         inEnglish = false;
         inTamil = false;
         inSinhala = false;
-        if (localeCode.equals("si_LK")) {
+        if (getLocaleCode().equals("si_LK")) {
             inSinhala = true;
-        } else if (localeCode.equals("ta_LK")) {
+        } else if (getLocaleCode().equals("ta_LK")) {
             inTamil = true;
         } else {
             inEnglish = true;
@@ -154,19 +154,24 @@ public class LanguageBean implements Serializable {
     }
 
     public String getLocaleCode() {
-        if (getSessionController() == null) {
-            return "si_LK";
+//        if (getSessionController() == null) {
+//            return "si_LK";
+//        }
+//        if (getSessionController().getDefLocale() == null) {
+//            getSessionController().getLoggedUser().setDefLocale("si_LK");
+//            getUserFacade().edit(getSessionController().getLoggedUser());
+//            getSessionController().setDefLocale("si_LK");
+//        }
+//        return sessionController.getDefLocale();
+        if(localeCode==null || localeCode.trim().equals("")){
+            localeCode = "si_LK";
         }
-        if (getSessionController().getDefLocale() == null) {
-            getSessionController().getLoggedUser().setDefLocale("si_LK");
-            getUserFacade().edit(getSessionController().getLoggedUser());
-            getSessionController().setDefLocale("si_LK");
-        }
-        return sessionController.getDefLocale();
+        return localeCode;
     }
 
     public void setLocaleCode(String localeCode) {
         this.localeCode = localeCode;
+        System.out.println("setLocaleCoe to " + localeCode);
     }
 
     public void changeLocale() {

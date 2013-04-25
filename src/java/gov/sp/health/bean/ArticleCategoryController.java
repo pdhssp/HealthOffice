@@ -287,11 +287,12 @@ public final class ArticleCategoryController  implements Serializable {
         }
 
         String getStringKey(java.lang.Long value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
@@ -301,7 +302,7 @@ public final class ArticleCategoryController  implements Serializable {
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type "
-                        + object.getClass().getName() + "; expected type: " + ArticleArticleCategoryController.class.getName());
+                        + object.getClass().getName() + "; expected type: " + ArticleCategoryController.class.getName());
             }
         }
     }

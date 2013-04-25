@@ -19,10 +19,6 @@
 
     <h:body >
         <f:view locale="#{languageBean.localeCode}" >
-
-
-
-
             <table id="bodyTable" >
                 <tr id="topLine">
                     <td>
@@ -51,7 +47,7 @@
 
                                         </table>
                                     </td>
-                                    <td style="width:20%;">
+                                    <td style="width:10%;">
                                     </td>
                                     <td>
                                         <table>
@@ -70,9 +66,12 @@
                                             <tr>
 
                                                 <td>
-                                                    <h:commandLink value="Sinhala" action="#{languageBean.languageToSinhala()}" rendered="#{!languageBean.inSinhala}" />
-                                                    <h:commandLink value="Sinhala" action="#{languageBean.languageToTamil()}" rendered="#{!languageBean.inTamil}" />
-                                                    <h:commandLink value="Sinhala" action="#{languageBean.languageToEnglish()}" rendered="#{!languageBean.inEnglish}" />
+                                                    <h:form>
+                                                        <h:commandLink value="&nbsp;|&nbsp;Sinhala" action="#{languageBean.languageToSinhala()}" rendered="#{!languageBean.inSinhala}" />
+                                                        <h:commandLink value="&nbsp;|&nbsp;Tamil" action="#{languageBean.languageToTamil()}" rendered="#{!languageBean.inTamil}" />
+                                                        <h:commandLink value="&nbsp;|&nbsp;English" action="#{languageBean.languageToEnglish()}" rendered="#{!languageBean.inEnglish}" />
+                                                        &nbsp;|&nbsp;
+                                                    </h:form>
                                                 </td>
 
                                             </tr>
@@ -131,7 +130,7 @@
                     <td>
                         <table id="contentTable" >
                             <tr>
-                                <td>
+                                <td style="text-align: center!important; background: magenta;padding: 5px; ">
                                     <h:panelGroup rendered="#{sessionController.logged}" >
                                         <ui:insert name="content"   >
                                         </ui:insert>

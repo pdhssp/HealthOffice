@@ -49,7 +49,19 @@ public class Article implements Serializable {
     @Lob
     private String englishContent;
     
+    @ManyToOne
     ArticleCategory category;
+    Long orderNo;
+
+    public Long getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Long orderNo) {
+        this.orderNo = orderNo;
+    }
+    
+    
 
     public ArticleCategory getCategory() {
         return category;

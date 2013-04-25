@@ -47,7 +47,7 @@ public final class ArticleController implements Serializable {
     boolean selectControlDisable = false;
     boolean modifyControlDisable = true;
     String selectText = "";
-    List<Article> frontMessage;
+    List<Article> welcomes;
     String articleType;
 
     public ArticleCategoryController getArticleCategoryController() {
@@ -73,7 +73,8 @@ public final class ArticleController implements Serializable {
     public String addWelcome() {
         setArticleType("Welcome");
         current = new Article();
-        ArticleCategory cat = articleCategoryController.searchItem("Welcome", true);
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem("Welcome", true);
         current.setCategory(cat);
         return "article";
     }
@@ -94,16 +95,16 @@ public final class ArticleController implements Serializable {
         this.sessionController = sessionController;
     }
 
-    public List<Article> getFrontMessage() {
-        if (frontMessage == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Message' order by a.orderNo";
-            frontMessage = getFacade().findBySQL(sql);
+    public List<Article> getWelcomes() {
+        if (welcomes == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            welcomes = getFacade().findBySQL(sql);
         }
-        return frontMessage;
+        return welcomes;
     }
 
-    public void setFrontMessage(List<Article> frontMessage) {
-        this.frontMessage = frontMessage;
+    public void setWelcomes(List<Article> welcomes) {
+        this.welcomes = welcomes;
     }
 
     public ArticleController() {
@@ -141,7 +142,7 @@ public final class ArticleController implements Serializable {
     }
 
     public DataModel<Article> getItems() {
-        items = new ListDataModel(getFacade().findAll("name", true));
+        items = new ListDataModel(getFacade().findAll());
         return items;
     }
 
@@ -179,6 +180,7 @@ public final class ArticleController implements Serializable {
 
     private void recreateModel() {
         items = null;
+        welcomes=null;
     }
 
     public void prepareSelect() {
@@ -216,7 +218,6 @@ public final class ArticleController implements Serializable {
         }
         this.prepareSelect();
         recreateModel();
-        getItems();
         selectText = "";
         selectedItemIndex = intValue(current.getId());
     }
