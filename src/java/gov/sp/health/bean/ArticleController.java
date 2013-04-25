@@ -8,8 +8,9 @@
  */
 package gov.sp.health.bean;
 
-import gov.sp.health.facade.AtmFacade;
-import gov.sp.health.entity.Atm;
+import gov.sp.health.entity.Article;
+import gov.sp.health.facade.ArticleFacade;
+import gov.sp.health.entity.Article;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -30,27 +31,56 @@ import javax.faces.model.ListDataModel;
  */
 @ManagedBean
 @SessionScoped
-public final class ArticleController  implements Serializable {
+public final class ArticleController implements Serializable {
 
     @EJB
-    private AtmFacade ejbFacade;
+    private ArticleFacade ejbFacade;
     SessionController sessionController = new SessionController();
-    List<Atm> lstItems;
-    private Atm current;
-    private DataModel<Atm> items = null;
+    List<Article> lstItems;
+    private Article current;
+    private DataModel<Article> items = null;
     private int selectedItemIndex;
     boolean selectControlDisable = false;
     boolean modifyControlDisable = true;
     String selectText = "";
+    List<Article> frontMessage;
+
+    public ArticleFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(ArticleFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+
+    public List<Article> getFrontMessage() {
+        if (frontMessage == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Message' order by a.orderNo";
+            frontMessage = getFacade().findBySQL(sql);
+        }
+        return frontMessage;
+    }
+
+    public void setFrontMessage(List<Article> frontMessage) {
+        this.frontMessage = frontMessage;
+    }
 
     public ArticleController() {
     }
 
-    public List<Atm> getLstItems() {
-        return getFacade().findBySQL("Select d From Atm d");
+    public List<Article> getLstItems() {
+        return getFacade().findBySQL("Select d From Article d");
     }
 
-    public void setLstItems(List<Atm> lstItems) {
+    public void setLstItems(List<Article> lstItems) {
         this.lstItems = lstItems;
     }
 
@@ -62,22 +92,22 @@ public final class ArticleController  implements Serializable {
         this.selectedItemIndex = selectedItemIndex;
     }
 
-    public Atm getCurrent() {
+    public Article getCurrent() {
         if (current == null) {
-            current = new Atm();
+            current = new Article();
         }
         return current;
     }
 
-    public void setCurrent(Atm current) {
+    public void setCurrent(Article current) {
         this.current = current;
     }
 
-    private AtmFacade getFacade() {
+    private ArticleFacade getFacade() {
         return ejbFacade;
     }
 
-    public DataModel<Atm> getItems() {
+    public DataModel<Article> getItems() {
         items = new ListDataModel(getFacade().findAll("name", true));
         return items;
     }
@@ -101,7 +131,7 @@ public final class ArticleController  implements Serializable {
                         true));
                 if (items.getRowCount() > 0) {
                     items.setRowIndex(0);
-                    current = (Atm) items.getRowData();
+                    current = (Article) items.getRowData();
                     Long temLong = current.getId();
                     selectedItemIndex = intValue(temLong);
                 } else {
@@ -112,22 +142,6 @@ public final class ArticleController  implements Serializable {
         }
         return items;
 
-    }
-
-    public Atm searchItem(String itemName, boolean createNewIfNotPresent) {
-        Atm searchedItem = null;
-        items = new ListDataModel(getFacade().findAll("name", itemName, true));
-        if (items.getRowCount() > 0) {
-            items.setRowIndex(0);
-            searchedItem = (Atm) items.getRowData();
-        } else if (createNewIfNotPresent) {
-            searchedItem = new Atm();
-            searchedItem.setName(itemName);
-            searchedItem.setCreatedAt(Calendar.getInstance().getTime());
-            searchedItem.setCreater(sessionController.loggedUser);
-            getFacade().create(searchedItem);
-        }
-        return searchedItem;
     }
 
     private void recreateModel() {
@@ -149,15 +163,15 @@ public final class ArticleController  implements Serializable {
 
     public void prepareAdd() {
         selectedItemIndex = -1;
-        current = new Atm();
+        current = new Article();
         this.prepareSelectControlDisable();
     }
 
     public void saveSelected() {
-        if (sessionController.getPrivilege().isMsEdit()==false){
+        if (sessionController.getPrivilege().isMsEdit() == false) {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
-        }            
+        }
         if (selectedItemIndex > 0) {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
@@ -183,7 +197,7 @@ public final class ArticleController  implements Serializable {
 
             getFacade().create(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
-            current = new Atm();
+            current = new Article();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "Error");
         }
@@ -247,15 +261,16 @@ public final class ArticleController  implements Serializable {
         modifyControlDisable = true;
     }
 
-    @FacesConverter(forClass = Atm.class)
-    public static class AtmControllerConverter implements Converter {
+    @FacesConverter(forClass = Article.class)
+    public static class ArticleControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             ArticleController controller = (ArticleController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "atmController");
+                    getValue(facesContext.getELContext(), null, "articleController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -266,17 +281,18 @@ public final class ArticleController  implements Serializable {
         }
 
         String getStringKey(java.lang.Long value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Atm) {
-                Atm o = (Atm) object;
+            if (object instanceof Article) {
+                Article o = (Article) object;
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type "

@@ -177,6 +177,20 @@ public class Menu implements Serializable {
         return submenu;
     }
 
+    private Submenu articleSubmenu() {
+        Submenu submenu = new Submenu();
+        submenu.setLabel(getLabel("Articles"));
+
+        MenuItem item;
+
+        item = new MenuItem();
+        item.setValue(getLabel("manageArticles"));
+        item.setUrl("article_index.xhtml");
+        submenu.getChildren().add(item);
+
+        return submenu;
+    }
+    
     public SessionController getSessionController() {
         return sessionController;
     }
@@ -226,6 +240,8 @@ public class Menu implements Serializable {
             model.addSubmenu(adminSubmenu());
         }
 
+        model.addSubmenu(articleSubmenu());
+        
         model.addSubmenu(userSubmenu());
     }
 

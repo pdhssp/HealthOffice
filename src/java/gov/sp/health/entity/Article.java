@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -35,16 +36,23 @@ public class Article implements Serializable {
     private WebUser retirer;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date retiredAt;
+    @Lob
     private String retireComments;
     private String sinhalaTopic;
     private String tamilTopic;
     private String englishTopic;
     
+    @Lob
     private String sinhalaContent;
+    @Lob
     private String tamilContent;
+    @Lob
     private String englishContent;
     
-    
+    @Lob
+    byte[] baImage;
+    String fileName;
+    String fileType;
     
     
 
