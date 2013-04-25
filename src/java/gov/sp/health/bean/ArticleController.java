@@ -8,14 +8,15 @@
  */
 package gov.sp.health.bean;
 
-import gov.sp.health.entity.Article;
 import gov.sp.health.facade.ArticleFacade;
 import gov.sp.health.entity.Article;
+import gov.sp.health.entity.ArticleCategory;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -35,7 +36,10 @@ public final class ArticleController implements Serializable {
 
     @EJB
     private ArticleFacade ejbFacade;
-    SessionController sessionController = new SessionController();
+    @ManagedProperty(value = "#{sessionController}")
+    SessionController sessionController;
+    @ManagedProperty(value = "#{articleCategoryController}")
+    ArticleCategoryController articleCategoryController;
     List<Article> lstItems;
     private Article current;
     private DataModel<Article> items = null;
@@ -44,6 +48,35 @@ public final class ArticleController implements Serializable {
     boolean modifyControlDisable = true;
     String selectText = "";
     List<Article> frontMessage;
+    String articleType;
+
+    public ArticleCategoryController getArticleCategoryController() {
+        return articleCategoryController;
+    }
+
+    public void setArticleCategoryController(ArticleCategoryController articleCategoryController) {
+        this.articleCategoryController = articleCategoryController;
+    }
+
+   
+    
+    
+    
+    public String getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(String articleType) {
+        this.articleType = articleType;
+    }
+
+    public String addWelcome() {
+        setArticleType("Welcome");
+        current = new Article();
+        ArticleCategory cat = articleCategoryController.searchItem("Welcome", true);
+        current.setCategory(cat);
+        return "article";
+    }
 
     public ArticleFacade getEjbFacade() {
         return ejbFacade;

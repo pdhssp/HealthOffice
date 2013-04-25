@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+            <ui:define name="title">
+                Article
+            </ui:define>
+
+            <ui:define name="content">
+                
+                
+                <table >
+                    <tr>
+                        <td>
+                            Article Topic in Sinhala
+                        </td>
+                        <td>
+                            <h:inputText maxlength="250" value="#{articleController.current.sinhalaTopic}" ></h:inputText>
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

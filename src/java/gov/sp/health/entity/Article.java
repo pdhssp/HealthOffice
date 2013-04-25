@@ -49,6 +49,42 @@ public class Article implements Serializable {
     @Lob
     private String englishContent;
     
+    ArticleCategory category;
+
+    public ArticleCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ArticleCategory category) {
+        this.category = category;
+    }
+
+    public byte[] getBaImage() {
+        return baImage;
+    }
+
+    public void setBaImage(byte[] baImage) {
+        this.baImage = baImage;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+    
+    
+    
     @Lob
     byte[] baImage;
     String fileName;

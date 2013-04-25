@@ -4,7 +4,11 @@
  */
 package gov.sp.health.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 
+@Entity
+@Inheritance
 public class ArticleCategory extends Category {
     
 }
