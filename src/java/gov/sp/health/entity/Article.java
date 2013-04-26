@@ -6,6 +6,7 @@ package gov.sp.health.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -53,6 +55,14 @@ public class Article implements Serializable {
     ArticleCategory category;
     Long orderNo;
 
+    @Transient
+    private Long i;
+    @Transient
+    private List<AppImage> images;
+    
+    
+    
+    
     public Long getOrderNo() {
         return orderNo;
     }
@@ -235,6 +245,22 @@ public class Article implements Serializable {
 
     public void setEnglishContent(String englishContent) {
         this.englishContent = englishContent;
+    }
+
+    public AppImage getImage() {
+        return image;
+    }
+
+    public void setImage(AppImage image) {
+        this.image = image;
+    }
+
+    public List<AppImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<AppImage> images) {
+        this.images = images;
     }
     
 }
