@@ -8,9 +8,13 @@
  */
 package gov.sp.health.bean;
 
+import gov.sp.health.entity.AppImage;
 import gov.sp.health.facade.ArticleFacade;
 import gov.sp.health.entity.Article;
 import gov.sp.health.entity.ArticleCategory;
+import gov.sp.health.facade.AppImageFacade;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -24,6 +28,10 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -36,6 +44,8 @@ public final class ArticleController implements Serializable {
 
     @EJB
     private ArticleFacade ejbFacade;
+    @EJB
+    private AppImageFacade imageFacade;
     @ManagedProperty(value = "#{sessionController}")
     SessionController sessionController;
     @ManagedProperty(value = "#{articleCategoryController}")
@@ -49,6 +59,122 @@ public final class ArticleController implements Serializable {
     String selectText = "";
     List<Article> welcomes;
     String articleType;
+    AppImage currentImg;
+    List<AppImage> currentImgs;
+    AppImage welcomeImg;
+    StreamedContent scImage;
+    StreamedContent scImageById;
+    private UploadedFile file;
+
+    public AppImage getWelcomeImg() {
+        return welcomeImg;
+    }
+
+    public void setWelcomeImg(AppImage welcomeImg) {
+        this.welcomeImg = welcomeImg;
+    }
+
+    public StreamedContent getScImage() {
+        return scImage;
+    }
+
+    public void setScImage(StreamedContent scImage) {
+        this.scImage = scImage;
+    }
+
+    public StreamedContent getScImageById() {
+        return scImageById;
+    }
+
+    public void setScImageById(StreamedContent scImageById) {
+        this.scImageById = scImageById;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public void saveWithImage() {
+        saveSelected();
+        InputStream in;
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please upload an image");
+            return;
+        }
+        JsfUtil.addSuccessMessage(file.getFileName());
+        try {
+            if (!file.getFileName().trim().equals("")) {
+                getCurrentImg().setFileName(file.getFileName());
+                getCurrentImg().setFileType(file.getContentType());
+                in = file.getInputstream();
+                getCurrentImg().setBaImage(IOUtils.toByteArray(in));
+                if (getCurrentImg().getId() == null || getCurrentImg().getId() == 0) {
+                    imageFacade.create(getCurrentImg());
+                } else {
+                    imageFacade.edit(getCurrentImg());
+                }
+
+                JsfUtil.addSuccessMessage(file.getFileName() + " saved successfully");
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
+        }
+
+    }
+
+    public StreamedContent getImageById() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            // So, browser is requesting the image. Get ID value from actual request param.
+            String id;
+            id = context.getExternalContext().getRequestParameterMap().get("id");
+            AppImage temImg = getImageFacade().find(Long.valueOf(id));
+            return new DefaultStreamedContent(new ByteArrayInputStream(temImg.getBaImage()), temImg.getFileType());
+        }
+    }
+
+    public AppImageFacade getImageFacade() {
+        return imageFacade;
+    }
+
+    public void setImageFacade(AppImageFacade imageFacade) {
+        this.imageFacade = imageFacade;
+    }
+
+    public void prepareImages(String sql) {
+        currentImgs = getImageFacade().findBySQL(sql);
+        if (currentImgs.size() > 0) {
+            currentImg = currentImgs.get(0);
+        } else {
+            currentImg = null;
+        }
+    }
+
+    public AppImage getCurrentImg() {
+        if (currentImg==null){
+            currentImg = new AppImage();
+        }
+        return currentImg;
+    }
+
+    public void setCurrentImg(AppImage currentImg) {
+        this.currentImg = currentImg;
+    }
+
+    public List<AppImage> getCurrentImgs() {
+        return currentImgs;
+    }
+
+    public void setCurrentImgs(List<AppImage> currentImgs) {
+        this.currentImgs = currentImgs;
+    }
 
     public ArticleCategoryController getArticleCategoryController() {
         return articleCategoryController;
@@ -58,10 +184,6 @@ public final class ArticleController implements Serializable {
         this.articleCategoryController = articleCategoryController;
     }
 
-   
-    
-    
-    
     public String getArticleType() {
         return articleType;
     }
@@ -135,6 +257,9 @@ public final class ArticleController implements Serializable {
 
     public void setCurrent(Article current) {
         this.current = current;
+        String sql;
+        sql = "Select ai from AppImage ai Where ai.article.id = " + current.getId() + " order by ai.id desc";
+        prepareImages(sql);
     }
 
     private ArticleFacade getFacade() {
@@ -180,7 +305,7 @@ public final class ArticleController implements Serializable {
 
     private void recreateModel() {
         items = null;
-        welcomes=null;
+        welcomes = null;
     }
 
     public void prepareSelect() {

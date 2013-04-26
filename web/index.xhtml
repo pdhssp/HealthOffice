@@ -16,18 +16,25 @@
 
 
         <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true">
+
             <table style="text-align:center; width: 100%;">
                 <tr style="text-align:center">
-                    <td style="text-align:center!important;background: yellow;">
+                    <td style="text-align:center!important;">
                         <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+
+                        <p:graphicImage value="#{articleController.imageById}" >
+                            <f:param name="id" value="#{img.id}" />
+                        </p:graphicImage>
+
                     </td>
                 </tr>
                 <tr style="text-align:center">
-                    <td style="text-align:center!important;background: yellow;">
+                    <td style="text-align:center!important;">
                         <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputLabel>
                     </td>
                 </tr>
             </table>
+
         </p:galleria>
 
 

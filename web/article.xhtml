@@ -3,10 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <body>
-        
+
         <p:growl autoUpdate="true"/>
 
         <ui:composition template="./resources/template/pdhs_template_1.xhtml">
@@ -17,7 +18,7 @@
 
             <ui:define name="content">
 
-                <h:form>
+                <h:form enctype="multipart/form-data">
 
                     <table >
                         <tr>
@@ -36,9 +37,28 @@
                                 <h:inputTextarea  value="#{articleController.current.sinhalaContent}" ></h:inputTextarea>
                             </td>
                         </tr>
+
                         <tr>
                             <td colspan="2" >
-                                <h:commandButton value="Save" action="#{articleController.saveSelected()}" >
+
+
+
+                                <p:galleria id="gal" value="#{articleController.currentImgs}" var="img">
+                                    <p:graphicImage value="#{articleController.imageById}" >
+                                        <f:param name="id" value="#{img.id}" />
+                                    </p:graphicImage>
+                                </p:galleria>
+                                <h:panelGrid columns="2" >
+                                    <p:fileUpload value="#{articleController.file}" mode="simple"/>
+                                </h:panelGrid>
+
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" >
+                                <h:commandButton value="Save" action="#{articleController.saveWithImage()}" >
                                 </h:commandButton>
                             </td>
                         </tr>

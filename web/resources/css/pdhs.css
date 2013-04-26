@@ -140,7 +140,7 @@ body{
 
 .welcomeHeading{
     font-family: Calibri , sans-serif;
-    font-size: 8em;
+    font-size: 4em;
     color: rgb(5,5,50);
     -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
     -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
@@ -149,7 +149,7 @@ body{
 
 .welcomeText{
     font-family: Calibri , sans-serif;
-    font-size: 4em;
+    font-size: 2em;
     color: rgb(2,2,10);
     -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
     -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
@@ -160,7 +160,6 @@ body{
     width:  100%!important;
     border: 1px dotted ;
     text-align: center!important;
-    background: red;
 }
 
 .ui-galleria-filmstrip-wrapper {

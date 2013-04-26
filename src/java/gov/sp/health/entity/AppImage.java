@@ -57,6 +57,8 @@ public class AppImage implements Serializable {
     Finding finding;
     @ManyToOne
     Letter letter;
+    @ManyToOne
+    Article article;
     
     
     @Lob
@@ -64,6 +66,16 @@ public class AppImage implements Serializable {
     String fileName;
     String fileType;
 
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    
+    
     public Encounter getEncounter() {
         return encounter;
     }
