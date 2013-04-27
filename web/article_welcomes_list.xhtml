@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+            <ui:define name="title">
+                #{labels.manageArticles}
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <p:dataTable value="#{articleController.welcomes}" var="wa" >
+
+                        <p:column >
+                            <h:outputLabel value="#{wa.sinhalaTopic}" />
+                        </p:column>
+
+                        <p:column >
+                            <h:outputLabel value="#{wa.sinhalaTopic}" />
+                        </p:column>
+
+                        <p:column >
+                            <h:outputLabel value="#{wa.imgId}" />
+                        </p:column>                        
+
+                        <p:column >
+                            <h:commandButton value="Edit" action="article" >
+                                <f:setPropertyActionListener value="#{wa}" target="#{articleController.current}" />
+                            </h:commandButton>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

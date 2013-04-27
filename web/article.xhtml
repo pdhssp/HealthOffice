@@ -43,9 +43,9 @@
 
 
 
-                                <p:galleria id="gal" value="#{articleController.currentImgs}" var="img">
+                                <p:galleria id="gal" value="#{articleController.current.imgIds}" var="img">
                                     <p:graphicImage value="#{articleController.imageById}" >
-                                        <f:param name="id" value="#{img.id}" />
+                                        <f:param name="id" value="#{img}" />
                                     </p:graphicImage>
                                 </p:galleria>
                                 <h:panelGrid columns="2" >

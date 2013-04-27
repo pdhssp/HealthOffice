@@ -88,6 +88,12 @@ public abstract class AbstractFacade<T> {
         return (Long) q.getSingleResult();
     }
 
+     public List<Long> longListBySql(String sql) {
+        Query q;
+        q = getEntityManager().createQuery(sql);
+        return q.getResultList();
+    }
+    
     public Double sumBySql(String sql) {
         Query q = getEntityManager().createQuery(sql);
         return (Double) q.getSingleResult();

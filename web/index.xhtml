@@ -14,40 +14,81 @@
 
         <h:outputStylesheet library="css" name="pdhs.css" />
 
+        <table id="indexTbl" style="width:100%;">
+            <tr>
+                <td colspan="2" style="width:100%;padding:5px;margin:5px;">
+                    <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true">
+                        <table  >
+                            <tr >
+                                <td  >
+                                    <table >
+                                        <tr>
+                                            <td class="centreText">
+                                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="justifiedText">
+                                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputLabel>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td >
+                                    <p:graphicImage value="#{articleController.imageById}" styleClass="welcomeImage" >
+                                        <f:param name="id" value="#{w.imgId}" />
+                                    </p:graphicImage>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:galleria>
+                </td>
 
-        <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true">
+            </tr>
+            <tr>
+                <td>
 
-            <table style="text-align:center; width: 100%;">
-                <tr style="text-align:center">
-                    <td style="text-align:center!important;">
-                        <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                    <table >
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            
+                                            <div id="newsBox" >
+                                                
+                                                dsfdsf 
+                                                
+                                                sdfsdfsd
+                                                fsdf
+                                                fds
+                                                
+                                            </div>
+                                                                    
 
-                        <p:graphicImage value="#{articleController.imageById}" >
-                            <f:param name="id" value="#{img.id}" />
-                        </p:graphicImage>
-
-                    </td>
-                </tr>
-                <tr style="text-align:center">
-                    <td style="text-align:center!important;">
-                        <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputLabel>
-                    </td>
-                </tr>
-            </table>
-
-        </p:galleria>
-
-
-
-
-        <p:panel header="#{postLabels.vision}" >
-            #{postLabels.visionText}
-        </p:panel>
-        <p:panel header="#{postLabels.mission}" >
-            #{postLabels.missionText}
-        </p:panel>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    
+                </td>
+            </tr>
 
 
+
+        </table>
 
     </ui:define>
 

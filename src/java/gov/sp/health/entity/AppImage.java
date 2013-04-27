@@ -296,7 +296,7 @@ public class AppImage implements Serializable {
 
     @Override
     public String toString() {
-        return "gov.sp.health.entity.UnitImage[ id=" + id + " ]";
+        return "gov.sp.health.entity.AppImage[ id=" + id + " ]";
     }
     
 }

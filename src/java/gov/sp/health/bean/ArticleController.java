@@ -8,6 +8,7 @@
  */
 package gov.sp.health.bean;
 
+import gov.sp.health.data.ArticleType;
 import gov.sp.health.entity.AppImage;
 import gov.sp.health.facade.ArticleFacade;
 import gov.sp.health.entity.Article;
@@ -16,6 +17,7 @@ import gov.sp.health.facade.AppImageFacade;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
@@ -52,28 +54,56 @@ public final class ArticleController implements Serializable {
     ArticleCategoryController articleCategoryController;
     List<Article> lstItems;
     private Article current;
+    ArticleType articleType;
     private DataModel<Article> items = null;
-    private int selectedItemIndex;
-    boolean selectControlDisable = false;
-    boolean modifyControlDisable = true;
     String selectText = "";
-    List<Article> welcomes;
-    String articleType;
     AppImage currentImg;
     List<AppImage> currentImgs;
-    AppImage welcomeImg;
     StreamedContent scImage;
     StreamedContent scImageById;
     private UploadedFile file;
+    List<Article> welcomes;
+    
+    private List<Article> newsItems;
+    private List<Article> eventItems;
+    private List<Article> announcements;
+    private List<Article> mchItems;
+    private List<Article> ncdItems;
+    private List<Article> epidItems;
+    private List<Article> curativeItems;
+    private List<Article> generalInfoItems;
+    private List<Article> regulations;
+    private List<Article> trainings;
+    private List<Article> circulars;
+    private List<Article> tenders;
+    private List<Article> gallaryItems;
+    private List<Article> otherItems;
+    private Article welcome;
+    private Article newsItem;
+    private Article eventItem;
+    private Article announcement;
+    private Article mchItem;
+    private Article ncdItem;
+    private Article epidItem;
+    private Article curativeItem;
+    private Article generalInfoItem;
+    private Article regulation;
+    private Article training;
+    private Article circular;
+    private Article tender;
+    private Article gallaryItem;
+    private Article otherItem;
 
-    public AppImage getWelcomeImg() {
-        return welcomeImg;
+    public ArticleType getArticleType() {
+        return articleType;
     }
 
-    public void setWelcomeImg(AppImage welcomeImg) {
-        this.welcomeImg = welcomeImg;
+    public void setArticleType(ArticleType articleType) {
+        this.articleType = articleType;
     }
 
+    
+    
     public StreamedContent getScImage() {
         return scImage;
     }
@@ -108,6 +138,9 @@ public final class ArticleController implements Serializable {
         JsfUtil.addSuccessMessage(file.getFileName());
         try {
             if (!file.getFileName().trim().equals("")) {
+                System.out.println("Article is " + current.toString());
+                System.out.println("Img is " + getCurrentImg().toString());
+                getCurrentImg().setArticle(current);
                 getCurrentImg().setFileName(file.getFileName());
                 getCurrentImg().setFileType(file.getContentType());
                 in = file.getInputstream();
@@ -117,13 +150,57 @@ public final class ArticleController implements Serializable {
                 } else {
                     imageFacade.edit(getCurrentImg());
                 }
-
+                System.out.println("current image article id is " + getCurrentImg().getArticle().toString());
+                saveArticleImages(current);
                 JsfUtil.addSuccessMessage(file.getFileName() + " saved successfully");
             }
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }
 
+    }
+
+    public void saveArticleImages(Article a) {
+        System.out.println("saving article images");
+        System.out.println("Article is " + a.toString());
+        if (a.getId() != null && a.getId() != 0) {
+            System.out.println("Article is existing");
+            String sql;
+            sql = "Select ai.id from AppImage ai Where ai.article.id = " + a.getId() + " order by ai.id desc";
+            System.out.println("sql is " + sql);
+            List<Long> lstLng;
+            lstLng = getImageFacade().longListBySql(sql);
+            Long temLng;
+            sql = "Select max(ai.id) from AppImage ai Where ai.article.id = " + a.getId() + " order by ai.id desc";
+//            temLng= getImageFacade().findAggregateLong(sql);
+            System.out.println("Long list size is " + lstLng.size());
+            System.out.println("Long List is " + lstLng.toString());
+            System.out.println("going to set image list");
+            a.setImgIds(lstLng);
+            System.out.println("sat the image list");
+            System.out.println("imgList in article is " + a.getImgIds().toString());
+            if (!lstLng.isEmpty()) {
+                System.out.println("enter to id not empty");
+                System.out.println("going to get long value");
+                temLng = lstLng.get(0);
+                System.out.println("got long value as " + temLng);
+                System.out.println("setting the long value to article");
+                a.setImgId(temLng);
+                System.out.println("finished not empty");
+            } else {
+                System.out.println("is empty");
+                a.setImgId(0l);
+                System.out.println("finished empty");
+            }
+            System.out.println("going to save article");
+            getFacade().edit(a);
+            System.out.println("saved article");
+            System.out.println("article is " + a.toString());
+        } else {
+            System.out.println("id and list null");
+            a.setImgId(0l);
+            a.setImgIds(new ArrayList<Long>());
+        }
     }
 
     public StreamedContent getImageById() {
@@ -135,6 +212,7 @@ public final class ArticleController implements Serializable {
             // So, browser is requesting the image. Get ID value from actual request param.
             String id;
             id = context.getExternalContext().getRequestParameterMap().get("id");
+            System.out.println("Id is " + id);
             AppImage temImg = getImageFacade().find(Long.valueOf(id));
             return new DefaultStreamedContent(new ByteArrayInputStream(temImg.getBaImage()), temImg.getFileType());
         }
@@ -158,7 +236,7 @@ public final class ArticleController implements Serializable {
     }
 
     public AppImage getCurrentImg() {
-        if (currentImg==null){
+        if (currentImg == null) {
             currentImg = new AppImage();
         }
         return currentImg;
@@ -184,19 +262,12 @@ public final class ArticleController implements Serializable {
         this.articleCategoryController = articleCategoryController;
     }
 
-    public String getArticleType() {
-        return articleType;
-    }
-
-    public void setArticleType(String articleType) {
-        this.articleType = articleType;
-    }
 
     public String addWelcome() {
-        setArticleType("Welcome");
+        setArticleType(ArticleType.Welcome);
         current = new Article();
         ArticleCategory cat;
-        cat = articleCategoryController.searchItem("Welcome", true);
+        cat = articleCategoryController.searchItem(ArticleType.Welcome.toString(), true);
         current.setCategory(cat);
         return "article";
     }
@@ -238,14 +309,6 @@ public final class ArticleController implements Serializable {
 
     public void setLstItems(List<Article> lstItems) {
         this.lstItems = lstItems;
-    }
-
-    public int getSelectedItemIndex() {
-        return selectedItemIndex;
-    }
-
-    public void setSelectedItemIndex(int selectedItemIndex) {
-        this.selectedItemIndex = selectedItemIndex;
     }
 
     public Article getCurrent() {
@@ -291,11 +354,8 @@ public final class ArticleController implements Serializable {
                 if (items.getRowCount() > 0) {
                     items.setRowIndex(0);
                     current = (Article) items.getRowData();
-                    Long temLong = current.getId();
-                    selectedItemIndex = intValue(temLong);
                 } else {
                     current = null;
-                    selectedItemIndex = -1;
                 }
             }
         }
@@ -308,43 +368,22 @@ public final class ArticleController implements Serializable {
         welcomes = null;
     }
 
-    public void prepareSelect() {
-        this.prepareModifyControlDisable();
-    }
-
-    public void prepareEdit() {
-        if (current != null) {
-            selectedItemIndex = intValue(current.getId());
-            this.prepareSelectControlDisable();
-        } else {
-            JsfUtil.addErrorMessage(new MessageProvider().getValue("nothingToEdit"));
-        }
-    }
-
-    public void prepareAdd() {
-        selectedItemIndex = -1;
-        current = new Article();
-        this.prepareSelectControlDisable();
-    }
-
     public void saveSelected() {
         if (sessionController.getPrivilege().isMsEdit() == false) {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
         }
-        if (selectedItemIndex > 0) {
-            getFacade().edit(current);
-            JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
-        } else {
+        if (getCurrent().getId() == null || getCurrent().getId() == 0) {
             current.setCreatedAt(Calendar.getInstance().getTime());
             current.setCreater(sessionController.loggedUser);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
+        } else {
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
         }
-        this.prepareSelect();
         recreateModel();
         selectText = "";
-        selectedItemIndex = intValue(current.getId());
     }
 
     public void addDirectly() {
@@ -363,10 +402,6 @@ public final class ArticleController implements Serializable {
 
     }
 
-    public void cancelSelect() {
-        this.prepareSelect();
-    }
-
     public void delete() {
         if (current != null) {
             current.setRetired(true);
@@ -380,25 +415,7 @@ public final class ArticleController implements Serializable {
         recreateModel();
         getItems();
         selectText = "";
-        selectedItemIndex = -1;
         current = null;
-        this.prepareSelect();
-    }
-
-    public boolean isModifyControlDisable() {
-        return modifyControlDisable;
-    }
-
-    public void setModifyControlDisable(boolean modifyControlDisable) {
-        this.modifyControlDisable = modifyControlDisable;
-    }
-
-    public boolean isSelectControlDisable() {
-        return selectControlDisable;
-    }
-
-    public void setSelectControlDisable(boolean selectControlDisable) {
-        this.selectControlDisable = selectControlDisable;
     }
 
     public String getSelectText() {
@@ -410,14 +427,362 @@ public final class ArticleController implements Serializable {
         searchItems();
     }
 
-    public void prepareSelectControlDisable() {
-        selectControlDisable = true;
-        modifyControlDisable = false;
+    public List<Article> getNewsItems() {
+        if (newsItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            newsItems = getFacade().findBySQL(sql);
+        }
+        if (welcomes.size() > 0) {
+            newsItem = newsItems.get(0);
+        } else {
+            newsItem = new Article();
+        }
+        return newsItems;
     }
 
-    public void prepareModifyControlDisable() {
-        selectControlDisable = false;
-        modifyControlDisable = true;
+    public void setNewsItems(List<Article> newsItems) {
+        this.newsItems = newsItems;
+    }
+
+    public List<Article> getEventItems() {
+        if (eventItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            eventItems = getFacade().findBySQL(sql);
+        }
+        if (welcomes.size() > 0) {
+            eventItem = eventItems.get(0);
+        } else {
+            eventItem = new Article();
+        }
+        return eventItems;
+    }
+
+    public void setEventItems(List<Article> eventItems) {
+        this.eventItems = eventItems;
+    }
+
+    public List<Article> getAnnouncements() {
+        if (announcements == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            announcements = getFacade().findBySQL(sql);
+        }
+        if (announcements.size() > 0) {
+            announcement = announcements.get(0);
+        } else {
+            announcement = new Article();
+        }
+        return announcements;
+    }
+
+    public void setAnnouncements(List<Article> announcements) {
+        this.announcements = announcements;
+    }
+
+    public List<Article> getMchItems() {
+        if (mchItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            mchItems = getFacade().findBySQL(sql);
+        }
+        if (welcomes.size() > 0) {
+            mchItem = mchItems.get(0);
+        } else {
+            mchItem = new Article();
+        }
+        return mchItems;
+    }
+
+    public void setMchItems(List<Article> mchItems) {
+        this.mchItems = mchItems;
+    }
+
+    public List<Article> getNcdItems() {
+        if (ncdItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            ncdItems = getFacade().findBySQL(sql);
+        }
+        if (ncdItems.size() > 0) {
+            ncdItem = ncdItems.get(0);
+        } else {
+            ncdItem = new Article();
+        }
+        return ncdItems;
+    }
+
+    public void setNcdItems(List<Article> ncdItems) {
+        this.ncdItems = ncdItems;
+    }
+
+    public List<Article> getEpidItems() {
+        if (epidItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            epidItems = getFacade().findBySQL(sql);
+        }
+        if (epidItems.size() > 0) {
+            epidItem = epidItems.get(0);
+        } else {
+            epidItem = new Article();
+        }
+        return epidItems;
+    }
+
+    public void setEpidItems(List<Article> epidItems) {
+        this.epidItems = epidItems;
+    }
+
+    public List<Article> getCurativeItems() {
+        if (curativeItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            curativeItems = getFacade().findBySQL(sql);
+        }
+        if (curativeItems.size() > 0) {
+            curativeItem = curativeItems.get(0);
+        } else {
+            curativeItem = new Article();
+        }
+        return curativeItems;
+    }
+
+    public void setCurativeItems(List<Article> curativeItems) {
+        this.curativeItems = curativeItems;
+    }
+
+    public List<Article> getGeneralInfoItems() {
+        if (generalInfoItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            generalInfoItems = getFacade().findBySQL(sql);
+        }
+        if (generalInfoItems.size() > 0) {
+            generalInfoItem = generalInfoItems.get(0);
+        } else {
+            generalInfoItem = new Article();
+        }
+        return generalInfoItems;
+    }
+
+    public void setGeneralInfoItems(List<Article> generalInfoItems) {
+        this.generalInfoItems = generalInfoItems;
+    }
+
+    public List<Article> getRegulations() {
+        if (regulations == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            regulations = getFacade().findBySQL(sql);
+        }
+        if (regulations.size() > 0) {
+            regulation = regulations.get(0);
+        } else {
+            regulation = new Article();
+        }
+        return regulations;
+    }
+
+    public void setRegulations(List<Article> regulations) {
+        this.regulations = regulations;
+    }
+
+    public List<Article> getTrainings() {
+        if (trainings == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Training' order by a.orderNo";
+            trainings = getFacade().findBySQL(sql);
+        }
+        if (trainings.size() > 0) {
+            training = trainings.get(0);
+        } else {
+            training = new Article();
+        }
+        return trainings;
+    }
+
+    public void setTrainings(List<Article> trainings) {
+        this.trainings = trainings;
+    }
+
+    public List<Article> getCirculars() {
+        if (circulars == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            circulars = getFacade().findBySQL(sql);
+        }
+        if (circulars.size() > 0) {
+            circular = circulars.get(0);
+        } else {
+            circular = new Article();
+        }
+        return circulars;
+    }
+
+    public void setCirculars(List<Article> circulars) {
+        this.circulars = circulars;
+    }
+
+    public List<Article> getTenders() {
+        if (tenders == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            tenders = getFacade().findBySQL(sql);
+        }
+        if (tenders.size() > 0) {
+            tender = tenders.get(0);
+        } else {
+            tender = new Article();
+        }
+        return tenders;
+    }
+
+    public void setTenders(List<Article> tenders) {
+        this.tenders = tenders;
+    }
+
+    public List<Article> getGallaryItems() {
+        if (gallaryItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            gallaryItems = getFacade().findBySQL(sql);
+        }
+        if (gallaryItems.size() > 0) {
+            gallaryItem = gallaryItems.get(0);
+        } else {
+            gallaryItem = new Article();
+        }
+        return gallaryItems;
+    }
+
+    public void setGallaryItems(List<Article> gallaryItems) {
+        this.gallaryItems = gallaryItems;
+    }
+
+    public List<Article> getOtherItems() {
+        if (otherItems == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            otherItems = getFacade().findBySQL(sql);
+        }
+        if (otherItems.size() > 0) {
+            otherItem = otherItems.get(0);
+        } else {
+            otherItem = new Article();
+        }
+        return otherItems;
+    }
+
+    public void setOtherItems(List<Article> otherItems) {
+        this.otherItems = otherItems;
+    }
+
+    public Article getWelcome() {
+        return welcome;
+    }
+
+    public void setWelcome(Article welcome) {
+        this.welcome = welcome;
+    }
+
+    public Article getNewsItem() {
+        return newsItem;
+    }
+
+    public void setNewsItem(Article newsItem) {
+        this.newsItem = newsItem;
+    }
+
+    public Article getEventItem() {
+        return eventItem;
+    }
+
+    public void setEventItem(Article eventItem) {
+        this.eventItem = eventItem;
+    }
+
+    public Article getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(Article announcement) {
+        this.announcement = announcement;
+    }
+
+    public Article getMchItem() {
+        return mchItem;
+    }
+
+    public void setMchItem(Article mchItem) {
+        this.mchItem = mchItem;
+    }
+
+    public Article getNcdItem() {
+        return ncdItem;
+    }
+
+    public void setNcdItem(Article ncdItem) {
+        this.ncdItem = ncdItem;
+    }
+
+    public Article getEpidItem() {
+        return epidItem;
+    }
+
+    public void setEpidItem(Article epidItem) {
+        this.epidItem = epidItem;
+    }
+
+    public Article getCurativeItem() {
+        return curativeItem;
+    }
+
+    public void setCurativeItem(Article curativeItem) {
+        this.curativeItem = curativeItem;
+    }
+
+    public Article getGeneralInfoItem() {
+        return generalInfoItem;
+    }
+
+    public void setGeneralInfoItem(Article generalInfoItem) {
+        this.generalInfoItem = generalInfoItem;
+    }
+
+    public Article getRegulation() {
+        return regulation;
+    }
+
+    public void setRegulation(Article regulation) {
+        this.regulation = regulation;
+    }
+
+    public Article getTraining() {
+        return training;
+    }
+
+    public void setTraining(Article training) {
+        this.training = training;
+    }
+
+    public Article getCircular() {
+        return circular;
+    }
+
+    public void setCircular(Article circular) {
+        this.circular = circular;
+    }
+
+    public Article getTender() {
+        return tender;
+    }
+
+    public void setTender(Article tender) {
+        this.tender = tender;
+    }
+
+    public Article getGallaryItem() {
+        return gallaryItem;
+    }
+
+    public void setGallaryItem(Article gallaryItem) {
+        this.gallaryItem = gallaryItem;
+    }
+
+    public Article getOtherItem() {
+        return otherItem;
+    }
+
+    public void setOtherItem(Article otherItem) {
+        this.otherItem = otherItem;
     }
 
     @FacesConverter(forClass = Article.class)

@@ -4,9 +4,12 @@
  */
 package gov.sp.health.entity;
 
+import gov.sp.health.facade.AppImageFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,12 +25,12 @@ import javax.persistence.Transient;
  */
 @Entity
 public class Article implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-     //Created Properties
+    //Created Properties
     @ManyToOne
     private WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -43,25 +46,18 @@ public class Article implements Serializable {
     private String sinhalaTopic;
     private String tamilTopic;
     private String englishTopic;
-    
     @Lob
     private String sinhalaContent;
     @Lob
     private String tamilContent;
     @Lob
     private String englishContent;
-    
     @ManyToOne
     ArticleCategory category;
     Long orderNo;
+    private Long imgId;
+    private List<Long> imgIds;
 
-    @Transient
-    private Long i;
-    @Transient
-    private List<AppImage> images;
-    
-    
-    
     
     public Long getOrderNo() {
         return orderNo;
@@ -70,8 +66,6 @@ public class Article implements Serializable {
     public void setOrderNo(Long orderNo) {
         this.orderNo = orderNo;
     }
-    
-    
 
     public ArticleCategory getCategory() {
         return category;
@@ -104,21 +98,13 @@ public class Article implements Serializable {
     public void setFileType(String fileType) {
         this.fileType = fileType;
     }
-    
-    
-    
     @Lob
     byte[] baImage;
     String fileName;
     String fileType;
-    
-    
-
-    
-    
 
     public Long getId() {
-        
+
         return id;
     }
 
@@ -247,20 +233,19 @@ public class Article implements Serializable {
         this.englishContent = englishContent;
     }
 
-    public AppImage getImage() {
-        return image;
+    public Long getImgId() {
+        return imgId;
     }
 
-    public void setImage(AppImage image) {
-        this.image = image;
+    public void setImgId(Long imgId) {
+        this.imgId = imgId;
     }
 
-    public List<AppImage> getImages() {
-        return images;
+    public List<Long> getImgIds() {
+        return imgIds;
     }
 
-    public void setImages(List<AppImage> images) {
-        this.images = images;
+    public void setImgIds(List<Long> imgIds) {
+        this.imgIds = imgIds;
     }
-    
 }
