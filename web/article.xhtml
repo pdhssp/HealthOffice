@@ -22,27 +22,61 @@
 
                     <table >
                         <tr>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Sinhala
+                            </th>
+                            <th>
+                                English
+                            </th>
+                            <th>
+                                Tamil
+                            </th>
+                        </tr>
+
+                        <tr>
                             <td>
-                                Article Topic in Sinhala
+                                Article Topic 
                             </td>
                             <td>
                                 <h:inputText maxlength="250" value="#{articleController.current.sinhalaTopic}" ></h:inputText>
                             </td>
+                            <td>
+                                <h:inputText maxlength="250" value="#{articleController.current.tamilTopic}" ></h:inputText>
+                            </td>
+                            <td>
+                                <h:inputText maxlength="250" value="#{articleController.current.englishTopic}" ></h:inputText>
+                            </td>
+
                         </tr>
                         <tr>
                             <td>
-                                Article Contents in Sinhala
+                                Article Contents
                             </td>
                             <td>
                                 <h:inputTextarea  value="#{articleController.current.sinhalaContent}" ></h:inputTextarea>
                             </td>
+                            <td>
+                                <h:inputTextarea  value="#{articleController.current.tamilContent}" ></h:inputTextarea>
+                            </td>
+
+                            <td>
+                                <h:inputTextarea  value="#{articleController.current.englishContent}" ></h:inputTextarea>
+                            </td>
                         </tr>
-
                         <tr>
-                            <td colspan="2" >
-
-
-
+                            <td>
+                                Event Date
+                            </td>
+                            <td colspan="3" >
+                                <p:calendar value="#{articleController.current.eventDate}" pattern="dd MMMM yyyy" >
+                                </p:calendar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" >
                                 <p:galleria id="gal" value="#{articleController.current.imgIds}" var="img">
                                     <p:graphicImage value="#{articleController.imageById}" >
                                         <f:param name="id" value="#{img}" />
@@ -51,13 +85,11 @@
                                 <h:panelGrid columns="2" >
                                     <p:fileUpload value="#{articleController.file}" mode="simple"/>
                                 </h:panelGrid>
-
-
                             </td>
                         </tr>
 
                         <tr>
-                            <td colspan="2" >
+                            <td colspan="4" >
                                 <h:commandButton value="Save" action="#{articleController.saveWithImage()}" >
                                 </h:commandButton>
                             </td>

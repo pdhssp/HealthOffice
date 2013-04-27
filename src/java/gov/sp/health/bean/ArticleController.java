@@ -63,7 +63,6 @@ public final class ArticleController implements Serializable {
     StreamedContent scImageById;
     private UploadedFile file;
     List<Article> welcomes;
-    
     private List<Article> newsItems;
     private List<Article> eventItems;
     private List<Article> announcements;
@@ -78,6 +77,11 @@ public final class ArticleController implements Serializable {
     private List<Article> tenders;
     private List<Article> gallaryItems;
     private List<Article> otherItems;
+    
+    List<Article> allExceptWelcomesAndEvents;
+    
+    private List<Article> selectedArticles;
+    
     private Article welcome;
     private Article newsItem;
     private Article eventItem;
@@ -94,6 +98,22 @@ public final class ArticleController implements Serializable {
     private Article gallaryItem;
     private Article otherItem;
 
+    
+    
+    public List<Article> getAllExceptWelcomesAndEvents() {
+          if (allExceptWelcomesAndEvents == null) {
+            String sql = "select a from Article a where a.retired=false and a.category.name <> 'Welcome' and a.category.name <> 'EventItem' order by a.orderNo";
+            allExceptWelcomesAndEvents = getFacade().findBySQL(sql);
+        }
+        return allExceptWelcomesAndEvents;
+    }
+
+    public void setAllExceptWelcomesAndEvents(List<Article> allExceptWelcomesAndEvents) {
+        this.allExceptWelcomesAndEvents = allExceptWelcomesAndEvents;
+    }
+    
+    
+
     public ArticleType getArticleType() {
         return articleType;
     }
@@ -102,8 +122,6 @@ public final class ArticleController implements Serializable {
         this.articleType = articleType;
     }
 
-    
-    
     public StreamedContent getScImage() {
         return scImage;
     }
@@ -262,16 +280,234 @@ public final class ArticleController implements Serializable {
         this.articleCategoryController = articleCategoryController;
     }
 
-
     public String addWelcome() {
         setArticleType(ArticleType.Welcome);
         current = new Article();
         ArticleCategory cat;
-        cat = articleCategoryController.searchItem(ArticleType.Welcome.toString(), true);
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
         return "article";
     }
 
+    public String addNewsItem() {
+        setArticleType(ArticleType.NewsItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addEventItem() {
+        setArticleType(ArticleType.EventItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addAnnouncement() {
+        setArticleType(ArticleType.Announcement);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addMchItem() {
+        setArticleType(ArticleType.MchItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addNcdItem() {
+        setArticleType(ArticleType.NcdItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addEpidItem() {
+        setArticleType(ArticleType.EpidItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addCurativeItem() {
+        setArticleType(ArticleType.CurativeItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addGeneralInfoItem() {
+        setArticleType(ArticleType.GeneralInfoItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addRegulation() {
+        setArticleType(ArticleType.Regulation);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+
+    public String addTraining() {
+        setArticleType(ArticleType.Training);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+    
+    public String addCircular() {
+        setArticleType(ArticleType.Circular);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+    
+    public String addTender() {
+        setArticleType(ArticleType.Tender);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+    
+    public String addGallaryItem() {
+        setArticleType(ArticleType.GallaryItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+    
+    public String addOtherItem() {
+        setArticleType(ArticleType.OtherItem);
+        current = new Article();
+        ArticleCategory cat;
+        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        current.setCategory(cat);
+        return "article";
+    }
+    
+    
+    
+    public String listWelcome() {
+        setSelectedArticles(welcomes);
+        return "article_list";
+    }
+
+    public String listNewsItem() {
+        setSelectedArticles(newsItems);
+        return "article_list";
+    }
+
+    public String listEventItem() {
+        setSelectedArticles(eventItems);
+        return "article_list";
+    }
+
+    public String listAnnouncement() {
+        setSelectedArticles(announcements);
+        return "article_list";
+    }
+
+    public String listMchItem() {
+        setSelectedArticles(mchItems);
+        return "article_list";
+    }
+
+    public String listNcdItem() {
+        setSelectedArticles(ncdItems);
+        return "article_list";
+    }
+
+    public String listEpidItem() {
+        setSelectedArticles(epidItems);
+        return "article_list";
+    }
+
+    public String listCurativeItem() {
+        setSelectedArticles(curativeItems);
+        return "article_list";
+    }
+
+    public String listGeneralInfoItem() {
+        setSelectedArticles(generalInfoItems);
+        return "article_list";
+    }
+
+    public String listRegulation() {
+        setSelectedArticles(regulations);
+        return "article_list";
+    }
+
+    public String listTraining() {
+        setSelectedArticles(trainings);
+        return "article_list";
+    }
+    
+    public String listCircular() {
+        setSelectedArticles(circulars);
+        return "article_list";
+    }
+    
+    public String listTender() {
+       setSelectedArticles(tenders);
+        return "article_list";
+    }
+    
+    public String listGallaryItem() {
+       setSelectedArticles(gallaryItems);
+        return "article_list";
+    }
+    
+    public String listOtherItem() {
+       setSelectedArticles(otherItems);
+        return "article_list";
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public ArticleFacade getEjbFacade() {
         return ejbFacade;
     }
@@ -429,10 +665,10 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getNewsItems() {
         if (newsItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='NewsItem' order by a.orderNo";
             newsItems = getFacade().findBySQL(sql);
         }
-        if (welcomes.size() > 0) {
+        if (newsItems.size() > 0) {
             newsItem = newsItems.get(0);
         } else {
             newsItem = new Article();
@@ -446,10 +682,10 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getEventItems() {
         if (eventItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='EventItem' order by a.orderNo";
             eventItems = getFacade().findBySQL(sql);
         }
-        if (welcomes.size() > 0) {
+        if (eventItems.size() > 0) {
             eventItem = eventItems.get(0);
         } else {
             eventItem = new Article();
@@ -463,7 +699,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getAnnouncements() {
         if (announcements == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Announcement' order by a.orderNo";
             announcements = getFacade().findBySQL(sql);
         }
         if (announcements.size() > 0) {
@@ -480,10 +716,10 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getMchItems() {
         if (mchItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='MchItem' order by a.orderNo";
             mchItems = getFacade().findBySQL(sql);
         }
-        if (welcomes.size() > 0) {
+        if (mchItems.size() > 0) {
             mchItem = mchItems.get(0);
         } else {
             mchItem = new Article();
@@ -497,7 +733,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getNcdItems() {
         if (ncdItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='NcdItem' order by a.orderNo";
             ncdItems = getFacade().findBySQL(sql);
         }
         if (ncdItems.size() > 0) {
@@ -514,7 +750,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getEpidItems() {
         if (epidItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='EpidItem' order by a.orderNo";
             epidItems = getFacade().findBySQL(sql);
         }
         if (epidItems.size() > 0) {
@@ -531,7 +767,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getCurativeItems() {
         if (curativeItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='CurativeItem' order by a.orderNo";
             curativeItems = getFacade().findBySQL(sql);
         }
         if (curativeItems.size() > 0) {
@@ -548,7 +784,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getGeneralInfoItems() {
         if (generalInfoItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='GeneralInfoItem' order by a.orderNo";
             generalInfoItems = getFacade().findBySQL(sql);
         }
         if (generalInfoItems.size() > 0) {
@@ -565,7 +801,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getRegulations() {
         if (regulations == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Regulation' order by a.orderNo";
             regulations = getFacade().findBySQL(sql);
         }
         if (regulations.size() > 0) {
@@ -599,7 +835,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getCirculars() {
         if (circulars == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Circular' order by a.orderNo";
             circulars = getFacade().findBySQL(sql);
         }
         if (circulars.size() > 0) {
@@ -616,7 +852,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getTenders() {
         if (tenders == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='Tender' order by a.orderNo";
             tenders = getFacade().findBySQL(sql);
         }
         if (tenders.size() > 0) {
@@ -633,7 +869,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getGallaryItems() {
         if (gallaryItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='GallaryItem' order by a.orderNo";
             gallaryItems = getFacade().findBySQL(sql);
         }
         if (gallaryItems.size() > 0) {
@@ -650,7 +886,7 @@ public final class ArticleController implements Serializable {
 
     public List<Article> getOtherItems() {
         if (otherItems == null) {
-            String sql = "select a from Article a where a.retired=false and a.category.name ='Welcome' order by a.orderNo";
+            String sql = "select a from Article a where a.retired=false and a.category.name ='OtherItem' order by a.orderNo";
             otherItems = getFacade().findBySQL(sql);
         }
         if (otherItems.size() > 0) {
@@ -783,6 +1019,14 @@ public final class ArticleController implements Serializable {
 
     public void setOtherItem(Article otherItem) {
         this.otherItem = otherItem;
+    }
+
+    public List<Article> getSelectedArticles() {
+        return selectedArticles;
+    }
+
+    public void setSelectedArticles(List<Article> selectedArticles) {
+        this.selectedArticles = selectedArticles;
     }
 
     @FacesConverter(forClass = Article.class)

@@ -58,6 +58,11 @@ public class Article implements Serializable {
     private Long imgId;
     private List<Long> imgIds;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date eventDate;
+    
+    
+    
     
     public Long getOrderNo() {
         return orderNo;
@@ -247,5 +252,13 @@ public class Article implements Serializable {
 
     public void setImgIds(List<Long> imgIds) {
         this.imgIds = imgIds;
+    }
+
+    public Date getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
     }
 }

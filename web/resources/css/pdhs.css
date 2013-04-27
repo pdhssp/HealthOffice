@@ -219,8 +219,9 @@ table tbody{
 
 #newsBox{
     width: 100%;
-    height: 250px;
-
+    min-width: 300px;
+    height: 350px;
+    text-align: center;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=84)";
     filter: alpha(opacity=84);
     -moz-opacity: 0.84;
@@ -240,7 +241,7 @@ table tbody{
     text-decoration: none;
     line-height: 2.2em;
     letter-spacing: 0.205em;
-    
+
     -moz-box-shadow: 4px 6px 7px 3px #000914;
     -webkit-box-shadow: 4px 6px 7px 3px #000914;
     box-shadow: 4px 6px 7px 3px #000914;
@@ -248,4 +249,113 @@ table tbody{
     transform:rotate(7deg);
     -ms-transform:rotate(7deg);
     -webkit-transform: rotate(7deg);
+
+    overflow: scroll;
+
+}
+
+
+
+
+.note {
+    position:relative;
+    min-width:91%;
+    padding:1em 1.5em;
+    margin:1em auto;
+    color:#fff;
+    background:#97C02F;
+    overflow:hidden;
+}
+
+.note:before {
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    border-width:0 16px 16px 0;
+    border-style:solid;
+    border-color: #d4d6f2  #d4d6f2 #658E15 #658E15;
+    background: #d4d6f2;
+    -webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
+    -moz-box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
+    box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
+    display:block; width:0; /* Firefox 3.0 damage limitation */
+}
+
+.note.rounded {
+    -webkit-border-radius:5px 0 5px 5px;
+    -moz-border-radius:5px 0 5px 5px;
+    border-radius:5px 0 5px 5px;
+}
+
+.note.rounded:before {
+    border-width:8px;
+    border-color:#fff #fff transparent transparent;
+    -webkit-border-bottom-left-radius:5px;
+    -moz-border-radius:0 0 0 5px;
+    border-radius:0 0 0 5px;
+}
+
+.eventHeader{
+    font-family: Calibri , sans-serif;
+    font-size: 2em;
+    color: rgb(2,2,10);
+    -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
+    -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
+    text-shadow:         4px 4px 12px rgba(0, 0, 83, 0.73);
+}
+
+.articleBox{
+    min-width: 50%;
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    filter: alpha(opacity=90);
+    -moz-opacity: 0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+    border: 5px #ebf3ff outset;
+
+    background-color: #f0f3ff;
+
+    padding: 6px;
+
+    color: #040e77;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: 'MS Sans Serif', Geneva, sans-serif;
+    font-style: inherit;
+    text-decoration: inherit;
+    line-height: 2.05em;
+    letter-spacing: 0.15em;
+    -moz-box-shadow: 6px 7px 7px 1px #022364;
+    -webkit-box-shadow: 6px 7px 7px 1px #022364;
+    box-shadow: 6px 7px 7px 1px #022364;
+}
+
+
+.articalImage{
+    width: 200px;
+    height: 300px;
+    margin: 5px;
+    padding: 5px;
+    float: left;
+}
+
+
+.articalHeading{
+    font-family: Calibri , sans-serif;
+    font-size: 1em;
+    color: rgb(5,5,50);
+    -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
+    -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
+    text-shadow:         4px 4px 12px rgba(0, 0, 83, 0.73);
+}
+
+.articalText{
+    font-family: Calibri , sans-serif;
+    font-size: 0.5em;
+    color: rgb(2,2,10);
+/*    -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
+    -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
+    text-shadow:         4px 4px 12px rgba(0, 0, 83, 0.73);*/
 }
