@@ -110,13 +110,25 @@
                                 </div>
                             </td>
                             <td>
+
                                 <div class="articleBox" >
                                     <p:galleria value="#{articleController.allExceptWelcomesAndEvents}" var="aa" >
-                                        <p:graphicImage value="#{articleController.imageById}" styleClass="articleImage" >
-                                            <f:param name="id" value="#{aa.imgId}" />
-                                        </p:graphicImage>
-                                        <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalHeading" ></h:outputLabel>
-                                        <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaContent }" styleClass="articalText" ></h:outputLabel>
+                                        <div>
+                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                        </div>
+                                        <div>
+                                            <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
+                                                <f:param name="id" value="#{aa.imgId}" />
+                                            </p:graphicImage>
+                                            <div class="articalTextBox">
+                                            <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaContent}" styleClass="articalText" ></h:outputText>
+                                            <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{aa.tamilContent}" styleClass="articalText" ></h:outputText>
+                                            <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{aa.englishContent}" styleClass="articalText" ></h:outputText>
+                                            </div>
+                                        </div>
+
                                     </p:galleria>
                                 </div>
                             </td>

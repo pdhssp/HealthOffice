@@ -330,14 +330,15 @@ table tbody{
     -moz-box-shadow: 6px 7px 7px 1px #022364;
     -webkit-box-shadow: 6px 7px 7px 1px #022364;
     box-shadow: 6px 7px 7px 1px #022364;
+    
+    
 }
 
 
 .articalImage{
     width: 200px;
-    height: 300px;
-    margin: 5px;
-    padding: 5px;
+    margin: 1px;
+    padding: 1px;
     float: left;
 }
 
@@ -355,6 +356,13 @@ table tbody{
     font-family: Calibri , sans-serif;
     font-size: 0.5em;
     color: rgb(2,2,10);
+/*    -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
+    -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
+    text-shadow:         4px 4px 12px rgba(0, 0, 83, 0.73);*/
+}
+
+.articalTextBox{
+    overflow: scroll;
 /*    -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
     -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
     text-shadow:         4px 4px 12px rgba(0, 0, 83, 0.73);*/

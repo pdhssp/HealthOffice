@@ -9,6 +9,7 @@
 package gov.sp.health.bean;
 
 import gov.sp.health.data.ArticleType;
+import gov.sp.health.data.CommonFunctions;
 import gov.sp.health.entity.AppImage;
 import gov.sp.health.facade.ArticleFacade;
 import gov.sp.health.entity.Article;
@@ -77,11 +78,8 @@ public final class ArticleController implements Serializable {
     private List<Article> tenders;
     private List<Article> gallaryItems;
     private List<Article> otherItems;
-    
     List<Article> allExceptWelcomesAndEvents;
-    
     private List<Article> selectedArticles;
-    
     private Article welcome;
     private Article newsItem;
     private Article eventItem;
@@ -98,10 +96,8 @@ public final class ArticleController implements Serializable {
     private Article gallaryItem;
     private Article otherItem;
 
-    
-    
     public List<Article> getAllExceptWelcomesAndEvents() {
-          if (allExceptWelcomesAndEvents == null) {
+        if (allExceptWelcomesAndEvents == null) {
             String sql = "select a from Article a where a.retired=false and a.category.name <> 'Welcome' and a.category.name <> 'EventItem' order by a.orderNo";
             allExceptWelcomesAndEvents = getFacade().findBySQL(sql);
         }
@@ -111,8 +107,6 @@ public final class ArticleController implements Serializable {
     public void setAllExceptWelcomesAndEvents(List<Article> allExceptWelcomesAndEvents) {
         this.allExceptWelcomesAndEvents = allExceptWelcomesAndEvents;
     }
-    
-    
 
     public ArticleType getArticleType() {
         return articleType;
@@ -231,8 +225,26 @@ public final class ArticleController implements Serializable {
             String id;
             id = context.getExternalContext().getRequestParameterMap().get("id");
             System.out.println("Id is " + id);
-            AppImage temImg = getImageFacade().find(Long.valueOf(id));
-            return new DefaultStreamedContent(new ByteArrayInputStream(temImg.getBaImage()), temImg.getFileType());
+            
+            long idVal;
+
+            if (CommonFunctions.isLongPositive(id)) {
+                idVal = Long.valueOf(id);
+            } else {
+                idVal = 0l;
+            }
+
+
+            if (idVal != 0) {
+                AppImage temImg = getImageFacade().find(Long.valueOf(id));
+                if (temImg != null) {
+                    return new DefaultStreamedContent(new ByteArrayInputStream(temImg.getBaImage()), temImg.getFileType());
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
         }
     }
 
@@ -293,7 +305,7 @@ public final class ArticleController implements Serializable {
         setArticleType(ArticleType.NewsItem);
         current = new Article();
         ArticleCategory cat;
-        cat = articleCategoryController.searchItem(getArticleType().toString(), true);
+        cat = articleCategoryController.searchItem(getArticleType().name(), true);
         current.setCategory(cat);
         return "article";
     }
@@ -378,7 +390,7 @@ public final class ArticleController implements Serializable {
         current.setCategory(cat);
         return "article";
     }
-    
+
     public String addCircular() {
         setArticleType(ArticleType.Circular);
         current = new Article();
@@ -387,7 +399,7 @@ public final class ArticleController implements Serializable {
         current.setCategory(cat);
         return "article";
     }
-    
+
     public String addTender() {
         setArticleType(ArticleType.Tender);
         current = new Article();
@@ -396,7 +408,7 @@ public final class ArticleController implements Serializable {
         current.setCategory(cat);
         return "article";
     }
-    
+
     public String addGallaryItem() {
         setArticleType(ArticleType.GallaryItem);
         current = new Article();
@@ -405,7 +417,7 @@ public final class ArticleController implements Serializable {
         current.setCategory(cat);
         return "article";
     }
-    
+
     public String addOtherItem() {
         setArticleType(ArticleType.OtherItem);
         current = new Article();
@@ -414,100 +426,82 @@ public final class ArticleController implements Serializable {
         current.setCategory(cat);
         return "article";
     }
-    
-    
-    
+
     public String listWelcome() {
-        setSelectedArticles(welcomes);
+        setSelectedArticles(getWelcomes());
         return "article_list";
     }
 
     public String listNewsItem() {
-        setSelectedArticles(newsItems);
+        setSelectedArticles(getNewsItems());
         return "article_list";
     }
 
     public String listEventItem() {
-        setSelectedArticles(eventItems);
+        setSelectedArticles(getEventItems());
         return "article_list";
     }
 
     public String listAnnouncement() {
-        setSelectedArticles(announcements);
+        setSelectedArticles(getAnnouncements());
         return "article_list";
     }
 
     public String listMchItem() {
-        setSelectedArticles(mchItems);
+        setSelectedArticles(getMchItems());
         return "article_list";
     }
 
     public String listNcdItem() {
-        setSelectedArticles(ncdItems);
+        setSelectedArticles(getNcdItems());
         return "article_list";
     }
 
     public String listEpidItem() {
-        setSelectedArticles(epidItems);
+        setSelectedArticles(getEpidItems());
         return "article_list";
     }
 
     public String listCurativeItem() {
-        setSelectedArticles(curativeItems);
+        setSelectedArticles(getCurativeItems());
         return "article_list";
     }
 
     public String listGeneralInfoItem() {
-        setSelectedArticles(generalInfoItems);
+        setSelectedArticles(getGeneralInfoItems());
         return "article_list";
     }
 
     public String listRegulation() {
-        setSelectedArticles(regulations);
+        setSelectedArticles(getRegulations());
         return "article_list";
     }
 
     public String listTraining() {
-        setSelectedArticles(trainings);
+        setSelectedArticles(getTrainings());
         return "article_list";
     }
-    
+
     public String listCircular() {
-        setSelectedArticles(circulars);
+        setSelectedArticles(getCirculars());
         return "article_list";
     }
-    
+
     public String listTender() {
-       setSelectedArticles(tenders);
+        setSelectedArticles(getTenders());
         return "article_list";
     }
-    
+
     public String listGallaryItem() {
-       setSelectedArticles(gallaryItems);
+        setSelectedArticles(getGallaryItems());
         return "article_list";
     }
-    
+
     public String listOtherItem() {
-       setSelectedArticles(otherItems);
+        setSelectedArticles(getOtherItems());
         return "article_list";
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     public ArticleFacade getEjbFacade() {
         return ejbFacade;
     }
