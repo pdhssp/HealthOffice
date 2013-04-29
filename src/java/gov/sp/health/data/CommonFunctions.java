@@ -5,6 +5,7 @@
 package gov.sp.health.data;
 
 import java.text.DateFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -151,5 +152,43 @@ public class CommonFunctions {
             temLst.add(temCal.getTime());
         }
         return temLst;
+    }
+
+    public static boolean isLongPositive(String str) {
+        if (str==null){
+            return false;
+        }
+        if(str.length()==0){
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isNumeric(String str) {
+        DecimalFormatSymbols currentLocaleSymbols = DecimalFormatSymbols.getInstance();
+        char localeMinusSign = currentLocaleSymbols.getMinusSign();
+
+        if (!Character.isDigit(str.charAt(0)) && str.charAt(0) != localeMinusSign) {
+            return false;
+        }
+
+        boolean isDecimalSeparatorFound = false;
+        char localeDecimalSeparator = currentLocaleSymbols.getDecimalSeparator();
+
+        for (char c : str.substring(1).toCharArray()) {
+            if (!Character.isDigit(c)) {
+                if (c == localeDecimalSeparator && !isDecimalSeparatorFound) {
+                    isDecimalSeparatorFound = true;
+                    continue;
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }

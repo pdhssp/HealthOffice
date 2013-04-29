@@ -57,6 +57,8 @@ public class AppImage implements Serializable {
     Finding finding;
     @ManyToOne
     Letter letter;
+    @ManyToOne
+    Article article;
     
     
     @Lob
@@ -64,6 +66,16 @@ public class AppImage implements Serializable {
     String fileName;
     String fileType;
 
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    
+    
     public Encounter getEncounter() {
         return encounter;
     }
@@ -284,7 +296,7 @@ public class AppImage implements Serializable {
 
     @Override
     public String toString() {
-        return "gov.sp.health.entity.UnitImage[ id=" + id + " ]";
+        return "gov.sp.health.entity.AppImage[ id=" + id + " ]";
     }
     
 }

@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+            <ui:define name="title">
+                #{labels.manageArticles}
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <h:commandButton value="New Fontpage Message" action="#{articleController.addWelcome()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All Fontpage Message" action="#{articleController.listWelcome()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New NewsItem" action="#{articleController.addNewsItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List NewsItem" action="#{articleController.listNewsItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New EventItem" action="#{articleController.addEventItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All EventItem" action="#{articleController.listEventItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New Announcement" action="#{articleController.addAnnouncement()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All Announcement" action="#{articleController.listAnnouncement()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New MchItem" action="#{articleController.addMchItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All MchItem" action="#{articleController.listMchItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New NcdItem" action="#{articleController.addNcdItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All NcdItem" action="#{articleController.listNcdItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New EpidItem" action="#{articleController.addEpidItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All EpidItem" action="#{articleController.listEpidItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New CurativeItem" action="#{articleController.addCurativeItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All CurativeItem" action="#{articleController.listCurativeItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New GeneralInfoItem" action="#{articleController.addGeneralInfoItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All GeneralInfoItem" action="#{articleController.listGeneralInfoItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New Regulation" action="#{articleController.addRegulation()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All Regulation" action="#{articleController.listRegulation()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New Training" action="#{articleController.addTraining()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All Training" action="#{articleController.listTraining()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New Circular" action="#{articleController.addCircular()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All Circular" action="#{articleController.listCircular()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New Tender" action="#{articleController.addTender()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List All Tender" action="#{articleController.listTender()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New GallaryItem" action="#{articleController.addGallaryItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List GallaryItem" action="#{articleController.listGallaryItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                    <h:commandButton value="New OtherItem" action="#{articleController.addOtherItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="List OtherItem" action="#{articleController.listOtherItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

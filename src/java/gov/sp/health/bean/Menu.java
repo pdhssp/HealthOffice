@@ -14,7 +14,7 @@ import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import org.primefaces.component.menuitem.MenuItem;
 
 /**
@@ -23,7 +23,7 @@ import org.primefaces.component.menuitem.MenuItem;
  * Informatics)
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class Menu implements Serializable {
 
     @ManagedProperty(value = "#{sessionController}")
@@ -177,6 +177,20 @@ public class Menu implements Serializable {
         return submenu;
     }
 
+    private Submenu articleSubmenu() {
+        Submenu submenu = new Submenu();
+        submenu.setLabel(getLabel("Articles"));
+
+        MenuItem item;
+
+        item = new MenuItem();
+        item.setValue(getLabel("manageArticles"));
+        item.setUrl("article_index.xhtml");
+        submenu.getChildren().add(item);
+
+        return submenu;
+    }
+    
     public SessionController getSessionController() {
         return sessionController;
     }
@@ -186,6 +200,9 @@ public class Menu implements Serializable {
     }
 
     public void createMenu() {
+        if (sessionController.privilege==null){
+            return;
+        }
         msModel = new DefaultMenuModel();
         if (sessionController.privilege.isMsView()) {
             msModel.addSubmenu(medicalSubmenu());
@@ -226,6 +243,8 @@ public class Menu implements Serializable {
             model.addSubmenu(adminSubmenu());
         }
 
+        model.addSubmenu(articleSubmenu());
+        
         model.addSubmenu(userSubmenu());
     }
 

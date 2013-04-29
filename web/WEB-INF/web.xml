@@ -39,7 +39,7 @@
         </filter-class>
         <init-param>
             <param-name>uploadDirectory</param-name>
-            <param-value>D:\</param-value>
+            <param-value>\</param-value>
         </init-param>
     </filter>
     <filter-mapping>
