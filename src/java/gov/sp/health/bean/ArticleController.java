@@ -1,8 +1,8 @@
 /*
  * MSc(Biomedical Informatics) Project
- * 
- * Development and Implementation of a Web-based Combined Data Repository of 
- Genealogical, Clinical, Laboratory and Genetic Data 
+ *
+ * Development and Implementation of a Web-based Combined Data Repository of
+ Genealogical, Clinical, Laboratory and Genetic Data
  * and
  * a Set of Related Tools
  */
@@ -45,6 +45,7 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public final class ArticleController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @EJB
     private ArticleFacade ejbFacade;
     @EJB
@@ -56,7 +57,7 @@ public final class ArticleController implements Serializable {
     List<Article> lstItems;
     private Article current;
     ArticleType articleType;
-    private DataModel<Article> items = null;
+    private List<Article> items = null;
     String selectText = "";
     AppImage currentImg;
     List<AppImage> currentImgs;
@@ -95,6 +96,14 @@ public final class ArticleController implements Serializable {
     private Article tender;
     private Article gallaryItem;
     private Article otherItem;
+
+    public List<Article> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Article> items) {
+        this.items = items;
+    }
 
     public List<Article> getAllExceptWelcomesAndEvents() {
         if (allExceptWelcomesAndEvents == null) {
@@ -183,8 +192,6 @@ public final class ArticleController implements Serializable {
             List<Long> lstLng;
             lstLng = getImageFacade().longListBySql(sql);
             Long temLng;
-            sql = "Select max(ai.id) from AppImage ai Where ai.article.id = " + a.getId() + " order by ai.id desc";
-//            temLng= getImageFacade().findAggregateLong(sql);
             System.out.println("Long list size is " + lstLng.size());
             System.out.println("Long List is " + lstLng.toString());
             System.out.println("going to set image list");
@@ -225,7 +232,7 @@ public final class ArticleController implements Serializable {
             String id;
             id = context.getExternalContext().getRequestParameterMap().get("id");
             System.out.println("Id is " + id);
-            
+
             long idVal;
 
             if (CommonFunctions.isLongPositive(id)) {
@@ -559,11 +566,6 @@ public final class ArticleController implements Serializable {
         return ejbFacade;
     }
 
-    public DataModel<Article> getItems() {
-        items = new ListDataModel(getFacade().findAll());
-        return items;
-    }
-
     public static int intValue(long value) {
         int valueInt = (int) value;
         if (valueInt != value) {
@@ -571,26 +573,6 @@ public final class ArticleController implements Serializable {
                     "The long value " + value + " is not within range of the int type");
         }
         return valueInt;
-    }
-
-    public DataModel searchItems() {
-        recreateModel();
-        if (items == null) {
-            if (selectText.equals("")) {
-                items = new ListDataModel(getFacade().findAll("name", true));
-            } else {
-                items = new ListDataModel(getFacade().findAll("name", "%" + selectText + "%",
-                        true));
-                if (items.getRowCount() > 0) {
-                    items.setRowIndex(0);
-                    current = (Article) items.getRowData();
-                } else {
-                    current = null;
-                }
-            }
-        }
-        return items;
-
     }
 
     private void recreateModel() {
@@ -654,7 +636,6 @@ public final class ArticleController implements Serializable {
 
     public void setSelectText(String selectText) {
         this.selectText = selectText;
-        searchItems();
     }
 
     public List<Article> getNewsItems() {
@@ -1021,6 +1002,126 @@ public final class ArticleController implements Serializable {
 
     public void setSelectedArticles(List<Article> selectedArticles) {
         this.selectedArticles = selectedArticles;
+    }
+
+    public String displayNews() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayEvents() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayAnnouncement() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayNCD() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayMCH() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayEpidemiology() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayLocations() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayGeneralInformation() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayRulesRegulations() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayTraining() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayCirculars() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayTenders() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String Awareness() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayStatistics() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayVision() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayMission() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayValues() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayOrganizationChart() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayProvince() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayGallary() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
     }
 
     @FacesConverter(forClass = Article.class)
