@@ -16,12 +16,15 @@
                 Article
             </ui:define>
 
-            <ui:define name="content">
+            <ui:define name="login">
 
                 <h:form >
 
-                    <h:panelGrid rendered="#{articleController.selectedArticles.size()<1}" >
-                        #{labels.noArticles}
+                    <h:panelGrid rendered="#{articleController.selectedArticles.size()==0}"  >
+                        <div style="min-height: 300px;">
+                            #{labels.noArticles}
+                        </div>
+
                     </h:panelGrid>
 
                     <h:panelGrid rendered="#{articleController.selectedArticles.size()>0}" >

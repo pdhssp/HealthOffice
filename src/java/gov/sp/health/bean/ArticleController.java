@@ -558,7 +558,12 @@ public final class ArticleController implements Serializable {
     public void setCurrent(Article current) {
         this.current = current;
         String sql;
-        sql = "Select ai from AppImage ai Where ai.article.id = " + current.getId() + " order by ai.id desc";
+        if (current != null && current.getId() != null) {
+            sql = "Select ai from AppImage ai Where ai.article.id = " + current.getId() + " order by ai.id desc";
+
+        } else {
+            sql = "Select ai from AppImage ai Where ai.article.id = 0 order by ai.id desc";
+        }
         prepareImages(sql);
     }
 
@@ -1005,13 +1010,13 @@ public final class ArticleController implements Serializable {
     }
 
     public String displayNews() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getNewsItems());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayEvents() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getEventItems());
         setCurrent(eventItem);
         return "article_page";
     }
@@ -1023,103 +1028,103 @@ public final class ArticleController implements Serializable {
     }
 
     public String displayNCD() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getNcdItems());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayMCH() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getMchItems());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayEpidemiology() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getEpidItems());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayLocations() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(null);
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayGeneralInformation() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getGeneralInfoItems());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayRulesRegulations() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getRegulations());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayTraining() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getTrainings());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayCirculars() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getCirculars());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayTenders() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getTenders());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String Awareness() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(null);
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayStatistics() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(null);
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayVision() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getWelcomes());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayMission() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getWelcomes());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayValues() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getWelcomes());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayOrganizationChart() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getWelcomes());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayProvince() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getWelcomes());
         setCurrent(eventItem);
         return "article_page";
     }
 
     public String displayGallary() {
-        setSelectedArticles(getAnnouncements());
+        setSelectedArticles(getWelcomes());
         setCurrent(eventItem);
         return "article_page";
     }

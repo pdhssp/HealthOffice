@@ -9,9 +9,9 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="css" name="pdhs.css" media="screen" />
+        <h:outputStylesheet library="css" name="pdhs.css"  />
         <title>
-            <ui:insert  name="title">        
+            <ui:insert  name="title">
                 #{labels.topic}
             </ui:insert>
         </title>
@@ -19,6 +19,7 @@
 
     <h:body >
         <f:view locale="#{languageBean.localeCode}" >
+            <h:outputStylesheet library="css" name="pdhs.css"  />
             <table id="bodyTable" >
                 <tr id="topLine">
                     <td>
@@ -84,16 +85,17 @@
                         <h:panelGroup rendered="#{sessionController.logged}" >
                             <p:panelGrid columns="2" style="border: 0px; width: 100%; height: 75px; ">
                                 <p:panel style="margin: 0px; padding: 0px; border: 0px; width: 20%; height: 70px;">
-                                    <h:graphicImage  class="pdLogo" library="image" name="logo.jpg" width="50px" height="50px" ></h:graphicImage> 
+                                    <h:graphicImage  class="pdLogo" library="image" name="logo.jpg" width="50px" height="50px" ></h:graphicImage>
                                 </p:panel>
                                 <p:panel style="margin: 1px; padding: 1px; border: 0px; width: 60%;">
                                     <h:outputLabel style="font-size: 2.0em;" >#{labels.topic}</h:outputLabel><br/>&nbsp;
-                                    <h:outputLabel style="font-size: 1.0em;" >#{labels.subtopic}</h:outputLabel> 
+                                    <h:outputLabel style="font-size: 1.0em;" >#{labels.subtopic}</h:outputLabel>
                                 </p:panel>
                             </p:panelGrid>
                         </h:panelGroup>
                     </td>
                 </tr>
+
                 <tr id="menuRow">
                     <td style="padding: 5px;">
                         <h:panelGroup rendered="#{!sessionController.logged}" >
@@ -101,15 +103,36 @@
                                 <div id='cssmenu'>
                                     <ul>
                                         <li class='active'><h:commandLink value="#{labels.home}" action="index" /></li>
-                                        <li class='has-sub'><a href='#'><span>Products</span></a>
+                                        <li class='has-sub'><h:commandLink value="#{labels.newsEventsAnnouncements}"/>
                                             <ul>
-                                                <li><a href='#'><span>Product 1</span></a></li>
-                                                <li class='last'><a href='#'><span>Product 2</span></a></li>
+                                                <li><h:commandLink value="#{labels.news}" action="#{articleController.displayNews()}" /></li>
+                                                <li><h:commandLink value="#{labels.events}" action="#{articleController.displayEvents() }" /></li>
+                                                <li class='last'><h:commandLink value="#{labels.announcement}" action="#{articleController.displayAnnouncement() }" /></li>
                                             </ul>
                                         </li>
-                                        <li><a href='#'><span>About</span></a></li>
-                                        <li><h:commandLink value="Staff Login" action="home" /></li>
-                                        <li class='last'><a href='#'><span>Contact</span></a></li>
+                                        <li class='has-sub'><h:commandLink value="#{labels.curativeServices}"/>
+                                            <ul>
+                                                <li class='last'><h:commandLink value="Under Construction" /></li>
+                                            </ul>
+                                        </li>
+                                        <li class='has-sub'><h:commandLink value="#{labels.publicHealthServices}"  />
+                                            <ul>
+                                                <li><h:commandLink value="#{labels.ncd}" action="#{articleController.displayNCD() }" /></li>
+                                                <li><h:commandLink value="#{labels.mch}" action="#{articleController.displayMCH() }" /></li>
+                                                <li class='last'><h:commandLink value="#{labels.locations}" action="#{articleController.displayLocations() }" /></li>
+                                            </ul>
+                                        </li>
+                                        <li class='has-sub'><h:commandLink value="#{labels.administrativeServices}" />
+                                            <ul>
+                                                <li><h:commandLink value="#{labels.generalInformation}" action="#{articleController.displayGeneralInformation() }" /></li>
+                                                <li><h:commandLink value="#{labels.rulesRegulations}" action="#{articleController.displayRulesRegulations() }" /></li>
+                                                <li><h:commandLink value="#{labels.circulars}" action="#{articleController.displayCirculars() }" /></li>
+                                                <li><h:commandLink value="#{labels.tenders}" action="#{articleController.displayTenders() }" /></li>
+                                                <li class='last'><h:commandLink value="#{labels.training}" action="#{articleController.displayTraining() }" /></li>
+                                            </ul>
+                                        </li>
+                                        <li><h:commandLink value="#{labels.statistics}" action="#{articleController.displayStatistics() }" /></li>
+                                        <li class='last'><h:commandLink value="#{labels.staffLogin}" action="home" /></li>
                                     </ul>
                                 </div>
                             </h:form>
@@ -125,15 +148,15 @@
                     </td>
                 </tr>
                 <tr id="contentRow">
-                    
+
                     <td id="contentCol" style="width:100%;">
-                        
+
                         <p:panel rendered="#{sessionController.logged}" style="width: 100%!important;">
                             <ui:insert name="content" class="fullWidth"   >
-                                
+
                             </ui:insert>
                         </p:panel>
-                        
+
                         <h:panelGroup rendered="#{!sessionController.logged}" style="width:100%!important;" >
                             <ui:insert name="login" class="fullWidth"  >
                                 <h:form>
@@ -146,7 +169,7 @@
                                     <h:inputSecret value="#{connetcionController.passord}" />
                                     <br/>
                                     <h:commandButton id="btnLogin" class="pdButton" type="submit" value="#{labels.Login}" action="#{connetcionController.loginAction()}"/>
-                                    <h:commandButton id="btnReg" class="pdButton" type="submit" value="#{labels.Register}" action="register" /> 
+                                    <h:commandButton id="btnReg" class="pdButton" type="submit" value="#{labels.Register}" action="register" />
                                 </h:form>
                             </ui:insert>
                         </h:panelGroup>
