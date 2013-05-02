@@ -17,7 +17,7 @@
         <table id="indexTbl" style="width:100%;">
             <tr>
                 <td colspan="2" style="width:100%;padding:5px;margin:5px;">
-                    <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true" transitionInterval="2000" effect="" >
+                    <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true" transitionInterval="2000" effect="fade" >
                         <table  >
                             <tr >
                                 <td  >
@@ -113,8 +113,8 @@
                                     <p:galleria value="#{articleController.allExceptWelcomesAndEvents}" var="aa" >
                                         <div>
                                             <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inTamil}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
                                         </div>
                                         <div>
                                             <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
