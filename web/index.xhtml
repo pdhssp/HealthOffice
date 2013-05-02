@@ -17,7 +17,7 @@
         <table id="indexTbl" style="width:100%;">
             <tr>
                 <td colspan="2" style="width:100%;padding:5px;margin:5px;">
-                    <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true">
+                    <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true" transitionInterval="2000" effect="fade" >
                         <table  >
                             <tr >
                                 <td  >
@@ -31,9 +31,9 @@
                                         </tr>
                                         <tr>
                                             <td class="justifiedText">
-                                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputLabel>
-                                                <h:outputLabel rendered="#{languageBean.inTamil}" value="#{w.tamilContent }" styleClass="welcomeText" ></h:outputLabel>
-                                                <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{w.englishContent }" styleClass="welcomeText" ></h:outputLabel>
+                                                <h:outputText escape="false"  rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputText>
+                                                <h:outputText escape="false"  rendered="#{languageBean.inTamil}" value="#{w.tamilContent }" styleClass="welcomeText" ></h:outputText>
+                                                <h:outputText escape="false"  rendered="#{languageBean.inEnglish}" value="#{w.englishContent }" styleClass="welcomeText" ></h:outputText>
                                             </td>
                                         </tr>
                                     </table>
@@ -53,13 +53,11 @@
                 <td>
                     <table >
                         <tr>
-                            <td style="min-width: 50%; padding-right: 110px; " >
+                            <td style="padding-right: 110px; " >
 
                                 <div id="newsBox" >
 
                                     <h:outputLabel value="Events" styleClass="eventHeader" ></h:outputLabel>
-
-                                    #{articleController.eventItems.size()}
 
                                     <div style="padding-top: 20px;">
 
@@ -115,23 +113,49 @@
                                     <p:galleria value="#{articleController.allExceptWelcomesAndEvents}" var="aa" >
                                         <div>
                                             <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inTamil}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
                                         </div>
                                         <div>
                                             <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
                                                 <f:param name="id" value="#{aa.imgId}" />
                                             </p:graphicImage>
                                             <div class="articalTextBox">
-                                            <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaContent}" styleClass="articalText" ></h:outputText>
-                                            <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{aa.tamilContent}" styleClass="articalText" ></h:outputText>
-                                            <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{aa.englishContent}" styleClass="articalText" ></h:outputText>
+                                                <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaContent}" styleClass="articalText" ></h:outputText>
+                                                <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{aa.tamilContent}" styleClass="articalText" ></h:outputText>
+                                                <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{aa.englishContent}" styleClass="articalText" ></h:outputText>
                                             </div>
                                         </div>
 
                                     </p:galleria>
                                 </div>
                             </td>
+                            <td>
+
+                                <div class="articleBox" >
+                                    <p:galleria value="#{articleController.allExceptWelcomesAndEvents}" var="ab" >
+                                        <div>
+                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                        </div>
+                                        <div>
+                                            <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
+                                                <f:param name="id" value="#{ab.imgId}" />
+                                            </p:graphicImage>
+                                            <div class="articalTextBox">
+                                                <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaContent}" styleClass="articalText" ></h:outputText>
+                                                <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{ab.tamilContent}" styleClass="articalText" ></h:outputText>
+                                                <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{ab.englishContent}" styleClass="articalText" ></h:outputText>
+                                            </div>
+                                        </div>
+
+                                    </p:galleria>
+                                </div>
+
+
+                            </td>
+
                         </tr>
                     </table>
                 </td>

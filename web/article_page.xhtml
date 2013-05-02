@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <p:growl autoUpdate="true"/>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+            <ui:define name="title">
+                Article
+            </ui:define>
+
+            <ui:define name="login">
+
+                <h:form >
+
+                    <h:panelGrid rendered="#{articleController.selectedArticles.size()==0}"  >
+                        <div style="min-height: 300px;">
+                            #{labels.noArticles}
+                        </div>
+
+                    </h:panelGrid>
+
+                    <h:panelGrid rendered="#{articleController.selectedArticles.size()>0}" >
+
+
+                        <table >
+                            <tr>
+                                <td>
+                                    <div class="leadingArticle">
+
+                                        #{articleController.selectedArticles.get(0).sinhalaTopic}
+                                        #{articleController.selectedArticles.get(0).sinhalaContent}
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>
