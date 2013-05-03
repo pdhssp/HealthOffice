@@ -24,29 +24,29 @@
                         <div style="min-height: 300px;">
                             #{labels.noArticles}
                         </div>
-
                     </h:panelGrid>
 
                     <h:panelGrid rendered="#{articleController.selectedArticles.size()>0}" >
 
 
-                        <table >
-                            <tr>
-                                <td>
-                                    <div class="leadingArticle">
+                        <p:panel styleClass="leadingArticleDiv" >
 
-                                        #{articleController.selectedArticles.get(0).sinhalaTopic}
-                                        #{articleController.selectedArticles.get(0).sinhalaContent}
-                                    </div>
-                                </td>
-                            </tr>
+                            <div>
 
-                            <tr>
-                                <td>
+                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{articleController.selectedArticles[0].sinhalaTopic}" styleClass="leadingArticleHeading" ></h:outputLabel>
+                                <h:outputLabel rendered="#{languageBean.inTamil}" value="#{articleController.selectedArticles[0].tamilTopic}" styleClass="leadingArticleHeading" ></h:outputLabel>
+                                <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{articleController.selectedArticles[0].englishTopic}" styleClass="leadingArticleHeading" ></h:outputLabel>
 
-                                </td>
-                            </tr>
-                        </table>
+                                <hr/>
+
+
+                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{articleController.selectedArticles[0].sinhalaContent}" styleClass="articalTopic" ></h:outputLabel>
+                                <h:outputLabel rendered="#{languageBean.inTamil}" value="#{articleController.selectedArticles[0].tamilContent}" styleClass="articalTopic" ></h:outputLabel>
+                                <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{articleController.selectedArticles[0].englishTopic}" styleClass="articalTopic" ></h:outputLabel>
+
+                            </div>
+
+                        </p:panel>
 
                     </h:panelGrid>
 

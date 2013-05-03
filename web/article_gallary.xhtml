@@ -29,16 +29,16 @@
                                 Sinhala
                             </th>
                             <th>
-                                Tamil
+                                English
                             </th>
                             <th>
-                                English
+                                Tamil
                             </th>
                         </tr>
 
                         <tr>
                             <td>
-                                Article Topic
+                                Article Topic 
                             </td>
                             <td>
                                 <h:inputText maxlength="250" value="#{articleController.current.sinhalaTopic}" ></h:inputText>
@@ -56,14 +56,14 @@
                                 Article Contents
                             </td>
                             <td>
-                                <h:inputTextarea  value="#{articleController.current.sinhalaContent}" ></h:inputTextarea>
+                                <p:editor  value="#{articleController.current.sinhalaContent}" ></p:editor>
                             </td>
                             <td>
-                                <h:inputTextarea  value="#{articleController.current.tamilContent}" ></h:inputTextarea>
+                                <p:editor  value="#{articleController.current.tamilContent}" ></p:editor>
                             </td>
 
                             <td>
-                                <h:inputTextarea  value="#{articleController.current.englishContent}" ></h:inputTextarea>
+                                <p:editor  value="#{articleController.current.englishContent}" ></p:editor>
                             </td>
                         </tr>
                         <tr>
@@ -95,7 +95,7 @@
                             </td>
                         </tr>
                     </table>
-                </h:form>
+                </h:form>                
             </ui:define>
 
 
