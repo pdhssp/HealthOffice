@@ -117,6 +117,7 @@
                                         </li>
                                         <li class='has-sub'><h:commandLink value="#{labels.publicHealthServices}"  />
                                             <ul>
+                                                <li><h:commandLink value="#{labels.statistics}" action="#{articleController.displayStatistics() }" /></li>
                                                 <li><h:commandLink value="#{labels.ncd}" action="#{articleController.displayNCD() }" /></li>
                                                 <li><h:commandLink value="#{labels.mch}" action="#{articleController.displayMCH() }" /></li>
                                                 <li class='last'><h:commandLink value="#{labels.locations}" action="#{articleController.displayLocations() }" /></li>
@@ -131,7 +132,7 @@
                                                 <li class='last'><h:commandLink value="#{labels.training}" action="#{articleController.displayTraining() }" /></li>
                                             </ul>
                                         </li>
-                                        <li><h:commandLink value="#{labels.statistics}" action="#{articleController.displayStatistics() }" /></li>
+
                                         <li><h:commandLink value="#{labels.gallery}" action="#{articleController.displayGallary() }" /></li>
                                         <li class='last'><h:commandLink value="#{labels.staffLogin}" action="home" /></li>
                                     </ul>
@@ -150,7 +151,7 @@
                 </tr>
                 <tr id="contentRow">
 
-                    <td id="contentCol" style="width:100%;">
+                    <td id="contentCol" style="max-width:100%;">
 
                         <p:panel rendered="#{sessionController.logged}" style="width: 100%!important;">
                             <ui:insert name="content" class="fullWidth"   >
