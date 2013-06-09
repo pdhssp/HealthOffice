@@ -25,6 +25,22 @@ html{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cce1ea',GradientType=0 );
 }
 
+
+
+/*Prime Faces*/
+
+.ui-widget, .ui-widget .ui-widget {
+   
+    font-family: Verdana, Tahoma, Sans-Serif;
+}
+
+
+
+.ui-panelgrid tr, .ui-panelgrid td {
+    border:0 !important;
+    vertical-align: top;
+}
+
 table td th {
     vertical-align: top!important;
     text-align: left;
@@ -264,8 +280,8 @@ table tbody{
     min-width:91%;
     padding:1em 1.5em;
     margin:1em auto;
-    color:#fff;
-    background:#97C02F;
+    color:rgb(0,100,0);
+    background:rgb(230,255,230)  ;
     overflow:hidden;
 }
 
@@ -336,6 +352,10 @@ table tbody{
     float: left;
     min-width: 300px;
     margin: 10px;
+    
+    max-height: 500px;
+    overflow: scroll;
+    
 }
 
 
@@ -377,19 +397,15 @@ table tbody{
     -moz-box-shadow:0px 0px 10px 7px #041a73;
     -webkit-box-shadow:0px 0px 10px 7px #041a73;
     box-shadow:0px 0px 10px 7px #041a73;
-
-    padding: 2px;
-    margin: 2px;
+    padding: 10px;
+    margin: 10px;
     border: 1px dotted;
     min-width: 90%;
-
 }
 
 .leadingArticleHeading{
-    background: #CCCCCC;
-    color: #CCCCCC;
-    text-shadow: 1px 1px 3px #666666,
-        -1px -1px 3px #FFFFFF;
+    color: rgb(10,50,50);
+    text-shadow: 1px 1px 3px #666666;
 }
 
 .leadingArticleText{

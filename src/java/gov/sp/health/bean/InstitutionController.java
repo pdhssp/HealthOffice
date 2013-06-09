@@ -11,8 +11,11 @@ package gov.sp.health.bean;
 import gov.sp.health.facade.InstitutionFacade;
 import gov.sp.health.entity.Institution;
 import gov.sp.health.entity.InstitutionContact;
+import gov.sp.health.entity.InstitutionType;
+import gov.sp.health.entity.PersonContact;
 import gov.sp.health.facade.ContactTypeFacade;
 import gov.sp.health.facade.InstitutionContactFacade;
+import gov.sp.health.facade.InstitutionTypeFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +43,8 @@ public final class InstitutionController implements Serializable {
     @EJB
     private InstitutionFacade ejbFacade;
     @EJB
+    InstitutionTypeFacade institutionTypeFacade;
+    @EJB
     InstitutionContactFacade insConFacade;
     @EJB
     ContactTypeFacade ctFacade;
@@ -51,6 +56,7 @@ public final class InstitutionController implements Serializable {
     DataModel<InstitutionContact> institutionContacts;
     InstitutionContact currentContact;
     private DataModel<Institution> items = null;
+    DataModel<InstitutionType> institutionTypes;
     private int selectedItemIndex;
     boolean selectControlDisable = false;
     boolean modifyControlDisable = true;
@@ -150,7 +156,24 @@ public final class InstitutionController implements Serializable {
         this.sessionController = sessionController;
     }
 
-   
+    public InstitutionTypeFacade getInstitutionTypeFacade() {
+        return institutionTypeFacade;
+    }
+
+    public void setInstitutionTypeFacade(InstitutionTypeFacade institutionTypeFacade) {
+        this.institutionTypeFacade = institutionTypeFacade;
+    }
+
+    public DataModel<InstitutionType> getInstitutionTypes() {
+        String temSQL;
+        temSQL = "SELECT i FROM InstitutionType i WHERE i.retired = false ORDER BY i.orderNo";
+        return new ListDataModel<InstitutionType>(getInstitutionTypeFacade().findBySQL(temSQL));
+    }
+
+    public void setInstitutionTypes(DataModel<InstitutionType> institutionTypes) {
+        this.institutionTypes = institutionTypes;
+    }
+
     public List<Institution> getLstItems() {
         return getFacade().findBySQL("Select d From Institution d");
     }

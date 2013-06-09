@@ -8,7 +8,7 @@
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>#{sessionController.primeTheme}</param-value>
-    </context-param>    
+    </context-param> 
     
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
@@ -39,7 +39,7 @@
         </filter-class>
         <init-param>
             <param-name>uploadDirectory</param-name>
-            <param-value>\</param-value>
+            <param-value>\tmp</param-value>
         </init-param>
     </filter>
     <filter-mapping>

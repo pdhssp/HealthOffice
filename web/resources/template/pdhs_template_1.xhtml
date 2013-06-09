@@ -7,6 +7,9 @@
       xmlns:f="http://java.sun.com/jsf/core"
       >
 
+    <!--Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com-->
+    
+    
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="pdhs.css"  />
@@ -15,11 +18,16 @@
                 #{labels.topic}
             </ui:insert>
         </title>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>        <link href="http://admin.contactbubble.com/Content/bubbles.css" rel="Stylesheet" type="text/css" /><script type="text/javascript" src="http://admin.contactbubble.com/Scripts/bubble.js"></script><script type="text/javascript">iCord.Bubble.createBubble(1449, 3, 1, 35, 35, 'Do you have any questions?', '#00ffff', '#000000', '#ff00aa', '#ffffff', 6356, 'aGVhbHRoZGVwdC5zcEBnbWFpbC5jb20');</script>
+
+        <h:outputStylesheet library="css" name="pdhs.css"  />
+
     </h:head>
 
     <h:body >
         <f:view locale="#{languageBean.localeCode}" >
-            <h:outputStylesheet library="css" name="pdhs.css"  />
+            
             <table id="bodyTable" >
                 <tr id="topLine">
                     <td>
@@ -27,7 +35,8 @@
                 </tr>
                 <tr id="heading">
                     <td  >
-                        <h:panelGroup rendered="#{!sessionController.logged}" >
+                        
+                        <h:panelGroup  >
                             <table style="width: 100%;">
                                 <tr>
                                     <td>
@@ -82,7 +91,8 @@
                                 </tr>
                             </table>
                         </h:panelGroup>
-                        <h:panelGroup rendered="#{sessionController.logged}" >
+                        
+                        <h:panelGroup rendered="false" >
                             <p:panelGrid columns="2" style="border: 0px; width: 100%; height: 75px; ">
                                 <p:panel style="margin: 0px; padding: 0px; border: 0px; width: 20%; height: 70px;">
                                     <h:graphicImage  class="pdLogo" library="image" name="logo.jpg" width="50px" height="50px" ></h:graphicImage>
@@ -93,11 +103,13 @@
                                 </p:panel>
                             </p:panelGrid>
                         </h:panelGroup>
+                    
                     </td>
                 </tr>
 
                 <tr id="menuRow">
                     <td style="padding: 5px;">
+                        
                         <h:panelGroup rendered="#{!sessionController.logged}" >
                             <h:form>
                                 <div id='cssmenu'>
@@ -139,14 +151,14 @@
                                 </div>
                             </h:form>
                         </h:panelGroup>
-
                         <h:panelGroup rendered="#{sessionController.logged}" >
-                            <p:panel  rendered="#{sessionController.logged}" style="margin: 0px; padding: 0px; border: 0px;" >
+                            <p:panel   >
                                 <h:form>
                                     <p:menubar  model="#{menu.model}" />
                                 </h:form>
                             </p:panel>
                         </h:panelGroup>
+                        
                     </td>
                 </tr>
                 <tr id="contentRow">
@@ -184,7 +196,14 @@
                         <table>
                             <tr>
                                 <td>
+                                    <h:panelGroup rendered="#{sessionController.logged}" >
+                                        <h:commandButton value="#{postLabels.logout}" action="#{connetcionController.logout()}" />
+                                    </h:panelGroup>  
+                                    <h:panelGroup rendered="#{!sessionController.logged}" >
                                     <h:outputLabel value="&copy;&nbsp;Health Information Unit, PDHS, Southern Province" id="copyRights" />
+                                    </h:panelGroup>  
+                                    
+                               
                                 </td>
                             </tr>
                         </table>

@@ -40,9 +40,9 @@
                                 <hr/>
 
 
-                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{articleController.selectedArticles[0].sinhalaContent}" styleClass="articalTopic" ></h:outputLabel>
-                                <h:outputLabel rendered="#{languageBean.inTamil}" value="#{articleController.selectedArticles[0].tamilContent}" styleClass="articalTopic" ></h:outputLabel>
-                                <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{articleController.selectedArticles[0].englishTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{articleController.selectedArticles[0].sinhalaContent}" styleClass="articalTopic" ></h:outputText>>
+                                 <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{articleController.selectedArticles[0].tamilContent}" styleClass="articalTopic" ></h:outputText>
+                                 <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{articleController.selectedArticles[0].englishTopic}" styleClass="articalTopic" ></h:outputText>
 
                             </div>
 
