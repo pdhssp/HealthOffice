@@ -407,6 +407,14 @@ public final class ItemUnitController implements Serializable {
         }
     }
 
+     public List<ItemUnit> getCylinderIns() {
+        if (institution != null) {
+            return getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND type(i.item)=Cylinder AND i.institution.id = " + institution.getId() + " order by i.item.name");
+        } else {
+            return null;
+        }
+    }
+    
     public void setItemsIns(DataModel<ItemUnit> itemsIns) {
         this.itemsIns = itemsIns;
     }
