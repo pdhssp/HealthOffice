@@ -150,6 +150,51 @@ public class Menu implements Serializable {
 
     }
 
+    private Submenu gasSubmenu(){
+        Submenu sm = new Submenu();
+        sm.setLabel("Medical Gases");
+        
+        MenuItem mi;
+        
+        mi=new MenuItem();
+        mi.setValue("Empty Issue");
+        mi.setUrl("gases_empty_issue.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue("Empty Receive");
+        mi.setUrl("gases_empty_receive.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue("Invoice");
+        mi.setUrl("gases_invoice.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue("Purchase");
+        mi.setUrl("gases_purchase.xhtml");
+        sm.getChildren().add(mi);
+        
+         mi=new MenuItem();
+        mi.setValue("Good Receive");
+        mi.setUrl("gases_receive_from_rmsd.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue("Reports");
+        mi.setUrl("gases_reports.xhtml");
+        sm.getChildren().add(mi);
+        
+        
+        mi=new MenuItem();
+        mi.setValue("Edit");
+        mi.setUrl("gases_edit.xhtml");
+        sm.getChildren().add(mi);
+        
+        return sm;
+    }
+    
     private Submenu financeSubmenu() {
         Submenu submenu = new Submenu();
         submenu.setLabel(getLabel("finance"));
@@ -216,6 +261,8 @@ public class Menu implements Serializable {
         item.setUrl("index.xhtml");
         model.addMenuItem(item);
 
+        model.addSubmenu(gasSubmenu());
+        
         if (sessionController.privilege.isDemographyView()) {
             model.addSubmenu(officeSubmenu());
         }

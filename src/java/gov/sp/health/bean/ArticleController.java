@@ -61,6 +61,7 @@ public final class ArticleController implements Serializable {
     String selectText = "";
     AppImage currentImg;
     List<AppImage> currentImgs;
+    List<AppImage> gallryImgs;
     StreamedContent scImage;
     StreamedContent scImageById;
     private UploadedFile file;
@@ -347,7 +348,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().name(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_rtf";
     }
 
     public String addEventItem() {
@@ -374,7 +375,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_rtf";
     }
 
     public String addNcdItem() {
@@ -383,7 +384,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_rtf";
     }
 
     public String addEpidItem() {
@@ -392,7 +393,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_rtf";
     }
 
     public String addCurativeItem() {
@@ -401,7 +402,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_rtf";
     }
 
     public String addGeneralInfoItem() {
@@ -410,7 +411,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_rtf";
     }
 
     public String addRegulation() {
@@ -437,7 +438,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_gallary";
     }
 
     public String addTender() {
@@ -446,7 +447,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_gallary";
     }
 
     public String addGallaryItem() {
@@ -455,7 +456,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_gallary";
     }
 
     public String addOtherItem() {
@@ -464,7 +465,7 @@ public final class ArticleController implements Serializable {
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
-        return "article";
+        return "article_gallary";
     }
 
     public String listWelcome() {
@@ -672,6 +673,20 @@ public final class ArticleController implements Serializable {
         return selectText;
     }
 
+    public List<AppImage> getGallryImgs() {
+        if (gallryImgs == null) {
+            String sql = "select a from AppImage a where a.retired=false and a.article.category.name ='GallaryItem' ";
+            gallryImgs = getImageFacade().findBySQL(sql);
+        }
+        return gallryImgs;
+    }
+
+    public void setGallryImgs(List<AppImage> gallryImgs) {
+        this.gallryImgs = gallryImgs;
+    }
+
+    
+    
     public void setSelectText(String selectText) {
         this.selectText = selectText;
     }
@@ -893,6 +908,8 @@ public final class ArticleController implements Serializable {
         return gallaryItems;
     }
 
+    
+    
     public void setGallaryItems(List<Article> gallaryItems) {
         this.gallaryItems = gallaryItems;
     }

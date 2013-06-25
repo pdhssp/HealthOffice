@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/template/pdhs_template_1.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+
+
+
+        <h:form >
+            <p:growl autoUpdate="true" />
+            <p:focus id="selectFocus" context="gpSelect" />
+            <p:focus id="detailFocus" context="gpDetail" />
+            <p:panel header="#{postLabels.manageCylinders}" >
+                <h:panelGrid id ="gpVeda" columns="2" >
+
+                    <h:panelGrid id="gpSelect" columns="1"  >
+                        <p:panel >
+
+                            <h:panelGrid id="gpSelectText" columns="2" >
+
+                                <h:outputText id="lblSelect" value="#{postLabels.cylinders}" >
+                                </h:outputText>
+
+                                <h:inputText id="txtSelect" value="#{cylinderController.selectText}"  style="min-width: 200px" >
+                                    <f:ajax  event="keyup" render="lstSelect gpDetail" >
+                                    </f:ajax>
+                                </h:inputText>
+
+                                <h:outputLabel value="&#160;">
+                                </h:outputLabel>
+
+
+
+                                <h:selectOneListbox id="lstSelect"  size="10" value="#{cylinderController.current}" style="min-width: 223px">
+                                    <f:selectItems value="#{cylinderController.searchItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
+                                    <f:ajax render="gpDetail" execute="lstSelect" >
+                                    </f:ajax>
+                                </h:selectOneListbox>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid id="gpSelectButtons" columns="3"  >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{cylinderController.prepareAdd()}" styleClass="buttons" >
+                                    <f:ajax render="@form"  execute="@all" ></f:ajax>
+                                </h:commandButton>
+                                <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
+                                            return false;"  action="#{cylinderController.delete()}"  value="#{labels.delete}" styleClass="buttons">
+                                </h:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:panelGrid  >
+
+                    <p:panel>
+                        <h:panelGrid id="gpDetail" columns="1">
+                            <h:panelGrid id="gpDetailText" columns="2">
+
+                                <h:outputText id="lblName" value="#{postLabels.cylinders}" ></h:outputText>
+                                <h:inputText id="txtName" value="#{cylinderController.current.name}"  ></h:inputText>
+
+                                <h:outputText id="lblNameS" value="#{postLabels.cylindersS}" ></h:outputText>
+                                <h:inputText id="txtNameS" value="#{cylinderController.current.sname}"  ></h:inputText>
+
+                                <h:outputText id="lblNameT" value="#{postLabels.cylindersT}" ></h:outputText>
+                                <h:inputText id="txtNameT" value="#{cylinderController.current.tname}"  ></h:inputText>
+
+
+                                <h:outputText id="lblPrefix" value="#{postLabels.itemPrefix}" ></h:outputText>
+                                <h:inputText id="txtPrefix" value="#{cylinderController.current.itemPrefix}"  ></h:inputText>
+
+                                <h:outputText id="lblCode" value="#{postLabels.code}" ></h:outputText>
+                                <h:inputText id="txtCode" value="#{cylinderController.current.code}"  ></h:inputText>
+
+
+                                <h:outputText id="lblVol" value="Volume (l)" ></h:outputText>
+                                <h:inputText id="txtVol" value="#{cylinderController.current.gasVolume}"  ></h:inputText>
+
+
+                                <h:outputText id="lblType" value="Cylinder Type" ></h:outputText>
+                                <h:selectOneListbox id="cmbType" value="#{cylinderController.current.cylinderType}" size="1"  >
+                                    <f:selectItem  itemValue="PinIndex" itemLabel="Pin Index"></f:selectItem>
+                                    <f:selectItem  itemValue="BullNoseTop" itemLabel="Bull Nose (Top)"></f:selectItem>
+                                    <f:selectItem  itemValue="BullNoseSide" itemLabel="Bull Nose (Side)"></f:selectItem>
+                                </h:selectOneListbox>
+
+
+                                <h:outputText id="lblGas" value="Gas" ></h:outputText>
+                                <h:selectOneListbox id="cmbGas" value="#{cylinderController.current.gas}" size="1"  >
+                                    <f:selectItem  itemValue="Oxygen" itemLabel="Oxygen"></f:selectItem>
+                                    <f:selectItem  itemValue="Nitrogen" itemLabel="Nitrogen"></f:selectItem>
+                                    <f:selectItem  itemValue="NitrousOxide" itemLabel="Nitrous Oxide"></f:selectItem>
+                                    <f:selectItem  itemValue="CarbonDioxide" itemLabel="Carbon Dioxide"></f:selectItem>
+                                    <f:selectItem  itemValue="MedicalAir" itemLabel="Medical Air"></f:selectItem>
+
+                                </h:selectOneListbox>
+
+
+
+
+
+                            </h:panelGrid>
+
+                            <h:panelGrid id="gpDetailButtons" columns="2">
+                                <h:commandButton id="btnSave" value="#{labels.save}"  action="#{cylinderController.saveSelected()}" styleClass="buttons">
+                                    <f:ajax render="@form"  execute="@all" >
+                                    </f:ajax>
+                                </h:commandButton>
+
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+
+
+
+    </ui:define>
+
+</ui:composition>

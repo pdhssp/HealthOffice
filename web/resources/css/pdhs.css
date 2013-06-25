@@ -25,6 +25,22 @@ html{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cce1ea',GradientType=0 );
 }
 
+
+
+/*Prime Faces*/
+
+.ui-widget, .ui-widget .ui-widget {
+   
+    font-family: Verdana, Tahoma, Sans-Serif;
+}
+
+
+
+.ui-panelgrid tr, .ui-panelgrid td {
+    border:0 !important;
+    vertical-align: top;
+}
+
 table td th {
     vertical-align: top!important;
     text-align: left;
@@ -57,6 +73,7 @@ table tbody{
 
 #bodyTable{
     width: 100%;
+    max-width: 100%!important;
     border: 0px;
     margin: 0px;
     padding: 0px;
@@ -217,7 +234,7 @@ table tbody{
 }
 
 #newsBox{
-    width: 100%;
+    min-width: 200px;
     /*min-width: 300px;*/
     height: 350px;
     text-align: center;
@@ -251,18 +268,20 @@ table tbody{
 
     overflow: scroll;
 
+    float: left;
+
+    margin-right: 50px;
 }
 
 
 
 
 .note {
-    position:relative;
     min-width:91%;
     padding:1em 1.5em;
     margin:1em auto;
-    color:#fff;
-    background:#97C02F;
+    color:rgb(0,100,0);
+    background:rgb(230,255,230)  ;
     overflow:hidden;
 }
 
@@ -330,7 +349,13 @@ table tbody{
     -webkit-box-shadow: 6px 7px 7px 1px #022364;
     box-shadow: 6px 7px 7px 1px #022364;
 
-
+    float: left;
+    min-width: 300px;
+    margin: 10px;
+    
+    max-height: 500px;
+    overflow: scroll;
+    
 }
 
 
@@ -362,10 +387,27 @@ table tbody{
 }
 
 .articalTextBox{
-    overflow: scroll;
+    overflow: hidden;
     /*    -webkit-text-shadow: 4px 4px 12px rgba(0, 0, 83, 0.73);
         -moz-text-shadow:    4px 4px 12px rgba(0, 0, 83, 0.73);
         text-shadow:         4px 4px 12px rgba(0, 0, 83, 0.73);*/
 }
 
+.leadingArticleDiv{
+    -moz-box-shadow:0px 0px 10px 7px #041a73;
+    -webkit-box-shadow:0px 0px 10px 7px #041a73;
+    box-shadow:0px 0px 10px 7px #041a73;
+    padding: 10px;
+    margin: 10px;
+    border: 1px dotted;
+    min-width: 90%;
+}
 
+.leadingArticleHeading{
+    color: rgb(10,50,50);
+    text-shadow: 1px 1px 3px #666666;
+}
+
+.leadingArticleText{
+
+}

@@ -4,7 +4,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:template="http://java.sun.com/jsf/composite/template"
       xmlns:p="http://primefaces.org/ui">
 
     <body>
@@ -39,7 +38,7 @@
                                         <h:outputLabel value="Month" />
                                     </td>
                                     <td>
-                                        <p:calendar id="calDate" value="#{institutionCadreController.carderDate}" pattern="dd MMMM yyyy" >
+                                        <p:calendar id="calDate"   navigator="true" value="#{institutionCadreController.carderDate}" pattern="MMMM yyyy" >
                                             <f:ajax event="dateSelect"  render="tblC" execute="calDate" />
                                         </p:calendar>
                                     </td>
@@ -51,12 +50,28 @@
 
                         </h:panelGroup>
 
+                        <p:panel header="#{labels.exportAllData}">
+                            <h:commandLink>
+                                <h:graphicImage  library="image" name="excel.png" />
+                                <p:dataExporter type="xls" target="tblC" fileName="CarderList" />
+                            </h:commandLink>
+
+                            <h:commandLink>
+                                <h:graphicImage  library="image" name="pdf.png" />
+                                <p:dataExporter type="pdf" target="tblC" fileName="CarderList"/>
+                            </h:commandLink>
+
+                        </p:panel>
                         <p:panelGrid columns="2" >
-
-
                             <h:panelGroup >
-
                                 <p:dataTable id="tblC" value="#{institutionCadreController.items}" var="itc" >
+                                    <f:facet name="header" >
+                                        <h:outputLabel value="#{institutionCadreController.institution.name}" />
+                                        <h:outputLabel value="&nbsp;&nbsp;&nbdp;"></h:outputLabel>
+                                        <h:outputLabel value="#{institutionCadreController.carderDate}" >
+                                            <f:convertDateTime pattern="MMMM yyyy" />
+                                        </h:outputLabel>
+                                    </f:facet>
                                     <p:column >
                                         <f:facet name="header" >
                                             <h:outputLabel value="Designation" />
@@ -85,7 +100,6 @@
                                         </f:facet>
                                         <h:outputLabel value="#{itc.maleAndFemaleIn}" />
                                     </p:column>
-
                                     <p:column >
                                         <f:facet name="header" >
                                             <h:outputLabel value="Approved" />
@@ -94,38 +108,25 @@
                                             <f:ajax event="blur" execute="tblC" render="tblC" />
                                         </h:inputText>
                                     </p:column>
-
                                     <p:column >
                                         <f:facet name="header" >
                                             <h:outputLabel value="Vacant" />
                                         </f:facet>
                                         <h:outputLabel value="#{itc.vac}" />
                                     </p:column>                            
-
                                     <p:column >
                                         <f:facet name="header" >
                                             <h:outputLabel value="Remove" />
                                         </f:facet>
                                         <h:commandButton value="Remove" action="#{institutionCadreController.removeDesignationFromInstitution()}" >
                                             <f:setPropertyActionListener target="#{institutionCadreController.current}" value="#{itc}" />
+                                            <f:ajax execute="@form" render="@all" ></f:ajax>
                                         </h:commandButton>
                                     </p:column>
-
                                 </p:dataTable>
-
-
                             </h:panelGroup>
-
-
-
                             <h:panelGroup >
-
-
                                 <table>
-
-
-
-
                                     <tr>
                                         <td colspan="3">
                                             <p:panel header="Add New Carder Position" >
@@ -140,7 +141,9 @@
                                                     <h:inputText value="#{institutionCadreController.maleIn}" style="max-width:50px; text-align:right;"/>
                                                     <h:outputLabel value="Female In" />
                                                     <h:inputText value="#{institutionCadreController.femaleIn}" style="max-width:50px; text-align:right;"/>
-                                                    <h:commandButton value="Add" action="#{institutionCadreController.addDesignationToInstitution()}" />
+                                                    <h:commandButton value="Add" action="#{institutionCadreController.addDesignationToInstitution()}" >
+                                                        <f:ajax execute="@form" render="@all" />
+                                                    </h:commandButton>
                                                 </p:panelGrid>
                                             </p:panel>
                                         </td>

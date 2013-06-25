@@ -14,151 +14,170 @@
 
         <h:outputStylesheet library="css" name="pdhs.css" />
 
+
+
         <table id="indexTbl" style="width:100%;">
             <tr>
-                <td colspan="2" style="width:100%;padding:5px;margin:5px;">
-                    <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true" transitionInterval="2000" effect="fade" >
-                        <table  >
-                            <tr >
-                                <td  >
-                                    <table >
-                                        <tr>
-                                            <td class="centreText">
-                                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaTopic}" styleClass="welcomeHeading" ></h:outputLabel>
-                                                <h:outputLabel rendered="#{languageBean.inTamil}" value="#{w.tamilTopic}" styleClass="welcomeHeading" ></h:outputLabel>
-                                                <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{w.englishTopic}" styleClass="welcomeHeading" ></h:outputLabel>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="justifiedText">
-                                                <h:outputText escape="false"  rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputText>
-                                                <h:outputText escape="false"  rendered="#{languageBean.inTamil}" value="#{w.tamilContent }" styleClass="welcomeText" ></h:outputText>
-                                                <h:outputText escape="false"  rendered="#{languageBean.inEnglish}" value="#{w.englishContent }" styleClass="welcomeText" ></h:outputText>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td >
-                                    <p:graphicImage value="#{articleController.imageById}" styleClass="welcomeImage" >
-                                        <f:param name="id" value="#{w.imgId}" />
-                                    </p:graphicImage>
-                                </td>
-                            </tr>
-                        </table>
-                    </p:galleria>
+                <td colspan="2"  align="center" width="30%" >
+
+                    <div>
+                        <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true" transitionInterval="5000" effect="clip" effectSpeed="1500" >
+                            <table  >
+                                <tr >
+                                    <td  >
+                                        <table >
+                                            <tr>
+                                                <td class="centreText">
+                                                    <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                                                    <h:outputLabel rendered="#{languageBean.inTamil}" value="#{w.tamilTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                                                    <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{w.englishTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="justifiedText">
+                                                    <h:outputText escape="false"  rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputText>
+                                                    <h:outputText escape="false"  rendered="#{languageBean.inTamil}" value="#{w.tamilContent }" styleClass="welcomeText" ></h:outputText>
+                                                    <h:outputText escape="false"  rendered="#{languageBean.inEnglish}" value="#{w.englishContent }" styleClass="welcomeText" ></h:outputText>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td >
+                                        <p:graphicImage value="#{articleController.imageById}" styleClass="welcomeImage" >
+                                            <f:param name="id" value="#{w.imgId}" />
+                                        </p:graphicImage>
+                                    </td>
+                                </tr>
+                            </table>
+                        </p:galleria>
+
+                    </div>
+
+
                 </td>
 
             </tr>
             <tr>
                 <td>
-                    <table >
-                        <tr>
-                            <td style="padding-right: 110px; " >
-
-                                <div id="newsBox" >
-
-                                    <h:outputLabel value="Events" styleClass="eventHeader" ></h:outputLabel>
-
-                                    <div style="padding-top: 20px;">
-
-                                        <ui:repeat value="#{articleController.eventItems}" var="myevent" >
 
 
-                                            <div class="note" >
-
-                                                <h:outputLabel value="#{myevent.eventDate}" >
-                                                    <f:convertDateTime pattern="dd MMMM yyyy" />
-                                                </h:outputLabel>
-
-                                                <hr/>
-
-                                                <h:outputLabel value="#{myevent.sinhalaTopic}"  rendered="#{languageBean.inSinhala}" >
-                                                </h:outputLabel>
-                                                <h:outputLabel value="#{myevent.tamilTopic}"  rendered="#{languageBean.inTamil}" >
-                                                </h:outputLabel>
-                                                <h:outputLabel value="#{myevent.englishTopic}"  rendered="#{languageBean.inEnglish}" >
-                                                </h:outputLabel>
-
-
-
-                                                <br/>
-
-                                                <h:outputLabel value="#{myevent.sinhalaContent}"  rendered="#{languageBean.inSinhala}" >
-                                                </h:outputLabel>
-
-                                                <h:outputLabel value="#{myevent.tamilContent}"  rendered="#{languageBean.inTamil}" >
-                                                </h:outputLabel>
-
-                                                <h:outputLabel value="#{myevent.englishContent}"  rendered="#{languageBean.inEnglish}" >
-                                                </h:outputLabel>
+                    <div id="newsBox" >
+                        <h:outputLabel value="Events" styleClass="eventHeader" ></h:outputLabel>
+                        <div style="padding-top: 20px;">
+                            <ui:repeat value="#{articleController.eventItems}" var="myevent" >
+                                <div class="note" >
+                                    <h:outputLabel value="#{myevent.eventDate}" >
+                                        <f:convertDateTime pattern="dd MMMM yyyy" />
+                                    </h:outputLabel>
+                                    <hr/>
+                                    <h:outputLabel value="#{myevent.sinhalaTopic}"  rendered="#{languageBean.inSinhala}" >
+                                    </h:outputLabel>
+                                    <h:outputLabel value="#{myevent.tamilTopic}"  rendered="#{languageBean.inTamil}" >
+                                    </h:outputLabel>
+                                    <h:outputLabel value="#{myevent.englishTopic}"  rendered="#{languageBean.inEnglish}" >
+                                    </h:outputLabel>
+                                    <br/>
+                                    <h:outputLabel value="#{myevent.sinhalaContent}"  rendered="#{languageBean.inSinhala}" >
+                                    </h:outputLabel>
+                                    <h:outputLabel value="#{myevent.tamilContent}"  rendered="#{languageBean.inTamil}" >
+                                    </h:outputLabel>
+                                    <h:outputLabel value="#{myevent.englishContent}"  rendered="#{languageBean.inEnglish}" >
+                                    </h:outputLabel>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </div>
 
 
 
-                                            </div>
-
-
-                                        </ui:repeat>
-
-
-
-
-
+                    <div class="articleBox" >
+                        <p:imageSwitch   effect="fade"  >
+                            <ui:repeat value="#{articleController.allExceptWelcomesAndEvents}" var="aa" >
+                                <div>
+                                    <div>
+                                        <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                        <h:outputLabel rendered="#{languageBean.inTamil}" value="#{aa.tamilTopic}" styleClass="articalTopic" ></h:outputLabel>
+                                        <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{aa.englishTopic}" styleClass="articalTopic" ></h:outputLabel>
                                     </div>
+                                    <div>
 
+                                        <div class="articalTextBox">
+                                            <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaContent}" styleClass="articalText" ></h:outputText>
+                                            <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{aa.tamilContent}" styleClass="articalText" ></h:outputText>
+                                            <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{aa.englishContent}" styleClass="articalText" ></h:outputText>
+                                        </div>
+                                    </div>
                                 </div>
-                            </td>
-                            <td>
+                            </ui:repeat>
+                        </p:imageSwitch>
+                    </div>
 
-                                <div class="articleBox" >
-                                    <p:galleria value="#{articleController.allExceptWelcomesAndEvents}" var="aa" >
-                                        <div>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inTamil}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                        </div>
-                                        <div>
-                                            <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
-                                                <f:param name="id" value="#{aa.imgId}" />
-                                            </p:graphicImage>
-                                            <div class="articalTextBox">
-                                                <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaContent}" styleClass="articalText" ></h:outputText>
-                                                <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{aa.tamilContent}" styleClass="articalText" ></h:outputText>
-                                                <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{aa.englishContent}" styleClass="articalText" ></h:outputText>
-                                            </div>
-                                        </div>
-
-                                    </p:galleria>
-                                </div>
-                            </td>
-                            <td>
-
-                                <div class="articleBox" >
-                                    <p:galleria value="#{articleController.allExceptWelcomesAndEvents}" var="ab" >
-                                        <div>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                            <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                        </div>
-                                        <div>
-                                            <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
-                                                <f:param name="id" value="#{ab.imgId}" />
-                                            </p:graphicImage>
-                                            <div class="articalTextBox">
-                                                <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{ab.sinhalaContent}" styleClass="articalText" ></h:outputText>
-                                                <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{ab.tamilContent}" styleClass="articalText" ></h:outputText>
-                                                <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{ab.englishContent}" styleClass="articalText" ></h:outputText>
-                                            </div>
-                                        </div>
-
-                                    </p:galleria>
-                                </div>
+                    <div class="articleBox">
+                        <p:imageSwitch   effect="fade"  >
+                            <ui:repeat value="#{articleController.gallryImgs}" var="gi" >
+                                <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
+                                    <f:param name="id" value="#{gi.imgId}" />
+                                </p:graphicImage>
+                            </ui:repeat>
+                        </p:imageSwitch>
+                    </div>
 
 
-                            </td>
-
-                        </tr>
-                    </table>
                 </td>
+            </tr>
+            <tr>
+                <td>
+
+                    <div style="float: left;" >
+                        <div id="fb-root"></div>
+                        <script>(function(d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0];
+                                if (d.getElementById(id))
+                                    return;
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }(document, 'script', 'facebook-jssdk'));</script>
+
+
+                        <div class="fb-like" data-href="http://www.facebook.com/pdhssp" data-send="true" data-width="450" data-show-faces="true"></div>
+
+
+                    </div>
+                    <div style="float:left;">
+                        <a href="https://twitter.com/PDHSSP" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @PDHSSP</a>
+                        <script>!function(d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                if (!d.getElementById(id)) {
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = p + '://platform.twitter.com/widgets.js';
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }
+                            }(document, 'script', 'twitter-wjs');</script>
+
+
+                    </div>
+                    
+                    
+                    <script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
+                    <div style="float: left;height: 50px; background-color: red; padding: 0px;margin: 0px;" >
+                        <div id="SkypeButton_Call_ministry-of-health_1">
+                            <script type="text/javascript">
+                                Skype.ui({
+                                    "name": "call",
+                                    "element": "SkypeButton_Call_ministry-of-health_1",
+                                    "participants": ["ministry-of-health"],
+                                    "imageSize": 32
+                                });
+                            </script>
+                        </div>
+                    </div>
+
+
+                </td>
+
             </tr>
 
         </table>

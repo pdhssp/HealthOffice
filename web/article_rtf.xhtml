@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <p:growl autoUpdate="true"/>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+            <ui:define name="title">
+                Article
+            </ui:define>
+
+            <ui:define name="content">
+
+                <h:form enctype="multipart/form-data">
+
+                    <table >
+                        <tr>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Sinhala
+                            </th>
+                            <th>
+                                Tamil
+                            </th>
+                            <th>
+                                English
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Article Topic
+                            </td>
+                            <td>
+                                <h:inputText maxlength="250" value="#{articleController.current.sinhalaTopic}" ></h:inputText>
+                            </td>
+                            <td>
+                                <h:inputText maxlength="250" value="#{articleController.current.tamilTopic}" ></h:inputText>
+                            </td>
+                            <td>
+                                <h:inputText maxlength="250" value="#{articleController.current.englishTopic}" ></h:inputText>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                Article Contents
+                            </td>
+                            <td>
+                                <p:editor  value="#{articleController.current.sinhalaContent}" ></p:editor>
+                            </td>
+                            <td>
+                                <p:editor  value="#{articleController.current.tamilContent}" ></p:editor>
+                            </td>
+
+                            <td>
+                                <p:editor  value="#{articleController.current.englishContent}" ></p:editor>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Event Date
+                            </td>
+                            <td colspan="3" >
+                                <p:calendar value="#{articleController.current.eventDate}" pattern="dd MMMM yyyy" >
+                                </p:calendar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" >
+                                <p:galleria id="gal" value="#{articleController.current.imgIds}" var="img">
+                                    <p:graphicImage value="#{articleController.imageById}" >
+                                        <f:param name="id" value="#{img}" />
+                                    </p:graphicImage>
+                                </p:galleria>
+                                <h:panelGrid columns="2" >
+                                    <p:fileUpload value="#{articleController.file}" mode="simple"/>
+                                </h:panelGrid>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4" >
+                                <h:commandButton value="Save" action="#{articleController.saveWithImage()}" >
+                                </h:commandButton>
+                            </td>
+                        </tr>
+                    </table>
+                </h:form>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>
