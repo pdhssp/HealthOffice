@@ -1,8 +1,8 @@
 /*
  * MSc(Biomedical Informatics) Project
- * 
- * Development and Implementation of a Web-based Combined Data Repository of 
- Genealogical, Clinical, Laboratory and Genetic Data 
+ *
+ * Development and Implementation of a Web-based Combined Data Repository of
+ Genealogical, Clinical, Laboratory and Genetic Data
  * and
  * a Set of Related Tools
  */
@@ -45,6 +45,7 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public final class ArticleController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @EJB
     private ArticleFacade ejbFacade;
     @EJB
@@ -56,7 +57,7 @@ public final class ArticleController implements Serializable {
     List<Article> lstItems;
     private Article current;
     ArticleType articleType;
-    private DataModel<Article> items = null;
+    private List<Article> items = null;
     String selectText = "";
     AppImage currentImg;
     List<AppImage> currentImgs;
@@ -95,6 +96,14 @@ public final class ArticleController implements Serializable {
     private Article tender;
     private Article gallaryItem;
     private Article otherItem;
+
+    public List<Article> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Article> items) {
+        this.items = items;
+    }
 
     public List<Article> getAllExceptWelcomesAndEvents() {
         if (allExceptWelcomesAndEvents == null) {
@@ -140,6 +149,39 @@ public final class ArticleController implements Serializable {
         this.file = file;
     }
 
+    public void saveWithMultipleImage() {
+        saveSelected();
+        InputStream in;
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please upload an image");
+            return;
+        }
+        JsfUtil.addSuccessMessage(file.getFileName());
+        try {
+            if (!file.getFileName().trim().equals("")) {
+                System.out.println("Article is " + current.toString());
+                System.out.println("Img is " + getCurrentImg().toString());
+                setCurrentImg(new AppImage());
+                getCurrentImg().setArticle(current);
+                getCurrentImg().setFileName(file.getFileName());
+                getCurrentImg().setFileType(file.getContentType());
+                in = file.getInputstream();
+                getCurrentImg().setBaImage(IOUtils.toByteArray(in));
+                if (getCurrentImg().getId() == null || getCurrentImg().getId() == 0) {
+                    imageFacade.create(getCurrentImg());
+                } else {
+                    imageFacade.edit(getCurrentImg());
+                }
+                System.out.println("current image article id is " + getCurrentImg().getArticle().toString());
+                saveArticleImages(current);
+                JsfUtil.addSuccessMessage(file.getFileName() + " saved successfully");
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
+        }
+
+    }
+
     public void saveWithImage() {
         saveSelected();
         InputStream in;
@@ -183,8 +225,6 @@ public final class ArticleController implements Serializable {
             List<Long> lstLng;
             lstLng = getImageFacade().longListBySql(sql);
             Long temLng;
-            sql = "Select max(ai.id) from AppImage ai Where ai.article.id = " + a.getId() + " order by ai.id desc";
-//            temLng= getImageFacade().findAggregateLong(sql);
             System.out.println("Long list size is " + lstLng.size());
             System.out.println("Long List is " + lstLng.toString());
             System.out.println("going to set image list");
@@ -225,7 +265,7 @@ public final class ArticleController implements Serializable {
             String id;
             id = context.getExternalContext().getRequestParameterMap().get("id");
             System.out.println("Id is " + id);
-            
+
             long idVal;
 
             if (CommonFunctions.isLongPositive(id)) {
@@ -294,7 +334,7 @@ public final class ArticleController implements Serializable {
 
     public String addWelcome() {
         setArticleType(ArticleType.Welcome);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -303,7 +343,7 @@ public final class ArticleController implements Serializable {
 
     public String addNewsItem() {
         setArticleType(ArticleType.NewsItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().name(), true);
         current.setCategory(cat);
@@ -312,7 +352,7 @@ public final class ArticleController implements Serializable {
 
     public String addEventItem() {
         setArticleType(ArticleType.EventItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -321,7 +361,7 @@ public final class ArticleController implements Serializable {
 
     public String addAnnouncement() {
         setArticleType(ArticleType.Announcement);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -330,7 +370,7 @@ public final class ArticleController implements Serializable {
 
     public String addMchItem() {
         setArticleType(ArticleType.MchItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -339,7 +379,7 @@ public final class ArticleController implements Serializable {
 
     public String addNcdItem() {
         setArticleType(ArticleType.NcdItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -348,7 +388,7 @@ public final class ArticleController implements Serializable {
 
     public String addEpidItem() {
         setArticleType(ArticleType.EpidItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -357,7 +397,7 @@ public final class ArticleController implements Serializable {
 
     public String addCurativeItem() {
         setArticleType(ArticleType.CurativeItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -366,7 +406,7 @@ public final class ArticleController implements Serializable {
 
     public String addGeneralInfoItem() {
         setArticleType(ArticleType.GeneralInfoItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -375,7 +415,7 @@ public final class ArticleController implements Serializable {
 
     public String addRegulation() {
         setArticleType(ArticleType.Regulation);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -384,7 +424,7 @@ public final class ArticleController implements Serializable {
 
     public String addTraining() {
         setArticleType(ArticleType.Training);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -393,7 +433,7 @@ public final class ArticleController implements Serializable {
 
     public String addCircular() {
         setArticleType(ArticleType.Circular);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -402,7 +442,7 @@ public final class ArticleController implements Serializable {
 
     public String addTender() {
         setArticleType(ArticleType.Tender);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -411,7 +451,7 @@ public final class ArticleController implements Serializable {
 
     public String addGallaryItem() {
         setArticleType(ArticleType.GallaryItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -420,7 +460,7 @@ public final class ArticleController implements Serializable {
 
     public String addOtherItem() {
         setArticleType(ArticleType.OtherItem);
-        current = new Article();
+        setCurrent(new Article());
         ArticleCategory cat;
         cat = articleCategoryController.searchItem(getArticleType().toString(), true);
         current.setCategory(cat);
@@ -543,7 +583,7 @@ public final class ArticleController implements Serializable {
 
     public Article getCurrent() {
         if (current == null) {
-            current = new Article();
+            setCurrent(new Article());
         }
         return current;
     }
@@ -551,17 +591,17 @@ public final class ArticleController implements Serializable {
     public void setCurrent(Article current) {
         this.current = current;
         String sql;
-        sql = "Select ai from AppImage ai Where ai.article.id = " + current.getId() + " order by ai.id desc";
+        if (current != null && current.getId() != null) {
+            sql = "Select ai from AppImage ai Where ai.article.id = " + current.getId() + " order by ai.id desc";
+
+        } else {
+            sql = "Select ai from AppImage ai Where ai.article.id = 0 order by ai.id desc";
+        }
         prepareImages(sql);
     }
 
     private ArticleFacade getFacade() {
         return ejbFacade;
-    }
-
-    public DataModel<Article> getItems() {
-        items = new ListDataModel(getFacade().findAll());
-        return items;
     }
 
     public static int intValue(long value) {
@@ -571,26 +611,6 @@ public final class ArticleController implements Serializable {
                     "The long value " + value + " is not within range of the int type");
         }
         return valueInt;
-    }
-
-    public DataModel searchItems() {
-        recreateModel();
-        if (items == null) {
-            if (selectText.equals("")) {
-                items = new ListDataModel(getFacade().findAll("name", true));
-            } else {
-                items = new ListDataModel(getFacade().findAll("name", "%" + selectText + "%",
-                        true));
-                if (items.getRowCount() > 0) {
-                    items.setRowIndex(0);
-                    current = (Article) items.getRowData();
-                } else {
-                    current = null;
-                }
-            }
-        }
-        return items;
-
     }
 
     private void recreateModel() {
@@ -625,7 +645,7 @@ public final class ArticleController implements Serializable {
 
             getFacade().create(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
-            current = new Article();
+            setCurrent(new Article());
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "Error");
         }
@@ -654,7 +674,6 @@ public final class ArticleController implements Serializable {
 
     public void setSelectText(String selectText) {
         this.selectText = selectText;
-        searchItems();
     }
 
     public List<Article> getNewsItems() {
@@ -1021,6 +1040,126 @@ public final class ArticleController implements Serializable {
 
     public void setSelectedArticles(List<Article> selectedArticles) {
         this.selectedArticles = selectedArticles;
+    }
+
+    public String displayNews() {
+        setSelectedArticles(getNewsItems());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayEvents() {
+        setSelectedArticles(getEventItems());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayAnnouncement() {
+        setSelectedArticles(getAnnouncements());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayNCD() {
+        setSelectedArticles(getNcdItems());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayMCH() {
+        setSelectedArticles(getMchItems());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayEpidemiology() {
+        setSelectedArticles(getEpidItems());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayLocations() {
+        setSelectedArticles(null);
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayGeneralInformation() {
+        setSelectedArticles(getGeneralInfoItems());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayRulesRegulations() {
+        setSelectedArticles(getRegulations());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayTraining() {
+        setSelectedArticles(getTrainings());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayCirculars() {
+        setSelectedArticles(getCirculars());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayTenders() {
+        setSelectedArticles(getTenders());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String Awareness() {
+        setSelectedArticles(null);
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayStatistics() {
+        setSelectedArticles(null);
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayVision() {
+        setSelectedArticles(getWelcomes());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayMission() {
+        setSelectedArticles(getWelcomes());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayValues() {
+        setSelectedArticles(getWelcomes());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayOrganizationChart() {
+        setSelectedArticles(getWelcomes());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayProvince() {
+        setSelectedArticles(getWelcomes());
+        setCurrent(eventItem);
+        return "article_page";
+    }
+
+    public String displayGallary() {
+        setSelectedArticles(getGallaryItems());
+        setCurrent(eventItem);
+        return "article_page";
     }
 
     @FacesConverter(forClass = Article.class)
