@@ -257,7 +257,7 @@ public final class InstitutionCadreController implements Serializable {
         JsfUtil.addSuccessMessage("Added Successfully");
         setDesignation(null);
         setCaderCount(null);
-
+        items = null;
     }
 
     public void removeDesignationFromInstitution() {
