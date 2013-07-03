@@ -17,12 +17,12 @@
         <h:form rendered="#{sessionController.privilege.activateAccounts}">
 
             <h:panelGrid columns="1">
-                <h:outputLabel class="pdPageTitle" value="Remove Users" />
+                <h:outputLabel class="pdPageTitle" value="#{labels.removeUsers}" />
             </h:panelGrid>
             <h:panelGrid columns="2" >
 
                 <h:panelGrid id="gpSelect" columns="1" >
-                    <h:outputLabel class="pdPageText" value="All Users"  />
+                    <h:outputLabel class="pdPageText" value="#{labels.allUsers}"  />
                     <h:selectOneListbox class="pdDropDownList" value="#{userApproveController.selectedUser}" size="5" >
                         <f:selectItems value="#{userApproveController.users}" var="users" itemValue="#{users}" itemLabel="#{users.webUserPerson.name} ( #{users.webUserPerson.institution.name} )" />
                         <f:ajax event="change" render="gpDetail" execute="gpSelect"/>
@@ -71,13 +71,13 @@
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.bmeDelete}"   value="#{userApproveController.privilege.bmeDelete}"/>
 
 
-                        <h:outputLabel rendered="#{sessionController.privilege.demographyView}"  value="Office" />
+                        <h:outputLabel rendered="#{sessionController.privilege.demographyView}"  value="#{labels.office}" />
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.demographyView}"   value="#{userApproveController.privilege.demographyView}"/>
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.demographyAdd}"   value="#{userApproveController.privilege.demographyAdd}"/>
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.demographyEdit}"   value="#{userApproveController.privilege.demographyEdit}"/>
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.demographyDelete}"   value="#{userApproveController.privilege.demographyDelete}"/>
 
-                        <h:outputLabel rendered="#{sessionController.privilege.inventoryView}"  value="Inventory" />
+                        <h:outputLabel rendered="#{sessionController.privilege.inventoryView}"  value="#{labels.inventory}" />
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.inventoryView}"   value="#{userApproveController.privilege.inventoryView}"/>
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.inventoryAdd}"   value="#{userApproveController.privilege.inventoryAdd}"/>
                         <h:selectBooleanCheckbox rendered="#{sessionController.privilege.inventoryEdit}"   value="#{userApproveController.privilege.inventoryEdit}"/>
@@ -119,7 +119,7 @@
 
                   
                     <h:panelGroup>
-                        <h:commandButton value="Remove User" action="#{userApproveController.removeUser}"></h:commandButton>
+                        <h:commandButton value="#{labels.removeUsers}" action="#{userApproveController.removeUser}"></h:commandButton>
                     </h:panelGroup>
 
 
@@ -127,7 +127,7 @@
             </h:panelGrid>
         </h:form>        
         <h:form rendered="#{!sessionController.privilege.activateAccounts}">
-            <h:outputLabel class="pdPageErrorText" value="You are not autherized to view this page."/>
+            <h:outputLabel class="pdPageErrorText" value="#{labels.youAreNotAutherizedToViewThisPage}"/>
         </h:form>
     </ui:define>
 </ui:composition>

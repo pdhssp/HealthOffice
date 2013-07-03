@@ -152,43 +152,44 @@ public class Menu implements Serializable {
 
     private Submenu gasSubmenu(){
         Submenu sm = new Submenu();
-        sm.setLabel("Medical Gases");
+        sm.setLabel(getLabel("medicalGases"));
         
+          
         MenuItem mi;
         
         mi=new MenuItem();
-        mi.setValue("Empty Issue");
+        mi.setValue(getLabel("emptyIssue"));
         mi.setUrl("gases_empty_issue.xhtml");
         sm.getChildren().add(mi);
         
         mi=new MenuItem();
-        mi.setValue("Empty Receive");
+        mi.setValue(getLabel("emptyReceive"));
         mi.setUrl("gases_empty_receive.xhtml");
         sm.getChildren().add(mi);
         
         mi=new MenuItem();
-        mi.setValue("Invoice");
+        mi.setValue(getLabel("invoice"));
         mi.setUrl("gases_invoice.xhtml");
         sm.getChildren().add(mi);
         
         mi=new MenuItem();
-        mi.setValue("Purchase");
+        mi.setValue(getLabel("purchase"));
         mi.setUrl("gases_purchase.xhtml");
         sm.getChildren().add(mi);
         
          mi=new MenuItem();
-        mi.setValue("Good Receive");
+        mi.setValue(getLabel("goodReceive"));
         mi.setUrl("gases_receive_from_rmsd.xhtml");
         sm.getChildren().add(mi);
         
         mi=new MenuItem();
-        mi.setValue("Reports");
+        mi.setValue(getLabel("වාර්තාවන්"));
         mi.setUrl("gases_reports.xhtml");
         sm.getChildren().add(mi);
         
         
         mi=new MenuItem();
-        mi.setValue("Edit");
+        mi.setValue(getLabel("edit"));
         mi.setUrl("gases_edit.xhtml");
         sm.getChildren().add(mi);
         
@@ -197,7 +198,7 @@ public class Menu implements Serializable {
     
     private Submenu financeSubmenu() {
         Submenu submenu = new Submenu();
-        submenu.setLabel(getLabel("finance"));
+        submenu.setLabel(getLabel(getLabel("finance")));
 
         MenuItem item;
 
@@ -224,7 +225,7 @@ public class Menu implements Serializable {
 
     private Submenu articleSubmenu() {
         Submenu submenu = new Submenu();
-        submenu.setLabel(getLabel("Articles"));
+        submenu.setLabel(getLabel("articles"));
 
         MenuItem item;
 
