@@ -48,16 +48,16 @@ public final class InstitutionCadreController implements Serializable {
     private List<InstitutionCadre> items = null;
     Institution institution;
     Designation designation;
-    Long caderCount;
-    Long maleIn;
-    Long femaleIn;
-    Long totalIn;
-    Long vacantCount;
+    long caderCount;
+    long maleIn;
+    long femaleIn;
+    long totalIn;
+    long vacantCount;
     Date carderDate;
-    Integer carderYear;
-    Integer carderMonth;
-    Integer carderYearLast;
-    Integer carderMonthLast;
+    int carderYear;
+    int carderMonth;
+    int carderYearLast;
+    int carderMonthLast;
 
     public Integer getCarderYearLast() {
         return carderYearLast;
@@ -180,7 +180,7 @@ public final class InstitutionCadreController implements Serializable {
         System.out.println("8");
         if (temM == 1) {
             System.out.println("9");
-            temM = 12;
+            temM = 11;
             temY = temY - 1;
         } else {
             System.out.println("10");
@@ -191,6 +191,8 @@ public final class InstitutionCadreController implements Serializable {
         System.out.println("12");
         setCarderYearLast(temY);
         System.out.println("13");
+        System.out.println("This month is " + getCarderYear() +" " + getCarderMonth() );
+        System.out.println("This month is " + getCarderYearLast()+" " + getCarderMonthLast());
         recreateItems();
     }
 
@@ -236,7 +238,7 @@ public final class InstitutionCadreController implements Serializable {
             JsfUtil.addErrorMessage("Please select an institution type");
             return;
         }
-        if (caderCount == null || caderCount == 0) {
+        if (caderCount == 0l) {
             JsfUtil.addErrorMessage("Please enter the count");
             return;
         }
@@ -254,9 +256,10 @@ public final class InstitutionCadreController implements Serializable {
         itc.setCreatedAt(Calendar.getInstance().getTime());
         itc.setCreater(sessionController.loggedUser);
         getEjbFacade().create(itc);
-        JsfUtil.addSuccessMessage("Added Successfully");
+//        JsfUtil.addSuccessMessage("Added Successfully");
         setDesignation(null);
         setCaderCount(null);
+        System.out.println("saved for " + itc.getIntYear() + " " + itc.getIntMonth());
         items = null;
     }
 

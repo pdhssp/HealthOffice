@@ -38,7 +38,7 @@
                                         <h:outputLabel value="Month" />
                                     </td>
                                     <td>
-                                        <p:calendar id="calDate"   navigator="true" value="#{institutionCadreController.carderDate}" pattern="MMMM yyyy" >
+                                        <p:calendar id="calDate"    value="#{institutionCadreController.carderDate}" pattern="MMMM yyyy" >
                                             <f:ajax event="dateSelect"  render="tblC" execute="calDate" />
                                         </p:calendar>
                                     </td>
@@ -132,17 +132,17 @@
                                             <p:panel header="Add New Carder Position" >
                                                 <p:panelGrid columns="2" >
                                                     <h:outputLabel value="Cader Postion" />
-                                                    <h:selectOneListbox value="#{institutionCadreController.designation}" size="1">
+                                                    <h:selectOneListbox id="cmbAddDesi" value="#{institutionCadreController.designation}" size="1">
                                                         <f:selectItems value="#{designationController.items}" var="d" itemLabel="#{d.name}" itemValue="#{d}" />
                                                     </h:selectOneListbox>
                                                     <h:outputLabel value="Approved" />
-                                                    <h:inputText value="#{institutionCadreController.caderCount}" style="max-width:50px; text-align:right;"/>
+                                                    <h:inputText id="txtAddApp" value="#{institutionCadreController.caderCount}" style="max-width:50px; text-align:right;"/>
                                                     <h:outputLabel value="Male In" />
-                                                    <h:inputText value="#{institutionCadreController.maleIn}" style="max-width:50px; text-align:right;"/>
+                                                    <h:inputText id="txtAddMale" value="#{institutionCadreController.maleIn}" style="max-width:50px; text-align:right;"/>
                                                     <h:outputLabel value="Female In" />
-                                                    <h:inputText value="#{institutionCadreController.femaleIn}" style="max-width:50px; text-align:right;"/>
-                                                    <h:commandButton value="Add" action="#{institutionCadreController.addDesignationToInstitution()}" >
-                                                        <f:ajax execute="@form" render="@all" />
+                                                    <h:inputText id="txtAddFemale" value="#{institutionCadreController.femaleIn}" style="max-width:50px; text-align:right;"/>
+                                                    <h:commandButton id="btnAddCarder" value="Add" action="#{institutionCadreController.addDesignationToInstitution()}" >
+                                                        <f:ajax execute="cmbAddDesi txtAddApp txtAddMale txtAddFemale btnAddCarder" render="@all" />
                                                     </h:commandButton>
                                                 </p:panelGrid>
                                             </p:panel>
