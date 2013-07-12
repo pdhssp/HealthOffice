@@ -47,20 +47,20 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
-                                <h:commandButton id="btnAdd" value="Add" disabled="#{atmController.selectControlDisable}" action="#{atmController.prepareAdd()}" styleClass="buttons" >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{atmController.selectControlDisable}" action="#{atmController.prepareAdd()}" styleClass="buttons" >
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="btnEdit" >                                
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnEdit" value="Edit" disabled="#{atmController.selectControlDisable}" action="#{atmController.prepareEdit()}"  styleClass="buttons">
+                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{atmController.selectControlDisable}" action="#{atmController.prepareEdit()}"  styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail detailFocus" execute="lstSelect" >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id="btnDelete" onclick="confirmation.show()" value="Delete" disabled="#{atmController.selectControlDisable}" styleClass="buttons">
+                                <h:commandButton id="btnDelete" onclick="confirmation.show()" value="#{labels.delete}" disabled="#{atmController.selectControlDisable}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
-                            <p:confirmDialog appendToBody="true" message="Are you sure you want to delete" header="Initiating destroy process" severity="alert" widgetVar="confirmation">  
-                                <p:commandButton value="Yes" oncomplete="confirmation.hide()" action="#{atmController.delete()}" update="lstSelect txtName"  />  
-                                <p:commandButton value="No" onclick="confirmation.hide()" type="button" />   
+                            <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
+                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide()" action="#{atmController.delete()}" update="lstSelect txtName"  />  
+                                <p:commandButton value="#{labels.No}" onclick="confirmation.hide()" type="button" />   
                             </p:confirmDialog>
                         </p:panel>
                     </h:panelGrid  >
@@ -68,20 +68,20 @@
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
-                                <h:outputText id="lblName" value="Trade Name" ></h:outputText>
+                                <h:outputText id="lblName" value="#{labels.tradeNames}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{atmController.current.name}" disabled="#{atmController.modifyControlDisable}" ></h:inputText>
-                                <h:outputText id="lblGp" value="Generic Name" ></h:outputText>
+                                <h:outputText id="lblGp" value="#{labels.genericNames}" ></h:outputText>
                                 <h:selectOneListbox id="txtGroup" value="#{atmController.current.vtm}" size="5"  disabled="#{atmController.modifyControlDisable}" >
                                     <f:selectItems value="#{vtmController.items}" var="vtm" itemValue="#{vtm}" itemLabel="#{vtm.name}"/>
                                 </h:selectOneListbox>
                             </h:panelGrid>
                             
                             <h:panelGrid id="gpDetailButtons" columns="2">
-                                <h:commandButton id="btnSave" value="Save" disabled="#{atmController.modifyControlDisable}" action="#{atmController.saveSelected()}" styleClass="buttons">
+                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{atmController.modifyControlDisable}" action="#{atmController.saveSelected()}" styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail    " >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnCancel" value="Cancel" disabled="#{atmController.modifyControlDisable}" action="#{atmController.cancelSelect()}" styleClass="buttons">
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{atmController.modifyControlDisable}" action="#{atmController.cancelSelect()}" styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect gpDetail selectFocus" execute=" gpDetail    " >                                
                                     </f:ajax>
                                 </h:commandButton>

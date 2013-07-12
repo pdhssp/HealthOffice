@@ -16,14 +16,14 @@
         <h:form >
             <p:growl autoUpdate="true" />
 
-            <p:panel header="Cader Postion Data Management" >
+            <p:panel header="#{labels.caderPostionDataManagement}" >
                 <p:panelGrid columns="1" >
-                    <h:commandButton value="Institution Categories" action="institution_type"/>
-                    <h:commandButton value="Old Institution Categories" action="old_institution_category"/>
-                    <h:commandButton value="Institutions" action="health_institution"/>
+                    <h:commandButton value="#{labels.institutionCategories}" action="institution_type"/>
+                    <h:commandButton value="#{labels.oldInstitutionCategories}" action="old_institution_category"/>
+                    <h:commandButton value="#{labels.Institution}" action="health_institution"/>
                     <hr/>
-                    <h:commandButton value="Designation Categories" action="designation_category"/>
-                    <h:commandButton value="Designations" action="designation"/>
+                    <h:commandButton value="#{labels.designationCategories}" action="designation_category"/>
+                    <h:commandButton value="#{labels.Designations}" action="designation"/>
                     <hr/>
                     
                     

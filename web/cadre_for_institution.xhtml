@@ -11,7 +11,7 @@
         <ui:composition template="./resources/template/pdhs_template_1.xhtml">
             <ui:define name="content">
 
-                <p:panel header="Add Carder Details to Institution" >
+                <p:panel header="#{labels.addCarderDetailsToInstitution}" >
 
                     <h:form>
 
@@ -21,7 +21,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <h:outputLabel value="Institution" />
+                                        <h:outputLabel value="#{labels.Institution}" />
                                     </td>
                                     <td>
                                         <h:selectOneListbox id="lstType" value="#{institutionCadreController.institution}" size="1">
@@ -35,7 +35,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <h:outputLabel value="Month" />
+                                        <h:outputLabel value="#{labels.month}" />
                                     </td>
                                     <td>
                                         <p:calendar id="calDate"    value="#{institutionCadreController.carderDate}" pattern="MMMM yyyy" >
@@ -74,13 +74,13 @@
                                     </f:facet>
                                     <p:column >
                                         <f:facet name="header" >
-                                            <h:outputLabel value="Designation" />
+                                            <h:outputLabel value="#{labels.Designation}" />
                                         </f:facet>
                                         <h:outputLabel value="#{itc.designation.name}" />
                                     </p:column>
                                     <p:column >
                                         <f:facet name="header" >
-                                            <h:outputLabel value="Male In" style="max-width:50px; text-align:right;"/>
+                                            <h:outputLabel value="#{labels.maleIn}" style="max-width:50px; text-align:right;"/>
                                         </f:facet>
                                         <h:inputText value="#{itc.maleIn}" maxlength="4" style="max-width:50px; text-align:right;">
                                             <f:ajax event="blur" execute="tblC" render="tblC" />
@@ -184,6 +184,8 @@
                     </h:form>
                 </p:panel>
             </ui:define>
+            
+            
         </ui:composition>
 
     </body>

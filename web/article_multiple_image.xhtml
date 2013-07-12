@@ -13,7 +13,7 @@
         <ui:composition template="./resources/template/pdhs_template_1.xhtml">
 
             <ui:define name="title">
-                Article
+               #{labels.articles}
             </ui:define>
 
             <ui:define name="content">
@@ -23,22 +23,22 @@
                     <table >
                         <tr>
                             <th>
-                                Description
+                               #{labels.descreption}
                             </th>
                             <th>
-                                Sinhala
+                                #{labels.sinhala}
                             </th>
                             <th>
-                                Tamil
+                                #{labels.tamil}
                             </th>
                             <th>
-                                English
+                                #{labels.english}
                             </th>
                         </tr>
 
                         <tr>
                             <td>
-                                Article Topic
+                                #{labels.articleTopic}
                             </td>
                             <td>
                                 <h:inputText maxlength="250" value="#{articleController.current.sinhalaTopic}" ></h:inputText>
@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Article Contents
+                                #{labels.articleContents}
                             </td>
                             <td>
                                 <p:editor  value="#{articleController.current.sinhalaContent}" ></p:editor>
@@ -68,7 +68,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Event Date
+                               #{labels.eventDate}
                             </td>
                             <td colspan="3" >
                                 <p:calendar value="#{articleController.current.eventDate}" pattern="dd MMMM yyyy" >
@@ -90,7 +90,7 @@
 
                         <tr>
                             <td colspan="4" >
-                                <h:commandButton value="Save" action="#{articleController.saveWithMultipleImage() }" >
+                                <h:commandButton value="#{labels.save}" action="#{articleController.saveWithMultipleImage() }" >
                                 </h:commandButton>
                             </td>
                         </tr>

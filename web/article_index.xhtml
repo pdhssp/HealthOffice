@@ -15,108 +15,108 @@
             <ui:define name="content">
                 <h:form>
                     <hr/>
-                    <h:commandButton value="New Front Page Message" action="#{articleController.addWelcome()}" >
+                    <h:commandButton value="#{labels.newFrontPageMessage}" action="#{articleController.addWelcome()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List All Front Page Messages" action="#{articleController.listWelcome()}" >
-                    </h:commandButton>
-                    <br/>
-                    <hr/>
-                    <h:commandButton value="New News Item" action="#{articleController.addNewsItem()}" >
-                    </h:commandButton>
-                    <br/>
-                    <h:commandButton value="List All News Items" action="#{articleController.listNewsItem()}" >
+                    <h:commandButton value="#{labels.listAllFrontPageMessages}" action="#{articleController.listWelcome()}" >
                     </h:commandButton>
                     <br/>
                     <hr/>
-                    <h:commandButton value="New Event" action="#{articleController.addEventItem()}" >
+                    <h:commandButton value="#{labels.newNewsItem}" action="#{articleController.addNewsItem()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List All Events" action="#{articleController.listEventItem()}" >
+                    <h:commandButton value="#{labels.listAllNewsItems}" action="#{articleController.listNewsItem()}" >
                     </h:commandButton>
                     <br/>
-<hr/>
-                    <h:commandButton value="New Announcement" action="#{articleController.addAnnouncement()}" >
+                    <hr/>
+                    <h:commandButton value="#{labels.newEvent}" action="#{articleController.addEventItem()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List All Announcements" action="#{articleController.listAnnouncement()}" >
-                    </h:commandButton>
-                    <br/>
-<hr/>
-                    <h:commandButton value="New MCH Article" action="#{articleController.addMchItem()}" >
-                    </h:commandButton>
-                    <br/>
-                    <h:commandButton value="List All MCH Articles" action="#{articleController.listMchItem()}" >
+                    <h:commandButton value="#{labels.listAllEvents}" action="#{articleController.listEventItem()}" >
                     </h:commandButton>
                     <br/>
 <hr/>
-                    <h:commandButton value="New NCD Article" action="#{articleController.addNcdItem()}" >
+<h:commandButton value="#{labels.newAnnouncement}" action="#{articleController.addAnnouncement()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List All NCD Articles" action="#{articleController.listNcdItem()}" >
-                    </h:commandButton>
-                    <br/>
-<hr/>
-                    <h:commandButton value="New Epid Article" action="#{articleController.addEpidItem()}" >
-                    </h:commandButton>
-                    <br/>
-                    <h:commandButton value="List All Epid Articles" action="#{articleController.listEpidItem()}" >
+                    <h:commandButton value="#{labels.listAllAnnouncements}" action="#{articleController.listAnnouncement()}" >
                     </h:commandButton>
                     <br/>
 <hr/>
-                    <h:commandButton value="New Curative Article" action="#{articleController.addCurativeItem()}" >
+<h:commandButton value="#{labels.newMCHArticle}" action="#{articleController.addMchItem()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List All Curative Articles" action="#{articleController.listCurativeItem()}" >
-                    </h:commandButton>
-                    <br/>
-<hr/>
-                    <h:commandButton value="New General Article" action="#{articleController.addGeneralInfoItem()}" >
-                    </h:commandButton>
-                    <br/>
-                    <h:commandButton value="List All General Articles" action="#{articleController.listGeneralInfoItem()}" >
+                    <h:commandButton value="#{labels.listAllMCHArticles}" action="#{articleController.listMchItem()}" >
                     </h:commandButton>
                     <br/>
 <hr/>
-                    <h:commandButton value="New Regulation" action="#{articleController.addRegulation()}" >
+<h:commandButton value="#{labels.newNCDArticle}" action="#{articleController.addNcdItem()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List All Regulations" action="#{articleController.listRegulation()}" >
-                    </h:commandButton>
-                    <br/>
-<hr/>
-                    <h:commandButton value="New Training Article" action="#{articleController.addTraining()}" >
-                    </h:commandButton>
-                    <br/>
-                    <h:commandButton value="List All Training Articles" action="#{articleController.listTraining()}" >
+                    <h:commandButton value="#{labels.listAllNCDArticles}" action="#{articleController.listNcdItem()}" >
                     </h:commandButton>
                     <br/>
 <hr/>
-                    <h:commandButton value="New Circular" action="#{articleController.addCircular()}" >
+<h:commandButton value="#{labels.newEpidArticle}" action="#{articleController.addEpidItem()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List All Circulars" action="#{articleController.listCircular()}" >
-                    </h:commandButton>
-                    <br/>
-<hr/>
-                    <h:commandButton value="New Tender" action="#{articleController.addTender()}" >
-                    </h:commandButton>
-                    <br/>
-                    <h:commandButton value="List All Tenders" action="#{articleController.listTender()}" >
+                    <h:commandButton value="#{labels.listAllEpidArticles}" action="#{articleController.listEpidItem()}" >
                     </h:commandButton>
                     <br/>
 <hr/>
-                    <h:commandButton value="New Gallary" action="#{articleController.addGallaryItem()}" >
+<h:commandButton value="#{labels.newCurativeArticle}" action="#{articleController.addCurativeItem()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List Gallaries" action="#{articleController.listGallaryItem()}" >
+                    <h:commandButton value="#{labels.listAllCurativeArticles}" action="#{articleController.listCurativeItem()}" >
                     </h:commandButton>
                     <br/>
 <hr/>
-                    <h:commandButton value="New Other Article" action="#{articleController.addOtherItem()}" >
+<h:commandButton value="#{labels.newGeneralArticle}" action="#{articleController.addGeneralInfoItem()}" >
                     </h:commandButton>
                     <br/>
-                    <h:commandButton value="List Other Articles" action="#{articleController.listOtherItem()}" >
+                    <h:commandButton value="#{labels.listAllGeneralArticles}" action="#{articleController.listGeneralInfoItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newRegulation}" action="#{articleController.addRegulation()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllRegulations}" action="#{articleController.listRegulation()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newTrainingArticle}" action="#{articleController.addTraining()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllTrainingArticles}" action="#{articleController.listTraining()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newCircular}" action="#{articleController.addCircular()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllCirculars}" action="#{articleController.listCircular()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newTender}" action="#{articleController.addTender()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllTenders}" action="#{articleController.listTender()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newGallary}" action="#{articleController.addGallaryItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listGallaries}" action="#{articleController.listGallaryItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newOtherArticle}" action="#{articleController.addOtherItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listOtherArticles}" action="#{articleController.listOtherItem()}" >
                     </h:commandButton>
                     <br/>
 

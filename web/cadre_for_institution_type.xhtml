@@ -13,18 +13,18 @@
 
                 <p:growl autoUpdate="true" />
 
-                <p:panel header="Adding Designations to Institution Types" >
+                <p:panel header="#{labels.addingDesignationsToInstitutionTypes}" >
 
                     <h:form>
                         <h:panelGrid columns="3" >
-                            <h:outputLabel value="Institution Type" />
+                            <h:outputLabel value="#{labels.InstitutionType}" />
                             <h:selectOneListbox size="1" id="lstType" value="#{institutionTypeCadreController.institutionType}" >
                                 <f:selectItems value="#{institutionTypeController.items}" var="it" itemLabel="#{it.name}" itemValue="#{it}"/>
                                 <f:ajax event="change" execute="lstType" render="tblItc" />
                             </h:selectOneListbox>
                             <h:outputLabel value="" />
 
-                            <h:outputLabel value="Designation" />
+                            <h:outputLabel value="#{labels.Designation}" />
                             <h:panelGroup >
                                 <h:selectOneListbox id="lstDesi" size="1" value="#{institutionTypeCadreController.designation}" >
                                     <f:selectItems value="#{designationController.items}" var="d" itemLabel="#{d.name}" itemValue="#{d}" />
@@ -32,33 +32,33 @@
                             </h:panelGroup>
                             <h:outputLabel value="" />
 
-                            <h:outputLabel value="Number of Positions" />
+                            <h:outputLabel value="#{labels.numberOfPositions}" />
                             <h:panelGroup >
                                 <h:inputText value="#{institutionTypeCadreController.caderCount }" />
                             </h:panelGroup>
                             <h:outputLabel value="" />
 
-                            <h:commandButton value="Add" action="#{institutionTypeCadreController.addDesignationToInstitutionType()}" />
+                            <h:commandButton value="#{labels.add}" action="#{institutionTypeCadreController.addDesignationToInstitutionType()}" />
                         </h:panelGrid>
 
                         <p:dataTable id="tblItc" value="#{institutionTypeCadreController.items}" var="itc" >
                             <p:column >
                                 <f:facet name="header" >
-                                    <h:outputLabel value="Designation" />
+                                    <h:outputLabel value="#{labels.designation}" />
                                 </f:facet>
                                 <h:outputLabel value="#{itc.designation.name}" />
                             </p:column>
                             <p:column >
                                 <f:facet name="header" >
-                                    <h:outputLabel value="Count" />
+                                    <h:outputLabel value="#{labels.count}" />
                                 </f:facet>
                                 <h:outputLabel value="#{itc.cadreCount}" />
                             </p:column>
                             <p:column >
                                 <f:facet name="header" >
-                                    <h:outputLabel value="Remove" />
+                                    <h:outputLabel value="#{labels.remove}" />
                                 </f:facet>
-                                <h:commandButton value="Remove" action="#{institutionTypeCadreController.removeDesignationFromInstitutionType()}" >
+                                <h:commandButton value="#{labels.remove}" action="#{institutionTypeCadreController.removeDesignationFromInstitutionType()}" >
                                     <f:setPropertyActionListener target="#{institutionTypeCadreController.current}" value="#{itc}" />
                                 </h:commandButton>
                             </p:column>

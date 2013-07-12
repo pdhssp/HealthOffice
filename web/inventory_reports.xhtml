@@ -15,21 +15,21 @@
 
         <h:form >
             <p:growl autoUpdate="true" />
-            <p:panel header="Inventory Reports" >
+            <p:panel header="#{labels.inventoryReports}" >
                 <p:panelGrid columns="1">
-                    <h:commandLink value="Main Inventory Report" action="inventory_report_institution_items"></h:commandLink>
-                    <h:commandLink value="Subinventory Report" action="inventory_report_unit_items"></h:commandLink>
-                    <h:commandLink value="Unit Stock Report" action="inventory_report_unit_items"></h:commandLink>
+                    <h:commandLink value="#{labels.mainInventoryReport}" action="inventory_report_institution_items"></h:commandLink>
+                    <h:commandLink value="#{labels.subInventoryReport}" action="inventory_report_unit_items"></h:commandLink>
+                    <h:commandLink value="#{labels.unitStockReport}" action="inventory_report_unit_items"></h:commandLink>
                     <h:commandLink value="#{postLabels.institutionInventory}" action="inventory_report_institution_items"></h:commandLink>
                     <h:commandLink value="#{postLabels.institutionInventoryCounts}" action="inventory_report_institution_items_counts"></h:commandLink>
                     <h:commandLink value="#{postLabels.ledger}" action="inventory_report_unit_ledger"></h:commandLink>
                     <h:commandLink value="#{postLabels.purchaseBills}" action="inventory_report_unit_purchase"></h:commandLink>
                 </p:panelGrid>
             </p:panel>
-            <p:panel header="Consumable Reports" >
+            <p:panel header="#{labels.consumableReports}" >
                 <p:panelGrid columns="1">
-                    <h:commandLink value="Institution Stock Report" action="consumable_report_institution_stock"></h:commandLink>
-                    <h:commandLink value="Unit Stock Report" action="consumable_report_unit_stock"></h:commandLink>
+                    <h:commandLink value="#{labels.institutionStockReport}" action="consumable_report_institution_stock"></h:commandLink>
+                    <h:commandLink value="#{labels.unitStockReport}" action="consumable_report_unit_stock"></h:commandLink>
 
                 </p:panelGrid>
             </p:panel>

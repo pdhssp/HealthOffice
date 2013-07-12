@@ -6,10 +6,10 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="content">
-        <pou:panel header="Medical Supplies Management and Logistics Information System" >
+        <pou:panel header="#{labels.medicalSuppliesManagementAndLogisticsInformationSystem}" >
             <pou:panelGrid columns="1" style="width: 100%;">
-                <h:commandButton value="Institution Stock by Sr No" action="ms_report_institution_stocks" />
-                <h:commandButton value="Institution Stock by Warehose No" action="ms_report_institution_stocks_wh" />
+                <h:commandButton value="#{labels.institutionStockBySrNo}" action="ms_report_institution_stocks" />
+                <h:commandButton value="#{labels.institutionStockByWarehouseNo}" action="ms_report_institution_stocks_wh" />
                 
             </pou:panelGrid>
         </pou:panel>
