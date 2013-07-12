@@ -16,26 +16,26 @@
                 <h:outputLabel value="#{labels.StartRowNo}" />
                 <h:inputText value="#{msExcelManager.startRow}"/>
 
-                <h:outputLabel value="Category Column" />
+                <h:outputLabel value="#{labels.categoryColumn}" />
                 <h:inputText value="#{msExcelManager.itemCategoryCol}"/>
-                <h:outputLabel value="Wharehouse Column" />
+                <h:outputLabel value="#{labels.wharehouseColumn}" />
                 <h:inputText value="#{msExcelManager.whareHouseCol}"/>
-                <h:outputLabel value="Level Column" />
+                <h:outputLabel value="#{labels.levelColumn}" />
                 <h:inputText value="#{msExcelManager.levelCol}"/>
-                <h:outputLabel value="SR No Column" />
+                <h:outputLabel value="#{labels.sRNoColumn}" />
                 <h:inputText value="#{msExcelManager.srNoCol}"/>
-                <h:outputLabel value="Medicine Column" />
+                <h:outputLabel value="#{labels.medicineColumn}" />
                 <h:inputText value="#{msExcelManager.vmpCol}"/>
-                <h:outputLabel value="Issue Unit Column" />
+                <h:outputLabel value="#{labels.issueUnitColumn}" />
                 <h:inputText value="#{msExcelManager.issueUnitCol}"/>
-                <h:outputLabel value="Generic Name Column" />
+                <h:outputLabel value="#{labels.genericNameColumn}" />
                 <h:inputText value="#{msExcelManager.vtmCol}"/>
                 <h:outputLabel value="Strength Column" />
                 <h:inputText value="#{msExcelManager.strengthOfIssueUnitCol}"/>
                 <h:outputLabel value="Strength Unit Column" />
                 <h:inputText value="#{msExcelManager.strengthUnitCol}"/>                
                 <pou:fileUpload value="#{msExcelManager.file}" mode="simple"/>
-                <h:commandButton value="Subit" action="#{msExcelManager.importToExcel}"/>
+                <h:commandButton value="#{labels.Subit}" action="#{msExcelManager.importToExcel}"/>
 
             </h:panelGrid>
         </h:form>
@@ -44,12 +44,12 @@
 
             <pou:tabView id="tblLists" >
 
-                <pou:tab title="Generic Names" >
+                <pou:tab title="#{labels.genericNames}" >
 
                     <pou:dataTable id="tblVtm"  var="vtm" value="#{msExcelManager.vtms}" >
                         <pou:column>
                             <f:facet name="header">
-                                Item Category
+                                #{labels.ItemCategories}
                             </f:facet>
                             <h:outputText value="#{vtm.category.name}"/>
                         </pou:column>
@@ -57,7 +57,7 @@
 
                         <pou:column>
                             <f:facet name="header">
-                                Item
+                                #{labels.item}
                             </f:facet>
                             <h:outputText value="#{vtm.name}"/>
                         </pou:column>
@@ -66,12 +66,12 @@
                 </pou:tab>
 
 
-                <pou:tab title="Item Names" >
+                <pou:tab title="#{labels.itemNames}" >
 
                     <pou:dataTable id="tblAmp"  var="amp" value="#{msExcelManager.amps}" >
                         <pou:column>
                             <f:facet name="header">
-                                Item Name
+                                #{labels.itemName}
                             </f:facet>
                             <h:outputText value="#{amp.name}"/>
                         </pou:column>
@@ -79,7 +79,7 @@
 
                         <pou:column>
                             <f:facet name="header">
-                                Composition
+                                #{labels.composition}
                             </f:facet>
                             <h:outputText value="#{amp.vmp.name}"/>
                         </pou:column>
@@ -88,24 +88,24 @@
                 </pou:tab>
 
 
-                <pou:tab title="Generic Names" >
+                <pou:tab title="#{labels.genericNames}" >
 
                     <pou:dataTable id="tblAmpp"  var="ampp" value="#{msExcelManager.ampps}" >
                         <pou:column>
                             <f:facet name="header">
-                                Pack Name
+                               #{labels.packName}
                             </f:facet>
                             <h:outputText value="#{ampp.name}"/>
                         </pou:column>
                         <pou:column>
                             <f:facet name="header">
-                                Item
+                                #{labels.item}
                             </f:facet>
                             <h:outputText value="#{ampp.amp}"/>
                         </pou:column>
                         <pou:column>
                             <f:facet name="header">
-                                Pack Size
+                                #{labels.packSize}
                             </f:facet>
                             <h:outputText value="#{ampp.issueUnitsPerPack} &nbsp; #{ampp.amp.issueUnit.name} &nbsp;per #{ampp.packUnit.name} "/>
                         </pou:column>

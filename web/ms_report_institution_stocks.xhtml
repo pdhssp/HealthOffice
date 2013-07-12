@@ -22,11 +22,11 @@
             <pou:growl id="g"></pou:growl>
 
             <h:panelGrid columns="2" >
-                <h:outputLabel value="Institution"/>
+                <h:outputLabel value="#{labels.institution}"/>
                 <h:selectOneListbox id="lstIns" value="#{itemUnitController.institution}" size="5">
                     <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
                 </h:selectOneListbox>
-                <h:commandButton value="Display All"/>
+                <h:commandButton value="#{labels.displayAll}"/>
             </h:panelGrid>
 
 
@@ -34,14 +34,14 @@
 
                 <pou:column>
                     <f:facet name="header">
-                        Item
+                        #{labels.item}
                     </f:facet>
                     <h:outputText value="#{demo.item.name}"/>
                 </pou:column>
 
                 <pou:column>
                     <f:facet name="header">
-                        Stock
+                        #{labels.stores}
                     </f:facet>
                     <h:outputText value="#{demo.sum}"/>
                 </pou:column>                
@@ -52,7 +52,7 @@
 
             
             
-            <pou:panel header="Export All Data">
+            <pou:panel header="#{labels.exportAllData}">
                 <!--                <h:commandLink>
                                     <h:graphicImage  library="image" name="excel.png" />
                                     <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
