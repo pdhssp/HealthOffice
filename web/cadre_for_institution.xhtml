@@ -122,29 +122,22 @@
                                             <f:setPropertyActionListener target="#{institutionCadreController.current}" value="#{itc}" />
                                             <f:ajax execute="@form" render="@all" ></f:ajax>
                                         </h:commandButton>
+                                        
                                     </p:column>
                                     <p:columnGroup type="footer">  
                                         <p:row>  
                                             <p:column >
                                                 <h:outputLabel value="Total" />
                                             </p:column>
-                                            <p:column >
-                                                <h:outputLabel value="#{institutionCadreController.institutionMaleInCount}"  style="max-width:50px; text-align:right;">
-                                                </h:outputLabel>
+                                            <p:column footerText="#{institutionCadreController.institutionMaleInCount}">
                                             </p:column>
-                                            <p:column >
-                                                <h:outputLabel value="#{institutionCadreController.institutionFemaleInCount}"  style="max-width:50px; text-align:right;">
-                                                </h:outputLabel>
+                                            <p:column footerText="#{institutionCadreController.institutionFemaleInCount}" >
                                             </p:column>
-                                            <p:column >
-                                                <h:outputLabel value="#{institutionCadreController.institutionTotalInCount}" />
+                                            <p:column footerText="#{institutionCadreController.institutionTotalInCount}">
                                             </p:column>
-                                            <p:column >
-                                                <h:outputLabel value="#{institutionCadreController.institutionApprovedCount}"  style="max-width:50px; text-align:right;">
-                                                </h:outputLabel>
+                                            <p:column footerText="#{institutionCadreController.institutionApprovedCount}">
                                             </p:column>
-                                            <p:column >
-                                                <h:outputLabel value="#{institutionCadreController.institutionVacantInCount}" />
+                                            <p:column footerText="#{institutionCadreController.institutionVacantInCount}" >
                                             </p:column>                            
                                         </p:row>  
                                     </p:columnGroup>  

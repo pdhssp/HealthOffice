@@ -444,6 +444,7 @@ public final class InstitutionCadreController implements Serializable {
             }
             sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.name";
             items = getFacade().findBySQL(sql);
+            calculateCountr();
         }
         return items;
     }
