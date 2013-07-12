@@ -38,8 +38,8 @@
                                         <h:outputLabel value="#{labels.month}" />
                                     </td>
                                     <td>
-                                        <p:calendar id="calDate"    value="#{institutionCadreController.carderDate}" pattern="MMMM yyyy" >
-                                            <f:ajax event="dateSelect"  render="tblC" execute="calDate" />
+                                        <p:calendar id="calDate"    value="#{institutionCadreController.carderDate}" pattern="MMMM yyyy" navigator="true" >
+                                            <p:ajax event="dateSelect"  update="tblC" process="calDate" />
                                         </p:calendar>
                                     </td>
                                     <td>
@@ -123,6 +123,32 @@
                                             <f:ajax execute="@form" render="@all" ></f:ajax>
                                         </h:commandButton>
                                     </p:column>
+                                    <p:columnGroup type="footer">  
+                                        <p:row>  
+                                            <p:column >
+                                                <h:outputLabel value="Total" />
+                                            </p:column>
+                                            <p:column >
+                                                <h:outputLabel value="#{institutionCadreController.institutionMaleInCount}"  style="max-width:50px; text-align:right;">
+                                                </h:outputLabel>
+                                            </p:column>
+                                            <p:column >
+                                                <h:outputLabel value="#{institutionCadreController.institutionFemaleInCount}"  style="max-width:50px; text-align:right;">
+                                                </h:outputLabel>
+                                            </p:column>
+                                            <p:column >
+                                                <h:outputLabel value="#{institutionCadreController.institutionTotalInCount}" />
+                                            </p:column>
+                                            <p:column >
+                                                <h:outputLabel value="#{institutionCadreController.institutionApprovedCount}"  style="max-width:50px; text-align:right;">
+                                                </h:outputLabel>
+                                            </p:column>
+                                            <p:column >
+                                                <h:outputLabel value="#{institutionCadreController.institutionVacantInCount}" />
+                                            </p:column>                            
+                                        </p:row>  
+                                    </p:columnGroup>  
+
                                 </p:dataTable>
                             </h:panelGroup>
                             <h:panelGroup >
@@ -141,9 +167,9 @@
                                                     <h:inputText id="txtAddMale" value="#{institutionCadreController.maleIn}" style="max-width:50px; text-align:right;"/>
                                                     <h:outputLabel value="Female In" />
                                                     <h:inputText id="txtAddFemale" value="#{institutionCadreController.femaleIn}" style="max-width:50px; text-align:right;"/>
-                                                    <h:commandButton id="btnAddCarder" value="Add" action="#{institutionCadreController.addDesignationToInstitution()}" >
-                                                        <f:ajax execute="cmbAddDesi txtAddApp txtAddMale txtAddFemale btnAddCarder" render="@all" />
-                                                    </h:commandButton>
+                                                    <p:commandButton update="@all" process="cmbAddDesi txtAddApp txtAddMale txtAddFemale btnAddCarder" id="btnAddCarder" value="Add" action="#{institutionCadreController.addDesignationToInstitution()}" >
+
+                                                    </p:commandButton>
                                                 </p:panelGrid>
                                             </p:panel>
                                         </td>
@@ -184,8 +210,8 @@
                     </h:form>
                 </p:panel>
             </ui:define>
-            
-            
+
+
         </ui:composition>
 
     </body>
