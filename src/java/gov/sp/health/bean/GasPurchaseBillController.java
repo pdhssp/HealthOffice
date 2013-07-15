@@ -344,32 +344,37 @@ public class GasPurchaseBillController implements Serializable {
         } else {
             strUnit = " (iu.unit.id = " + exUnit.getId() + ") " ;
         }
-        if (exPerson == null) {
-            strPer = " ((iu.person.id = 0) or (iu.person.id = null ))" ;
-        } else {
-            strPer = " (iu.person.id = " + exPerson.getId() + ") " ;
-        }
+//        if (exPerson == null) {
+//            strPer = " ((iu.person.id = 0) or (iu.person.id = null ))" ;
+//        } else {
+//            strPer = " (iu.person.id = " + exPerson.getId() + ") " ;
+//        }
         if (exItem == null) {
-            strItem = " ((iu.item.id = 0) or (iu.item.id = null ))" ;
+            strItem = " ((iu.item.id = 0))" ;
         } else {
             strItem = " (iu.item.id = " + exItem.getId() + " ) " ;
         }
-        if (exMake == null) {
-            strMake = " ((iu.make.id = 0) or (iu.make.id = null ))" ;
-        } else {
-            strMake = " (iu.make.id = " + exMake.getId() + ") " ;
-        }
-        if (exLoc == null) {
-            strLoc = " ((iu.location.id = 0) or (iu.location.id = null ))" ;
-        } else {
-            strLoc = " (iu.location.id = " + exLoc.getId() + " ) " ;
-        }
-        if (exSerial == null) {
-            strSerial = " ((iu.name = '') or (iu.name = null))" ;
-        }else{
-            strSerial = " (iu.name = '" + exSerial + "') " ;
-        }
-        sql = "Select iu from ItemUnit iu where  " + strItem + " and " + strSerial + " and " + strIns + " and " + strUnit + " and " + strPer + " and " + strMake + " and  " + strLoc;
+//        if (exMake == null) {
+//            strMake = " ((iu.make.id = 0) or (iu.make.id = null ))" ;
+//        } else {
+//            strMake = " (iu.make.id = " + exMake.getId() + ") " ;
+//        }
+//        if (exLoc == null) {
+//            strLoc = " ((iu.location.id = 0) or (iu.location.id = null ))" ;
+//        } else {
+//            strLoc = " (iu.location.id = " + exLoc.getId() + " ) " ;
+//        }
+//        if (exSerial == null) {
+//            strSerial = " ((iu.name = '') or (iu.name = null))" ;
+//        }else{
+//            strSerial = " (iu.name = '" + exSerial + "') " ;
+//        }
+//        sql = "Select iu from ItemUnit iu where   + strItem + " and " + strSerial + " and " + strIns + " and " + strUnit + " and " + strPer + " and " + strMake + " and  " + strLoc;
+        
+        
+          sql = "Select iu from ItemUnit iu where " + strIns + " and " + strUnit + " and " + strItem;
+        
+        
         System.out.println(sql);
 
         myIu = getItemUnitFacade().findFirstBySQL(sql);

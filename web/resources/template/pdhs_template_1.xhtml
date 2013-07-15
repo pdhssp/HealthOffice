@@ -185,12 +185,17 @@
                         <table>
                             <tr>
                                 <td>
-                                    <h:panelGroup rendered="#{sessionController.logged}" >
-                                        <h:commandLink value="#{postLabels.logout}" action="#{connetcionController.logout()}"/>
-                                    </h:panelGroup>
-                                    <h:panelGroup rendered="#{!sessionController.logged}" >
-                                        <h:outputLabel value="&copy;&nbsp;Health Information Unit, PDHS, Southern Province" id="copyRights" />
-                                    </h:panelGroup>
+                                    <h:form>
+                                        <h:panelGroup rendered="#{sessionController.logged}" >
+                                            <h:commandLink value="#{postLabels.logout}" action="#{connetcionController.logout()}"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{!sessionController.logged}" >
+                                            <h:outputLabel value="&copy;&nbsp;Health Information Unit, PDHS, Southern Province" id="copyRights" />
+                                        </h:panelGroup>
+                                    </h:form>
+
+                                    
+
                                 </td>
                             </tr>
                         </table>
