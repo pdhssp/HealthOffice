@@ -78,11 +78,11 @@
                                 <h:inputText id="txtCode" value="#{cylinderController.current.code}"  ></h:inputText>
 
 
-                                <h:outputText id="lblVol" value="Volume (l)" ></h:outputText>
+                                <h:outputText id="lblVol" value="#{labels.volume(l)}" ></h:outputText>
                                 <h:inputText id="txtVol" value="#{cylinderController.current.gasVolume}"  ></h:inputText>
 
 
-                                <h:outputText id="lblType" value="Cylinder Type" ></h:outputText>
+                                <h:outputText id="lblType" value="#{labels.CylinderType}" ></h:outputText>
                                 <h:selectOneListbox id="cmbType" value="#{cylinderController.current.cylinderType}" size="1"  >
                                     <f:selectItem  itemValue="PinIndex" itemLabel="Pin Index"></f:selectItem>
                                     <f:selectItem  itemValue="BullNoseTop" itemLabel="Bull Nose (Top)"></f:selectItem>
@@ -90,7 +90,7 @@
                                 </h:selectOneListbox>
 
 
-                                <h:outputText id="lblGas" value="Gas" ></h:outputText>
+                                <h:outputText id="lblGas" value="#{labels.gas}" ></h:outputText>
                                 <h:selectOneListbox id="cmbGas" value="#{cylinderController.current.gas}" size="1"  >
                                     <f:selectItem  itemValue="Oxygen" itemLabel="Oxygen"></f:selectItem>
                                     <f:selectItem  itemValue="Nitrogen" itemLabel="Nitrogen"></f:selectItem>

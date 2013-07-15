@@ -692,17 +692,17 @@ public class Menu implements Serializable {
         
         
         item = new MenuItem();
-        item.setValue(getLabel("EditMetaData"));
+        item.setValue(getLabel("editMetaData"));
         item.setUrl("cadre_edit.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("CaderForInstitutionTypes"));
+        item.setValue(getLabel("carderForInstitutionTypes"));
         item.setUrl("cadre_for_institution_type.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("CarderForInstitutions"));
+        item.setValue(getLabel("carderForInstitutions"));
         item.setUrl("cadre_for_institution.xhtml");
         submenu.getChildren().add(item);
 
