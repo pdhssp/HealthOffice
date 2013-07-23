@@ -49,7 +49,7 @@
                             <p:panelGrid id="gpSelectButtons" columns="3"  >
                                 <p:commandButton  process="btnAdd" update="gpDetail detailFocus"  id="btnAdd" value="#{labels.add}"  actionListener="#{inventoryItemCategoryController.prepareAdd}"  >
                                 </p:commandButton>
-                                <p:commandButton  id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
+                                <p:commandButton  id="btnDelete" onclick="if (!confirm(#{labels.areYouSureYouWantToDelete}))
                                             return false;" value="#{labels.delete}"  action="#{inventoryItemCategoryController.delete}" update="lstSelect txtSelect gpDetail">
                                 </p:commandButton>
                             </p:panelGrid>
@@ -65,11 +65,11 @@
                             <p:panelGrid id="gpDetailText" columns="2">
                                 <h:outputText id="lblName" value="#{postLabels.inventoryItemCategories}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{inventoryItemCategoryController.current.name}"  ></h:inputText>
-                                <h:outputText id="lblCode" value="Code" ></h:outputText>
+                                <h:outputText id="lblCode" value="#{labels.code}" ></h:outputText>
                                 <h:inputText id="txtCode" value="#{inventoryItemCategoryController.current.code}"  ></h:inputText>
-                                <h:outputText id="lblNameS" value="#{postLabels.inSinhala}" ></h:outputText>
+                                <h:outputText id="lblNameS" value="#{labels.inSinhala}" ></h:outputText>
                                 <h:inputText id="txtNameS" value="#{inventoryItemCategoryController.current.sname}"  ></h:inputText>
-                                <h:outputText id="lblNameT" value="#{postLabels.inTamil}" ></h:outputText>
+                                <h:outputText id="lblNameT" value="#{labels.inTamil}" ></h:outputText>
                                 <h:inputText id="txtNameT" value="#{inventoryItemCategoryController.current.tname}"  ></h:inputText>
 
                             </p:panelGrid>

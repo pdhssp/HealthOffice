@@ -10,10 +10,10 @@
     <ui:define name="content">
         <h:form  enctype="multipart/form-data">
             <p:growl autoUpdate="true" />
-            <p:panel header="Record Room" >
+            <p:panel header="#{labels.editLetter}" >
 
                 <p:panelGrid columns="2">
-                    <h:outputLabel value="From" >
+                    <h:outputLabel value="#{postLabels.from}" >
                     </h:outputLabel>
                     <h:outputLabel id="lblFromIns" value="#{letterController.fromInstitution.name}" />
                     <h:outputLabel value="" >
@@ -22,33 +22,33 @@
                         
                     </h:selectOneListbox>
                     <h:outputLabel id="cmbFromPer"  value="#{letterController.current.fromPerson.name}" />
-                    <h:outputLabel value="Received Date" >
+                    <h:outputLabel value="#{postLabels.receivedDate}" >
                     </h:outputLabel>
                     <h:outputLabel value="#{letterController.current.receivedDate}" >
                         <f:convertDateTime pattern="dd MMMM yyyy" />
                     </h:outputLabel>
 
-                    <h:outputLabel value="Letter Date" >
+                    <h:outputLabel value="#{postLabels.letterDate}" >
                     </h:outputLabel>
                     <h:outputLabel value="#{letterController.current.receivedDate}" >
                         <f:convertDateTime pattern="dd MMMM yyyy" />
                     </h:outputLabel>
-                    <h:outputLabel value="Registered" >
+                    <h:outputLabel value="#{postLabels.registered}" >
                     </h:outputLabel>
                     <h:outputLabel value="#{ (letterController.current.registered) ? 'Regitered Post' : 'Normal Post' }" />
-                    <h:outputLabel value="Number" >
+                    <h:outputLabel value="#{postLabels.number2}" >
                     </h:outputLabel>  
                     <h:outputLabel value="#{letterController.current.name}"  style="width: 400px"/>
-                    <h:outputLabel value="Topic" >
+                    <h:outputLabel value="#{postLabels.topic}" >
                     </h:outputLabel>
                     <h:outputLabel value="#{letterController.current.description}" style="width: 400px"/>
-                    <h:outputLabel value="Content" >
+                    <h:outputLabel value="#{postLabels.content}" >
                     </h:outputLabel>
                     <h:outputLabel value="#{letterController.current.letterContent}" />
-                    <h:outputLabel value="Subject" >
+                    <h:outputLabel value="#{postLabels.subject}" >
                     </h:outputLabel>
                     <h:outputLabel id="cmbSub" value="#{letterController.current.subject.name}" />
-                    <h:outputLabel value="Assigned to" >
+                    <h:outputLabel value="#{postLabels.assignedTo}" >
                     </h:outputLabel>
                     <h:outputLabel id="txtToIns" value="#{letterController.toInstitution.name}" />
                     <h:outputLabel value="" >
@@ -64,7 +64,7 @@
                 </p:dataGrid>  
                 <h:panelGrid columns="2" >
                     <p:fileUpload value="#{imageController.file}" mode="simple"/>
-                    <h:commandButton value="Save" action="#{imageController.saveLetterImage()}"/>
+                    <h:commandButton value="#{labels.save}" action="#{imageController.saveLetterImage()}"/>
                 </h:panelGrid>                
             </p:panel>
 

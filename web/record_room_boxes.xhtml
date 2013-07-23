@@ -20,7 +20,7 @@
             <p:panel header="#{postLabels.manageBoxes}" >
                 <h:panelGrid id ="gpVeda" columns="3" >
                     <p:panelGrid columns="2">
-                        <h:outputText id="lblIns" value="#{labels.Institution}" ></h:outputText>
+                        <h:outputText id="lblIns" value="#{labels.institution}" ></h:outputText>
                         <h:selectOneListbox id="cmbIns" value="#{locationController.institution}" size="4" style="width: 300px;">
                             <f:selectItems value="#{locationController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}" />
                             <f:ajax event="change" execute="cmbIns" render="cmbUnit"/>

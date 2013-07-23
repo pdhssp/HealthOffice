@@ -33,7 +33,7 @@
 
                     <h:panelGroup id="gpDetails" >
                         <h:panelGrid  columns="2" rendered="#{userApproveController.selectedUser!=null}">
-                            <h:outputText value="#{labels.Institution}"/>
+                            <h:outputText value="#{labels.institution}"/>
                             <h:selectOneListbox id="cmbPerIns" value="#{userApproveController.selectedUser.webUserPerson.institution}" size="1" style="width:300px;">
                                 <f:selectItems value="#{userApproveController.institutions}" var="perIns" itemValue="#{perIns}" itemLabel="#{perIns.name}"/>
                                 <f:ajax event="change" execute="cmbPerIns" render="cmbPerUnit"/>
@@ -121,7 +121,7 @@
                             <f:selectItems value="#{userApproveController.areas}"  var="ra" itemLabel="#{ra.name}" itemValue="#{ra}" />
                         </h:selectOneListbox>
 
-                        <h:outputLabel rendered="#{sessionController.privilege.restrictedInstitution==null}"  value="#{labels.Institution}" />
+                        <h:outputLabel rendered="#{sessionController.privilege.restrictedInstitution==null}"  value="#{labels.institution}" />
                         <h:selectOneListbox id="cmbIns" rendered="#{sessionController.privilege.restrictedInstitution==null}" value="#{userApproveController.privilege.restrictedInstitution}"  size="5">
                             <f:selectItems value="#{userApproveController.institutions}" var="ri" itemValue="#{ri}" itemLabel="#{ri.name}" />
                             <f:ajax event="change" execute="cmbIns" render="cmbUnits"/>

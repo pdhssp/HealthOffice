@@ -22,16 +22,16 @@
             <pou:growl id="g"></pou:growl>
 
             <h:panelGrid columns="2" >
-                <h:outputLabel value="Institution"/>
+                <h:outputLabel value="#{labels.institution}"/>
                 <h:selectOneListbox id="lstIns" value="#{unitController.institution}" size="5">
                     <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
                     <f:ajax execute="lstIns" render="lstUnit" event="change"/>
                 </h:selectOneListbox>
-                <h:outputLabel value="Unit"/>
+                <h:outputLabel value="#{postLabels.unit}"/>
                 <h:selectOneListbox id="lstUnit" value="#{itemUnitController.unit}" size="5">
                     <f:selectItems value="#{unitController.items}" var="uni" itemValue="#{uni}" itemLabel="#{uni.name}"/>
                 </h:selectOneListbox>
-                <h:commandButton value="Display All"/>
+                <h:commandButton value="#{labels.displayAll}"/>
             </h:panelGrid>
 
 
@@ -41,14 +41,14 @@
 
                 <pou:column>
                     <f:facet name="header">
-                        Item
+                        #{labels.item}
                     </f:facet>
                     <h:outputText value="#{demo.item.name}"/>
                 </pou:column>
 
                 <pou:column style="text-align:right">
                     <f:facet name="header">
-                        Total
+                       #{labels.total}
                     </f:facet>
                     <h:outputText value="#{demo.sum}">
                         <f:convertNumber pattern="#,#00"/>
@@ -58,7 +58,7 @@
             </pou:dataTable>
 
 
-            <pou:panel header="Export All Data">
+            <pou:panel header="#{labels.exportAllData}">
                 <!--                <h:commandLink>
                                     <h:graphicImage  library="image" name="excel.png" />
                                     <pou:dataExporter type="xls" target="tblItems" fileName="cars" />

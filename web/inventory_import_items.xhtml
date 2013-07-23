@@ -38,7 +38,7 @@
             <pou:dataTable id="tblArea"  var="demo" value="#{inventoryExcelManager.inventoryItems}" emptyMessage="#{postLabels.noRecordsFoundInventory}" >
                 <pou:column>
                     <f:facet name="header">
-                        #{labels.ItemCategories}
+                        #{labels.itemCategories}
                     </f:facet>
                     <h:outputText value="#{demo.category.name}"/>
                 </pou:column>

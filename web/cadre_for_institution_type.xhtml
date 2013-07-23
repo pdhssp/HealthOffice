@@ -17,7 +17,7 @@
 
                     <h:form>
                         <h:panelGrid columns="3" >
-                            <h:outputLabel value="#{labels.InstitutionType}" />
+                            <h:outputLabel value="#{labels.institutionType}" />
                             <h:selectOneListbox size="1" id="lstType" value="#{institutionTypeCadreController.institutionType}" >
                                 <f:selectItems value="#{institutionTypeController.items}" var="it" itemLabel="#{it.name}" itemValue="#{it}"/>
                                 <f:ajax event="change" execute="lstType" render="tblItc" />

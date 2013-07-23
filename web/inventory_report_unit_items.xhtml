@@ -26,7 +26,7 @@
 
                 <h:panelGrid columns="2" >
 
-                    <h:outputLabel value="#{labels.Institution}"/>
+                    <h:outputLabel value="#{labels.institution}"/>
                     <h:selectOneListbox id="lstIns" value="#{unitController.institution}" size="5">
                         <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
                         <f:ajax execute="lstIns" render="lstUnit" event="change"/>

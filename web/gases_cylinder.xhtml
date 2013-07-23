@@ -17,7 +17,7 @@
             <p:growl autoUpdate="true" />
             <p:focus id="selectFocus" context="gpSelect" />
             <p:focus id="detailFocus" context="gpDetail" />
-            <p:panel header="#{postLabels.manageCylinders}" >
+            <p:panel header="#{labels.manageCylinders}" >
                 <h:panelGrid id ="gpVeda" columns="2" >
 
                     <h:panelGrid id="gpSelect" columns="1"  >
@@ -25,7 +25,7 @@
 
                             <h:panelGrid id="gpSelectText" columns="2" >
 
-                                <h:outputText id="lblSelect" value="#{postLabels.cylinders}" >
+                                <h:outputText id="lblSelect" value="#{labels.cylinders}" >
                                 </h:outputText>
 
                                 <h:inputText id="txtSelect" value="#{cylinderController.selectText}"  style="min-width: 200px" >
@@ -50,7 +50,7 @@
                                 <h:commandButton id="btnAdd" value="#{labels.add}" action="#{cylinderController.prepareAdd()}" styleClass="buttons" >
                                     <f:ajax render="@form"  execute="@all" ></f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
+                                <h:commandButton id="btnDelete" onclick="if (!confirm('#{labels.areYouSureYouWantToDelete}'))
                                             return false;"  action="#{cylinderController.delete()}"  value="#{labels.delete}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
@@ -61,28 +61,28 @@
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
 
-                                <h:outputText id="lblName" value="#{postLabels.cylinders}" ></h:outputText>
+                                <h:outputText id="lblName" value="#{labels.cylinders}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{cylinderController.current.name}"  ></h:inputText>
 
-                                <h:outputText id="lblNameS" value="#{postLabels.cylinders}" ></h:outputText>
+                                <h:outputText id="lblNameS" value="#{labels.cylinders}" ></h:outputText>
                                 <h:inputText id="txtNameS" value="#{cylinderController.current.sname}"  ></h:inputText>
 
-                                <h:outputText id="lblNameT" value="#{postLabels.cylinders}" ></h:outputText>
+                                <h:outputText id="lblNameT" value="#{labels.cylinders}" ></h:outputText>
                                 <h:inputText id="txtNameT" value="#{cylinderController.current.tname}"  ></h:inputText>
 
 
-                                <h:outputText id="lblPrefix" value="#{postLabels.itemPrefix}" ></h:outputText>
+                                <h:outputText id="lblPrefix" value="#{labels.itemPrefix}" ></h:outputText>
                                 <h:inputText id="txtPrefix" value="#{cylinderController.current.itemPrefix}"  ></h:inputText>
 
-                                <h:outputText id="lblCode" value="#{postLabels.code}" ></h:outputText>
+                                <h:outputText id="lblCode" value="#{labels.code}" ></h:outputText>
                                 <h:inputText id="txtCode" value="#{cylinderController.current.code}"  ></h:inputText>
 
 
-                                <h:outputText id="lblVol" value="Volume (l)" ></h:outputText>
+                                <h:outputText id="lblVol" value="#{labels.volume}" ></h:outputText>
                                 <h:inputText id="txtVol" value="#{cylinderController.current.gasVolume}"  ></h:inputText>
 
 
-                                <h:outputText id="lblType" value="Cylinder Type" ></h:outputText>
+                                <h:outputText id="lblType" value="#{labels.cylinderType}" ></h:outputText>
                                 <h:selectOneListbox id="cmbType" value="#{cylinderController.current.cylinderType}" size="1"  >
                                     <f:selectItem  itemValue="PinIndex" itemLabel="Pin Index"></f:selectItem>
                                     <f:selectItem  itemValue="BullNoseTop" itemLabel="Bull Nose (Top)"></f:selectItem>
@@ -90,13 +90,13 @@
                                 </h:selectOneListbox>
 
 
-                                <h:outputText id="lblGas" value="Gas" ></h:outputText>
+                                <h:outputText id="lblGas" value="#{labels.gas}" ></h:outputText>
                                 <h:selectOneListbox id="cmbGas" value="#{cylinderController.current.gas}" size="1"  >
-                                    <f:selectItem  itemValue="Oxygen" itemLabel="Oxygen"></f:selectItem>
-                                    <f:selectItem  itemValue="Nitrogen" itemLabel="Nitrogen"></f:selectItem>
-                                    <f:selectItem  itemValue="NitrousOxide" itemLabel="Nitrous Oxide"></f:selectItem>
-                                    <f:selectItem  itemValue="CarbonDioxide" itemLabel="Carbon Dioxide"></f:selectItem>
-                                    <f:selectItem  itemValue="MedicalAir" itemLabel="Medical Air"></f:selectItem>
+                                    <f:selectItem  itemValue="Oxygen" itemLabel="#{labels.oxygen}"></f:selectItem>
+                                    <f:selectItem  itemValue="Nitrogen" itemLabel="#{labels.nitrogen}"></f:selectItem>
+                                    <f:selectItem  itemValue="NitrousOxide" itemLabel="#{labels.nitrousOxide}"></f:selectItem>
+                                    <f:selectItem  itemValue="CarbonDioxide" itemLabel="#{labels.carbonDioxide}"></f:selectItem>
+                                    <f:selectItem  itemValue="MedicalAir" itemLabel="#{labels.medicalAir}"></f:selectItem>
 
                                 </h:selectOneListbox>
 

@@ -16,7 +16,7 @@
                     #{labels.addPersonsAsUsers}
                 </f:facet>
                 
-                <h:outputLabel value="Person" />
+                <h:outputLabel value="#{labels.persons}" />
                 <h:selectOneListbox value="#{connetcionController.currentPerson}" size="10" >
                     <f:selectItems value="#{personController.items}" var="per" itemValue="#{per}" itemLabel="#{per.name} ( #{per.institution.name} )"/>
                 </h:selectOneListbox>

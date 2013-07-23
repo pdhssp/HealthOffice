@@ -9,12 +9,12 @@
         <ui:composition template="./resources/template/pdhs_template_1.xhtml">
 
             <ui:define name="title">
-                Medical Gases - Edit
+               #{labels.medicalGasesEdit}
             </ui:define>
 
             <ui:define name="content">
                 <p:panelGrid columns="1" >
-                    <p:commandButton value="Cylinder Types" action="gases_cylinder" ></p:commandButton>
+                    <p:commandButton value="#{labels.cylinderType}" action="gases_cylinder" ></p:commandButton>
                     
                 </p:panelGrid>
             </ui:define>

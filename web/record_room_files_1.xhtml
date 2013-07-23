@@ -17,15 +17,15 @@
             <p:growl autoUpdate="true" />
             <p:focus id="selectFocus" context="gpSelect" />
             <p:focus id="detailFocus" context="gpDetail" />
-            <p:panel header="Manage Files" >
+            <p:panel header="#{postLabels.manageFiles}" >
                 <h:panelGrid id ="gpVeda" columns="3" >
                     <p:panelGrid columns="2">
-                        <h:outputText id="lblIns" value="Institution" ></h:outputText>
+                        <h:outputText id="lblIns" value="#{labels.institution}" ></h:outputText>
                         <h:selectOneListbox id="cmbIns" value="#{fileController.institution}" size="4" style="width: 300px;">
                             <f:selectItems value="#{fileController.institutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}" />
                             <f:ajax event="change" execute="cmbIns" render="cmbUnit"/>
                         </h:selectOneListbox>
-                        <h:outputText id="lblUnit" value="Unit" ></h:outputText>
+                        <h:outputText id="lblUnit" value="#{postLabels.unit}" ></h:outputText>
                         <h:selectOneListbox id="cmbUnit" value="#{fileController.unit}" size="4"  style="width: 300px;">
                             <f:selectItems value="#{fileController.units}" var="unit" itemValue="#{unit}" itemLabel="#{unit.name}" />
                             <f:ajax event="change" execute="cmbUnit" render="lstSelect"/>
@@ -35,19 +35,19 @@
                     <h:panelGrid id="gpSelect" columns="1"  >
                         <p:panel >
                             <h:panelGrid id="gpSelectText" columns="2" >
-                                <h:outputText  value="Search by file number" >
+                                <h:outputText  value="#{postLabels.searchByFileNumber}" >
                                 </h:outputText>
                                 <h:inputText value="#{fileController.selectText}" id="txtSelect"  style="width: 200px;">
                                     <f:ajax event="keyup" execute="txtSelect" render="lstSelect gpDetail"/>
                                 </h:inputText>
 
-                                <h:outputText  value="Search by file name" >
+                                <h:outputText  value="#{postLabels.searchByFileName}" >
                                 </h:outputText>
                                 <h:inputText value="#{fileController.selectName}" id="txtSelectName" style="width: 200px;">
                                     <f:ajax event="keyup" execute="txtSelectName" render="lstSelect gpDetail"/>
                                 </h:inputText>                                
 
-                                <h:outputText id="lblSelect" value="Files" >
+                                <h:outputText id="lblSelect" value="#{postLabels.files}" >
                                 </h:outputText>
                                 <h:selectOneListbox id="lstSelect"  disabled="#{fileController.selectControlDisable}" size="10" value="#{fileController.current}" style="min-width: 223px">
                                     <f:selectItems value="#{fileController.items}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
@@ -57,24 +57,24 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="4"  >
-                                <h:commandButton id="btnAdd" value="Add" disabled="#{fileController.selectControlDisable}" action="#{fileController.prepareAdd()}" styleClass="buttons" >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{fileController.selectControlDisable}" action="#{fileController.prepareAdd()}" styleClass="buttons" >
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel  lstSelect gpDetail detailFocus" execute="btnEdit" >                                
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnEdit" value="Edit" disabled="#{fileController.selectControlDisable}" action="#{fileController.prepareEdit()}"  styleClass="buttons">
+                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{fileController.selectControlDisable}" action="#{fileController.prepareEdit()}"  styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel  lstSelect gpDetail detailFocus" execute="lstSelect" >
                                     </f:ajax>
                                 </h:commandButton>
 
-                                <h:commandButton id="btnViewBox" value="Images" action="#{fileController.viewBoxImages()}" disabled="#{fileController.selectControlDisable}" styleClass="buttons">
+                                <h:commandButton id="btnViewBox" value="#{postLabels.image}" action="#{fileController.viewBoxImages()}" disabled="#{fileController.selectControlDisable}" styleClass="buttons">
                                 </h:commandButton>
 
-                                <h:commandButton id="btnDelete" onclick="confirmation.show();" value="Delete" disabled="#{fileController.selectControlDisable}" styleClass="buttons">
+                                <h:commandButton id="btnDelete" onclick="confirmation.show();" value="#{labels.delete}" disabled="#{fileController.selectControlDisable}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
-                            <p:confirmDialog appendToBody="true" message="Are you sure you want to delete" header="Initiating destroy process" severity="alert" widgetVar="confirmation">  
-                                <p:commandButton value="Yes" oncomplete="confirmation.hide()" action="#{fileController.delete()}" update="lstSelect gpDetail"  />  
-                                <p:commandButton value="No" onclick="confirmation.hide();" type="button" />   
+                            <p:confirmDialog appendToBody="true" message="#{labels.areYouSureYouWantToDelete}" header="#{labels.initiatingDestroyProcess}" severity="alert" widgetVar="confirmation">  
+                                <p:commandButton value="#{labels.yes}" oncomplete="confirmation.hide()" action="#{fileController.delete()}" update="lstSelect gpDetail"  />  
+                                <p:commandButton value="#{labels.No}" onclick="confirmation.hide();" type="button" />   
                             </p:confirmDialog>
                         </p:panel>
                     </h:panelGrid  >
@@ -82,12 +82,12 @@
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
-                                <h:outputText id="lblName" value="Number" ></h:outputText>
+                                <h:outputText id="lblName" value="#{postLabels.number}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{fileController.current.name}" disabled="#{fileController.modifyControlDisable}" style="width: 200px"></h:inputText>
-                                <h:outputText id="lblDes" value="Name" ></h:outputText>
+                                <h:outputText id="lblDes" value="#{postLabels.name2}" ></h:outputText>
                                 <h:inputText id="txtDes" value="#{fileController.current.description}" disabled="#{fileController.modifyControlDisable}" style="width: 300px"></h:inputText>
 
-                                <h:outputText id="lblBox" value="Box" ></h:outputText>
+                                <h:outputText id="lblBox" value="#{postLabels.box}" ></h:outputText>
                                 <h:selectOneListbox id="cmbLoc" value="#{fileController.current.location}" rendered ="#{!fileController.modifyControlDisable}"   disabled="#{fileController.modifyControlDisable}" size="5" style="width: 300px">
                                     <f:selectItems value="#{fileController.locations}" var="loc" itemValue="#{loc}" itemLabel="#{loc.name}"/>
                                 </h:selectOneListbox>
@@ -96,11 +96,11 @@
 
                             </h:panelGrid>
                             <h:panelGrid id="gpDetailButtons" columns="2">
-                                <h:commandButton id="btnSave" value="Save" disabled="#{fileController.modifyControlDisable}" action="#{fileController.saveSelected()}" styleClass="buttons">
+                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{fileController.modifyControlDisable}" action="#{fileController.saveSelected()}" styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel  lstSelect gpDetail selectFocus"  execute="gpDetail" >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnCancel" value="Cancel" disabled="#{fileController.modifyControlDisable}" action="#{fileController.cancelSelect()}" styleClass="buttons">
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{fileController.modifyControlDisable}" action="#{fileController.cancelSelect()}" styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel  lstSelect gpDetail selectFocus" execute="gpDetail" >                                
                                     </f:ajax>
                                 </h:commandButton>

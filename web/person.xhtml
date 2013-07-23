@@ -25,7 +25,7 @@
 
                             <h:panelGrid id="gpSelectText" columns="2" >
 
-                                <h:outputText id="lblSelect" value="#{labels.Persons}" >
+                                <h:outputText id="lblSelect" value="#{labels.persons}" >
                                 </h:outputText>
 
                                 <h:inputText id="txtSelect" value="#{personController.selectText}"   style="min-width: 200px" >
@@ -64,11 +64,11 @@
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
-                                <h:outputText id="lblName" value="#{labels.Persons}" ></h:outputText>
+                                <h:outputText id="lblName" value="#{labels.persons}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{personController.current.name}"  ></h:inputText>
                                 <h:outputText id="lblSub" value="#{postLabels.subject}" ></h:outputText>
                                 <h:inputText id="txtSub" value="#{personController.current.givenName}"  ></h:inputText>
-                                <h:outputLabel value="#{labels.Institution}" >
+                                <h:outputLabel value="#{labels.institution}" >
                                 </h:outputLabel>
                                 <h:selectOneListbox  size="1" id="cmbIns" value="#{personController.current.institution}" style="width: 300px;"  >
                                     <f:selectItems value="#{institutionController.items}" var="ins" itemLabel="#{ins.name}" itemValue="#{ins}" />

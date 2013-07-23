@@ -63,19 +63,19 @@
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
-                                <h:outputText id="lblCat" value="Category" ></h:outputText>
+                                <h:outputText id="lblCat" value="#{labels.category}" ></h:outputText>
                                 <h:inputText id="txtCat" value="#{vmpController.current.category.name}"  ></h:inputText>
                                 <h:outputText id="lblName" value="#{labels.Vmps}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{vmpController.current.name}"  ></h:inputText>
                                 <h:outputText id="lblSr" value="SR No" ></h:outputText>
                                 <h:inputText id="txtSr" value="#{vmpController.current.code}"  ></h:inputText>                                
-                                <h:outputText id="lblLevel" value="Level" ></h:outputText>
+                                <h:outputText id="lblLevel" value="#{labels.level}" ></h:outputText>
                                 <h:inputText id="txtLevel" value="#{vmpController.current.levelNo}"  ></h:inputText>                                
                                 <h:outputText id="lblWh" value="WH No" ></h:outputText>
                                 <h:inputText id="txtWh" value="#{vmpController.current.whNo}"  ></h:inputText>                                
-                                <h:outputText id="lblClass" value="Class" ></h:outputText>
+                                <h:outputText id="lblClass" value="#{labels.class}" ></h:outputText>
                                 <h:inputText id="txtClass" value="#{vmpController.current.itemClass}"  ></h:inputText>
-                                <h:outputText id="lblSub" value="Comments" ></h:outputText>
+                                <h:outputText id="lblSub" value="#{labels.comments}" ></h:outputText>
                                 <h:inputText id="txtSub" value="#{vmpController.current.description}"  ></h:inputText>
                             </h:panelGrid>
                             <h:panelGrid id="gpDetailButtons" columns="2">
