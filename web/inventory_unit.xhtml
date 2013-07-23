@@ -19,7 +19,7 @@
             <p:focus id="detailFocus" context="gpDetail" />
             <p:panel header="#{postLabels.manageUnits}" >
                 <h:panelGrid id ="gpFilter" columns="2" >
-                    <h:outputText id="lblFilter" value="#{labels.Institution}" ></h:outputText>
+                    <h:outputText id="lblFilter" value="#{labels.institutions}" ></h:outputText>
                     <h:selectOneListbox id="cmbFilter" value="#{unitController.institution}" size="5" >
                         <f:selectItems value="#{unitController.institutions}" var="p" itemValue="#{p}" itemLabel="#{p.name}" />
                         <f:ajax render="lstSelect" execute="cmbFilter" event="change"/>
@@ -34,7 +34,7 @@
 
                             <h:panelGrid id="gpSelectText" columns="2" >
 
-                                <h:outputText id="lblSelect" value="#{labels.Units}" >
+                                <h:outputText id="lblSelect" value="#{labels.units}" >
                                 </h:outputText>
 
                                 <h:selectOneListbox id="lstSelect"  disabled="#{unitController.selectControlDisable}" size="10" value="#{unitController.current}" style="min-width: 223px">

@@ -51,7 +51,7 @@
                                     <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail detailFocus" execute="" >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
+                                <h:commandButton id="btnDelete" onclick="if (!confirm(#{labels.areYouSureYouWantToDelete}))
                                             return false;"  action="#{inventoryItemController.delete()}"  value="#{labels.delete}" styleClass="buttons">
                                 </h:commandButton>
                             </h:panelGrid>
@@ -65,14 +65,14 @@
                                 <h:outputText id="lblName" value="#{postLabels.inventoryItems}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{inventoryItemController.current.name}"  ></h:inputText>
 
-                                <h:outputText id="lblNameS" value="#{postLabels.inventoryItemsS}" ></h:outputText>
+                                <h:outputText id="lblNameS" value="#{labels.inventoryItemsS}" ></h:outputText>
                                 <h:inputText id="txtNameS" value="#{inventoryItemController.current.sname}"  ></h:inputText>
 
-                                <h:outputText id="lblNameT" value="#{postLabels.inventoryItemsT}" ></h:outputText>
+                                <h:outputText id="lblNameT" value="#{labels.inventoryItemsT}" ></h:outputText>
                                 <h:inputText id="txtNameT" value="#{inventoryItemController.current.tname}"  ></h:inputText>
 
 
-                                <h:outputText id="lblPrefix" value="#{postLabels.itemPrefix}" ></h:outputText>
+                                <h:outputText id="lblPrefix" value="#{labels.itemPrefix}" ></h:outputText>
                                 <h:inputText id="txtPrefix" value="#{inventoryItemController.current.itemPrefix}"  ></h:inputText>
 
                                 <h:outputText id="lblCode" value="#{postLabels.code}" ></h:outputText>

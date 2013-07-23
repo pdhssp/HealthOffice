@@ -22,7 +22,7 @@
             <pou:growl id="g"></pou:growl>
 
             <h:panelGrid columns="2" >
-                <h:outputLabel value="#{labels.Institution}"/>
+                <h:outputLabel value="#{labels.institution}"/>
                 <h:selectOneListbox id="lstIns" value="#{itemUnitController.institution}" size="5">
                     <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
                 </h:selectOneListbox>

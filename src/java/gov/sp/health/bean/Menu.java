@@ -303,7 +303,7 @@ public class Menu implements Serializable {
         MenuItem item;
 
         item = new MenuItem();
-        item.setValue(getLabel("InstitutionTypes"));
+        item.setValue(getLabel("institutionTypes"));
         item.setUrl("institution_type.xhtml");
         submenu.getChildren().add(item);
 
@@ -313,7 +313,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Units"));
+        item.setValue(getLabel("units"));
         item.setUrl("inventory_unit.xhtml");
         submenu.getChildren().add(item);
 
@@ -323,7 +323,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Locations"));
+        item.setValue(getLabel("locations"));
         item.setUrl("inventory_location.xhtml");
         submenu.getChildren().add(item);
 
@@ -334,26 +334,26 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Persons"));
+        item.setValue(getLabel("persons"));
         item.setUrl("person.xhtml");
         submenu.getChildren().add(item);
 
 
         item = new MenuItem();
-        item.setValue(getLabel("Suppliers"));
+        item.setValue(getLabel("suppliers"));
         item.setUrl("inventory_supplier.xhtml");
         submenu.getChildren().add(item);
 
 
         item = new MenuItem();
-        item.setValue(getLabel("Manufacturers"));
+        item.setValue(getLabel("manufacturers"));
         item.setUrl("inventory_manufacturer.xhtml");
         submenu.getChildren().add(item);
 
 
 
         item = new MenuItem();
-        item.setValue(getLabel("Countries"));
+        item.setValue(getLabel("countries"));
         item.setUrl("country.xhtml");
         submenu.getChildren().add(item);
 

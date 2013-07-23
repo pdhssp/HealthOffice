@@ -39,14 +39,14 @@
 
                                 <h:outputLabel value="#{labels.item}" />
                                 <h:selectOneListbox id="lstItem" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.item}"  size="1">
-                                    <f:selectItem  itemLabel="Select an Item" />
+                                    <f:selectItem  itemLabel="#{labels.selectAnItem}" />
                                     <f:selectItems value="#{purchaseBillController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
                                     </f:selectItems>
                                 </h:selectOneListbox>
 
                                 <h:outputLabel value="#{labels.make}" />
                                 <h:selectOneListbox id="lstMake" value="#{purchaseBillController.billItemEntry.billItem.itemUnit.make}"  size="1">
-                                    <f:selectItem itemLabel="Select a make"/>
+                                    <f:selectItem itemLabel="#{labels.selectAMake}"/>
                                     <f:selectItems value="#{purchaseBillController.makes}" var="myMake" itemLabel="#{myMake.name}" itemValue="#{myMake}"/>
                                 </h:selectOneListbox>
 
@@ -114,19 +114,19 @@
                             </h:selectOneListbox>
                             #{postLabels.receivingUnit}
                             <h:selectOneListbox id="cmbToUnit" value="#{purchaseBillController.bill.toUnit}"  size="1">
-                                <f:selectItem itemLabel="Select a Unit"/>
+                                <f:selectItem itemLabel="#{labels.selectAUnit}"/>
                                 <f:selectItems value="#{purchaseBillController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
                                 <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
                             </h:selectOneListbox>
                             #{postLabels.receivingLocation}
                             <h:selectOneListbox id="cmbToLocation" value="#{purchaseBillController.bill.toLocation}"  size="1">
-                                <f:selectItem itemLabel="Select a location"/>
+                                <f:selectItem itemLabel="#{labels.selectALocation}"/>
                                 <f:selectItems value="#{purchaseBillController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
                                 <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
                             </h:selectOneListbox>
                             #{postLabels.receivingPerson}
                             <h:selectOneListbox id="cmbToPerson" value="#{purchaseBillController.bill.toPerson}"  size="1">
-                                <f:selectItem itemLabel="Select a person" />
+                                <f:selectItem itemLabel="#{labels.selectAPerson}" />
                                 <f:selectItems value="#{purchaseBillController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
                             </h:selectOneListbox>
                             #{postLabels.grossValue}
@@ -149,8 +149,8 @@
 
 
                             <h:commandButton rendered="#{purchaseBillController.newBill}" value="#{postLabels.settle}" action="#{purchaseBillController.settleBill}"/>
-                            <h:commandButton rendered="#{!purchaseBillController.newBill}" value="Cancel" action="#{purchaseBillController.settleBill}"/>
-                            <h:commandButton rendered="#{!purchaseBillController.newBill}" value="Reprint" action="#{purchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!purchaseBillController.newBill}" value="#{labels.cancel}" action="#{purchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!purchaseBillController.newBill}" value="#{labels.reprint}" action="#{purchaseBillController.settleBill}"/>
 
 
                         </pou:panelGrid>

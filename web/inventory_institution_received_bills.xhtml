@@ -22,7 +22,7 @@
             <pou:growl id="g" autoUpdate="true"></pou:growl>
 
             <h:panelGrid columns="2" >
-                <h:outputLabel value="#{labels.Institution}"/>
+                <h:outputLabel value="#{labels.institution}"/>
                 <h:selectOneListbox id="lstIns" value="#{inventoryReceivedBillListController.toInstitution}" size="5">
                     <f:selectItems value="#{inventoryReceivedBillListController.toInstitutions}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
                     <f:ajax execute="lstIns" render="lstUnit" event="change"/>

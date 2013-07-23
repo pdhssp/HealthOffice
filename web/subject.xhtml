@@ -17,7 +17,7 @@
             <p:growl autoUpdate="true" />
             <p:focus id="selectFocus" context="gpSelect" />
             <p:focus id="detailFocus" context="gpDetail" />
-            <p:panel header="Manage Subjects" >
+            <p:panel header="#{labels.manageSubjects}" >
                 <h:panelGrid id ="gpVeda" columns="2" >
 
                     <h:panelGrid id="gpSelect" columns="1"  >
@@ -25,7 +25,7 @@
 
                             <h:panelGrid id="gpSelectText" columns="2" >
 
-                                <h:outputText id="lblSelect" value="Subjects" >
+                                <h:outputText id="lblSelect" value="#{labels.subjects}" >
                                 </h:outputText>
 
                                 <h:inputText id="txtSelect" value="#{subjectController.selectText}" disabled="#{subjectController.selectControlDisable}"  style="min-width: 200px" >
@@ -47,15 +47,15 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpSelectButtons" columns="3"  >
-                                <h:commandButton id="btnAdd" value="Add" disabled="#{subjectController.selectControlDisable}" action="#{subjectController.prepareAdd()}" styleClass="buttons" >
+                                <h:commandButton id="btnAdd" value="#{labels.add}" disabled="#{subjectController.selectControlDisable}" action="#{subjectController.prepareAdd()}" styleClass="buttons" >
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName detailFocus" execute="btnEdit" >                                
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnEdit" value="Edit" disabled="#{subjectController.selectControlDisable}" action="#{subjectController.prepareEdit()}"  styleClass="buttons">
+                                <h:commandButton id ="btnEdit" value="#{labels.edit}" disabled="#{subjectController.selectControlDisable}" action="#{subjectController.prepareEdit()}"  styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName detailFocus" execute="lstSelect" >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id="btnDelete" value="Delete" disabled="#{subjectController.selectControlDisable}" styleClass="buttons" action="#{subjectController.delete}">
+                                <h:commandButton id="btnDelete" value="#{labels.delete}" disabled="#{subjectController.selectControlDisable}" styleClass="buttons" action="#{subjectController.delete}">
                                 </h:commandButton>
                             </h:panelGrid>
                             
@@ -65,15 +65,15 @@
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
-                                <h:outputText id="lblName" value="Subject" ></h:outputText>
+                                <h:outputText id="lblName" value="#{labels.subject}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{subjectController.current.name}" disabled="#{subjectController.modifyControlDisable}" ></h:inputText>
                             </h:panelGrid>
                             <h:panelGrid id="gpDetailButtons" columns="2">
-                                <h:commandButton id="btnSave" value="Save" disabled="#{subjectController.modifyControlDisable}" action="#{subjectController.saveSelected()}" styleClass="buttons">
+                                <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{subjectController.modifyControlDisable}" action="#{subjectController.saveSelected()}" styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName selectFocus"  execute="txtName    " >
                                     </f:ajax>
                                 </h:commandButton>
-                                <h:commandButton id ="btnCancel" value="Cancel" disabled="#{subjectController.modifyControlDisable}" action="#{subjectController.cancelSelect()}" styleClass="buttons">
+                                <h:commandButton id ="btnCancel" value="#{labels.cancel}" disabled="#{subjectController.modifyControlDisable}" action="#{subjectController.cancelSelect()}" styleClass="buttons">
                                     <f:ajax render="btnAdd btnEdit btnDelete btnSave btnCancel txtSelect lstSelect txtName selectFocus" execute=" txtName    " >                                
                                     </f:ajax>
                                 </h:commandButton>

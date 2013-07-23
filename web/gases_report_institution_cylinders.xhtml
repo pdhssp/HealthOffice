@@ -28,7 +28,7 @@
 
                 <tr>
                     <td>
-                        Select Institution
+                        #{labels.selectAnItem}
                     </td>
                     <td>
                         <h:selectOneListbox id="lstIns" value="#{itemUnitController.institution}" size="1">
@@ -47,11 +47,11 @@
             <h:panelGrid columns="4" >
                 <h:commandLink>
                     <h:graphicImage  library="image" name="excel.png" />
-                    <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
+                    <pou:dataExporter type="#{labels.xls}" target="tblItems" fileName="cars" />
                 </h:commandLink>
                 <h:commandLink>
                     <h:graphicImage  library="image" name="pdf.png" />
-                    <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
+                    <pou:dataExporter type="#{labels.pDF}" target="tblItems" fileName="cars"/>
                 </h:commandLink>
                 <h:commandLink id="clPrint" type="button">
                     <pou:tooltip for="clPrint" >
@@ -65,17 +65,17 @@
 
 
 
-            <pou:dataTable id="tblItems"  var="demo" value="#{itemUnitController.cylinderIns}" emptyMessage="#{postLabels.noRecordsFoundInventory}">
+            <pou:dataTable id="tblItems"  var="demo" value="#{itemUnitController.cylinderIns}" emptyMessage="#{labels.noRecordsFoundCylinder}">
                 <pou:column>
                     <f:facet name="header">
-                        Cylinder
+                        #{labels.cylinders}
                     </f:facet>
                     <h:outputText value="#{demo.item.name}"/>
                 </pou:column>
 
                 <pou:column>
                     <f:facet name="header">
-                        Quantity
+                        #{labels.quentity}
                     </f:facet>
                     <h:outputText value="#{demo.quentity}" />
                 </pou:column>

@@ -11,9 +11,9 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel header="Under construction">
-                <h:outputLabel value="Please visit after some time"/>
-                <p:commandButton ajax="false" value="Home Page" action="index"/>
+            <p:panel header="#{labels.underConstruction}">
+                <h:outputLabel value="#{labels.PleaseVisitAfterSomeTime}"/>
+                <p:commandButton ajax="false" value="#{labels.homePage}" action="index"/>
             </p:panel>
         </h:form>
     </ui:define>
