@@ -36,6 +36,7 @@ public class ItemUnitHistory implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date retiredAt;
     String retireComments;
+    boolean emptyUnit;
     
     @ManyToOne
     Item item;
@@ -75,6 +76,16 @@ public class ItemUnitHistory implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date historyTimeStamp;
 
+    public boolean isEmptyUnit() {
+        return emptyUnit;
+    }
+
+    public void setEmptyUnit(boolean emptyUnit) {
+        this.emptyUnit = emptyUnit;
+    }
+
+    
+    
     public Date getHistoryDate() {
         return historyDate;
     }

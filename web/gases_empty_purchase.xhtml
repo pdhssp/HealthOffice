@@ -2,7 +2,7 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition template="./resources/template/pdhs_template_1.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:pou="http://primefaces.org/ui"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
 
@@ -10,22 +10,128 @@
     <ui:define name="content">
 
         <h:outputStylesheet library="css" name="pdhscss1.css"   />
-        <pou:growl autoUpdate="true"/>
+        <p:growl autoUpdate="true"/>
 
         <h:form >
 
             <h:inputHidden value="#{gasPurchaseBillController.bill.id}" />
 
+            <p:panel id="gpPreview" header="Bill Preview" rendered="#{gasPurchaseBillController.billView}">
 
-            <pou:panel id="gpPurchase" header="#{labels.purchase}">
+                <p:panel>
+                    <p:commandButton ajax="false" value="Print">
+                        <p:printer target="preview" />
+                    </p:commandButton>
+                </p:panel>
 
-                <pou:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
+                <p:panel id="preview" style="width: 20.3cm;height: 27.9cm;padding: 0.5cm;" >
+                    <p:panelGrid columns="1" >
+                        <h:outputLabel value="#{gasPurchaseBillController.toInstitution.name}" />
+                        <h:outputLabel value="Good Receive Note - Empty Cylinders" />
+                        <h:panelGrid columns="5" >
+                            <h:outputLabel value="Supplier" />
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.fromInstitution.name}" />
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+                            <h:outputLabel value="Bill Date" />
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.billDate}" >
+                                <f:convertDateTime pattern="dd MMMM yyyy"/>
+                            </h:outputLabel>
+                            <h:outputLabel value="Address" />
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.fromInstitution.address}" />
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+                            <h:outputLabel value="Invoice No" />
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.name}" />
+                        </h:panelGrid>
 
-                    <pou:panel id="gpItemAndList" style="vertical-align: text-top;">
-                        <pou:panel id="gpItem" header="#{labels.itemDetails}" rendered="#{gasPurchaseBillController.newBill}" >
+                        <p:dataTable value="#{gasPurchaseBillController.billItems}" var="pBillItem"  >
+                            <p:column  >
+                                <f:facet name="header">
+                                    #{labels.number}
+                                </f:facet>
+                                #{pBillItem.billSerial}
+                            </p:column>
+                            <p:column  >
+                                <f:facet name="header">
+                                    #{labels.item}
+                                </f:facet>
+                                #{pBillItem.item.name}
+                            </p:column>
+                            <p:column  >
+                                <f:facet name="header">
+                                    #{labels.rate}
+                                </f:facet>
+                                #{pBillItem.netRate}
+                            </p:column>
+                            <p:column  >
+                                <f:facet name="header">
+                                    #{labels.quentity}
+                                </f:facet>
+                                #{pBillItem.quentity}
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    #{labels.value}
+                                </f:facet>
+                                #{pBillItem.netValue}
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:panelGrid columns="5" >
+                            <h:outputLabel value="No of items" ></h:outputLabel>
+                            <h:outputLabel value="#{gasPurchaseBillController.billItems.size()}" ></h:outputLabel>
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                            <h:outputLabel value="#{postLabels.grossValue}"/>
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.grossValue}" />
+
+                            <h:outputLabel value="Total Cylinders" ></h:outputLabel>
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.billQty}" ></h:outputLabel>
+                            <h:outputLabel value="" ></h:outputLabel>
+                            <h:outputLabel value="#{postLabels.discount}"/>
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.discountValue}">
+                            </h:outputLabel>
 
 
-                            <pou:panelGrid columns="6" >
+                            <h:outputLabel value="" ></h:outputLabel>
+                            <h:outputLabel value="" ></h:outputLabel>
+                            <h:outputLabel value="" ></h:outputLabel>
+                            <h:outputLabel value="#{postLabels.netValue}"/>
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.netValue}">
+                            </h:outputLabel>
+
+
+                        </p:panelGrid>
+
+
+                        <p:panelGrid columns="5" style="bottom: 300px; width: 100%;" >
+                            <h:outputLabel value="User" ></h:outputLabel>
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.creater.webUserPerson.name}" ></h:outputLabel>
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                            <h:outputLabel value="GRN Date/Time" ></h:outputLabel>
+                            <h:outputLabel value="#{gasPurchaseBillController.bill.createdAt}" >
+                                <f:convertDateTime pattern="dd MMMM yyyy hh mm a" />
+                            </h:outputLabel>
+                            <h:outputLabel value="Printer Date/Time" ></h:outputLabel>
+                            <h:outputLabel value="#{gasPurchaseBillController.printerDateTime }" >
+                                <f:convertDateTime pattern="dd MMMM yyyy hh mm a" />
+                            </h:outputLabel>
+                            
+
+                        </p:panelGrid>
+
+                    </p:panelGrid>
+                </p:panel>
+            </p:panel>
+
+
+            <p:panel id="gpPurchase" header="Good Receive - Empty Cylinders" rendered="#{!gasPurchaseBillController.billView}">
+
+                <p:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
+
+                    <p:panel id="gpItemAndList" style="vertical-align: text-top;">
+                        <p:panel id="gpItem" header="#{labels.itemDetails}" rendered="#{gasPurchaseBillController.newBill}" >
+
+
+                            <p:panelGrid columns="6" >
 
 
                                 <h:outputLabel value="#{labels.item}" />
@@ -50,12 +156,12 @@
                                 <h:inputText disabled="true" id="txtValue" value="#{gasPurchaseBillController.billItem.netValue}">
                                 </h:inputText>
 
-                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{gasPurchaseBillController.addItemToList}">
+                                <h:commandButton id="btnAdd" value="#{labels.add}" action="#{gasPurchaseBillController.addItemToEmptyList()}">
                                     <f:ajax execute="gpItem btnAdd" render="gpItem gpList gpBillDetails"/>
                                 </h:commandButton>
 
 
-                            </pou:panelGrid>
+                            </p:panelGrid>
 
 
 
@@ -63,11 +169,11 @@
 
 
 
-                        </pou:panel>
+                        </p:panel>
 
 
 
-                        <pou:panel id="gpList" header="#{labels.itemList}">
+                        <p:panel id="gpList" header="#{labels.itemList}">
 
                             <h:dataTable value="#{gasPurchaseBillController.billItems}" var="temBillItem"  >
 
@@ -85,7 +191,7 @@
                                     #{temBillItem.item.name}
                                 </h:column>
 
-                                
+
 
                                 <h:column  >
                                     <f:facet name="header">
@@ -120,10 +226,10 @@
 
 
 
-                        </pou:panel>
-                    </pou:panel>
-                    <pou:panel id="gpBillDetails" header="#{labels.billDetails}">
-                        <pou:panelGrid columns="2">
+                        </p:panel>
+                    </p:panel>
+                    <p:panel id="gpBillDetails" header="#{labels.billDetails}">
+                        <p:panelGrid columns="2">
                             <h:outputLabel value="#{postLabels.suppliedBy}"/>
                             <h:selectOneListbox value="#{gasPurchaseBillController.bill.fromInstitution}" size="1">
                                 <f:selectItem itemLabel="Select the Supplier" />
@@ -133,8 +239,8 @@
                             <h:inputText  id="txtInvoiceNo" value="#{gasPurchaseBillController.bill.name}">
                             </h:inputText>
                             <h:outputLabel value="#{labels.billDate}"/>
-                            <pou:calendar locale="en_UK"  id="txtBillDate" value="#{gasPurchaseBillController.bill.billDate}">
-                            </pou:calendar>
+                            <p:calendar locale="en_UK"  id="txtBillDate" value="#{gasPurchaseBillController.bill.billDate}">
+                            </p:calendar>
                             <h:outputLabel value="#{postLabels.grossValue}"/>
                             <h:inputText disabled="true" value="#{gasPurchaseBillController.bill.grossValue}" />
                             <h:outputLabel value="#{postLabels.discount}"/>
@@ -170,10 +276,10 @@
                             <h:commandButton rendered="#{!gasPurchaseBillController.newBill}" value="Reprint" action="#{gasPurchaseBillController.settleBill}"/>
 
 
-                        </pou:panelGrid>
-                    </pou:panel>
-                </pou:panelGrid>
-            </pou:panel>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:panelGrid>
+            </p:panel>
 
 
 

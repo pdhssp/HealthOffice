@@ -142,9 +142,11 @@
 
                         <h:panelGroup rendered="#{sessionController.logged}" >
                             <p:panel  rendered="#{sessionController.logged}" style="margin: 0px; padding: 0px; border: 0px;" >
+
                                 <h:form>
                                     <p:menubar  model="#{menu.model}" />
                                 </h:form>
+
                             </p:panel>
                         </h:panelGroup>
                     </td>
@@ -192,9 +194,13 @@
                                         <h:panelGroup rendered="#{!sessionController.logged}" >
                                             <h:outputLabel value="&copy;&nbsp;Health Information Unit, PDHS, Southern Province" id="copyRights" />
                                         </h:panelGroup>
+                                        <h:commandLink value="&nbsp;|&nbsp;Sinhala" action="#{languageBean.languageToSinhala()}" rendered="#{!languageBean.inSinhala}" />
+                                        <h:commandLink value="&nbsp;|&nbsp;Tamil" action="#{languageBean.languageToTamil()}" rendered="#{!languageBean.inTamil}" />
+                                        <h:commandLink value="&nbsp;|&nbsp;English" action="#{languageBean.languageToEnglish()}" rendered="#{!languageBean.inEnglish}" />
+
                                     </h:form>
 
-                                    
+
 
                                 </td>
                             </tr>

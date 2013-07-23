@@ -79,6 +79,13 @@
                     </f:facet>
                     <h:outputText value="#{demo.quentity}" />
                 </pou:column>
+                
+                 <pou:column>
+                    <f:facet name="header">
+                        Full/Empty
+                    </f:facet>
+                    <h:outputText value="#{(demo.emptyUnit)? 'Empty':'Filled'}" />
+                </pou:column>
 
 
 

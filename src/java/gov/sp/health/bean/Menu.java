@@ -173,17 +173,24 @@ public class Menu implements Serializable {
         sm.getChildren().add(mi);
         
         mi=new MenuItem();
-        mi.setValue(getLabel("purchase"));
-        mi.setUrl("gases_purchase.xhtml");
-        sm.getChildren().add(mi);
-        
-         mi=new MenuItem();
-        mi.setValue(getLabel("goodReceive"));
-        mi.setUrl("gases_receive_from_rmsd.xhtml");
+        mi.setValue("Purchase - Empty");
+        mi.setUrl("gases_empty_purchase.xhtml");
         sm.getChildren().add(mi);
         
         mi=new MenuItem();
-        mi.setValue(getLabel("වාර්තාවන්"));
+        mi.setValue("Purchase - Filled");
+        mi.setUrl("gases_filled_purchase.xhtml");
+        sm.getChildren().add(mi);
+               
+        
+        mi=new MenuItem();
+        mi.setValue("Good Receive");
+        mi.setUrl("gases_filled_purchase.xhtml");
+        sm.getChildren().add(mi);
+               
+        
+        mi=new MenuItem();
+        mi.setValue("Reports");
         mi.setUrl("gases_reports.xhtml");
         sm.getChildren().add(mi);
         

@@ -30,6 +30,8 @@ public class Cylinder extends Item implements Serializable {
     CylinderType cylinderType;
     Double gasVolume;
 
+    
+    
     public Double getGasVolume() {
         return gasVolume;
     }

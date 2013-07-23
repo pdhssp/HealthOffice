@@ -76,6 +76,18 @@ public class BillItem implements Serializable {
     Date dateOfExpiary;
     Long billSerial;
 
+    boolean emptyUnit;
+
+    public boolean isEmptyUnit() {
+        return emptyUnit;
+    }
+
+    public void setEmptyUnit(boolean emptyUnit) {
+        this.emptyUnit = emptyUnit;
+    }
+    
+    
+    
     public Long getBillSerial() {
         return billSerial;
     }

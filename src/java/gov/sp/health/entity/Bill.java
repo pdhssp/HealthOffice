@@ -50,6 +50,7 @@ public class Bill implements Serializable {
     double netCost;
     double discountCostPercent;
     boolean cancelled;
+    double billQty;
     @ManyToOne
     Bill cancelledBill;
     boolean returned;
@@ -83,6 +84,14 @@ public class Bill implements Serializable {
 
     public void setBillItems(List<BillItem> billItems) {
         this.billItems = billItems;
+    }
+
+    public double getBillQty() {
+        return billQty;
+    }
+
+    public void setBillQty(double billQty) {
+        this.billQty = billQty;
     }
 
        
