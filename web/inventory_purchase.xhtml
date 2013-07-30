@@ -111,7 +111,9 @@
                                     <f:facet name="header">
                                         #{labels.expiry}
                                     </f:facet>
-                                    #{temBillItem.dateOfExpiary}
+                                    <h:outputLabel value ="#{temBillItem.dateOfExpiary}" >
+                                        <f:convertDateTime pattern="dd MMMM yyyy"/>
+                                    </h:outputLabel>
                                 </h:column>
 
                                 <h:column  >

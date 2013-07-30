@@ -7,14 +7,182 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:pou="http://primefaces.org/ui">
 
-    <pou:growl autoUpdate="true"/>
-    
-    
+
     <ui:define name="content">
-        Application Timed out. Please close the browser and restart again.
+        <pou:growl autoUpdate="true"/>
+       
+
+        <pou:tabView id="tabView" activeIndex="2">
+
+            <pou:tab id="tab1" title="#{postLabels.introduction}">
+
+                <pou:panelGrid >
+                    <pou:row>
+                        <pou:column >
+                            <pou:panel>
+                                <pou:imageSwitch effect="zoom" style="text-align: center;" >
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs1.png" styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs2.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs3.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs4.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"> <pou:graphicImage   value="resources\image\pdhs5.png"  styleClass="pdMainImage"  ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs6.png"  styleClass="pdMainImage"  ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs7.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs8.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs9.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs10.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs11.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs12.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs13.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs14.png"  styleClass="pdMainImage"> </pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs15.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs16.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs17.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs18.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs19.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs20.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs21.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs22.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs23.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs24.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs25.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs26.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs27.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs28.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs29.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs30.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs31.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs32.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs33.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs34.png"  styleClass="pdMainImage"> </pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs35.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs36.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs37.png"   styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs38.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs39.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                    <pou:panel styleClass="pdMainPanel"><pou:graphicImage   value="resources\image\pdhs40.png"  styleClass="pdMainImage" ></pou:graphicImage></pou:panel>
+                                </pou:imageSwitch>
+                            </pou:panel>
+
+
+                        </pou:column>
+                        <pou:column >
+                            <pou:panel header="#{postLabels.vision}" >
+                                #{postLabels.visionText}
+                            </pou:panel>
+                            <pou:panel header="#{postLabels.mission}" >
+                                #{postLabels.missionText}
+                            </pou:panel>
+
+                        </pou:column>
+                    </pou:row>
+                    <pou:row>
+                        <pou:column>
+
+                        </pou:column>
+                        <pou:column>
+
+                        </pou:column>
+                    </pou:row>
+                </pou:panelGrid>
+
+
+
+                <pou:panel header="#{postLabels.values}">
+                    <pou:panelGrid columns="3" >
+
+
+                        <h:outputLabel>1</h:outputLabel>	
+                        <h:outputLabel>#{postLabels.compliance}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.complianceText}</h:outputLabel>
+                        <h:outputLabel>2</h:outputLabel>
+                        <h:outputLabel>#{postLabels.conformity}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.conformityText}</h:outputLabel>
+                        <h:outputLabel>3</h:outputLabel>
+                        <h:outputLabel>#{postLabels.collectivism}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.collectivismText}</h:outputLabel>
+                        <h:outputLabel>4</h:outputLabel>
+                        <h:outputLabel>#{postLabels.equality}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.equalityText}</h:outputLabel>
+                        <h:outputLabel>5</h:outputLabel>
+                        <h:outputLabel>#{postLabels.individualism}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.individualismText}</h:outputLabel>
+                        <h:outputLabel>6</h:outputLabel>
+                        <h:outputLabel>#{postLabels.authority}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.authorityText}</h:outputLabel>
+                        <h:outputLabel>7</h:outputLabel>
+                        <h:outputLabel>#{postLabels.empowerment}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.empowermentText}</h:outputLabel>
+                        <h:outputLabel>8</h:outputLabel>
+                        <h:outputLabel>#{postLabels.independence}</h:outputLabel>
+                        <h:outputLabel>#{postLabels.independenceText} </h:outputLabel>
+
+                    </pou:panelGrid>
+                </pou:panel>
+            </pou:tab>
+
+            <pou:tab id="tab2" title="#{postLabels.messages}">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <pou:graphicImage id="tab2Img" value="/images/godfather/godfather2.jpg" />
+                    <h:outputText id="tab2Text" value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.
+                                  In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,
+                                  killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."/>
+                </h:panelGrid>
+            </pou:tab>
+
+
+
+            <pou:tab id="tab3" title="#{postLabels.notifications}">
+                <h:form>
+
+                    <pou:panel header="#{postLabels.lettersToCollect}" >
+
+                        <h:commandButton value="#{postLabels.collectMarkedLetters}" action="#{letterController.markAsSent}" />
+                        
+                        <pou:dataTable id="tblItems" selectionMode="multiple" var="demo" rowKey="#{demo.id}" value="#{letterController.myLettersToCollect}" selection="#{letterController.lettersToMark}" emptyMessage="#{postLabels.noRecordsFound}"   >
+                            <pou:column>
+                                <f:facet name="header">
+                                    #{postLabels.receivedDate}
+                                </f:facet>
+                                <h:outputText value="#{demo.receivedDate}">
+                                    <f:convertDateTime pattern="dd MMMM yyyy" />
+                                </h:outputText>
+                            </pou:column>
+                            <pou:column>
+                                <f:facet name="header">
+                                    #{postLabels.fromInstitution}
+                                </f:facet>
+                                <h:outputText value="#{demo.fromInstitution.name}" />  
+                            </pou:column>  
+                            <pou:column>
+                                <f:facet name="header">
+                                    #{postLabels.number}
+                                </f:facet>
+                                <h:outputText value="#{demo.name}" />  
+                            </pou:column>
+                            <pou:column>
+                                <f:facet name="header">
+                                    #{postLabels.topic}
+                                </f:facet>
+                                <h:outputText value="#{demo.description}" />  
+                            </pou:column>
+                            <pou:column >
+                                <h:commandButton value="#{postLabels.view}" action="#{letterController.toView()}">
+                                    <f:setPropertyActionListener value="#{demo}" target="#{letterController.current}" />
+                                </h:commandButton>
+                            </pou:column>
+
+                        </pou:dataTable>
+
+                    </pou:panel>
+
+                </h:form>
+            </pou:tab>
+        </pou:tabView>
+
+
+
+
     </ui:define>
-    <ui:define name="login">
-        Application Timed out. Please close the browser and restart again.
-    </ui:define>
-    
+
 </ui:composition>

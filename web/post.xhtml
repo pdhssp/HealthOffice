@@ -15,16 +15,16 @@
 
         <h:form >
             <p:growl autoUpdate="true" />
-            <p:panel header="Post" >
+            <p:panel header="#{labels.post}" >
 
                 <p:panelGrid columns="1">
-                    <h:commandLink value="Subjects" action="subject"></h:commandLink>
-                    <h:commandLink value="Persons" action="person"></h:commandLink>
-                    <h:commandLink value="Institutions" action="institutions"></h:commandLink>
-                    <h:commandLink value="New Letter" action="#{letterController.prepareAddNew}"></h:commandLink>
-                    <h:commandLink value="Received Letters" action="post_institution_received"></h:commandLink>
-                    <h:commandLink value="Received Letters" action="post_institution_received_subject"></h:commandLink>
-                    <h:commandLink value="Send Letters" action="institutions"></h:commandLink>
+                    <h:commandLink value="#{labels.subject}" action="subject"></h:commandLink>
+                    <h:commandLink value="#{labels.persons}" action="person"></h:commandLink>
+                    <h:commandLink value="#{labels.institution}" action="institutions"></h:commandLink>
+                    <h:commandLink value="#{labels.newLetter}" action="#{letterController.prepareAddNew}"></h:commandLink>
+                    <h:commandLink value="#{labels.receivedLetters}" action="post_institution_received"></h:commandLink>
+                    <h:commandLink value="#{labels.receivedLettersToSubject}" action="post_institution_received_subject"></h:commandLink>
+                    <h:commandLink value="#{labels.sendLetters}" action="institutions"></h:commandLink>
                 </p:panelGrid>
             </p:panel>
 

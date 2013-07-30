@@ -15,11 +15,11 @@
 
         <h:form >
             <p:growl autoUpdate="true" />
-            <p:panel header="Reports" >
+            <p:panel header="#{labels.reports}" >
 
                 <p:panelGrid columns="1">
-                    <h:commandLink value="Institution Stock" action="stores_report_institution_items_stocks"></h:commandLink>
-                    <h:commandLink value="Unit Stock" action="stores_report_unit_items_stock"></h:commandLink>
+                    <h:commandLink value="#{labels.institutionStock}" action="stores_report_institution_items_stocks"></h:commandLink>
+                    <h:commandLink value="#{labels.unitStock}" action="stores_report_unit_items_stock"></h:commandLink>
                 </p:panelGrid>
             </p:panel>
 

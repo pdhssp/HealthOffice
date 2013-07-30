@@ -1,5 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
+ * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
 package gov.sp.health.entity;
@@ -50,6 +50,7 @@ public class Bill implements Serializable {
     double netCost;
     double discountCostPercent;
     boolean cancelled;
+    double billQty;
     @ManyToOne
     Bill cancelledBill;
     boolean returned;
@@ -83,6 +84,14 @@ public class Bill implements Serializable {
 
     public void setBillItems(List<BillItem> billItems) {
         this.billItems = billItems;
+    }
+
+    public double getBillQty() {
+        return billQty;
+    }
+
+    public void setBillQty(double billQty) {
+        this.billQty = billQty;
     }
 
        

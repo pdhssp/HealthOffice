@@ -1,5 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
+ * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
 package gov.sp.health.entity;
@@ -107,11 +107,45 @@ public class ItemUnit implements Serializable {
     double wholesaleValue;
     double wholesaleCostValue;
     
-    
+    boolean emptyUnit;
     
     
     double quentity;
+    
+    @Transient
+    double startStock;
+    @Transient
+    double balanceStock;
 
+    public double getStartStock() {
+        return startStock;
+    }
+
+    public void setStartStock(double startStock) {
+        this.startStock = startStock;
+    }
+
+    public double getBalanceStock() {
+        balanceStock=startStock-quentity;
+        return balanceStock;
+    }
+
+    public void setBalanceStock(double balanceStock) {
+        this.balanceStock = balanceStock;
+    }
+    
+    
+
+    public boolean isEmptyUnit() {
+        return emptyUnit;
+    }
+
+    public void setEmptyUnit(boolean emptyUnit) {
+        this.emptyUnit = emptyUnit;
+    }
+
+    
+    
     public String getModalNo() {
         return modalNo;
     }

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <p:growl autoUpdate="true"/>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+            <ui:define name="title">
+                #{labels.articles}
+            </ui:define>
+
+            <ui:define name="login">
+
+                <h:form >
+
+                    <h:panelGrid rendered="#{articleController.selectedArticles.size()==0}"  >
+                        <div style="min-height: 300px;">
+                            #{labels.noArticles}
+                        </div>
+                    </h:panelGrid>
+
+                    <h:panelGrid rendered="#{articleController.selectedArticles.size()>0}" >
+
+
+                        <p:panel styleClass="leadingArticleDiv" >
+
+                            <div>
+
+                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{articleController.selectedArticles[0].sinhalaTopic}" styleClass="leadingArticleHeading" ></h:outputLabel>
+                                <h:outputLabel rendered="#{languageBean.inTamil}" value="#{articleController.selectedArticles[0].tamilTopic}" styleClass="leadingArticleHeading" ></h:outputLabel>
+                                <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{articleController.selectedArticles[0].englishTopic}" styleClass="leadingArticleHeading" ></h:outputLabel>
+
+                                <hr/>
+
+
+                                <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{articleController.selectedArticles[0].sinhalaContent}" styleClass="articalTopic" ></h:outputText>>
+                                 <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{articleController.selectedArticles[0].tamilContent}" styleClass="articalTopic" ></h:outputText>
+                                 <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{articleController.selectedArticles[0].englishTopic}" styleClass="articalTopic" ></h:outputText>
+
+                            </div>
+
+                        </p:panel>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

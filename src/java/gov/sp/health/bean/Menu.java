@@ -14,7 +14,7 @@ import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import org.primefaces.component.menuitem.MenuItem;
 
 /**
@@ -23,7 +23,7 @@ import org.primefaces.component.menuitem.MenuItem;
  * Informatics)
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class Menu implements Serializable {
 
     @ManagedProperty(value = "#{sessionController}")
@@ -150,9 +150,62 @@ public class Menu implements Serializable {
 
     }
 
+    private Submenu gasSubmenu(){
+        Submenu sm = new Submenu();
+        sm.setLabel(getLabel("medicalGases"));
+        
+          
+        MenuItem mi;
+        
+        mi=new MenuItem();
+        mi.setValue(getLabel("emptyIssue"));
+        mi.setUrl("gases_empty_issue.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue(getLabel("emptyReceive"));
+        mi.setUrl("gases_empty_receive.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue(getLabel("invoice"));
+        mi.setUrl("gases_invoice.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue("Purchase - Empty");
+        mi.setUrl("gases_empty_purchase.xhtml");
+        sm.getChildren().add(mi);
+        
+        mi=new MenuItem();
+        mi.setValue("Purchase - Filled");
+        mi.setUrl("gases_filled_purchase.xhtml");
+        sm.getChildren().add(mi);
+               
+        
+        mi=new MenuItem();
+        mi.setValue("Good Receive");
+        mi.setUrl("gases_filled_purchase.xhtml");
+        sm.getChildren().add(mi);
+               
+        
+        mi=new MenuItem();
+        mi.setValue("Reports");
+        mi.setUrl("gases_reports.xhtml");
+        sm.getChildren().add(mi);
+        
+        
+        mi=new MenuItem();
+        mi.setValue(getLabel("edit"));
+        mi.setUrl("gases_edit.xhtml");
+        sm.getChildren().add(mi);
+        
+        return sm;
+    }
+    
     private Submenu financeSubmenu() {
         Submenu submenu = new Submenu();
-        submenu.setLabel(getLabel("finance"));
+        submenu.setLabel(getLabel(getLabel("finance")));
 
         MenuItem item;
 
@@ -177,6 +230,20 @@ public class Menu implements Serializable {
         return submenu;
     }
 
+    private Submenu articleSubmenu() {
+        Submenu submenu = new Submenu();
+        submenu.setLabel(getLabel("articles"));
+
+        MenuItem item;
+
+        item = new MenuItem();
+        item.setValue(getLabel("manageArticles"));
+        item.setUrl("article_index.xhtml");
+        submenu.getChildren().add(item);
+
+        return submenu;
+    }
+    
     public SessionController getSessionController() {
         return sessionController;
     }
@@ -186,6 +253,9 @@ public class Menu implements Serializable {
     }
 
     public void createMenu() {
+        if (sessionController.privilege==null){
+            return;
+        }
         msModel = new DefaultMenuModel();
         if (sessionController.privilege.isMsView()) {
             msModel.addSubmenu(medicalSubmenu());
@@ -199,6 +269,8 @@ public class Menu implements Serializable {
         item.setUrl("index.xhtml");
         model.addMenuItem(item);
 
+        model.addSubmenu(gasSubmenu());
+        
         if (sessionController.privilege.isDemographyView()) {
             model.addSubmenu(officeSubmenu());
         }
@@ -226,6 +298,8 @@ public class Menu implements Serializable {
             model.addSubmenu(adminSubmenu());
         }
 
+        model.addSubmenu(articleSubmenu());
+        
         model.addSubmenu(userSubmenu());
     }
 
@@ -236,7 +310,7 @@ public class Menu implements Serializable {
         MenuItem item;
 
         item = new MenuItem();
-        item.setValue(getLabel("InstitutionTypes"));
+        item.setValue(getLabel("institutionTypes"));
         item.setUrl("institution_type.xhtml");
         submenu.getChildren().add(item);
 
@@ -246,7 +320,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Units"));
+        item.setValue(getLabel("units"));
         item.setUrl("inventory_unit.xhtml");
         submenu.getChildren().add(item);
 
@@ -256,7 +330,7 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Locations"));
+        item.setValue(getLabel("locations"));
         item.setUrl("inventory_location.xhtml");
         submenu.getChildren().add(item);
 
@@ -267,26 +341,26 @@ public class Menu implements Serializable {
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("Persons"));
+        item.setValue(getLabel("persons"));
         item.setUrl("person.xhtml");
         submenu.getChildren().add(item);
 
 
         item = new MenuItem();
-        item.setValue(getLabel("Suppliers"));
+        item.setValue(getLabel("suppliers"));
         item.setUrl("inventory_supplier.xhtml");
         submenu.getChildren().add(item);
 
 
         item = new MenuItem();
-        item.setValue(getLabel("Manufacturers"));
+        item.setValue(getLabel("manufacturers"));
         item.setUrl("inventory_manufacturer.xhtml");
         submenu.getChildren().add(item);
 
 
 
         item = new MenuItem();
-        item.setValue(getLabel("Countries"));
+        item.setValue(getLabel("countries"));
         item.setUrl("country.xhtml");
         submenu.getChildren().add(item);
 
@@ -625,17 +699,17 @@ public class Menu implements Serializable {
         
         
         item = new MenuItem();
-        item.setValue(getLabel("EditMetaData"));
+        item.setValue(getLabel("editMetaData"));
         item.setUrl("cadre_edit.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("CaderForInstitutionTypes"));
+        item.setValue(getLabel("carderForInstitutionTypes"));
         item.setUrl("cadre_for_institution_type.xhtml");
         submenu.getChildren().add(item);
 
         item = new MenuItem();
-        item.setValue(getLabel("CarderForInstitutions"));
+        item.setValue(getLabel("carderForInstitutions"));
         item.setUrl("cadre_for_institution.xhtml");
         submenu.getChildren().add(item);
 

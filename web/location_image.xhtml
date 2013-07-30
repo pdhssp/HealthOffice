@@ -10,9 +10,9 @@
 
         <h:form enctype="multipart/form-data">
             <pou:growl ></pou:growl>
-            <h:outputLabel value="Locations Images" ></h:outputLabel>
+            <h:outputLabel value="#{labels.locationImages}" ></h:outputLabel>
             <h:panelGrid columns="2" >
-                <h:outputText value="Location"/>
+                <h:outputText value="#{labels.locations}"/>
                 <h:outputText id="cmbLoc" value="#{imageController.location.name}" />
             </h:panelGrid>
             <pou:galleria id="gal" value="#{imageController.appImages}" var="img">
@@ -22,7 +22,7 @@
             </pou:galleria>
             <h:panelGrid columns="2" >
                 <pou:fileUpload value="#{imageController.file}" mode="simple"/>
-                <h:commandButton value="Save" action="#{imageController.saveLocationImage}"/>
+                <h:commandButton value="#{labels.save}" action="#{imageController.saveLocationImage}"/>
             </h:panelGrid>
 
         </h:form>

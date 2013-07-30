@@ -11,10 +11,10 @@
     <ui:define name="content">
 
         <h:form>
-            <h:commandLink action="areas" value="Areas" > </h:commandLink><br/>
-            <h:commandLink action="login" value="Login Page"> </h:commandLink>
-            <h:commandLink action="register" value="Register Page" > </h:commandLink>
-            <h:commandLink action="population" value="Population Page" > </h:commandLink> <br/>
+            <h:commandLink action="areas" value="#{labels.area}" > </h:commandLink><br/>
+            <h:commandLink action="login" value="#{labels.loginPage}"> </h:commandLink>
+            <h:commandLink action="register" value="#{labels.registerPage}" > </h:commandLink>
+            <h:commandLink action="population" value="#{labels.populationPage}" > </h:commandLink> <br/>
 
 
 
@@ -32,24 +32,24 @@
                 <tr>
                     <td align="center" colspan="2">
 
-                        <span class="pdHeading1">Login to the Admin Panel</span>
+                        <span class="pdHeading1">#{labels.loginToTheAdminPanel}</span>
                     </td>
                 </tr>                  
                 <tr>
                     <td colspan="2" class="pdLabel">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="pdLabel" align="right" width="40%">Username:</td>
+                    <td class="pdLabel" align="right" width="40%">#{labels.UserName}:</td>
                     <td align="left" width="60%"><h:inputText value="#{connetcionController.userName}"/></td>
                 </tr>
                 <tr>
-                    <td class="pdLabel" align="right">Password:</td>
+                    <td class="pdLabel" align="right">#{labels.Password}:</td>
                     <td align="left"><h:inputSecret value="#{connetcionController.passord}"  /></td>
                 </tr>
                 <tr>
 
-                    <td align="left"><h:commandButton  class="pdButton" type="submit" value="Register" action="register" /> </td>
-                    <td align="left"><h:commandButton class="pdButton" type="submit" value="Login" action="#{connetcionController.loginAction()}"/></td>
+                    <td align="left"><h:commandButton  class="pdButton" type="submit" value="#{labels.Register}" action="register" /> </td>
+                    <td align="left"><h:commandButton class="pdButton" type="submit" value="#{labels.Login}" action="#{connetcionController.loginAction()}"/></td>
 
 
                 </tr>                  

@@ -28,7 +28,7 @@
                 <h:panelGrid columnClasses = "pdTopAlign" styleClass="pdTopAlignNoBorder"  >
                     <pou:row>
                         <pou:column  styleClass="pdTopAlign">
-                            <h:outputLabel value="#{labels.Institution}"/>
+                            <h:outputLabel value="#{labels.institution}"/>
                             <h:selectOneListbox id="lstIns" value="#{unitController.institution}" size="5">
                                 <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
                                 <f:ajax execute="lstIns" render="lstUnit" event="change"/>
@@ -106,7 +106,7 @@
 
                 <pou:column>
                     <f:facet name="header">
-                        Asset Code
+                       #{labels.assetCode}
                     </f:facet>
                     <h:outputText value="#{demo.itemUnit.name}"/>
                 </pou:column>

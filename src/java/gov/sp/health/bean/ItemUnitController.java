@@ -74,6 +74,12 @@ public final class ItemUnitController implements Serializable {
     List<ConsumableItem> selectedConsumableItems;
     List<InventoryItem> selectedInventoryItems;
 
+    public List<ItemUnit> completeItemUnit(String qry){
+        String sql;
+        sql = "select i from ItemUnit i where i.retired=false and upper(i.item.name) like '%" + qry.toUpperCase() + "%' ";
+        return getEjbFacade().findBySQL(sql);
+    }   
+    
     public Integer getIntSelect() {
         return intSelect;
     }
@@ -407,6 +413,14 @@ public final class ItemUnitController implements Serializable {
         }
     }
 
+     public List<ItemUnit> getCylinderIns() {
+        if (institution != null) {
+            return getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND type(i.item)=Cylinder AND i.institution.id = " + institution.getId() + " order by i.item.name");
+        } else {
+            return null;
+        }
+    }
+    
     public void setItemsIns(DataModel<ItemUnit> itemsIns) {
         this.itemsIns = itemsIns;
     }
@@ -710,4 +724,48 @@ public final class ItemUnitController implements Serializable {
             }
         }
     }
+    
+    
+    
+    
+    
+    @FacesConverter("itemUnitConverter")
+    public static class ItemUnitConverter implements Converter {
+
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            ItemUnitController controller = (ItemUnitController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "itemUnitController");
+            return controller.ejbFacade.find(getKey(value));
+        }
+
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Long value) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof ItemUnit) {
+                ItemUnit o = (ItemUnit) object;
+                return getStringKey(o.getId());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type "
+                        + object.getClass().getName() + "; expected type: " + ItemUnitController.class.getName());
+            }
+        }
+    }
+    
+    
 }

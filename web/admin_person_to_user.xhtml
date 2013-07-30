@@ -13,10 +13,10 @@
         <h:form>
             <p:panelGrid columns="2">
                 <f:facet name="header" >
-                    Add Persons as users
+                    #{labels.addPersonsAsUsers}
                 </f:facet>
                 
-                <h:outputLabel value="Person" />
+                <h:outputLabel value="#{labels.persons}" />
                 <h:selectOneListbox value="#{connetcionController.currentPerson}" size="10" >
                     <f:selectItems value="#{personController.items}" var="per" itemValue="#{per}" itemLabel="#{per.name} ( #{per.institution.name} )"/>
                 </h:selectOneListbox>

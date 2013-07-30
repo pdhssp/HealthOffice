@@ -87,6 +87,25 @@ public final class UnitController implements Serializable {
     public List<Unit> getLstItems() {
         return getFacade().findBySQL("Select d From Unit d WHERE d.retired=false ORDER BY d.name");
     }
+    List<Unit> userUnits;
+
+    public List<Unit> getUserUnits() {
+
+        String sql;
+        if (getSessionController().getLoggedUser().getWebUserPerson().getInstitution() != null) {
+            sql = "select u from Unit u where u.retired=false and u.institution.id = " + getSessionController().getLoggedUser().getWebUserPerson().getInstitution().getId() + " order by u.name";
+        } else {
+            sql = "select u from Unit u where u.retired=false order by u.name";
+        }
+        userUnits = getEjbFacade().findBySQL(sql);
+        return userUnits;
+    }
+    
+   
+
+    public void setUserUnits(List<Unit> userUnits) {
+        this.userUnits = userUnits;
+    }
 
     public void setLstItems(List<Unit> lstItems) {
         this.lstItems = lstItems;

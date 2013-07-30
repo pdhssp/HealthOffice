@@ -105,7 +105,7 @@
 
                 <pou:column>
                     <f:facet name="header">
-                        Collected
+                        #{labels.collected}
                     </f:facet>
                     <h:outputText value="#{ (demo.sent) ? 'Collected' : 'Yet to collect' }"   />
                     <h:inputText  rendered="#{demo.registered}"  value="#{demo.code}"/>                    

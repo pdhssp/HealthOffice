@@ -21,11 +21,42 @@
 
             <pou:growl id="g"></pou:growl>
 
-            <h:panelGrid columns="2" >
-                <h:outputLabel value="#{labels.Institution}"/>
-                <h:selectOneListbox id="lstIns" value="#{itemUnitController.institution}" size="5">
-                    <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
-                </h:selectOneListbox>
+            <table>
+
+                <tr>
+                    <td>
+                        #{labels.selectInstitution} 
+                    </td>
+                    <td>
+                        <h:selectOneListbox id="lstIns" value="#{itemUnitController.institution}" size="5">
+                            <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
+                        </h:selectOneListbox>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h:selectBooleanCheckbox id="optAll" value="#{itemUnitController.allItems}" >
+                        </h:selectBooleanCheckbox>
+                    </td>
+                    <td>
+                        <h:selectBooleanCheckbox id="optSelected" value="#{itemUnitController.selectedItems}" >
+                        </h:selectBooleanCheckbox>
+                    </td>
+                </tr>
+
+
+
+            </table>
+
+
+
+            <h:panelGrid columns="4" >
+
+
+
+
+
                 <pou:commandButton value="#{labels.displayAll}" ajax="false"  />
                 <pou:commandButton value="#{postLabels.print}" >
                     <pou:printer target="tblItems" />
@@ -47,22 +78,22 @@
                     <f:facet name="header">
                         #{postLabels.unit}
                     </f:facet>
-                    <h:outputText rendered="#{demo.unit!=null}" value="#{demo.unit.name}" />  
-                </pou:column>                
+                    <h:outputText rendered="#{demo.unit!=null}" value="#{demo.unit.name}" />
+                </pou:column>
 
                 <pou:column>
                     <f:facet name="header">
-                        #{labels.Persons}
+                        #{labels.persons}
                     </f:facet>
-                    <h:outputText  rendered="#{demo.person!=null}"  value="#{demo.person.name}" />  
-                </pou:column>  
+                    <h:outputText  rendered="#{demo.person!=null}"  value="#{demo.person.name}" />
+                </pou:column>
 
                 <pou:column>
                     <f:facet name="header">
                         #{labels.serial}
                     </f:facet>
-                    <h:outputText value="#{demo.serial}" />  
-                </pou:column>                  
+                    <h:outputText value="#{demo.serial}" />
+                </pou:column>
 
             </pou:dataTable>
 
@@ -71,13 +102,13 @@
                                     <h:graphicImage  library="image" name="excel.png" />
                                     <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
                                 </h:commandLink>
-                
+
                                 <h:commandLink>
                                     <h:graphicImage  library="image" name="pdf.png" />
                                     <pou:dataExporter type="pdf" target="tblItems" fileName="cars"/>
                                 </h:commandLink>-->
 
-                 <h:commandLink id="clCvs">
+                <h:commandLink id="clCvs">
                     <h:graphicImage  library="image" name="csv.png" />
                     <pou:dataExporter type="csv" target="tblItems" fileName="items" />
                     <pou:tooltip for="clCvs" >
@@ -108,7 +139,7 @@
                         <h:outputLabel value="#{postLabels.removeSelectedReports}" />
                     </pou:tooltip>
                     <h:graphicImage  library="image" name="remove.png" style="width: 30px;height: 30px;" />
-                </h:commandLink>                
+                </h:commandLink>
 
             </pou:panel>
 

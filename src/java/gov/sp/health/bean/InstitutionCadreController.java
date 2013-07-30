@@ -48,34 +48,133 @@ public final class InstitutionCadreController implements Serializable {
     private List<InstitutionCadre> items = null;
     Institution institution;
     Designation designation;
-    Long caderCount;
-    Long maleIn;
-    Long femaleIn;
-    Long totalIn;
-    Long vacantCount;
+    long caderCount;
+    long maleIn;
+    long femaleIn;
+    long totalIn;
+    long vacantCount;
     Date carderDate;
-    Integer carderYear;
-    Integer carderMonth;
-    Integer carderYearLast;
-    Integer carderMonthLast;
+    int carderYear;
+    int carderMonth;
+    int carderYearLast;
+    int carderMonthLast;
+    long institutionMaleInCount;
+    long institutionFemaleInCount;
+    long institutionTotalInCount;
+    long institutionVacantInCount;
+    long institutionApprovedCount;
 
-    public Integer getCarderYearLast() {
+    public long getMaleIn() {
+        return maleIn;
+    }
+
+    public void setMaleIn(long maleIn) {
+        this.maleIn = maleIn;
+    }
+
+    public long getFemaleIn() {
+        return femaleIn;
+    }
+
+    public void setFemaleIn(long femaleIn) {
+        this.femaleIn = femaleIn;
+    }
+
+    public long getTotalIn() {
+        return totalIn;
+    }
+
+    public void setTotalIn(long totalIn) {
+        this.totalIn = totalIn;
+    }
+
+    public long getVacantCount() {
+        return vacantCount;
+    }
+
+    public void setVacantCount(long vacantCount) {
+        this.vacantCount = vacantCount;
+    }
+
+    public int getCarderYear() {
+        return carderYear;
+    }
+
+    public void setCarderYear(int carderYear) {
+        this.carderYear = carderYear;
+    }
+
+    public int getCarderMonth() {
+        return carderMonth;
+    }
+
+    public void setCarderMonth(int carderMonth) {
+        this.carderMonth = carderMonth;
+    }
+
+    public int getCarderYearLast() {
         return carderYearLast;
+    }
+
+    public void setCarderYearLast(int carderYearLast) {
+        this.carderYearLast = carderYearLast;
+    }
+
+    public int getCarderMonthLast() {
+        return carderMonthLast;
+    }
+
+    public void setCarderMonthLast(int carderMonthLast) {
+        this.carderMonthLast = carderMonthLast;
+    }
+
+    public long getInstitutionMaleInCount() {
+        return institutionMaleInCount;
+    }
+
+    public void setInstitutionMaleInCount(long institutionMaleInCount) {
+        this.institutionMaleInCount = institutionMaleInCount;
+    }
+
+    public long getInstitutionFemaleInCount() {
+        return institutionFemaleInCount;
+    }
+
+    public void setInstitutionFemaleInCount(long institutionFemaleInCount) {
+        this.institutionFemaleInCount = institutionFemaleInCount;
+    }
+
+    public long getInstitutionTotalInCount() {
+        return institutionTotalInCount;
+    }
+
+    public void setInstitutionTotalInCount(long institutionTotalInCount) {
+        this.institutionTotalInCount = institutionTotalInCount;
+    }
+
+    public long getInstitutionVacantInCount() {
+        return institutionVacantInCount;
+    }
+
+    public void setInstitutionVacantInCount(long institutionVacantInCount) {
+        this.institutionVacantInCount = institutionVacantInCount;
+    }
+
+    public long getInstitutionApprovedCount() {
+        return institutionApprovedCount;
+    }
+
+    public void setInstitutionApprovedCount(long institutionApprovedCount) {
+        this.institutionApprovedCount = institutionApprovedCount;
     }
 
     public void setCarderYearLast(Integer carderYearLast) {
         this.carderYearLast = carderYearLast;
     }
 
-    public Integer getCarderMonthLast() {
-        return carderMonthLast;
-    }
-
     public void setCarderMonthLast(Integer carderMonthLast) {
         this.carderMonthLast = carderMonthLast;
     }
-
-   
 
     public InstitutionTypeCadreFacade getTypeCarderFacade() {
         return typeCarderFacade;
@@ -88,7 +187,12 @@ public final class InstitutionCadreController implements Serializable {
     public void fillInsTypeCarder() {
         String sql;
         if (getInstitution() == null) {
-            items = new ArrayList<InstitutionCadre>();
+            JsfUtil.addErrorMessage("Please select the institute");
+            return;
+        }
+        if (getInstitution().getInstitutionType() == null) {
+            JsfUtil.addErrorMessage("Please add a type to the institution " + getInstitution().getName());
+            return;
         }
         for (InstitutionCadre ic : items) {
             ic.setRetired(true);
@@ -114,7 +218,7 @@ public final class InstitutionCadreController implements Serializable {
 
     public void fillLastMonthCarder() {
         String sql;
-        if (getInstitution() == null || getCarderYearLast()==null || getCarderMonthLast()==null) {
+        if (getInstitution() == null) {
             items = new ArrayList<InstitutionCadre>();
         }
         for (InstitutionCadre ic : items) {
@@ -122,7 +226,7 @@ public final class InstitutionCadreController implements Serializable {
             //TODO:Add retireer properties
             getFacade().edit(ic);
         }
-        sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYearLast()+ " and d.intMonth = " + getCarderMonthLast()+ " order by d.name";
+        sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYearLast() + " and d.intMonth = " + getCarderMonthLast() + " order by d.name";
         List<InstitutionCadre> typItems = getFacade().findBySQL(sql);
         for (InstitutionCadre itc : typItems) {
             InstitutionCadre ic = new InstitutionCadre();
@@ -142,16 +246,8 @@ public final class InstitutionCadreController implements Serializable {
         recreateItems();
     }
 
-    public Integer getCarderYear() {
-        return carderYear;
-    }
-
     public void setCarderYear(Integer carderYear) {
         this.carderYear = carderYear;
-    }
-
-    public Integer getCarderMonth() {
-        return carderMonth;
     }
 
     public void setCarderMonth(Integer carderMonth) {
@@ -180,7 +276,7 @@ public final class InstitutionCadreController implements Serializable {
         System.out.println("8");
         if (temM == 1) {
             System.out.println("9");
-            temM = 12;
+            temM = 11;
             temY = temY - 1;
         } else {
             System.out.println("10");
@@ -191,35 +287,21 @@ public final class InstitutionCadreController implements Serializable {
         System.out.println("12");
         setCarderYearLast(temY);
         System.out.println("13");
+        System.out.println("This month is " + getCarderYear() + " " + getCarderMonth());
+        System.out.println("This month is " + getCarderYearLast() + " " + getCarderMonthLast());
         recreateItems();
-    }
-
-    public Long getMaleIn() {
-        return maleIn;
     }
 
     public void setMaleIn(Long maleIn) {
         this.maleIn = maleIn;
     }
 
-    public Long getFemaleIn() {
-        return femaleIn;
-    }
-
     public void setFemaleIn(Long femaleIn) {
         this.femaleIn = femaleIn;
     }
 
-    public Long getTotalIn() {
-        return totalIn;
-    }
-
     public void setTotalIn(Long totalIn) {
         this.totalIn = totalIn;
-    }
-
-    public Long getVacantCount() {
-        return vacantCount;
     }
 
     public void setVacantCount(Long vacantCount) {
@@ -236,7 +318,7 @@ public final class InstitutionCadreController implements Serializable {
             JsfUtil.addErrorMessage("Please select an institution type");
             return;
         }
-        if (caderCount == null || caderCount == 0) {
+        if (caderCount == 0l) {
             JsfUtil.addErrorMessage("Please enter the count");
             return;
         }
@@ -254,10 +336,11 @@ public final class InstitutionCadreController implements Serializable {
         itc.setCreatedAt(Calendar.getInstance().getTime());
         itc.setCreater(sessionController.loggedUser);
         getEjbFacade().create(itc);
-        JsfUtil.addSuccessMessage("Added Successfully");
+//        JsfUtil.addSuccessMessage("Added Successfully");
         setDesignation(null);
-        setCaderCount(null);
-
+        setCaderCount(0);
+        System.out.println("saved for " + itc.getIntYear() + " " + itc.getIntMonth());
+        items = null;
     }
 
     public void removeDesignationFromInstitution() {
@@ -292,11 +375,11 @@ public final class InstitutionCadreController implements Serializable {
         this.designation = designation;
     }
 
-    public Long getCaderCount() {
+    public long getCaderCount() {
         return caderCount;
     }
 
-    public void setCaderCount(Long caderCount) {
+    public void setCaderCount(long caderCount) {
         this.caderCount = caderCount;
     }
 
@@ -333,14 +416,35 @@ public final class InstitutionCadreController implements Serializable {
         return "";
     }
 
+    public void calculateCountr() {
+        long t = 0l;
+        long mi = 0l;
+        long fi = 0l;
+        long a = 0l;
+        long v = 0l;
+        for (InstitutionCadre c : items) {
+            t = t + c.getMaleAndFemaleIn();
+            mi = mi + c.getMaleIn();
+            fi = fi + c.getFemaleIn();
+            a = a + c.getApproved();
+            v = v + c.getVac();
+        }
+        institutionMaleInCount = mi;
+        institutionFemaleInCount = fi;
+        institutionVacantInCount = v;
+        institutionApprovedCount = a;
+        institutionTotalInCount = t;
+    }
+
     public List<InstitutionCadre> getItems() {
         if (items == null) {
             String sql;
-            if (getInstitution() == null || getCarderYear()==null || getCarderMonth()==null) {
+            if (getInstitution() == null) {
                 return new ArrayList<InstitutionCadre>();
             }
             sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.name";
             items = getFacade().findBySQL(sql);
+            calculateCountr();
         }
         return items;
     }

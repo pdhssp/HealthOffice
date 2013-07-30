@@ -1,5 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
+ * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
 package gov.sp.health.entity;
@@ -84,6 +84,24 @@ public class Letter implements Serializable {
     @ManyToOne
     Subject subject;
     Boolean printed;
+    Boolean urgent;
+    Boolean secret;
+
+    public Boolean getUrgent() {
+        return urgent;
+    }
+
+    public void setUrgent(Boolean urgent) {
+        this.urgent = urgent;
+    }
+
+    public Boolean getSecret() {
+        return secret;
+    }
+
+    public void setSecret(Boolean secret) {
+        this.secret = secret;
+    }
 
     public Boolean getPrinted() {
         return printed;
@@ -92,9 +110,7 @@ public class Letter implements Serializable {
     public void setPrinted(Boolean printed) {
         this.printed = printed;
     }
-    
-    
-    
+
     public Boolean getSent() {
         return sent;
     }
@@ -103,8 +119,6 @@ public class Letter implements Serializable {
         this.sent = sent;
     }
 
-    
-    
     public Boolean getRegistered() {
         return registered;
     }
@@ -113,8 +127,6 @@ public class Letter implements Serializable {
         this.registered = registered;
     }
 
-    
-    
     public Category getCategory() {
         return category;
     }
@@ -371,8 +383,6 @@ public class Letter implements Serializable {
         this.toUnit = toUnit;
     }
 
-    
-    
     public Long getId() {
         return id;
     }

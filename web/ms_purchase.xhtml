@@ -19,19 +19,19 @@
             <h:inputHidden value="#{msPurchaseBillController.bill.id}" />
 
 
-            <p:panel id="gpPurchase" header="Purchase">
+            <p:panel id="gpPurchase" header="#{labels.purchase}">
 
                 <p:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
 
                     <p:panel id="gpItemAndList" style="vertical-align: text-top;">
-                        <p:panel id="gpItem" header="Item Details" rendered="#{msPurchaseBillController.newBill}" >
+                        <p:panel id="gpItem" header="#{labels.itemDetails}" rendered="#{msPurchaseBillController.newBill}" >
 
 
                             <p:panelGrid  columnClasses = "pdTopAlign" styleClass="pdTopAlignNoBorder" >
 
                                 <p:row  >
                                     <p:column  colspan="1">
-                                        <h:outputLabel value="Medicine Product" /><br/>
+                                        <h:outputLabel value="#{labels.medicineProduct}" /><br/>
                                         <h:selectOneListbox id="lstVmp" value="#{msPurchaseBillController.selectedVmp}" size="1">
                                             <f:selectItems value="#{vmpController.items}" var="vmp" itemValue="#{vmp}" itemLabel="#{vmp.name}">
                                             </f:selectItems>
@@ -39,40 +39,40 @@
                                             </f:selectItems>
                                             <f:ajax execute="lstVmp" render="lstItem"/>
                                         </h:selectOneListbox>
-                                        <h:outputLabel value="Item" /><br/>
+                                        <h:outputLabel value="#{labels.item}" /><br/>
                                         <h:selectOneListbox id="lstItem" value="#{msPurchaseBillController.billItemEntry.billItem.itemUnit.item}" size="1" style="width: 400px; max-width: 400px;">
                                             <f:selectItems value="#{msPurchaseBillController.selectedAmps}" var="amp" itemValue="#{amp}" itemLabel="#{amp.name}">
                                             </f:selectItems>
-                                            <f:ajax execute="lstItem" render="txtTem"/>
+                                            <f:ajax execute="#{labels.lstItem}" render="txtTem"/>
                                         </h:selectOneListbox>
                                         <br/>
-                                        <h:outputLabel value="Batch" ></h:outputLabel>
+                                        <h:outputLabel value="#{labels.batch}" ></h:outputLabel>
                                         <br/>
                                         <h:inputText value="#{msPurchaseBillController.billItemEntry.billItem.itemUnit.name}" style="width: 400px;  max-width: 400px;" ></h:inputText>
                                         <br/>
-                                        <h:outputLabel value="Expiary" ></h:outputLabel>
+                                        <h:outputLabel value="#{labels.expiry}" ></h:outputLabel>
                                         <br/>
                                         <p:calendar value="#{msPurchaseBillController.billItemEntry.billItem.itemUnit.dateOfExpiary}" styleClass="pdPageText" ></p:calendar>
 
                                     </p:column>
                                     <p:column>
-                                        <h:outputLabel value="Rate"/>
+                                        <h:outputLabel value="#{labels.rate}"/>
                                         <br/>
                                         <h:inputText id="txtRate" value="#{msPurchaseBillController.billItemEntry.billItem.netRate}" >
                                             <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{msPurchaseBillController.calculateItemValue}" />
                                         </h:inputText>
                                         <br/>
-                                        <h:outputLabel value="Quentity"/>
+                                        <h:outputLabel value="#{labels.quentity}"/>
                                         <br/>
                                         <h:inputText id="txtQty" value="#{msPurchaseBillController.billItemEntry.billItem.quentity}" >
                                             <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{msPurchaseBillController.calculateItemValue}" />                                            
                                         </h:inputText>
                                         <br/>
-                                        <h:outputLabel value="Value"/>
+                                        <h:outputLabel value="#{labels.value}"/>
                                         <br/>
                                         <h:inputText disabled="true" id="txtValue" value="#{msPurchaseBillController.billItemEntry.billItem.netValue}">
                                         </h:inputText>
-                                        <h:commandButton id="btnAdd" value="Add" action="#{msPurchaseBillController.addItemToList}">
+                                        <h:commandButton id="btnAdd" value="#{labels.add}" action="#{msPurchaseBillController.addItemToList}">
                                             <f:ajax execute="gpItem btnAdd" render="gpItem gpList gpBillDetails"/>
                                         </h:commandButton>                                        
                                     </p:column>
@@ -91,38 +91,38 @@
 
 
                         </p:panel>
-                        <p:panel id="gpList" header="Item List">
+                        <p:panel id="gpList" header="#{labels.itemList}">
 
                             <p:dataTable value="#{msPurchaseBillController.billItemEntrys}" var="temBillItem" selection="#{msPurchaseBillController.editBillItemEntry}" selectionMode="single" rowKey="#{temBillItem.id}" >
 
-                                <p:column headerText="Item" >
+                                <p:column headerText="#{labels.item}" >
                                     #{temBillItem.billItem.itemUnit.item.name}
                                 </p:column>
 
-                                <p:column headerText="Batch" >
+                                <p:column headerText="#{labels.batch}" >
                                     #{temBillItem.billItem.itemUnit.name}
                                 </p:column>
 
-                                <p:column headerText="Expiry" >
+                                <p:column headerText="#{labels.expiry}" >
                                     <h:outputLabel value="#{temBillItem.billItem.itemUnit.dateOfExpiary}">
                                         <f:convertDateTime pattern="dd MMMM yyyy" />
                                     </h:outputLabel>
 
                                 </p:column>                                
 
-                                <p:column headerText="Rate" >
+                                <p:column headerText="#{labels.rate}" >
                                     <h:outputLabel value="#{temBillItem.billItem.netRate}" >
                                         <f:convertNumber pattern="#,##0.00" />
                                     </h:outputLabel>
                                 </p:column>
 
-                                <p:column headerText="Quentity" >
+                                <p:column headerText="#{labels.quentity}" >
                                     <h:outputLabel value="#{temBillItem.billItem.quentity}">
 <!--                                        <f:convertNumber pattern="#,##0.00" /> -->
                                     </h:outputLabel>
                                 </p:column>
 
-                                <p:column headerText="Value" >
+                                <p:column headerText="#{labels.value}" >
                                     <h:outputLabel value="#{temBillItem.billItem.netValue}">
                                         <f:convertNumber pattern="#,##0.00" /> 
                                     </h:outputLabel>
@@ -134,7 +134,7 @@
 
 
 
-                            <h:commandButton value="Delete" action="#{msPurchaseBillController.removeItemFromList}" >
+                            <h:commandButton value="#{labels.delete}" action="#{msPurchaseBillController.removeItemFromList}" >
                                 <f:ajax render="gpList gpItem" execute="gpList"/>
                             </h:commandButton>
 
@@ -143,53 +143,53 @@
 
                         </p:panel>
                     </p:panel>
-                    <p:panel id="gpBillDetails" header="Bill Details">
+                    <p:panel id="gpBillDetails" header="#{labels.billDetails}">
                         <p:panelGrid columns="2">
-                            Supplied By
+                            #{labels.suppliedBy}
                             <h:selectOneListbox value="#{msPurchaseBillController.bill.fromInstitution}" size="4">
                                 <f:selectItems value="#{msPurchaseBillController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
                             </h:selectOneListbox>
-                            Receiving Institution
+                            #{labels.receivingInstitution}
                             <h:selectOneListbox id="cmbToIns" value="#{msPurchaseBillController.bill.toInstitution}"  size="4">
                                 <f:selectItems value="#{msPurchaseBillController.toInstitutions}" var="toIns" itemValue="#{toIns}" itemLabel="#{toIns.name}"></f:selectItems>
                                 <f:ajax execute="cmbToIns" render="cmbToUnit cmbToPerson" event="change" />
                             </h:selectOneListbox>
-                            Receiving Unit
+                            #{labels.receivingUnit}
                             <h:selectOneListbox id="cmbToUnit" value="#{msPurchaseBillController.bill.toUnit}"  size="4">
                                 <f:selectItems value="#{msPurchaseBillController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
                                 <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
                             </h:selectOneListbox>                      
-                            Receiving Location
+                            #{labels.receivingLocation}
                             <h:selectOneListbox id="cmbToLocation" value="#{msPurchaseBillController.bill.toLocation}"  size="4">
                                 <f:selectItems value="#{msPurchaseBillController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
                                 <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
                             </h:selectOneListbox>                      
-                            Receiving Person
+                            #{labels.receivingPerson}
                             <h:selectOneListbox id="cmbToPerson" value="#{msPurchaseBillController.bill.toPerson}"  size="4">
                                 <f:selectItems value="#{msPurchaseBillController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
                             </h:selectOneListbox>                      
-                            Gross Value
+                            #{labels.grossValue}
                             <h:inputText disabled="true" value="#{msPurchaseBillController.bill.grossValue}" />
-                            Discount
+                            #{labels.discount}
                             <h:inputText value="#{msPurchaseBillController.bill.discountValue}">
 
                             </h:inputText>
-                            Net Value
+                           #{labels.netValue}
                             <h:inputText disabled="true" value="#{msPurchaseBillController.bill.netValue}"/> 
 
 
-                            <h:outputLabel value="Invoice"/>
+                            <h:outputLabel value="#{labels.invoice}"/>
                             <h:inputText  id="txtInvoiceNo" value="#{msPurchaseBillController.bill.name}">
                             </h:inputText>
-                            <h:outputLabel value="Bill Date"/>
+                            <h:outputLabel value="#{labels.billDate}"/>
                             <p:calendar locale="en_UK"  id="txtBillDate" value="#{msPurchaseBillController.bill.billDate}">
                             </p:calendar>
 
 
 
-                            <h:commandButton rendered="#{msPurchaseBillController.newBill}" value="Settle" action="#{msPurchaseBillController.settleBill}"/>
-                            <h:commandButton rendered="#{!msPurchaseBillController.newBill}" value="Cancel" action="#{msPurchaseBillController.settleBill}"/>
-                            <h:commandButton rendered="#{!msPurchaseBillController.newBill}" value="Reprint" action="#{msPurchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{msPurchaseBillController.newBill}" value="#{labels.settle}" action="#{msPurchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!msPurchaseBillController.newBill}" value="#{labels.cancel}" action="#{msPurchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!msPurchaseBillController.newBill}" value="#{labels.reprint}" action="#{msPurchaseBillController.settleBill}"/>
 
 
                         </p:panelGrid>

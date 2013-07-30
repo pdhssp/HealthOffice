@@ -17,7 +17,7 @@
             <p:growl autoUpdate="true" />
             <p:focus id="selectFocus" context="gpSelect" />
             <p:focus id="detailFocus" context="gpDetail" />
-            <p:panel header="#{postLabels.manageModals}" >
+            <p:panel header="#{labels.manageModals}" >
                 <h:panelGrid id ="gpVeda" columns="2" >
 
                     <h:panelGrid id="gpSelect" columns="1"  >
@@ -25,7 +25,7 @@
 
                             <h:panelGrid id="gpSelectText" columns="2" >
 
-                                <h:outputText id="lblSelect" value="#{labels.Modals}" >
+                                <h:outputText id="lblSelect" value="#{labels.modals}" >
                                 </h:outputText>
 
                                 <h:inputText id="txtSelect" value="#{modalController.selectText}"   style="min-width: 200px" >
@@ -52,7 +52,7 @@
                                     </f:ajax>
                                 </h:commandButton>
 
-                                <h:commandButton id="btnDelete" onclick="if (!confirm('Are you sure you want to delete this record?'))
+                                <h:commandButton id="btnDelete" onclick="if (!confirm(#{labels.areYouSureYouWantToDelete}))
                                             return false;"  value="#{labels.delete}"  styleClass="buttons" action="#{modalController.deleteCurrent()}">
                                 </h:commandButton>
                             </h:panelGrid>
@@ -63,7 +63,7 @@
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
-                                <h:outputText id="lblName" value="#{labels.modal}" ></h:outputText>
+                                <h:outputText id="lblName" value="#{labels.model}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{modalController.current.name}"  ></h:inputText>
                                 <h:outputText id="lblMake" value="#{labels.make}" ></h:outputText>
                                 <h:selectOneListbox id="txtMake" value="#{modalController.currentMake}" size="1" >

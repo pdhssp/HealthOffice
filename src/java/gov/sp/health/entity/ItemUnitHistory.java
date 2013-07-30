@@ -1,5 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
+ * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
 package gov.sp.health.entity;
@@ -36,6 +36,7 @@ public class ItemUnitHistory implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date retiredAt;
     String retireComments;
+    boolean emptyUnit;
     
     @ManyToOne
     Item item;
@@ -75,6 +76,16 @@ public class ItemUnitHistory implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date historyTimeStamp;
 
+    public boolean isEmptyUnit() {
+        return emptyUnit;
+    }
+
+    public void setEmptyUnit(boolean emptyUnit) {
+        this.emptyUnit = emptyUnit;
+    }
+
+    
+    
     public Date getHistoryDate() {
         return historyDate;
     }

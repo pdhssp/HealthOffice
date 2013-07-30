@@ -22,17 +22,17 @@
             <pou:growl id="g"></pou:growl>
 
             <h:panelGrid columns="2" >
-                <h:outputLabel value="Institution"/>
+                <h:outputLabel value="#{labels.institution}"/>
                 <h:selectOneListbox id="lstIns" value="#{itemUnitController.institution}" size="5">
                     <f:selectItems value="#{institutionController.items}" var="ins" itemValue="#{ins}" itemLabel="#{ins.name}"/>
                 </h:selectOneListbox>
 
-                <h:outputLabel value="Warehouse No"/>
+                <h:outputLabel value="#{labels.warehouseNo}"/>
                 <h:selectOneListbox id="lstWhs"  size="5">
-                    <f:selectItem itemLabel="Select Warehouse" />
+                    <f:selectItem itemLabel="#{labels.selectWarehouse}" />
                     <f:selectItems value="#{itemUnitController.whNos}" />
                 </h:selectOneListbox>
-                <h:commandButton value="Display All"/>
+                <h:commandButton value="#{labels.displayAll}"/>
                 
                 
             </h:panelGrid>
@@ -42,14 +42,14 @@
 
                 <pou:column>
                     <f:facet name="header">
-                        Item
+                        #{labels.item}
                     </f:facet>
                     <h:outputText value="#{demo.item.name}"/>
                 </pou:column>
 
                 <pou:column>
                     <f:facet name="header">
-                        Stock
+                        #{labels.stores}
                     </f:facet>
                     <h:outputText value="#{demo.sum}"/>
                 </pou:column>                
@@ -60,7 +60,7 @@
 
             
             
-            <pou:panel header="Export All Data">
+            <pou:panel header="#{labels.exportAllData}">
                 <!--                <h:commandLink>
                                     <h:graphicImage  library="image" name="excel.png" />
                                     <pou:dataExporter type="xls" target="tblItems" fileName="cars" />
@@ -73,12 +73,12 @@
 
                 <h:commandLink>
                     <h:graphicImage  library="image" name="csv.png" />
-                    <pou:dataExporter type="csv" target="tblItems" fileName="items" />
+                    <pou:dataExporter type="#{labels.csv}" target="tblItems" fileName="items" />
                 </h:commandLink>
 
                 <h:commandLink>
                     <h:graphicImage  library="image" name="xml.png" />
-                    <pou:dataExporter type="xml" target="tblItems" fileName="items" />
+                    <pou:dataExporter type="#{labels.xml}" target="tblItems" fileName="items" />
                 </h:commandLink>
             </pou:panel>
 

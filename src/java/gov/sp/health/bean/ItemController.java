@@ -251,8 +251,48 @@ public final class ItemController  implements Serializable {
         modifyControlDisable = true;
     }
 
+    
     @FacesConverter(forClass = Item.class)
     public static class ItemControllerConverter implements Converter {
+
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            ItemController controller = (ItemController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "itemController");
+            return controller.ejbFacade.find(getKey(value));
+        }
+
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Long value) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Item) {
+                Item o = (Item) object;
+                return getStringKey(o.getId());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type "
+                        + object.getClass().getName() + "; expected type: " + ItemController.class.getName());
+            }
+        }
+    }
+    
+    
+    @FacesConverter("itemConverter")
+    public static class ItemConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {

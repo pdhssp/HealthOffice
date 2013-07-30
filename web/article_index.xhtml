@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+            <ui:define name="title">
+                #{labels.manageArticles}
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <hr/>
+                    <h:commandButton value="#{labels.newFrontPageMessage}" action="#{articleController.addWelcome()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllFrontPageMessages}" action="#{articleController.listWelcome()}" >
+                    </h:commandButton>
+                    <br/>
+                    <hr/>
+                    <h:commandButton value="#{labels.newNewsItem}" action="#{articleController.addNewsItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllNewsItems}" action="#{articleController.listNewsItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <hr/>
+                    <h:commandButton value="#{labels.newEvent}" action="#{articleController.addEventItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllEvents}" action="#{articleController.listEventItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newAnnouncement}" action="#{articleController.addAnnouncement()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllAnnouncements}" action="#{articleController.listAnnouncement()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newMCHArticle}" action="#{articleController.addMchItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllMCHArticles}" action="#{articleController.listMchItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newNCDArticle}" action="#{articleController.addNcdItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllNCDArticles}" action="#{articleController.listNcdItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newEpidArticle}" action="#{articleController.addEpidItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllEpidArticles}" action="#{articleController.listEpidItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newCurativeArticle}" action="#{articleController.addCurativeItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllCurativeArticles}" action="#{articleController.listCurativeItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newGeneralArticle}" action="#{articleController.addGeneralInfoItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllGeneralArticles}" action="#{articleController.listGeneralInfoItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newRegulation}" action="#{articleController.addRegulation()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllRegulations}" action="#{articleController.listRegulation()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newTrainingArticle}" action="#{articleController.addTraining()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllTrainingArticles}" action="#{articleController.listTraining()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newCircular}" action="#{articleController.addCircular()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllCirculars}" action="#{articleController.listCircular()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newTender}" action="#{articleController.addTender()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listAllTenders}" action="#{articleController.listTender()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newGallary}" action="#{articleController.addGallaryItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listGallaries}" action="#{articleController.listGallaryItem()}" >
+                    </h:commandButton>
+                    <br/>
+<hr/>
+<h:commandButton value="#{labels.newOtherArticle}" action="#{articleController.addOtherItem()}" >
+                    </h:commandButton>
+                    <br/>
+                    <h:commandButton value="#{labels.listOtherArticles}" action="#{articleController.listOtherItem()}" >
+                    </h:commandButton>
+                    <br/>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

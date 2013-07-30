@@ -61,36 +61,36 @@
 
                             <pou:panel id="gpBillDetails" header="#{labels.billDetails}">
                                 <pou:panelGrid columns="2">
-                                    Supplied By
+                                    #{labels.suppliedBy}
                                     <h:selectOneListbox value="#{purchaseBillController.bill.fromInstitution}" size="4">
                                         <f:selectItems value="#{purchaseBillController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
                                     </h:selectOneListbox>
-                                    Receiving Institution
+                                   #{labels.receivingInstitution}
                                     <h:selectOneListbox id="cmbToIns" value="#{purchaseBillController.bill.toInstitution}"  size="4">
                                         <f:selectItems value="#{purchaseBillController.toInstitutions}" var="toIns" itemValue="#{toIns}" itemLabel="#{toIns.name}"></f:selectItems>
                                         <f:ajax execute="cmbToIns" render="cmbToUnit cmbToPerson" event="change" />
                                     </h:selectOneListbox>
-                                    Receiving Unit
+                                    #{labels.receivingUnit}
                                     <h:selectOneListbox id="cmbToUnit" value="#{purchaseBillController.bill.toUnit}"  size="4">
                                         <f:selectItems value="#{purchaseBillController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
                                         <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
                                     </h:selectOneListbox>                      
-                                    Receiving Location
+                                    #{labels.receivingLocation}
                                     <h:selectOneListbox id="cmbToLocation" value="#{purchaseBillController.bill.toLocation}"  size="4">
                                         <f:selectItems value="#{purchaseBillController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
                                         <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
                                     </h:selectOneListbox>                      
-                                    Receiving Person
+                                    #{labels.receivingPerson}
                                     <h:selectOneListbox id="cmbToPerson" value="#{purchaseBillController.bill.toPerson}"  size="4">
                                         <f:selectItems value="#{purchaseBillController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
                                     </h:selectOneListbox>                      
-                                    Gross Value
+                                    #{labels.grossValue}
                                     <h:inputText disabled="true" value="#{purchaseBillController.bill.grossValue}" />
-                                    Discount
+                                    #{labels.discount}
                                     <h:inputText value="#{purchaseBillController.bill.discountValue}">
 
                                     </h:inputText>
-                                    Net Value
+                                    #{labels.netValue}
                                     <h:inputText disabled="true" value="#{purchaseBillController.bill.netValue}"/> 
 
 
@@ -103,9 +103,9 @@
 
 
 
-                                    <h:commandButton rendered="#{purchaseBillController.newBill}" value="Settle" action="#{purchaseBillController.settleBill}"/>
-                                    <h:commandButton rendered="#{!purchaseBillController.newBill}" value="Cancel" action="#{purchaseBillController.settleBill}"/>
-                                    <h:commandButton rendered="#{!purchaseBillController.newBill}" value="Reprint" action="#{purchaseBillController.settleBill}"/>
+                                    <h:commandButton rendered="#{purchaseBillController.newBill}" value="#{labels.settle}" action="#{purchaseBillController.settleBill}"/>
+                                    <h:commandButton rendered="#{!purchaseBillController.newBill}" value="#{labels.cancel}" action="#{purchaseBillController.settleBill}"/>
+                                    <h:commandButton rendered="#{!purchaseBillController.newBill}" value="#{labels.reprint}" action="#{purchaseBillController.settleBill}"/>
 
 
                                 </pou:panelGrid>
