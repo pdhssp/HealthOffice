@@ -17,7 +17,7 @@
             <p:growl autoUpdate="true" />
             <p:focus id="selectFocus" context="gpSelect" />
             <p:focus id="detailFocus" context="gpDetail" />
-            <p:panel header="#{labels.ManageDesignations}" >
+            <p:panel header="#{labels.manageDesignationsCategory}" >
                 <h:panelGrid id ="gpVeda" columns="2" >
 
                     <h:panelGrid id="gpSelect" columns="1"  >
@@ -68,11 +68,11 @@
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
                             <h:panelGrid id="gpDetailText" columns="2">
-                                <h:outputText id="lblName" value="#{labels.designation}" ></h:outputText>
+                                <h:outputText id="lblName" value="#{labels.designationsCategory}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{designationController.current.name}" disabled="#{designationController.modifyControlDisable}" ></h:inputText>
-                                <h:outputText id="lblNameS" value="#{labels.designationS}" ></h:outputText>
+                                <h:outputText id="lblNameS" value="#{labels.sdesignationCategory}" ></h:outputText>
                                 <h:inputText id="txtNameS" value="#{designationController.current.sname}" disabled="#{designationController.modifyControlDisable}" ></h:inputText>
-                                <h:outputText id="lblNameT" value="#{labels.designationT}" ></h:outputText>
+                                <h:outputText id="lblNameT" value="#{labels.tdesignationCategory}" ></h:outputText>
                                 <h:inputText id="txtNameT" value="#{designationController.current.tname}" disabled="#{designationController.modifyControlDisable}" ></h:inputText>
                             
                             </h:panelGrid>
