@@ -184,6 +184,7 @@ public final class ArticleController implements Serializable {
     }
 
     public void saveWithImage() {
+        System.out.println("going to sav");
         saveSelected();
         InputStream in;
         if (file == null) {
@@ -624,6 +625,7 @@ public final class ArticleController implements Serializable {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
         }
+        System.out.println("autherized to save");
         if (getCurrent().getId() == null || getCurrent().getId() == 0) {
             current.setCreatedAt(Calendar.getInstance().getTime());
             current.setCreater(sessionController.loggedUser);
