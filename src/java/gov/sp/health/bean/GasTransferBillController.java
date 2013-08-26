@@ -133,6 +133,24 @@ public class GasTransferBillController implements Serializable {
         return unitsStocks;
     }
 
+    public List<ItemUnit> getEmptyUnitsStocks() {
+        String sql;
+        if (unit != null) {
+            sql = "select i from ItemUnit i where i.emptyUnit=true and i.retired=false and i.unit.id = " + unit.getId();
+            unitsStocks = getItemUnitFacade().findBySQL(sql);
+        }
+        return unitsStocks;
+    }
+    
+    public List<ItemUnit> getFilledUnitsStocks() {
+        String sql;
+        if (unit != null) {
+            sql = "select i from ItemUnit i where i.emptyUnit=false and i.retired=false and i.unit.id = " + unit.getId();
+            unitsStocks = getItemUnitFacade().findBySQL(sql);
+        }
+        return unitsStocks;
+    }
+    
     public void setUnitsStocks(List<ItemUnit> unitsStocks) {
         this.unitsStocks = unitsStocks;
     }
@@ -294,10 +312,10 @@ public class GasTransferBillController implements Serializable {
             JsfUtil.addErrorMessage("Please enter a quantity");
             return;
         }
-        if (getBillItem().getNetRate() == 0) {
-            JsfUtil.addErrorMessage("Please enter a rate");
-            return;
-        }
+//        if (getBillItem().getNetRate() == 0) {
+//            JsfUtil.addErrorMessage("Please enter a rate");
+//            return;
+//        }
         getBillItem().setEmptyUnit(false);
         // TODO: Warning - Need to add logic to search and save model
         System.out.println("going to ad last bill number");
