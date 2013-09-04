@@ -23,21 +23,14 @@
                     <p:panelGrid id="gpSelect" columns="1"  >
                         <p:panel >
 
-                            <p:panelGrid id="gpSelectText" columns="2" >
+                            <p:panelGrid id="gpSelectText" columns="1" >
 
                                 <h:outputText id="lblSelect" value="#{postLabels.inventoryItemCategories}" >
                                 </h:outputText>
-
                                 <p:inputText id="txtSelect" value="#{inventoryItemCategoryController.selectText}"   style="min-width: 200px" >
                                     <p:ajax  event="keyup" update="lstSelect gpDetail" >
                                     </p:ajax>
                                 </p:inputText>
-
-                                <h:outputLabel value="&#160;">
-                                </h:outputLabel>
-
-
-
                                 <p:selectOneListbox id="lstSelect"    value="#{inventoryItemCategoryController.current}" style="min-width: 223px; height: 250px;">
                                     <f:selectItems value="#{inventoryItemCategoryController.lstItems}" var="myItem" itemValue="#{myItem}" itemLabel="#{myItem.name}" ></f:selectItems>
                                     <p:ajax update="gpDetail" process="lstSelect" >
