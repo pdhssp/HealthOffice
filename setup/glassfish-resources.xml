@@ -10,7 +10,6 @@
         <property name="URL" value="jdbc:derby://localhost:1527/ho"/>
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="dsHo" object-type="user" pool-name="derby_net_ho_hoPool"/>
-    <jdbc-resource enabled="true" jndi-name="dsho" object-type="user" pool-name="derby_net_ho_hoPool"/>
+    <jdbc-resource enabled="true" jndi-name="acm" object-type="user" pool-name="derby_net_ho_hoPool"/>
     <jdbc-resource enabled="true" jndi-name="ho" object-type="user" pool-name="derby_net_ho_hoPool"/>
 </resources>
