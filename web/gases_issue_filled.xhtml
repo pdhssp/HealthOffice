@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <body>
+
+        <ui:composition template="./resources/template/pdhs_template_1.xhtml">
+
+
+            <ui:define name="content">
+
+                <h:form>
+
+                    <p:panelGrid columns="2" >
+
+                        <p:panel>
+
+                            <p:panelGrid columns="2" >
+
+                                <h:outputLabel value="Select a Department"/>
+                                <p:selectOneMenu id="mnuUnit" value="#{gasTransferBillController.unit}" >
+                                    <f:selectItem itemLabel="Please select a unit" />
+                                    <f:selectItems value="#{unitController.userUnits}" var="u" itemLabel="#{u.name}" itemValue="#{u}"  />
+                                    <p:ajax event="change" process="mnuUnit" update="cmbIu" />
+                                </p:selectOneMenu>
+
+                            </p:panelGrid>
+                            <p:panelGrid columns="6" >
+                                <h:outputLabel value="Select Cylinder" ></h:outputLabel>
+                                <p:selectOneMenu id="cmbIu" value="#{gasTransferBillController.billItem.item}" style="width: 300px;" >
+                                    <f:selectItem itemLabel="Select one" />
+                                    <f:selectItems value="#{gasTransferBillController.unitsFilledStocks}"  var="ss" itemLabel="#{ss.item.name}" itemValue="#{ss.item}" ></f:selectItems>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="qty" ></h:outputLabel>
+                                <p:inputText  value="#{gasTransferBillController.billItem.quentity}" ></p:inputText>
+                                <h:outputLabel value="Rate" ></h:outputLabel>
+                                <p:inputText  value="#{gasTransferBillController.billItem.netRate}" ></p:inputText>
+
+                                <p:commandButton ajax="false" value="Add" action="#{gasTransferBillController.addItemToFilledList()}" >
+                                </p:commandButton>
+
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="1" >
+
+                                <p:dataTable value="#{gasTransferBillController.billItems}" var="bi" >
+                                    <p:column headerText="Item" >
+                                        <h:outputLabel value="#{bi.item.name}" ></h:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Qty" >
+                                        <h:outputLabel value="#{bi.quentity }" >
+                                            <f:convertNumber  maxFractionDigits="0" />
+                                        </h:outputLabel>
+                                    </p:column>
+                                </p:dataTable>
+
+                            </p:panelGrid>
+
+                        </p:panel>
+                        
+                        <p:panel >
+                            <p:panelGrid columns="2" >
+                                <h:outputLabel value="Issued to" ></h:outputLabel>
+                                <p:selectOneMenu value="#{healthInstitutionController.allItems}" >
+                                    <f:selectItem itemLabel="Select Institution" />
+                                    <f:selectItems value="#{healthInstitutionController.allItems}" var="hi" itemValue="#{hi}" itemLabel="#{hi.name}" />
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                            
+                        </p:panel>
+
+                    </p:panelGrid>
+
+                </h:form>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

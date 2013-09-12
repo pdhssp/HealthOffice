@@ -18,12 +18,12 @@
 
             <ui:define name="content">
 
-                <h:form enctype="multipart/form-data">
+                <h:form >
 
                     <table >
                         <tr>
                             <th>
-                               #{labels.Designations}
+                                #{labels.Designations}
                             </th>
                             <th>
                                 #{labels.sinhala}
@@ -75,8 +75,22 @@
                                 </p:calendar>
                             </td>
                         </tr>
+
+
                         <tr>
                             <td colspan="4" >
+                                <p:commandButton ajax="false" value="#{labels.save}" actionListener="#{articleController.saveSelected}" >
+                                </p:commandButton>
+                            </td>
+                        </tr>
+                    </table>
+                </h:form>
+
+                <h:form enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <td colspan="4" >
+
                                 <p:galleria id="gal" value="#{articleController.current.imgIds}" var="img">
                                     <p:graphicImage value="#{articleController.imageById}" >
                                         <f:param name="id" value="#{img}" />
@@ -85,17 +99,14 @@
                                 <h:panelGrid columns="2" >
                                     <p:fileUpload value="#{articleController.file}" mode="simple"/>
                                 </h:panelGrid>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="4" >
-                                <h:commandButton value="#{labels.save}" action="#{articleController.saveWithImage()}" >
-                                </h:commandButton>
+                                <p:commandButton ajax="false" value="#{labels.save}" actionListener="#{articleController.saveWithImage()}" >
+                                </p:commandButton>
+                                
                             </td>
                         </tr>
                     </table>
                 </h:form>
+
             </ui:define>
 
 

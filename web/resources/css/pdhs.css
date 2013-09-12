@@ -139,7 +139,7 @@ table tbody{
     color: rgb(5,5,150);
     font-family: tahoma , sans-serif ;
 }
-#cssmenu{ height:37px; display:block; padding:0; margin:20px auto;  border:1px solid; border-radius:5px; }
+#cssmenu{ height:37px; display:block; padding:0; margin:0px auto;  border:1px solid; border-radius:5px; }
 #cssmenu > ul {list-style:inside none; padding:0; margin:0;}
 #cssmenu > ul > li {list-style:inside none; padding:0; margin:0; float:left; display:block; position:relative;}
 #cssmenu > ul > li > a{ outline:none; display:block; position:relative; padding:12px 20px; font:bold 13px/100% Arial, Helvetica, sans-serif; text-align:center; text-decoration:none; text-shadow:1px 1px 0 rgba(0,0,0, 0.4); }
@@ -410,4 +410,10 @@ table tbody{
 
 .leadingArticleText{
 
+}
+
+@media {
+    .printText{
+        font-size: 11px!important;
+    }
 }
