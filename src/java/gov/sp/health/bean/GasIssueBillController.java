@@ -37,7 +37,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class GasTransferBillController implements Serializable {
+public class GasIssueBillController implements Serializable {
 
     /**
      *
@@ -103,6 +103,36 @@ public class GasTransferBillController implements Serializable {
     private BillItem editBillItem;
     private String itemSerial;
     private Institution toInstitution;
+    Institution fromInstitution;
+    Unit fromUnit;
+    Person fromPerson;
+
+    public Institution getFromInstitution() {
+        fromInstitution = getSessionController().getPrivilege().getRestrictedInstitution();
+        return fromInstitution;
+    }
+
+    public void setFromInstitution(Institution fromInstitution) {
+        this.fromInstitution = fromInstitution;
+    }
+
+    public Unit getFromUnit() {
+        fromUnit = getSessionController().getPrivilege().getRestrictedUnit();
+        return fromUnit;
+    }
+
+    public void setFromUnit(Unit fromUnit) {
+        this.fromUnit = fromUnit;
+    }
+
+    public Person getFromPerson() {
+        fromPerson = getSessionController().getLoggedUser().getWebUserPerson();
+        return fromPerson;
+    }
+
+    public void setFromPerson(Person fromPerson) {
+        this.fromPerson = fromPerson;
+    }
     //Controllers
     //
 //    Institution fromInstitution;
@@ -119,132 +149,25 @@ public class GasTransferBillController implements Serializable {
      */
     private String modalName;
     private Boolean newBill;
-    ItemUnit unitStock;
-    List<ItemUnit> unitsStocks;
-    Unit unit;
-    List<ItemUnit> selecteStocks;
+    ItemUnit billingItemUnit;
+    List<ItemUnit> availableItemUnits;
 
-    public List<ItemUnit> getUnitsStocks() {
-        String sql;
-        if (unit != null) {
-            sql = "select i from ItemUnit i where i.retired=false and i.unit.id = " + unit.getId();
-            unitsStocks = getItemUnitFacade().findBySQL(sql);
-        }
-        return unitsStocks;
+    public List<ItemUnit> getAvailableItemUnits() {
+        String sql = "SELECT i From ItemUnit i WHERE i.retired=false AND type(i.item)=Cylinder AND i.unit.id = " + getSessionController().getPrivilege().getRestrictedUnit().getId() + " order by i.item.name";
+        availableItemUnits = getItemUnitFacade().findBySQL(sql);
+        return availableItemUnits;
     }
 
-    public List<ItemUnit> getEmptyUnitsStocks() {
-        String sql;
-        if (unit != null) {
-            sql = "select i from ItemUnit i where i.emptyUnit=true and i.retired=false and i.unit.id = " + unit.getId();
-            unitsStocks = getItemUnitFacade().findBySQL(sql);
-        }
-        return unitsStocks;
-    }
-    
-    public List<ItemUnit> getFilledUnitsStocks() {
-        String sql;
-        if (unit != null) {
-            sql = "select i from ItemUnit i where i.emptyUnit=false and i.retired=false and i.unit.id = " + unit.getId();
-            unitsStocks = getItemUnitFacade().findBySQL(sql);
-        }
-        return unitsStocks;
-    }
-    
-    public void setUnitsStocks(List<ItemUnit> unitsStocks) {
-        this.unitsStocks = unitsStocks;
+    public void setAvailableItemUnits(List<ItemUnit> availableItemUnits) {
+        this.availableItemUnits = availableItemUnits;
     }
 
-    public Unit getUnit() {
-        return unit;
+    public ItemUnit getBillingItemUnit() {
+        return billingItemUnit;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    public List<ItemUnit> completeItemUnit(String qry) {
-        String sql;
-        sql = "select i from ItemUnit i where i.retired=false and upper(i.item.name) like '%" + qry.toUpperCase() + "%'  and i.unit.id = " + getSessionController().getLoggedUser().getWebUserPerson().getUnit().getId();
-        return getItemUnitFacade().findBySQL(sql);
-    }
-
-    public ItemUnit getUnitStock() {
-        String sql;
-        if (unit != null) {
-            sql = "Select i from ItemUnit i where i.retired=false and i.unit.id = " + unit.getId();
-            unitStock = getItemUnitFacade().findFirstBySQL(sql);
-        }
-        return unitStock;
-    }
-    List<ItemUnit> transferringStock;
-
-    public List<ItemUnit> getTransferringStock() {
-        return transferringStock;
-    }
-
-    public void setTransferringStock(List<ItemUnit> transferringStock) {
-        this.transferringStock = transferringStock;
-    }
-
-    public void transfer() {
-    }
-
-    public void setUnitStock(ItemUnit unitStock) {
-        this.unitStock = unitStock;
-    }
-
-    public List<ItemUnit> getSelecteStocks() {
-        return selecteStocks;
-    }
-
-    public void setSelecteStocks(List<ItemUnit> selecteStocks) {
-        this.selecteStocks = selecteStocks;
-        setStartStock(selecteStocks);
-    }
-
-    public double getTotalCylinders() {
-        return totalCylinders;
-    }
-
-    public void setTotalCylinders(double totalCylinders) {
-        this.totalCylinders = totalCylinders;
-    }
-
-    public double getIssuingCylinders() {
-        return issuingCylinders;
-    }
-
-    public void setIssuingCylinders(double issuingCylinders) {
-        this.issuingCylinders = issuingCylinders;
-    }
-
-    public double getBalanceCylinders() {
-        return balanceCylinders;
-    }
-
-    public void setBalanceCylinders(double balanceCylinders) {
-        this.balanceCylinders = balanceCylinders;
-    }
-    double totalCylinders;
-    double issuingCylinders;
-    double balanceCylinders;
-
-    public void calTotals() {
-        totalCylinders = 0;
-        issuingCylinders = 0;
-        balanceCylinders = 0;
-        for (ItemUnit i : selecteStocks) {
-            totalCylinders=i.getStartStock()+totalCylinders;
-            issuingCylinders=i.getQuentity()+issuingCylinders;
-            balanceCylinders=i.getBalanceStock();
-        }
-    }
-
-    public void setStartStock(List<ItemUnit> iu) {
-        for (ItemUnit i : iu) {
-            i.setStartStock(i.getQuentity());
-        }
+    public void setBillingItemUnit(ItemUnit billingItemUnit) {
+        this.billingItemUnit = billingItemUnit;
     }
 
     /**
@@ -260,6 +183,40 @@ public class GasTransferBillController implements Serializable {
 
     public void setCylinderFacade(CylinderFacade cylinderFacade) {
         this.cylinderFacade = cylinderFacade;
+    }
+
+    public void addItemUnitToEmptyList() {
+        orderBillItemEntries();
+        if (getBillItem() == null) {
+            JsfUtil.addErrorMessage("Hothing to add");
+            return;
+        }
+        if (getBillItem().getItemUnit() == null) {
+            JsfUtil.addErrorMessage("Please select an item");
+            return;
+        }
+        if (getBillItem().getQuentity() == 0) {
+            JsfUtil.addErrorMessage("Please enter a quantity");
+            return;
+        }
+        if (getBillItem().getQuentity() > getBillItem().getItemUnit().getQuentity()) {
+            JsfUtil.addErrorMessage("Quantity more thatn the stocks");
+            return;
+        }
+        getBillItem().setItem(getBillItem().getItemUnit().getItem());
+        getBillItem().setEmptyUnit(getBillItem().getItemUnit().isEmptyUnit());
+        // TODO: Warning - Need to add logic to search and save model
+        System.out.println("going to ad last bill number");
+        addLastBillEntryNumber(getBillItem());
+        System.out.println("before adding bill items. Size is " + getBillItems().size());
+
+        getBillItems().add(getBillItem());
+
+        System.out.println("before adding bill items. Size is " + getBillItems().size());
+        calculateBillValue();
+
+        clearEntry();
+
     }
 
     /**
@@ -312,10 +269,10 @@ public class GasTransferBillController implements Serializable {
             JsfUtil.addErrorMessage("Please enter a quantity");
             return;
         }
-//        if (getBillItem().getNetRate() == 0) {
-//            JsfUtil.addErrorMessage("Please enter a rate");
-//            return;
-//        }
+        if (getBillItem().getNetRate() == 0) {
+            JsfUtil.addErrorMessage("Please enter a rate");
+            return;
+        }
         getBillItem().setEmptyUnit(false);
         // TODO: Warning - Need to add logic to search and save model
         System.out.println("going to ad last bill number");
@@ -373,18 +330,15 @@ public class GasTransferBillController implements Serializable {
         clearEntry();
         clearBill();
         billView = false;
-        return "gases_purchase";
+        return "gases_empty_issue";
     }
 
     /**
      *
      */
     public void settleBill() {
-
         saveBill();
         saveNewBillItems();
-//        clearEntry();
-//        clearBill();
         billView = true;
         JsfUtil.addSuccessMessage("Bill Settled successfully");
     }
@@ -492,11 +446,14 @@ public class GasTransferBillController implements Serializable {
 
     private void saveBill() {
         Bill temBill = getBill();
-        temBill.setDiscountCost(temBill.getDiscountValue());
-        temBill.setDiscountValuePercent(temBill.getDiscountValue() * 100 / temBill.getNetValue());
-        temBill.setDiscountCostPercent(temBill.getDiscountValuePercent());
-        temBill.setGrossCost(temBill.getGrossValue());
-        temBill.setNetCost(temBill.getNetValue());
+        temBill.setDiscountCost(0);
+        temBill.setDiscountValuePercent(0);
+        temBill.setDiscountCostPercent(0);
+        temBill.setGrossCost(0);
+        temBill.setNetCost(0);
+        temBill.setFromInstitution(getFromInstitution());
+        temBill.setFromUnit(getFromUnit());
+        temBill.setFromPerson(getFromPerson());
         if (getBill().getId() != null && getBill().getId() > 0) {
             getBillFacade().edit(temBill);
         } else {
@@ -594,14 +551,10 @@ public class GasTransferBillController implements Serializable {
     private void settleBillItem(BillItem temEntry) {
 
         BillItem temBillItem = temEntry;
-        ItemUnit newItemUnit = getExistingItemUnit(toInstitution, getBill().getToUnit(), (Cylinder) temBillItem.getItem(), temBillItem.isEmptyUnit());
+        ItemUnit newItemUnit = temEntry.getItemUnit(); // getExistingItemUnit(getFromInstitution(), getBill().getToUnit(), (Cylinder) temBillItem.getItem(), temBillItem.isEmptyUnit());
 
-        newItemUnit.setOwner(getBill().getToPerson());
-        newItemUnit.setWarrantyExpiary(newItemUnit.getDateOfExpiary());
-        newItemUnit.setSupplier(null);
-        newItemUnit.setUnit(getBill().getToUnit());
-        newItemUnit.setEmptyUnit(temBillItem.isEmptyUnit());
-        newItemUnit.setQuentity(newItemUnit.getQuentity() + temBillItem.getQuentity());
+        
+        newItemUnit.setQuentity(newItemUnit.getQuentity() - temBillItem.getQuentity());
 
 
 
@@ -840,7 +793,7 @@ public class GasTransferBillController implements Serializable {
     /**
      * Creates a new instance of PurchaseBillController
      */
-    public GasTransferBillController() {
+    public GasIssueBillController() {
     }
 
     /**

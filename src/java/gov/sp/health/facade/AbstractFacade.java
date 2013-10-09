@@ -62,6 +62,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findBySQL(String temSQL) {
+        System.out.println("sql is " + temSQL);
         TypedQuery<T> qry = getEntityManager().createQuery(temSQL, entityClass);
         return qry.getResultList();
     }

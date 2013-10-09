@@ -11,6 +11,7 @@ package gov.sp.health.bean;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.InstitutionFacade;
 import gov.sp.health.facade.LetterFacade;
+import gov.sp.health.facade.LocationFacade;
 import gov.sp.health.facade.PersonFacade;
 import gov.sp.health.facade.SubjectFacade;
 import gov.sp.health.facade.UnitFacade;
@@ -28,8 +29,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -50,6 +49,8 @@ public final class LetterController implements Serializable {
     PersonFacade personFacade;
     @EJB
     SubjectFacade subjectFacade;
+    @EJB
+    LocationFacade locationFacade;
     @ManagedProperty(value = "#{sessionController}")
     SessionController sessionController;
     @ManagedProperty(value = "#{imageController}")
@@ -60,22 +61,22 @@ public final class LetterController implements Serializable {
     Letter[] lettersToMark;
     List<Letter> lstItems;
     private Letter current;
-    private DataModel<Letter> items = null;
-    private DataModel<Letter> itemsIns = null;
-    private DataModel<Letter> itemsUni = null;
-    private DataModel<Letter> itemsLoc = null;
-    private DataModel<Letter> itemsPer = null;
-    private DataModel temItems = null;
+    private List<Letter> items = null;
+    private List<Letter> itemsIns = null;
+    private List<Letter> itemsUni = null;
+    private List<Letter> itemsLoc = null;
+    private List<Letter> itemsPer = null;
+    private List temItems = null;
     //
     //
-    DataModel<Institution> institutions;
-    DataModel<Unit> toUnits;
-    DataModel<Unit> fromUnits;
-    DataModel<Location> toLocations;
-    DataModel<Location> fromLocations;
-    DataModel<Person> fromPersons;
-    DataModel<Person> toPersons;
-    DataModel<Subject> subjects;
+    List<Institution> institutions;
+    List<Unit> toUnits;
+    List<Unit> fromUnits;
+    List<Location> toLocations;
+    List<Location> fromLocations;
+    List<Person> fromPersons;
+    List<Person> toPersons;
+    List<Subject> subjects;
     //
     //
     //
@@ -102,6 +103,17 @@ public final class LetterController implements Serializable {
     Date fromDate;
     Date toDate;
 
+    public LocationFacade getLocationFacade() {
+        return locationFacade;
+    }
+
+    public void setLocationFacade(LocationFacade locationFacade) {
+        this.locationFacade = locationFacade;
+    }
+
+    
+    
+    
     public Letter[] getLettersToMark() {
         return lettersToMark;
     }
@@ -123,8 +135,8 @@ public final class LetterController implements Serializable {
         JsfUtil.addSuccessMessage("Letters marked as Collected");
     }
 
-    public DataModel getTemItems() {
-        return new ListDataModel(getFacade().findAll());
+    public List getTemItems() {
+        return getFacade().findAll();
     }
 
     public Subject getSubject() {
@@ -135,7 +147,7 @@ public final class LetterController implements Serializable {
         this.subject = subject;
     }
 
-    public void setTemItems(DataModel temItems) {
+    public void setTemItems(List temItems) {
         this.temItems = temItems;
     }
 
@@ -176,11 +188,11 @@ public final class LetterController implements Serializable {
         this.subjectFacade = subjectFacade;
     }
 
-    public DataModel<Subject> getSubjects() {
-        return new ListDataModel<Subject>(getSubjectFacade().findBySQL("Select s from Subject s where s.retired=false order by s.name"));
+    public List<Subject> getSubjects() {
+        return getSubjectFacade().findBySQL("Select s from Subject s where s.retired=false order by s.name");
     }
 
-    public void setSubjects(DataModel<Subject> subjects) {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
     }
 
@@ -196,16 +208,16 @@ public final class LetterController implements Serializable {
         this.unitFacade = unitFacade;
     }
 
-    public DataModel<Location> getFromLocations() {
+    public List<Location> getFromLocations() {
         if (getFromUnit() != null) {
-            return new ListDataModel(getFacade().findBySQL("select l from Location l where l.retired=false and l.unit.id = " + getFromUnit().getId() + " order by l.name"));
+            return getLocationFacade().findBySQL("select l from Location l where l.retired=false and l.unit.id = " + getFromUnit().getId() + " order by l.name");
         } else {
             return null;
         }
 
     }
 
-    public void setFromLocations(DataModel<Location> fromLocations) {
+    public void setFromLocations(List<Location> fromLocations) {
         this.fromLocations = fromLocations;
     }
 
@@ -217,27 +229,27 @@ public final class LetterController implements Serializable {
         this.fromPerson = fromPerson;
     }
 
-    public DataModel<Person> getFromPersons() {
+    public List<Person> getFromPersons() {
         if (getFromInstitution() != null) {
-            return new ListDataModel(getPersonFacade().findBySQL("select l from Person l where l.retired=false and l.institution.id = " + getFromInstitution().getId() + " order by l.name"));
+            return getPersonFacade().findBySQL("select l from Person l where l.retired=false and l.institution.id = " + getFromInstitution().getId() + " order by l.name");
         } else {
             return null;
         }
     }
 
-    public void setFromPersons(DataModel<Person> fromPersons) {
+    public void setFromPersons(List<Person> fromPersons) {
         this.fromPersons = fromPersons;
     }
 
-    public DataModel<Unit> getFromUnits() {
+    public List<Unit> getFromUnits() {
         if (getFromInstitution() != null) {
-            return new ListDataModel(getUnitFacade().findBySQL("select l from Unit l where l.retired=false and l.institution.id = " + getFromInstitution().getId() + " order by l.name"));
+            return getUnitFacade().findBySQL("select l from Unit l where l.retired=false and l.institution.id = " + getFromInstitution().getId() + " order by l.name");
         } else {
             return null;
         }
     }
 
-    public void setFromUnits(DataModel<Unit> fromUnits) {
+    public void setFromUnits(List<Unit> fromUnits) {
         this.fromUnits = fromUnits;
     }
 
@@ -250,11 +262,17 @@ public final class LetterController implements Serializable {
     }
 
     public Institution getToInstitution() {
+        if(sessionController.getPrivilege().getRestrictedInstitution()!=null){
+            toInstitution = sessionController.getPrivilege().getRestrictedInstitution();
+        }
         return toInstitution;
     }
 
     public void setToInstitution(Institution toInstitution) {
         this.toInstitution = toInstitution;
+        if(sessionController.getPrivilege().getRestrictedInstitution()!=null){
+            toInstitution = sessionController.getPrivilege().getRestrictedInstitution();
+        }
     }
 
     public Location getToLocation() {
@@ -265,27 +283,27 @@ public final class LetterController implements Serializable {
         this.toLocation = toLocation;
     }
 
-    public DataModel<Location> getToLocations() {
+    public List<Location> getToLocations() {
         if (getToUnit() != null) {
-            return new ListDataModel(getFacade().findBySQL("select l from Location l where l.retired=false and l.unit.id = " + getToUnit().getId() + " order by l.name"));
+            return getLocationFacade().findBySQL("select l from Location l where l.retired=false and l.unit.id = " + getToUnit().getId() + " order by l.name");
         } else {
             return null;
         }
     }
 
-    public void setToLocations(DataModel<Location> toLocations) {
+    public void setToLocations(List<Location> toLocations) {
         this.toLocations = toLocations;
     }
 
-    public DataModel<Person> getToPersons() {
+    public List<Person> getToPersons() {
         if (getToInstitution() != null) {
-            return new ListDataModel(getPersonFacade().findBySQL("select l from Person l where l.retired=false and l.institution.id = " + getToInstitution().getId() + " order by l.givenName"));
+            return getPersonFacade().findBySQL("select l from Person l where l.retired=false and l.institution.id = " + getToInstitution().getId() + " order by l.givenName");
         } else {
             return null;
         }
     }
 
-    public void setToPersons(DataModel<Person> toPersons) {
+    public void setToPersons(List<Person> toPersons) {
         this.toPersons = toPersons;
     }
 
@@ -297,19 +315,19 @@ public final class LetterController implements Serializable {
         this.toUnit = toUnit;
     }
 
-    public DataModel<Unit> getToUnits() {
+    public List<Unit> getToUnits() {
         if (getToInstitution() != null) {
-            return new ListDataModel(getUnitFacade().findBySQL("select l from Unit l where l.retired=false and l.institution.id = " + getToInstitution().getId() + " order by l.name"));
+            return getUnitFacade().findBySQL("select l from Unit l where l.retired=false and l.institution.id = " + getToInstitution().getId() + " order by l.name");
         } else {
             return null;
         }
     }
 
-    public void setToUnits(DataModel<Unit> toUnits) {
+    public void setToUnits(List<Unit> toUnits) {
         this.toUnits = toUnits;
     }
 
-    public DataModel<Institution> getInstitutions() {
+    public List<Institution> getInstitutions() {
         String temSQL;
 //        if (sessionController.getPrivilege().getRestrictedInstitution() != null) {
 //            temSQL = "SELECT i FROM Institution i WHERE i.retired=false AND i.id = " + sessionController.getPrivilege().getRestrictedInstitution().getId();
@@ -317,14 +335,16 @@ public final class LetterController implements Serializable {
 //            temSQL = "SELECT i FROM Institution i WHERE i.retired=false ORDER BY i.name";
 //        }
         temSQL = "SELECT i FROM Institution i WHERE i.retired=false ORDER BY i.name";
-        return new ListDataModel<Institution>(getInstitutionFacade().findBySQL(temSQL));
+        return getInstitutionFacade().findBySQL(temSQL);
     }
 
-    public void setInstitutions(DataModel<Institution> institutions) {
+    
+    
+    public void setInstitutions(List<Institution> institutions) {
         this.institutions = institutions;
     }
 
-//    public DataModel<Unit> getUnits() {
+//    public List<Unit> getUnits() {
 //        String temSql;
 //        if (sessionController.getPrivilege().getRestrictedUnit() != null) {
 //            temSql = "SELECT u from Unit u where u.id = " + sessionController.getPrivilege().getRestrictedUnit().getId();
@@ -333,7 +353,7 @@ public final class LetterController implements Serializable {
 //        } else {
 //            return null;
 //        }
-//        return new ListDataModel<Unit>(getUnitFacade().findBySQL(temSql));
+//        return new ListList<Unit>(getUnitFacade().findBySQL(temSql));
 //    }
     public Institution getFromInstitution() {
         return fromInstitution;
@@ -417,7 +437,7 @@ public final class LetterController implements Serializable {
         return ejbFacade;
     }
 
-    public DataModel<Letter> getItems() {
+    public List<Letter> getItems() {
         String temSql;
         if (fromUnit == null) {
             return null;
@@ -429,7 +449,7 @@ public final class LetterController implements Serializable {
         } else {
             temSql = "select f from Letter f where f.retired=false and f.unit.id = " + fromUnit.getId() + " order by f.name";
         }
-        items = new ListDataModel(getFacade().findBySQL(temSql));
+        items = getFacade().findBySQL(temSql);
         return items;
     }
 
@@ -449,7 +469,7 @@ public final class LetterController implements Serializable {
         return getFacade().findBySQL(temSQL);
     }
 
-    public DataModel<Letter> getItemsIns() {
+    public List<Letter> getItemsIns() {
         if (getToInstitution() == null) {
             return null;
         }
@@ -460,10 +480,10 @@ public final class LetterController implements Serializable {
         System.out.println("From Date" + fromDate);
         System.out.println("To Date" + toDate);
         System.out.println("SQL" + temSQL);
-        return new ListDataModel<Letter>(getFacade().findBySQL(temSQL, temMap));
+        return getFacade().findBySQL(temSQL, temMap);
     }
 
-    public DataModel<Letter> getItemsInsSub() {
+    public List<Letter> getItemsInsSub() {
         setToInstitution(getSessionController().getPrivilege().getRestrictedInstitution());
         if (getToInstitution() == null) {
             return null;
@@ -478,10 +498,10 @@ public final class LetterController implements Serializable {
         temMap.put("fromDate", fromDate);
         temMap.put("toDate", fromDate);
         System.out.println(temSQL);
-        return new ListDataModel<Letter>(getFacade().findBySQL(temSQL, temMap));
+        return getFacade().findBySQL(temSQL, temMap);
     }
 
-    public DataModel<Letter> getItemsInsSubToPrint() {
+    public List<Letter> getItemsInsSubToPrint() {
         setToInstitution(getSessionController().getPrivilege().getRestrictedInstitution());
         if (getToInstitution() == null) {
             return null;
@@ -503,7 +523,7 @@ public final class LetterController implements Serializable {
         temMap.put("fromDate", fromDate);
         temMap.put("toDate", c.getTime());
         System.out.println(temSQL);
-        return new ListDataModel<Letter>(getFacade().findBySQL(temSQL, temMap));
+        return getFacade().findBySQL(temSQL, temMap);
     }
 
     public void markPrintInsSub() {
@@ -532,35 +552,35 @@ public final class LetterController implements Serializable {
         }
     }
 
-    public void setItemsIns(DataModel<Letter> itemsIns) {
+    public void setItemsIns(List<Letter> itemsIns) {
         this.itemsIns = itemsIns;
     }
 
-    public DataModel<Letter> getItemsLoc() {
+    public List<Letter> getItemsLoc() {
         if (fromLocation != null) {
-            return new ListDataModel<Letter>(getFacade().findBySQL("SELECT i From Letter i WHERE i.retired=false AND i.location.id = " + fromLocation.getId()));
+            return getFacade().findBySQL("SELECT i From Letter i WHERE i.retired=false AND i.location.id = " + fromLocation.getId());
         } else {
             return null;
         }
     }
 
-    public void setItemsLoc(DataModel<Letter> itemsLoc) {
+    public void setItemsLoc(List<Letter> itemsLoc) {
         this.itemsLoc = itemsLoc;
     }
 
-    public void setItemsPer(DataModel<Letter> itemsPer) {
+    public void setItemsPer(List<Letter> itemsPer) {
         this.itemsPer = itemsPer;
     }
 
-    public DataModel<Letter> getItemsUni() {
+    public List<Letter> getItemsUni() {
         if (fromUnit != null) {
-            return new ListDataModel<Letter>(getFacade().findBySQL("SELECT i From Letter i WHERE i.retired=false AND i.unit.id = " + fromUnit.getId()));
+            return getFacade().findBySQL("SELECT i From Letter i WHERE i.retired=false AND i.unit.id = " + fromUnit.getId());
         } else {
             return null;
         }
     }
 
-    public void setItemsUni(DataModel<Letter> itemsUni) {
+    public void setItemsUni(List<Letter> itemsUni) {
         this.itemsUni = itemsUni;
     }
 
@@ -573,17 +593,16 @@ public final class LetterController implements Serializable {
         return valueInt;
     }
 
-    public DataModel searchItems() {
+    public List searchItems() {
         recreateModel();
         if (items == null) {
             if (selectText.equals("")) {
-                items = new ListDataModel(getFacade().findAll("name", true));
+                items = getFacade().findAll("name", true);
             } else {
-                items = new ListDataModel(getFacade().findAll("name", "%" + selectText + "%",
-                        true));
-                if (items.getRowCount() > 0) {
-                    items.setRowIndex(0);
-                    current = (Letter) items.getRowData();
+                items = getFacade().findAll("name", "%" + selectText + "%",
+                        true);
+                if (items.size() > 0) {
+                    current = (Letter) items.get(0);
                     Long temLong = current.getId();
                     selectedItemIndex = intValue(temLong);
                 } else {
@@ -598,10 +617,9 @@ public final class LetterController implements Serializable {
 
     public Letter searchItem(String itemName, boolean createNewIfNotPresent) {
         Letter searchedItem = null;
-        items = new ListDataModel(getFacade().findAll("name", itemName, true));
-        if (items.getRowCount() > 0) {
-            items.setRowIndex(0);
-            searchedItem = (Letter) items.getRowData();
+        items = getFacade().findAll("name", itemName, true);
+        if (items.size() > 0) {
+            searchedItem = (Letter) items.get(0);
         } else if (createNewIfNotPresent) {
             searchedItem = new Letter();
             searchedItem.setName(itemName);
@@ -621,7 +639,7 @@ public final class LetterController implements Serializable {
     }
 
     public String toEdit() {
-        current = getItemsIns().getRowData();
+        current = getItemsIns().get(0);
         return "post_new_letter";
     }
 

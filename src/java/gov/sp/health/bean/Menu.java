@@ -158,19 +158,15 @@ public class Menu implements Serializable {
         MenuItem mi;
         
         mi=new MenuItem();
-        mi.setValue(getLabel("emptyIssue"));
-        mi.setUrl("gases_empty_issue.xhtml");
+        mi.setValue(("Issue"));
+        mi.setUrl("gases_issue.xhtml");
         sm.getChildren().add(mi);
         
         mi=new MenuItem();
-        mi.setValue(getLabel("emptyReceive"));
-        mi.setUrl("gases_empty_receive.xhtml");
+        mi.setValue(("Receive"));
+        mi.setUrl("gases_receive_list.xhtml");
         sm.getChildren().add(mi);
         
-        mi=new MenuItem();
-        mi.setValue(getLabel("invoice"));
-        mi.setUrl("gases_invoice.xhtml");
-        sm.getChildren().add(mi);
         
         mi=new MenuItem();
         mi.setValue("Purchase - Empty");
@@ -184,19 +180,13 @@ public class Menu implements Serializable {
                
         
         mi=new MenuItem();
-        mi.setValue("Good Receive");
-        mi.setUrl("gases_filled_purchase.xhtml");
-        sm.getChildren().add(mi);
-               
-        
-        mi=new MenuItem();
         mi.setValue("Reports");
         mi.setUrl("gases_reports.xhtml");
         sm.getChildren().add(mi);
         
         
         mi=new MenuItem();
-        mi.setValue(getLabel("edit"));
+        mi.setValue(("Administration"));
         mi.setUrl("gases_edit.xhtml");
         sm.getChildren().add(mi);
         
