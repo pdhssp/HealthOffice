@@ -15,15 +15,15 @@
                 <p:panelGrid columns="2">
                     <h:outputLabel value="#{postLabels.from}" >
                     </h:outputLabel>
-                    <h:selectOneListbox size="1"  id="cmbFromIns" value="#{letterController.fromInstitution}" >
+                    <p:selectOneMenu  id="cmbFromIns" value="#{letterController.fromInstitution}" >
                         <f:selectItems value="#{letterController.institutions}" var="fins" itemValue="#{fins}" itemLabel="#{fins.name}"  />
                         <f:ajax execute="cmbFromIns" render="cmbFromPer" event="change"/>
-                    </h:selectOneListbox>
+                    </p:selectOneMenu>
                     <h:outputLabel value="" >
                     </h:outputLabel>
-                    <h:selectOneListbox id="cmbFromPer" size="1"  value="#{letterController.current.fromPerson}" >
+                    <p:selectOneMenu id="cmbFromPer"  value="#{letterController.current.fromPerson}" >
                         <f:selectItems value="#{letterController.fromPersons}" var="fper" itemValue="#{fper}" itemLabel="#{fper.name}"/>
-                    </h:selectOneListbox>                    
+                    </p:selectOneMenu>                    
                     <h:outputLabel value="#{postLabels.receivedDate}" >
                     </h:outputLabel>
                     <p:calendar value="#{letterController.current.receivedDate}" pattern="dd/MM/yyyy" />
@@ -33,36 +33,36 @@
                     <p:calendar value="#{letterController.current.lettterDate}" pattern="dd/MM/yyyy" />
                     <h:outputLabel value="#{postLabels.registered }" >
                     </h:outputLabel>
-                    <h:selectBooleanCheckbox value="#{letterController.current.registered}"/>
+                    <p:selectBooleanCheckbox value="#{letterController.current.registered}"/>
                     <h:outputLabel value="#{postLabels.registereNo}" >
                     </h:outputLabel>
-                    <h:inputText value="#{letterController.current.code}"/>
+                    <p:inputText value="#{letterController.current.code}"/>
                     <h:outputLabel value="#{postLabels.number}" >
                     </h:outputLabel>  
-                    <h:inputText value="#{letterController.current.name}"  style="width: 400px"/>
+                    <p:inputText value="#{letterController.current.name}"  style="width: 400px"/>
                     <h:outputLabel value="#{postLabels.topic}" >
                     </h:outputLabel>
-                    <h:inputText value="#{letterController.current.description}" style="width: 400px"/>
+                    <p:inputText value="#{letterController.current.description}" style="width: 400px"/>
                     <h:outputLabel value="#{postLabels.content}" >
                     </h:outputLabel>
-                    <h:inputTextarea value="#{letterController.current.letterContent}" style="width: 400px; height: 100px;"/>
+                    <p:inputTextarea value="#{letterController.current.letterContent}" style="width: 400px; height: 100px;"/>
                     <h:outputLabel value="#{postLabels.subject}" >
                     </h:outputLabel>
-                    <h:selectOneListbox id="cmbSub" value="#{letterController.current.subject}" >
+                    <p:selectOneMenu id="cmbSub" value="#{letterController.current.subject}" >
                         <f:selectItems value="#{letterController.subjects}" var="sub" itemValue="#{sub}" itemLabel="#{sub.name}"/>
-                    </h:selectOneListbox>                       
+                    </p:selectOneMenu>                       
                     <h:outputLabel value="#{postLabels.assignedTo}" >
                     </h:outputLabel>
-                    <h:selectOneListbox id="cmbToIns" size="5"  value="#{letterController.toInstitution}" >
+                    <p:selectOneMenu id="cmbToIns" value="#{letterController.toInstitution}" >
                         <f:selectItems value="#{letterController.institutions}" var="tins" itemValue="#{tins}" itemLabel="#{tins.name}"/>
                         <f:ajax execute="cmbToIns" render="cmbToPer" event="change"/>
-                    </h:selectOneListbox>
+                    </p:selectOneMenu>
                     <h:outputLabel value="" >
                     </h:outputLabel>
-                    <h:selectOneListbox id="cmbToPer" size="5"  value="#{letterController.current.toPerson}" >
+                    <p:selectOneMenu id="cmbToPer"  value="#{letterController.current.toPerson}" >
                         <f:selectItems value="#{letterController.toPersons}" var="tper" itemValue="#{tper}" itemLabel="#{tper.givenName}"/>
-                    </h:selectOneListbox> 
-                    <h:commandButton value="#{labels.save}" action="#{letterController.addDirectly}" />
+                    </p:selectOneMenu> 
+                    <p:commandButton ajax="false" value="#{labels.save}" action="#{letterController.addDirectly}" />
                 </p:panelGrid>
             </p:panel>
 
