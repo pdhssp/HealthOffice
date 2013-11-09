@@ -77,6 +77,19 @@ public class BillItem implements Serializable {
     Long billSerial;
 
     boolean emptyUnit;
+    
+    @Transient
+    ItemUnit itemUnit;
+
+    public ItemUnit getItemUnit() {
+        return itemUnit;
+    }
+
+    public void setItemUnit(ItemUnit itemUnit) {
+        this.itemUnit = itemUnit;
+    }
+    
+    
 
     public boolean isEmptyUnit() {
         return emptyUnit;

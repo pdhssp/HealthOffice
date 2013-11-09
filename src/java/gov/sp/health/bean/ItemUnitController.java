@@ -74,12 +74,12 @@ public final class ItemUnitController implements Serializable {
     List<ConsumableItem> selectedConsumableItems;
     List<InventoryItem> selectedInventoryItems;
 
-    public List<ItemUnit> completeItemUnit(String qry){
+    public List<ItemUnit> completeItemUnit(String qry) {
         String sql;
         sql = "select i from ItemUnit i where i.retired=false and upper(i.item.name) like '%" + qry.toUpperCase() + "%' ";
         return getEjbFacade().findBySQL(sql);
-    }   
-    
+    }
+
     public Integer getIntSelect() {
         return intSelect;
     }
@@ -319,6 +319,9 @@ public final class ItemUnitController implements Serializable {
     }
 
     public Institution getInstitution() {
+        if(sessionController.getPrivilege().getRestrictedInstitution()!= null){
+            institution = sessionController.getPrivilege().getRestrictedInstitution();
+        }
         return institution;
     }
 
@@ -412,15 +415,33 @@ public final class ItemUnitController implements Serializable {
             return null;
         }
     }
+    Cylinder currentCylinder;
 
-     public List<ItemUnit> getCylinderIns() {
-        if (institution != null) {
-            return getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND type(i.item)=Cylinder AND i.institution.id = " + institution.getId() + " order by i.item.name");
+    public Cylinder getCurrentCylinder() {
+        return currentCylinder;
+    }
+
+    public void setCurrentCylinder(Cylinder currentCylinder) {
+        this.currentCylinder = currentCylinder;
+    }
+
+    public List<ItemUnit> getCylinderIns() {
+        System.out.println("getting cylinderIns");
+        if (getInstitution() != null) {
+            System.out.println("ins is not null");
+            if (currentCylinder == null) {
+                System.out.println("current cylinder is null");
+                return getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND type(i.item)=Cylinder AND i.institution.id = " + institution.getId() + " order by i.item.name");
+            } else {
+                System.out.println("current cylinder is not null");
+                return getFacade().findBySQL("SELECT i From ItemUnit i WHERE i.retired=false AND i.item.id=" + getCurrentCylinder().getId() + " AND i.institution.id = " + institution.getId() + " order by i.item.name");
+            }
         } else {
+            System.out.println("ins is null");
             return null;
         }
     }
-    
+
     public void setItemsIns(DataModel<ItemUnit> itemsIns) {
         this.itemsIns = itemsIns;
     }
@@ -724,11 +745,7 @@ public final class ItemUnitController implements Serializable {
             }
         }
     }
-    
-    
-    
-    
-    
+
     @FacesConverter("itemUnitConverter")
     public static class ItemUnitConverter implements Converter {
 
@@ -766,6 +783,4 @@ public final class ItemUnitController implements Serializable {
             }
         }
     }
-    
-    
 }

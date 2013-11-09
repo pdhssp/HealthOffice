@@ -4,6 +4,7 @@
  */
 package gov.sp.health.entity;
 
+import gov.sp.health.entity.post.Letter;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;

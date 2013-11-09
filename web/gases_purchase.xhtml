@@ -102,21 +102,19 @@
                         </p:panelGrid>
 
 
-                        <p:panelGrid columns="3" style="bottom: 300px;" >
+                        <p:panelGrid columns="5" style="bottom: 300px; width: 100%;" >
                             <h:outputLabel value="User" ></h:outputLabel>
                             <h:outputLabel value="#{gasPurchaseBillController.bill.creater.webUserPerson.name}" ></h:outputLabel>
-                            <h:outputLabel value="GRN Date" ></h:outputLabel>
+                            <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
+                            <h:outputLabel value="GRN Date/Time" ></h:outputLabel>
                             <h:outputLabel value="#{gasPurchaseBillController.bill.createdAt}" >
-                                <f:convertDateTime pattern="dd MMMM yyyy" />
+                                <f:convertDateTime pattern="dd MMMM yyyy hh mm a" />
                             </h:outputLabel>
-                            <h:outputLabel value="Printer Date" ></h:outputLabel>
+                            <h:outputLabel value="Printer Date/Time" ></h:outputLabel>
                             <h:outputLabel value="#{gasPurchaseBillController.printerDateTime }" >
-                                <f:convertDateTime pattern="hh mm a" />
+                                <f:convertDateTime pattern="dd MMMM yyyy hh mm a" />
                             </h:outputLabel>
-                            <h:outputLabel value="Printed Time" ></h:outputLabel>
-                            <h:outputLabel value="#{gasPurchaseBillController.printerDateTime}" >
-                                <f:convertDateTime pattern="hh mm a" />
-                            </h:outputLabel>
+                            
 
                         </p:panelGrid>
 
@@ -125,7 +123,7 @@
             </p:panel>
 
 
-            <p:panel id="gpPurchase" header="Good Receive Note - Empty Cylinders" rendered="#{!gasPurchaseBillController.billView}">
+            <p:panel id="gpPurchase" header="Good Receive - Empty Cylinders" rendered="#{!gasPurchaseBillController.billView}">
 
                 <p:panelGrid columns="2" styleClass="pdTopAlignNoBorder">
 
@@ -138,7 +136,7 @@
 
                                 <h:outputLabel value="#{labels.item}" />
                                 <h:selectOneListbox id="lstItem" value="#{gasPurchaseBillController.billItem.item}"  size="1">
-                                    <f:selectItem  itemLabel="Select an Item" />
+                                    <f:selectItem  itemLabel="#{labels.selectAnItem}" />
                                     <f:selectItems value="#{gasPurchaseBillController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
                                     </f:selectItems>
                                 </h:selectOneListbox>
@@ -234,7 +232,7 @@
                         <p:panelGrid columns="2">
                             <h:outputLabel value="#{postLabels.suppliedBy}"/>
                             <h:selectOneListbox value="#{gasPurchaseBillController.bill.fromInstitution}" size="1">
-                                <f:selectItem itemLabel="Select the Supplier" />
+                                <f:selectItem itemLabel="#{labels.selectTheSupplier}" />
                                 <f:selectItems value="#{gasPurchaseBillController.fromInstitutions}" var="fronIns" itemValue="#{fronIns}" itemLabel="#{fronIns.name}"></f:selectItems>
                             </h:selectOneListbox>
                             <h:outputLabel value="#{labels.invoice}"/>
@@ -257,25 +255,25 @@
 
                             <h:outputLabel value="#{postLabels.receivingUnit}"/>
                             <h:selectOneListbox id="cmbToUnit" value="#{gasPurchaseBillController.bill.toUnit}"  size="1">
-                                <f:selectItem itemLabel="Select a Unit"/>
+                                <f:selectItem itemLabel="#{labels.selectAUnit}"/>
                                 <f:selectItems value="#{gasPurchaseBillController.toUnits}" var="toUnit" itemValue="#{toUnit}" itemLabel="#{toUnit.name}"></f:selectItems>
                                 <f:ajax event="change" render="cmbToLocation" execute="cmbToUnit" />
                             </h:selectOneListbox>
                             <h:outputLabel value="#{postLabels.receivingLocation}"/>
                             <h:selectOneListbox id="cmbToLocation" value="#{gasPurchaseBillController.bill.toLocation}"  size="1">
-                                <f:selectItem itemLabel="Select a location"/>
+                                <f:selectItem itemLabel="#{labels.selectALocation}"/>
                                 <f:selectItems value="#{gasPurchaseBillController.toLocations}" var="toLoc" itemValue="#{toLoc}" itemLabel="#{toLoc.name}"></f:selectItems>
                                 <f:ajax event="change" render="cmbToPerson" execute="cmbToLocation" />
                             </h:selectOneListbox>
                             <h:outputLabel value="#{postLabels.receivingPerson}"/>
                             <h:selectOneListbox id="cmbToPerson" value="#{gasPurchaseBillController.bill.toPerson}"  size="1">
-                                <f:selectItem itemLabel="Select a person" />
+                                <f:selectItem itemLabel="#{labels.selectAPerson}" />
                                 <f:selectItems value="#{gasPurchaseBillController.toPersons}" var="toPer" itemValue="#{toPer}" itemLabel="#{toLoc.name}"></f:selectItems>
                             </h:selectOneListbox>
 
                             <h:commandButton rendered="#{gasPurchaseBillController.newBill}" value="#{postLabels.settle}" action="#{gasPurchaseBillController.settleBill}"/>
-                            <h:commandButton rendered="#{!gasPurchaseBillController.newBill}" value="Cancel" action="#{gasPurchaseBillController.settleBill}"/>
-                            <h:commandButton rendered="#{!gasPurchaseBillController.newBill}" value="Reprint" action="#{gasPurchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!gasPurchaseBillController.newBill}" value="#{labels.cancel}" action="#{gasPurchaseBillController.settleBill}"/>
+                            <h:commandButton rendered="#{!gasPurchaseBillController.newBill}" value="#{labels.reprint}" action="#{gasPurchaseBillController.settleBill}"/>
 
 
                         </p:panelGrid>

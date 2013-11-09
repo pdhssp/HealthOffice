@@ -6,8 +6,13 @@
  * and
  * a Set of Related Tools
  */
-package gov.sp.health.bean;
+package gov.sp.health.bean.post;
 
+import gov.sp.health.bean.ImageController;
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.MessageProvider;
+import gov.sp.health.bean.SessionController;
+import gov.sp.health.entity.post.Letter;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.InstitutionFacade;
 import gov.sp.health.facade.LetterFacade;
@@ -15,11 +20,7 @@ import gov.sp.health.facade.PersonFacade;
 import gov.sp.health.facade.SubjectFacade;
 import gov.sp.health.facade.UnitFacade;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -30,13 +31,15 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @SessionScoped
 public final class LetterController implements Serializable {
 
@@ -50,21 +53,22 @@ public final class LetterController implements Serializable {
     PersonFacade personFacade;
     @EJB
     SubjectFacade subjectFacade;
-    @ManagedProperty(value = "#{sessionController}")
+    /////////////
+    @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
-    //
-    //
-    //
+    ///////
     Letter[] lettersToMark;
     List<Letter> lstItems;
-    private Letter current;
-    private DataModel<Letter> items = null;
-    private DataModel<Letter> itemsIns = null;
+     private DataModel<Letter> itemsIns = null;
     private DataModel<Letter> itemsUni = null;
     private DataModel<Letter> itemsLoc = null;
     private DataModel<Letter> itemsPer = null;
+   
+    //////////
+    private Letter current;
+    private DataModel<Letter> items = null;
     private DataModel temItems = null;
     //
     //
@@ -606,7 +610,7 @@ public final class LetterController implements Serializable {
             searchedItem = new Letter();
             searchedItem.setName(itemName);
             searchedItem.setCreatedAt(Calendar.getInstance().getTime());
-            searchedItem.setCreater(sessionController.loggedUser);
+            searchedItem.setCreater(getSessionController().getLoggedUser());
             getFacade().create(searchedItem);
         }
         return searchedItem;
@@ -666,7 +670,7 @@ public final class LetterController implements Serializable {
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
         } else {
             current.setCreatedAt(Calendar.getInstance().getTime());
-            current.setCreater(sessionController.loggedUser);
+            current.setCreater(getSessionController().getLoggedUser());
             getFacade().create(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
         }
@@ -683,7 +687,7 @@ public final class LetterController implements Serializable {
             current.setFromInstitution(fromInstitution);
             current.setToInstitution(toInstitution);
             current.setCreatedAt(Calendar.getInstance().getTime());
-            current.setCreater(sessionController.loggedUser);
+            current.setCreater(getSessionController().getLoggedUser());
             getFacade().create(current);
             
             JsfUtil.addSuccessMessage("savedNewSuccessfully");
@@ -718,7 +722,7 @@ public final class LetterController implements Serializable {
         if (current != null) {
             current.setRetired(true);
             current.setRetiredAt(Calendar.getInstance().getTime());
-            current.setRetirer(sessionController.loggedUser);
+            current.setRetirer(getSessionController().getLoggedUser());
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("deleteSuccessful"));
         } else {

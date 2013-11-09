@@ -4,7 +4,7 @@
  */
 package gov.sp.health.facade;
 
-import gov.sp.health.entity.Letter;
+import gov.sp.health.entity.post.Letter;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

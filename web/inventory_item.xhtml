@@ -88,11 +88,10 @@
                             </h:panelGrid>
 
                             <h:panelGrid id="gpDetailButtons" columns="2">
-                                <h:commandButton id="btnSave" value="#{labels.save}"  action="#{inventoryItemController.saveSelected()}" styleClass="buttons">
+                                <p:commandButton id="btnSave" value="#{labels.save}"  action="#{inventoryItemController.saveSelected()}" styleClass="buttons">
                                     <f:ajax render="btnAdd  btnDelete btnSave  txtSelect lstSelect gpDetail selectFocus"  execute="gpDetail" >
                                     </f:ajax>
-                                </h:commandButton>
-
+                                </p:commandButton>
                             </h:panelGrid>
                         </h:panelGrid>
                     </p:panel>
