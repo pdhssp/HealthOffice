@@ -4,6 +4,7 @@
  */
 package gov.sp.health.bean;
 
+import gov.sp.health.entity.post.Letter;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.UnitFacade;
 import gov.sp.health.facade.AppImageFacade;

@@ -2,8 +2,15 @@
  * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
-package gov.sp.health.entity;
+package gov.sp.health.entity.post;
 
+import gov.sp.health.entity.Category;
+import gov.sp.health.entity.Institution;
+import gov.sp.health.entity.Location;
+import gov.sp.health.entity.Person;
+import gov.sp.health.entity.Subject;
+import gov.sp.health.entity.Unit;
+import gov.sp.health.entity.WebUser;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -413,6 +420,6 @@ public class Letter implements Serializable {
 
     @Override
     public String toString() {
-        return "gov.sp.health.entity.Letter[ id=" + id + " ]";
+        return "gov.sp.health.entity.post.Letter[ id=" + id + " ]";
     }
 }
