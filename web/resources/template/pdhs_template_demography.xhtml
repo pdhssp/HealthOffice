@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pou="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>#{labels.topic}</title>
+        <h:outputStylesheet library="css" name="pdhscss1.css" ></h:outputStylesheet>
+        <style type="text/css">
+            .ui-widget,
+            .ui-widget .ui-widget {
+                font-size: 12px !important;
+            }
+            .ui-layout-north {
+                z-index:20 !important;
+                overflow:visible !important;;
+            }
+
+            .ui-layout-north .ui-layout-unit-content {
+                overflow:visible !important;
+            }
+            .ui-layout-south {
+                overflow:hidden;;
+            }
+
+            .ui-layout-south .ui-layout-unit-content {
+                overflow:hidden !important;
+            }
+
+        </style>   
+    </h:head>
+
+    <!-- style="min-height:920px !important; height:auto !important;"   -->
+    <h:body >
+        <f:view locale="#{languageBean.localeCode}" >
+        <!--        style="width: 100%; min-height:700px !important; height:auto !important; padding: 1px; margin :0px;"-->
+        <pou:panel style="border: 0px; margin: 0px;padding: 0px;" >
+            <pou:panelGrid style="border: 0px; margin: 0px;padding: 0px;  " >
+                <pou:row>
+                    <pou:column colspan="2" style="margin: 0px; border: 0px;"  >
+                        <pou:panel style="margin: 0px; padding: 0px; border: 0px;" >
+
+                            <ui:insert  name="top">
+                                <pou:panelGrid columns="2" style="border: 0px; width: 100%; height: 75px;">
+                                    <pou:panel style="margin: 0px; padding: 0px; border: 0px; width: 20%; height: 70px;">
+                                        <h:graphicImage  class="pdLogo" library="image" name="logo.jpg" width="50px" height="50px" ></h:graphicImage> 
+                                    </pou:panel>
+                                    <pou:panel style="margin: 1px; padding: 1px; border: 0px; width: 60%;">
+                                        <h:outputLabel style="font-size: 2.0em;" >#{labels.topic}</h:outputLabel><br/>&nbsp;
+                                        <h:outputLabel style="font-size: 1.0em;" >#{labels.subtopic}</h:outputLabel> 
+                                    </pou:panel>
+                                </pou:panelGrid>
+
+                            </ui:insert>
+                        </pou:panel>
+                    </pou:column>
+                </pou:row>
+                <pou:row >
+                    <pou:column colspan="2" style="margin: 0px; padding: 0px; border: 0px;">
+                        <pou:panel  rendered="#{connetcionController.logged}" style="margin: 0px; padding: 0px; border: 0px;" >
+                            <h:form>
+                                <pou:menubar  model="#{menu.model}" />
+                            </h:form>
+                        </pou:panel>
+                    </pou:column>
+                </pou:row>
+                <pou:row >
+
+                    <pou:column  style="width: 65%; vertical-align: text-top; border: 0px;">
+                        <pou:panel  style="width: 100%; border: 0px;" >
+                            <h:panelGroup rendered="#{sessionController.logged}" >
+
+                                <ui:insert name="content"   >
+                                </ui:insert>
+
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!sessionController.logged}" >
+                                <ui:insert name="login"   >
+
+                                    <h:form>
+                                        <table render="false"  width="400px" class="pdTable" align="center">
+                                            <tr>
+                                                <td colspan="2" class="pdTableHighlightRow">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="pdLabel">&nbsp;</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td align="center" colspan="2">
+
+                                                    <span class="pdHeading1">#{labels.LogintotheApplication}</span>
+                                                </td>
+                                            </tr>                  
+                                            <tr>
+                                                <td colspan="2" class="pdLabel">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pdLabel" align="right" width="40%">#{labels.UserName}</td>
+                                                <td align="left" width="60%"><h:inputText value="#{connetcionController.userName}" autocomplete="off"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pdLabel" align="right">#{labels.Password}</td>
+                                                <td align="left"><h:inputSecret value="#{connetcionController.passord}"  autocomplete="off" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left"></td>
+                                                <td align="left">
+                                                    <h:commandButton id="btnLogin" class="pdButton" type="submit" value="#{labels.Login}" action="#{connetcionController.loginAction()}"/>
+                                                    <h:commandButton id="btnReg" class="pdButton" type="submit" value="#{labels.Register}" action="register" /> 
+                                                </td>
+                                            </tr>                  
+                                            <tr>
+                                                <td colspan="2" class="pdLabel">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"  class="pdTableHighlightRow">&nbsp;
+                                                    <pou:messages globalOnly="true" ></pou:messages>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </h:form>
+
+
+                                </ui:insert>
+                            </h:panelGroup>
+
+                        </pou:panel>
+                    </pou:column>
+                    <pou:column style="width: 15%; margin: 0px; padding: 0px;">
+                        <!--                        style="width: 100%; min-height:700px !important; height:auto !important; height:800px !important; border: 0px; padding: 0px; margin: 0px;"-->
+                        <pou:panel  >
+                            <ui:insert   name="right">
+                                <pou:panel rendered="#{!connetcionController.logged}" >
+                                    <table >
+                                        <tr>  
+                                            <td>
+                                                <h:graphicImage  class="pdPotraitImage" library="image" name="governer.jpg" ></h:graphicImage><br/>
+                                                <h:outputLabel class="pdPotraitTitle">#{labels.GovernerTitel}</h:outputLabel><br/>
+                                                <h:outputLabel class="pdPotraitName">#{labels.GovernerName}</h:outputLabel><br/>
+                                                <h:outputLabel class="pdPotraitTitle">#{labels.GovernersMessage}</h:outputLabel><br/>
+                                            </td> 
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                <h:graphicImage  class="pdPotraitImage" library="image" name="minister.jpg" ></h:graphicImage><br/>
+                                                <h:outputLabel class="pdPotraitTitle"> #{labels.ChiefMinisterTitel}</h:outputLabel><br/>
+                                                <h:outputLabel class="pdPotraitName"> #{labels.ChiefMinisterName}</h:outputLabel><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:graphicImage  class="pdPotraitImage" library="image" name="secretary.jpg" ></h:graphicImage><br></br>
+                                                <h:outputLabel class="pdPotraitTitle">#{labels.Secretary}</h:outputLabel><br></br>
+                                                <h:outputLabel class="pdPotraitTitle">#{labels.SecretaryTitel}</h:outputLabel><br></br>
+                                                <h:outputLabel class="pdPotraitName">#{labels.SecretaryName}</h:outputLabel><br></br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:graphicImage  class="pdPotraitImage" library="image" name="director.jpg" ></h:graphicImage><br></br>
+                                                <h:outputLabel class="pdPotraitTitle">#{labels.Director}</h:outputLabel><br/> 
+                                                <h:outputLabel class="pdPotraitTitle">#{labels.DirectorTitel}</h:outputLabel><br/>
+                                                <h:outputLabel class="pdPotraitName">#{labels.DirectorName}</h:outputLabel><br/>
+                                            </td>
+                                        </tr>
+                                    </table> 
+                                </pou:panel>
+
+                                <pou:panel rendered="#{connetcionController.logged}" header="Loggin" style="margin: 2px; padding: 2px; border: 0px;">
+                                    <h:form>
+                                        <pou:panel id="divActivated" rendered="#{connetcionController.activated}" style="margin:2px; padding: 0px; border: 0px;">
+                                            You are logged as #{connetcionController.displayName}
+                                            <pou:commandButton value="Logout" action="#{connetcionController.logout}" ajax="false"></pou:commandButton>
+                                        </pou:panel>
+                                        <pou:panel id="divNotActivated" rendered="#{!connetcionController.activated}" style="margin: 2px; padding: 0px; border: 0px;">
+                                            Welcome to Health Office. Your account is yet to activate. Please contact administrator.
+                                            <pou:commandButton value="Logout" action="#{connetcionController.logout}" ajax="false"></pou:commandButton>
+                                        </pou:panel>
+                                    </h:form>
+                                </pou:panel>
+
+                                <pou:panel header="Theme" style="margin: 2px; padding: 2px; border: 0px;">
+                                    <h:form>
+                                        <pou:themeSwitcher style="width:165px" id="defaultSwitcher" value="#{themeSwitcherBean.theme}">
+                                            <f:selectItem itemLabel="Choose Theme" itemValue="" />
+                                            <f:selectItems value="#{themeSwitcherBean.themes}" />
+                                        </pou:themeSwitcher>
+                                        <pou:commandButton value="Set" action="#{themeSwitcherBean.saveTheme}"></pou:commandButton>
+                                    </h:form>
+                                </pou:panel>
+
+                                <pou:panel  header="Language" style="margin: 2px; padding: 2px; border: 0px;">
+                                    
+                                    <h:form>
+                                        <h:selectOneMenu value="#{messageProvider.localeCode}" >   
+                                            <f:selectItems value="#{messageProvider.countriesInMap}" /> 
+                                        </h:selectOneMenu>
+                                        <h:commandButton value="Set" action="#{messageProvider.changeLocale()}"></h:commandButton>
+                                    </h:form> 
+                                    
+                                </pou:panel>                                       
+
+
+
+
+                                <pou:panel  header="Search Contacts" style="margin: 2px; padding: 2px; border: 0px;">
+                                    <h:form>
+
+
+                                    </h:form>  
+                                </pou:panel>                                  
+
+                            </ui:insert>
+                        </pou:panel>
+                    </pou:column>
+
+                </pou:row>
+                <pou:row>
+                    <pou:column colspan="2">
+                        <pou:panel style="width: 100%; border: 0px;" >
+                            <ui:insert name="bottom">
+                                <pou:column colspan="2" style="width: 100%;" >
+                                    &copy;&nbsp;PDHS, Southern Province
+                                </pou:column>
+                            </ui:insert>
+                        </pou:panel>
+                    </pou:column>
+                </pou:row>
+
+            </pou:panelGrid>
+
+
+        </pou:panel>
+        </f:view>
+    </h:body>
+
+</html>
