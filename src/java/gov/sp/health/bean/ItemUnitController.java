@@ -8,6 +8,7 @@
  */
 package gov.sp.health.bean;
 
+import gov.sp.health.entity.inventory.InventoryItem;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.ItemFacade;
 import gov.sp.health.facade.ItemUnitFacade;

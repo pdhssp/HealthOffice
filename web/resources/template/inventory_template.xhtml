@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="inventorydefault.css" />
+        <h:outputStylesheet library="css" name="inventoryLayout.css" />
+        <title>Facelets Template</title>
+        <style type="text/css">
+            .menubar{
+                background-color: #ee5f5b;
+                width: 100%;
+                padding: 2px;
+                margin: 1px;
+            }
+
+        </style>
+    </h:head>
+
+    <h:body >
+
+
+        <div id="itop" class="itop">
+            <ui:insert name="top">
+                <h:graphicImage library="image" name="header01en.jpg" style="width: 100%" />
+                <h:form>
+                    <p:menubar styleClass="menubar">
+
+                        <p:submenu label="Home"  />
+
+                        <p:submenu label="Admin" />
+                        <p:submenu label="Articles" />
+                        <p:submenu label="User" />
+                        <p:submenu label="About Us" />
+                        <p:submenu label="Logout" />
+                    </p:menubar>
+                </h:form>
+            </ui:insert>
+        </div>
+        <div>
+            <div id="ileft">
+                <ui:insert name="left">
+                    <h:form>
+                        <p:growl id="pmenu" autoUpdate="true"/>
+
+                        <p:panelMenu style="width: 250px" >
+                            <p:submenu label="Inventory Reports"  >
+                                <p:menuitem value="Main Inventory Report" />
+                                <p:menuitem value="Sub Inventory Report" />
+                                <p:menuitem value="Unit Stock Report" />
+                                <p:menuitem value="Institution Inventory" />
+                                <p:menuitem value="Institution Inventory Counts" />
+                                <p:menuitem value="Ledger" />
+                                <p:menuitem value="Purchase Bill" />
+                            </p:submenu>
+                            <p:submenu label="Consumable Reports">
+                                <p:menuitem value="Institution Stock Report" />
+                                <p:menuitem value="Unit Stock Report" />
+                            </p:submenu>
+                            <p:submenu label="Purchase">
+
+                            </p:submenu>
+                            <p:submenu label="Issues">
+
+                            </p:submenu>
+                            <p:submenu label="Receive Items">
+
+                            </p:submenu>
+                            <p:submenu label="Adjust">
+                                <p:menuitem value="Edit MetaData" />
+                            </p:submenu>
+                            <p:submenu label="Edit">
+                                <p:menuitem value="Internal Institution" />
+                                <p:menuitem value="External Institution" />
+                                <p:menuitem value="Inventory Item Details" />
+                                <p:menuitem value="Consumable Details" />
+                            </p:submenu>
+                        </p:panelMenu>
+                    </h:form>
+                </ui:insert>
+            </div>
+
+            <div >
+                <ui:insert name="content">Content</ui:insert>
+
+            </div>
+        </div>
+    </h:body>
+
+</html>

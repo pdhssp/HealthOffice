@@ -8,9 +8,12 @@
  */
 package gov.sp.health.bean;
 
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.MessageProvider;
+import gov.sp.health.bean.SessionController;
 import gov.sp.health.facade.InventoryItemFacade;
-import gov.sp.health.entity.InventoryItem;
-import gov.sp.health.entity.InventoryItemCategory;
+import gov.sp.health.entity.inventory.InventoryItem;
+import gov.sp.health.entity.inventory.InventoryItemCategory;
 import gov.sp.health.entity.ItemCategory;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -23,13 +26,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 
 /**
  *
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @SessionScoped
 public final class InventoryItemController implements Serializable {
 

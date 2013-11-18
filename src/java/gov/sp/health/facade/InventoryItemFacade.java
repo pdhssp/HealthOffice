@@ -4,7 +4,7 @@
  */
 package gov.sp.health.facade;
 
-import gov.sp.health.entity.InventoryItem;
+import gov.sp.health.entity.inventory.InventoryItem;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

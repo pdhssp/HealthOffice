@@ -1,12 +1,6 @@
-html{
-    width: 100%;
-    border: 1px solid red;
-}
-
-
 body {
     width: 100%;
-    border: 1px solid red;
+    border: 2px solid red;
     background-color: #ffffff;
     font-size: 12px;
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;

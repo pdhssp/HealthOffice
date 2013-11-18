@@ -2,34 +2,26 @@
  * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
-package gov.sp.health.bean;
+package gov.sp.health.bean.inventory;
 
-import gov.sp.health.facade.PopulationFacade;
-import gov.sp.health.facade.DpdhsFacade;
-import gov.sp.health.facade.GnFacade;
-import gov.sp.health.facade.PhiFacade;
-import gov.sp.health.facade.PhmFacade;
-import gov.sp.health.facade.MohFacade;
+import gov.sp.health.entity.inventory.InventoryItem;
+import gov.sp.health.entity.inventory.InventoryItemCategory;
+import gov.sp.health.bean.JsfUtil;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.InventoryItemCategoryFacade;
 import gov.sp.health.facade.InventoryItemFacade;
 import java.io.File;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Named;
 import jxl.Cell;
-import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
@@ -39,7 +31,7 @@ import org.primefaces.model.UploadedFile;
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class InventoryExcelManager  implements Serializable {
 
