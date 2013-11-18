@@ -18,26 +18,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @SessionScoped
-public final class InstitutionTypeCadreController implements Serializable {
+public class InstitutionTypeCadreController implements Serializable {
 
     @EJB
     private InstitutionTypeCadreFacade ejbFacade;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
     private InstitutionTypeCadre current;
     private List<InstitutionTypeCadre> items = null;

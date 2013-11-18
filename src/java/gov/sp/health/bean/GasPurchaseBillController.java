@@ -27,15 +27,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-
+import javax.inject.Inject;
+import javax.inject.Named;
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class GasPurchaseBillController implements Serializable {
 
@@ -72,9 +73,9 @@ public class GasPurchaseBillController implements Serializable {
     /**
      * Managed Properties
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
-    @ManagedProperty(value = "#{transferBean}")
+    @Inject
     private TransferBean transferBean;
     /**
      * Collections

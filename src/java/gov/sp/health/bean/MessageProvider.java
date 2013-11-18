@@ -4,23 +4,25 @@ import gov.sp.health.facade.WebUserFacade;
 import java.io.Serializable;
 import java.util.*;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class MessageProvider implements Serializable {
 
     public MessageProvider() {
     }
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
     private ResourceBundle bundle;
     private ResourceBundle msBundle;

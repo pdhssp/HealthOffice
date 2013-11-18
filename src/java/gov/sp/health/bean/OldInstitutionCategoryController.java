@@ -10,25 +10,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class OldInstitutionCategoryController {
 
     @EJB
     private OldInstitutionCategoryFacade ejbFacade;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
     List<OldInstitutionCategory> items;
     private OldInstitutionCategory current;

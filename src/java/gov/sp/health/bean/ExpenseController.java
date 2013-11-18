@@ -22,15 +22,17 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
@@ -39,9 +41,9 @@ import org.primefaces.model.chart.ChartSeries;
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @SessionScoped
-public final class ExpenseController implements Serializable {
+public class ExpenseController implements Serializable {
 
     @EJB
     private ExpenseFacade ejbFacade;
@@ -58,7 +60,7 @@ public final class ExpenseController implements Serializable {
     @EJB
     HeadCountFacade hcFacade;
     //
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
     @ManagedProperty(value = "#{imageController}")
     ImageController imageController;

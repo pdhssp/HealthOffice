@@ -22,9 +22,9 @@ import gov.sp.health.facade.UnitFacade;
 import java.io.Serializable;
 import java.util.*;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -41,7 +41,7 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public final class LetterController implements Serializable {
+public class LetterController implements Serializable {
 
     @EJB
     private LetterFacade ejbFacade;

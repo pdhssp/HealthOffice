@@ -15,7 +15,7 @@ import gov.sp.health.facade.ItemUnitFacade;
 import gov.sp.health.facade.LocationFacade;
 import gov.sp.health.facade.PersonFacade;
 import java.io.ByteArrayInputStream;
-import javax.faces.bean.ManagedBean;
+
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -23,15 +23,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import org.apache.commons.io.IOUtils;
 
 /**
  *
  * @author buddhika
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class ImageController  implements Serializable {
 

@@ -8,18 +8,19 @@ import gov.sp.health.entity.FinancialFindingCategory;
 import gov.sp.health.facade.FinancialFindingCategoryFacade;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 
 /**
  *
  * @author buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class FinancialFindingSubCategoryController {
 

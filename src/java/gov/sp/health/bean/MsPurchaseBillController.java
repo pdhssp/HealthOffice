@@ -29,12 +29,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
@@ -47,7 +49,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class MsPurchaseBillController implements Serializable {
 
@@ -90,9 +92,9 @@ public class MsPurchaseBillController implements Serializable {
     /**
      * Managed Properties
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{transferBean}")
+    @Inject
     TransferBean transferBean;
     /**
      * Collections

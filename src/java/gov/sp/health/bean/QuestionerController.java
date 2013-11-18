@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
@@ -20,6 +20,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.primefaces.component.datalist.DataList;
 
 /**
@@ -27,7 +29,7 @@ import org.primefaces.component.datalist.DataList;
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class QuestionerController  implements Serializable {
 
@@ -78,7 +80,7 @@ public class QuestionerController  implements Serializable {
      *
      *
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
 
     /**

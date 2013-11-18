@@ -16,16 +16,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Named;
 
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class BillController  implements Serializable {
 

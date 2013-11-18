@@ -26,12 +26,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -44,7 +46,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class OutBillController implements Serializable {
 
@@ -85,7 +87,7 @@ public class OutBillController implements Serializable {
     /**
      * Managed Properties
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
     /**
      * Collections

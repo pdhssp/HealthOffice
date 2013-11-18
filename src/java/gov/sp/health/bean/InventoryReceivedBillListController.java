@@ -22,17 +22,19 @@ import gov.sp.health.facade.UnitFacade;
 import java.io.Serializable;
 import java.util.*;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class InventoryReceivedBillListController  implements Serializable {
 
@@ -73,9 +75,9 @@ public class InventoryReceivedBillListController  implements Serializable {
     /**
      * Managed Properties
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{transferBean}")
+    @Inject
     TransferBean transferBean;
     /**
      * Collections

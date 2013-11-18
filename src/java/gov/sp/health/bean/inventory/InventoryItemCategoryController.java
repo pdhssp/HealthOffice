@@ -6,10 +6,13 @@
  * and
  * a Set of Related Tools
  */
-package gov.sp.health.bean;
+package gov.sp.health.bean.inventory;
 
 import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.JsfUtil;
 import gov.sp.health.bean.MessageProvider;
+import gov.sp.health.bean.MessageProvider;
+import gov.sp.health.bean.SessionController;
 import gov.sp.health.bean.SessionController;
 import gov.sp.health.facade.InventoryItemCategoryFacade;
 import gov.sp.health.entity.inventory.InventoryItemCategory;
@@ -17,13 +20,14 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 
@@ -34,11 +38,12 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public final class InventoryItemCategoryController implements Serializable {
+
+public class InventoryItemCategoryController implements Serializable {
 
     @EJB
     private InventoryItemCategoryFacade ejbFacade;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
     private List<InventoryItemCategory> lstItems;
     private InventoryItemCategory current;
@@ -132,7 +137,7 @@ public final class InventoryItemCategoryController implements Serializable {
             searchedItem = new InventoryItemCategory();
             searchedItem.setName(itemName);
             searchedItem.setCreatedAt(Calendar.getInstance().getTime());
-            searchedItem.setCreater(getSessionController().loggedUser);
+            searchedItem.setCreater(getSessionController().getLoggedUser());
             getFacade().create(searchedItem);
         }
         return searchedItem;
@@ -156,7 +161,7 @@ public final class InventoryItemCategoryController implements Serializable {
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedOldSuccessfully"));
         } else {
             getCurrent().setCreatedAt(Calendar.getInstance().getTime());
-            getCurrent().setCreater(getSessionController().loggedUser);
+            getCurrent().setCreater(getSessionController().getLoggedUser());
             getFacade().create(getCurrent());
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
         }
@@ -170,7 +175,7 @@ public final class InventoryItemCategoryController implements Serializable {
         try {
 
             getCurrent().setCreatedAt(Calendar.getInstance().getTime());
-            getCurrent().setCreater(getSessionController().loggedUser);
+            getCurrent().setCreater(getSessionController().getLoggedUser());
 
             getFacade().create(getCurrent());
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("savedNewSuccessfully"));
@@ -192,7 +197,7 @@ public final class InventoryItemCategoryController implements Serializable {
             System.out.println("3");
             getCurrent().setRetired(true);
             getCurrent().setRetiredAt(Calendar.getInstance().getTime());
-            getCurrent().setRetirer(getSessionController().loggedUser);
+            getCurrent().setRetirer(getSessionController().getLoggedUser());
             getFacade().edit(getCurrent());
             JsfUtil.addSuccessMessage(new MessageProvider().getValue("deleteSuccessful"));
         } else {

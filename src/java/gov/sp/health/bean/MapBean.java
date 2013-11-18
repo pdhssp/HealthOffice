@@ -4,13 +4,14 @@
  */
 package gov.sp.health.bean;
 
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
 import java.io.Serializable;  
   
 import javax.faces.application.FacesMessage;  
 import javax.faces.context.FacesContext;  
 import javax.faces.event.ActionEvent;  
+import javax.inject.Named;
   
 import org.primefaces.event.map.OverlaySelectEvent;  
 import org.primefaces.model.map.DefaultMapModel;  
@@ -21,7 +22,7 @@ import org.primefaces.model.map.Polygon;
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class MapBean {
 

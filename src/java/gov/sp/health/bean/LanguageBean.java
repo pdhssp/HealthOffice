@@ -9,17 +9,19 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class LanguageBean implements Serializable {
 
@@ -30,7 +32,7 @@ public class LanguageBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private String localeCode;
     private static Map<String, Object> countries;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
     @ManagedProperty(value = "#{menu}")
     private Menu menu;

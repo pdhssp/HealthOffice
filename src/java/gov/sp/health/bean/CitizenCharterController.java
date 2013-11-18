@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
@@ -38,6 +38,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
@@ -45,7 +47,7 @@ import org.primefaces.model.chart.ChartSeries;
  *
  * @author buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class CitizenCharterController {
 
@@ -62,7 +64,7 @@ public class CitizenCharterController {
     @EJB
     CitizenCharterCategoryFacade catFacade;
     //
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
     @ManagedProperty(value = "#{imageController}")
     ImageController imageController;

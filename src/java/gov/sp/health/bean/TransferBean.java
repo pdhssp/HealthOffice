@@ -8,14 +8,15 @@ import gov.sp.health.entity.Bill;
 import gov.sp.health.entity.Location;
 import gov.sp.health.entity.Unit;
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class TransferBean  implements Serializable {
 

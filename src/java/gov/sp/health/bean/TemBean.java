@@ -11,14 +11,15 @@ import gov.sp.health.facade.CitizenCharterFacade;
 import gov.sp.health.facade.ExpenseFacade;
 import gov.sp.health.facade.FinancialFindingCategoryFacade;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class TemBean {
 @EJB

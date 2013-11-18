@@ -24,15 +24,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-
+import javax.inject.Inject;
+import javax.inject.Named;
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class PurchaseBillController implements Serializable {
 
@@ -73,9 +74,9 @@ public class PurchaseBillController implements Serializable {
     /**
      * Managed Properties
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
-    @ManagedProperty(value = "#{transferBean}")
+    @Inject
     private TransferBean transferBean;
     /**
      * Collections

@@ -20,12 +20,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.omg.PortableInterceptor.ACTIVE;
 import org.primefaces.event.CaptureEvent;
 
@@ -34,7 +36,7 @@ import org.primefaces.event.CaptureEvent;
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class ConnetcionController implements Serializable {
 
@@ -53,7 +55,7 @@ public class ConnetcionController implements Serializable {
     UnitFacade unitFacade;
     @EJB
     AreaFacade areaFacade;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
     @ManagedProperty(value = "#{menu}")
     private Menu menu;

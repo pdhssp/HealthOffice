@@ -8,15 +8,16 @@
 package gov.sp.health.bean;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class TestBean  implements Serializable {
 

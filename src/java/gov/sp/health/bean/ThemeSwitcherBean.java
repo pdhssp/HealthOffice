@@ -6,8 +6,8 @@ package gov.sp.health.bean;
 
 import gov.sp.health.facade.WebUserFacade;
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+import javax.enterprise.context.SessionScoped;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +15,14 @@ import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedProperty;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class ThemeSwitcherBean  implements Serializable {
 
@@ -29,7 +31,7 @@ public class ThemeSwitcherBean  implements Serializable {
     /**
      * Managed Properties
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
 
     /**

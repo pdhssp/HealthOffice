@@ -9,21 +9,23 @@ import gov.sp.health.facade.CitizenCharterCategoryFacade;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author buddhika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class CccCtrl {
 
     @EJB
     CitizenCharterCategoryFacade facade;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
     @ManagedProperty(value = "#{messageProvider}")
     private MessageProvider messageProvider;

@@ -18,24 +18,26 @@ import gov.sp.health.facade.UnitFacade;
 import java.io.Serializable;
 import java.util.*;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @SessionScoped
-public final class IncomeController implements Serializable {
+public class IncomeController implements Serializable {
 
     @EJB
     private IncomeFacade ejbFacade;
@@ -47,7 +49,7 @@ public final class IncomeController implements Serializable {
     PersonFacade personFacade;
     @EJB
     SubjectFacade subjectFacade;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
     @ManagedProperty(value = "#{imageController}")
     ImageController imageController;

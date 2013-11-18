@@ -8,13 +8,15 @@
 package gov.sp.health.bean;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.primefaces.component.menuitem.MenuItem;
 
 /**
@@ -22,11 +24,11 @@ import org.primefaces.component.menuitem.MenuItem;
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class Menu implements Serializable {
 
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
     @ManagedProperty(value = "#{messageProvider}")
     private MessageProvider messageProvider;

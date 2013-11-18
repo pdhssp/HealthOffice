@@ -7,18 +7,20 @@
  */
 package gov.sp.health.bean;
 
+import javax.inject.Named;
 import gov.sp.health.entity.Privilege;
 import gov.sp.health.entity.WebUser;
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author Dr. M. H. B. Ariyaratne, MBBS, PGIM Trainee for MSc(Biomedical
  * Informatics)
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class SessionController  implements Serializable {
 

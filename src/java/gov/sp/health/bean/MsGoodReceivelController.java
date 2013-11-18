@@ -24,17 +24,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Buddhika
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class MsGoodReceivelController implements Serializable {
 
@@ -75,9 +77,9 @@ public class MsGoodReceivelController implements Serializable {
     /**
      * Managed Properties
      */
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{transferBean}")
+    @Inject
     TransferBean transferBean;
     /**
      * Collections
