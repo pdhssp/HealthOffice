@@ -2,8 +2,14 @@
  * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
-package gov.sp.health.bean;
+package gov.sp.health.bean.inventory;
 
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.SessionController;
+import gov.sp.health.bean.SessionController;
+import gov.sp.health.bean.TransferBean;
+import gov.sp.health.bean.TransferBean;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.BillFacade;
 import gov.sp.health.facade.BillItemFacade;
@@ -36,7 +42,7 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class InventoryReceivedBillListController  implements Serializable {
+public class InventoryReceivedBillListController implements Serializable {
 
     /**
      *
@@ -185,7 +191,7 @@ public class InventoryReceivedBillListController  implements Serializable {
         return getBillFacade().findAggregateDbl(strJQL);
     }
 
-     /**
+    /**
      * Getters and Setters
      */
     public BillFacade getBillFacade() {
@@ -517,17 +523,13 @@ public class InventoryReceivedBillListController  implements Serializable {
 
     public DataModel<Bill> getInInventoryBills() {
         String temSQL = "";
-        if (getUnit() == null) {
-            temSQL = "SELECT b FROM InInventoryBill b WHERE b.retired=false AND b.toUnit.id=" + getUnit().getId() + " AND b.billDate BETWEEN :fromDate AND :toDate ";
-        }
-        if (getInstitution() == null) {
-            temSQL = "SELECT b FROM InInventoryBill b WHERE b.retired=false AND b.toInstitution.id=" + getInstitution().getId() + " AND b.billDate BETWEEN :fromDate AND :toDate ";
-        }     
-        if (temSQL.equals("")){
-            return null;
-        }
         Map temMap = new HashMap();
-        
+
+        temSQL = "SELECT b FROM InInventoryBill b WHERE b.retired=false AND (b.toUnit=:uni or b.toInstitution=:ins )"
+                + " AND b.billDate BETWEEN :fromDate AND :toDate ";
+
+        temMap.put("uni", getUnit());
+        temMap.put("ins", getInstitution());
         temMap.put("fromDate", fromDate);
         temMap.put("toDate", toDate);
 

@@ -458,7 +458,7 @@ public class AreaController  implements Serializable {
             }
             AreaController controller = (AreaController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "areaController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getAreaFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

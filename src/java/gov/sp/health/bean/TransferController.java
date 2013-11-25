@@ -51,7 +51,7 @@ public class TransferController implements Serializable {
     SubjectFacade subjectFacade;
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
     //
     //
@@ -693,7 +693,7 @@ public class TransferController implements Serializable {
             try {
                 TransferController controller = (TransferController) facesContext.getApplication().getELResolver().
                         getValue(facesContext.getELContext(), null, "transferController");
-                return controller.ejbFacade.find(getKey(value));
+                return controller.getEjbFacade().find(getKey(value));
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "Error");
                 return null;

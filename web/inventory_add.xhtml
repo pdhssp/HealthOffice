@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./resources/template/pdhs_template_1.xhtml"
+                template="./resources/template/inventory_template.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -46,14 +46,14 @@
                     </h:selectOneListbox>                      
 
                     <h:outputLabel value="#{labels.item}" />
-                    <h:selectOneListbox id="lstItem" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.item}" styleClass="pdListBox" size="5">
+                    <h:selectOneListbox id="lstItem" value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.item}" styleClass="pdListBox" size="5">
                         <f:selectItems value="#{inventoryItemUnitAlterController.items}" var="item" itemValue="#{item}" itemLabel="#{item.name}">
                         </f:selectItems>
-                        <f:ajax execute="#{postLabels.lstItem}" render="txtTem"/>
+                        <f:ajax execute="#{postLabels.lstItem}" />
                     </h:selectOneListbox>
 
                     <h:outputLabel value="#{labels.make}" />
-                    <h:selectOneListbox id="lstMake" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.make}" styleClass="pdListBox" size="5">
+                    <h:selectOneListbox id="lstMake" value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.make}" styleClass="pdListBox" size="5">
                         <f:selectItems value="#{inventoryItemUnitAlterController.makes}" var="myMake" itemLabel="#{myMake.name}" itemValue="#{myMake}"/>
                     </h:selectOneListbox>
 
@@ -61,33 +61,33 @@
                     <h:inputText value="#{inventoryItemUnitAlterController.modalName}" styleClass="pdPageText" ></h:inputText>
                     <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
                     <h:outputLabel value="#{labels.serial}" ></h:outputLabel>
-                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.serial}" ></h:inputText>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.serial}" ></h:inputText>
 
                     <h:outputLabel value="#{labels.id}" ></h:outputLabel>
-                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.name}" styleClass="pdPageText" ></h:inputText>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.name}" styleClass="pdPageText" ></h:inputText>
                     <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
                     <h:outputLabel value="#{labels.descreption}" ></h:outputLabel>
-                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.description}" ></h:inputText>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.description}" ></h:inputText>
 
                     <h:outputLabel value="#{labels.warranty}" ></h:outputLabel>
-                    <p:calendar value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.dateOfExpiary}" styleClass="pdPageText" ></p:calendar>
+                    <p:calendar value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.dateOfExpiary}" styleClass="pdPageText" ></p:calendar>
                     <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputLabel>
                     <h:outputLabel value="#{labels.modalNo}" ></h:outputLabel>
-                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.modalNo}" ></h:inputText>
+                    <h:inputText value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.modalNo}" ></h:inputText>
 
                     <h:outputLabel value="#{labels.country}" />
-                    <h:selectOneListbox id="lstCountry" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.country}" styleClass="pdListBox" size="5">
+                    <h:selectOneListbox id="lstCountry" value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.country}" styleClass="pdListBox" size="5">
                         <f:selectItems value="#{inventoryItemUnitAlterController.countries}" var="myCon" itemLabel="#{myCon.name}" itemValue="#{myCon}"/>
                     </h:selectOneListbox>
 
                     <h:outputLabel value="#{labels.suppliers}" />
-                    <h:selectOneListbox id="lstManu" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.itemUnit.supplier}" styleClass="pdListBox" size="5">
+                    <h:selectOneListbox id="lstManu" value="#{inventoryItemUnitAlterController.billItemEntry.itemUnit.supplier}" styleClass="pdListBox" size="5">
                         <f:selectItems value="#{inventoryItemUnitAlterController.suppliers}" var="mySup" itemLabel="#{mySup.name}" itemValue="#{mySup}"/>
                     </h:selectOneListbox>
 
                     <h:outputLabel value="#{labels.rate}"/>
-                    <h:inputText id="txtRate" value="#{inventoryItemUnitAlterController.billItemEntry.billItem.netRate}">
-                        <f:ajax execute="txtRate txtQty" event="change" render="txtValue" listener="#{inventoryItemUnitAlterController.calculateItemValue}" />
+                    <h:inputText id="txtRate" value="#{inventoryItemUnitAlterController.billItemEntry.netRate}">
+                        <f:ajax execute="txtRate" event="change"  listener="#{inventoryItemUnitAlterController.calculateItemValue}" />
                     </h:inputText>
                     #{labels.suppliedBy}
                     <h:selectOneListbox value="#{inventoryItemUnitAlterController.bill.fromInstitution}" size="4">

@@ -322,7 +322,7 @@ public class ItemUnitController implements Serializable {
     }
 
     public Institution getInstitution() {
-        if(sessionController.getPrivilege().getRestrictedInstitution()!= null){
+        if (sessionController.getPrivilege() != null && sessionController.getPrivilege().getRestrictedInstitution() != null) {
             institution = sessionController.getPrivilege().getRestrictedInstitution();
         }
         return institution;
@@ -720,7 +720,7 @@ public class ItemUnitController implements Serializable {
             }
             ItemUnitController controller = (ItemUnitController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "itemUnitController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -758,7 +758,7 @@ public class ItemUnitController implements Serializable {
             }
             ItemUnitController controller = (ItemUnitController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "itemUnitController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -74,7 +74,7 @@ public class ItemCategoryController  implements Serializable {
         this.current = current;
     }
 
-    private ItemCategoryFacade getFacade() {
+    public ItemCategoryFacade getFacade() {
         return ejbFacade;
     }
 
@@ -261,7 +261,7 @@ public class ItemCategoryController  implements Serializable {
             }
             ItemCategoryController controller = (ItemCategoryController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "itemCategoryController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

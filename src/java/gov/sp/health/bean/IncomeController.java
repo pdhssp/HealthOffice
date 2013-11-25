@@ -51,7 +51,7 @@ public class IncomeController implements Serializable {
     SubjectFacade subjectFacade;
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
     //
     //
@@ -683,7 +683,7 @@ public class IncomeController implements Serializable {
             try {
                 IncomeController controller = (IncomeController) facesContext.getApplication().getELResolver().
                         getValue(facesContext.getELContext(), null, "incomeController");
-                return controller.ejbFacade.find(getKey(value));
+                return controller.getEjbFacade().find(getKey(value));
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "Error");
                 return null;

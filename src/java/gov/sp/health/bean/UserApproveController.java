@@ -54,7 +54,7 @@ public class UserApproveController implements Serializable {
     DataModel<Institution> institutions;
     DataModel<Unit> units;
     DataModel<Location> locations;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     private ImageController imageController;
 
     public Person getSelectedPerson() {

@@ -279,7 +279,7 @@ public class CategoryController  implements Serializable {
             }
             CategoryController controller = (CategoryController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "categoryController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -44,10 +44,9 @@ public class BookController implements Serializable {
     private BookFacade ejbFacade;
     @EJB
     ItemUnitHistoryFacade ithFacade;
-    
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
     List<Book> lstItems;
     private Book current;
@@ -80,27 +79,27 @@ public class BookController implements Serializable {
     @EJB
     InstitutionFacade institutionFacade;
 
-    public void issue(){
-        if (current==null){
+    public void issue() {
+        if (current == null) {
             JsfUtil.addErrorMessage("Please select a book");
             return;
         }
-        if (person==null){
+        if (person == null) {
             JsfUtil.addErrorMessage("Please select a person");
             return;
         }
         ItemUnitHistory hx = new ItemUnitHistory();
-        
+
         hx.setCreatedAt(Calendar.getInstance().getTime());
         hx.setCreater(sessionController.loggedUser);
-        
-        
+
+
         hx.setItem(null);
         hx.setItemUnit(current);
-        
+
         hx.setBeforeQty(1.0);
-        
-        
+
+
     }
 
     public ItemUnitHistoryFacade getIthFacade() {
@@ -111,8 +110,6 @@ public class BookController implements Serializable {
         this.ithFacade = ithFacade;
     }
 
-    
-    
     public String getSelectName() {
         return selectName;
     }
@@ -409,10 +406,10 @@ public class BookController implements Serializable {
     }
 
     public void saveSelected() {
-        if (sessionController.getPrivilege().isInventoryEdit()==false){
+        if (sessionController.getPrivilege().isInventoryEdit() == false) {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
-        }            
+        }
         current.setItem(null);
         current.setUnit(unit);
         current.setInstitution(institution);
@@ -454,7 +451,7 @@ public class BookController implements Serializable {
     }
 
     public void delete() {
-        if (sessionController.getPrivilege().isInventoryDelete()==false){
+        if (sessionController.getPrivilege().isInventoryDelete() == false) {
             JsfUtil.addErrorMessage("You are not autherized to delete any content");
             return;
         }
@@ -547,7 +544,7 @@ public class BookController implements Serializable {
             }
             BookController controller = (BookController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "bookController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

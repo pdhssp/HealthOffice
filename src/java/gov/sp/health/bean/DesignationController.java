@@ -279,7 +279,7 @@ public class DesignationController  implements Serializable {
             }
             DesignationController controller = (DesignationController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "designationController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

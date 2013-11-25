@@ -186,7 +186,7 @@ public class AmpController implements Serializable {
             }
             AmpController controller = (AmpController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "ampController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

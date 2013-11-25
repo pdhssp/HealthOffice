@@ -74,7 +74,7 @@ public class MedicineGroupController  implements Serializable {
         this.current = current;
     }
 
-    private MedicineGroupFacade getFacade() {
+    public MedicineGroupFacade getFacade() {
         return ejbFacade;
     }
 
@@ -261,7 +261,7 @@ public class MedicineGroupController  implements Serializable {
             }
             MedicineGroupController controller = (MedicineGroupController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "medicineGroupController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -280,7 +280,7 @@ public class CountryController implements Serializable {
             }
             CountryController controller = (CountryController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "countryController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

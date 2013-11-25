@@ -2,7 +2,7 @@
 #itop {
     width: 100%;
     position: relative;
-    background-color: #036fab;
+    
     color: white;
     padding: 5px;
     margin: 0px 0px 10px 0px;
@@ -17,7 +17,7 @@
 
 #ileft {
     float: left;
-    background-color: #ece3a5;
+    
     padding: 5px;
     width: 260px;
 }
@@ -35,10 +35,14 @@
     padding: 5px;
 }
 
-.ileft_content {
+#icontent {
     background-color: #dddddd;
     padding: 5px;
-    margin-left: 280px;
+    margin-left: 270px;
+    position: absolute;
+    top: 200px;
+    width: 1080px;
+    height: 450px;
 }
 
 .right_content {
@@ -58,5 +62,4 @@
   font-weight : bold;
   text-decoration : underline;
 }
-
 

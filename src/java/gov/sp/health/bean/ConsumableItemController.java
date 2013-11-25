@@ -206,7 +206,7 @@ public class ConsumableItemController implements Serializable {
             }
             ConsumableItemController controller = (ConsumableItemController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "consumableItemController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

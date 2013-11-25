@@ -305,7 +305,7 @@ public class DpdhsController  implements Serializable {
             }
             DpdhsController controller = (DpdhsController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "dpdhsController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

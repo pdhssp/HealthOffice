@@ -2,8 +2,14 @@
  * Author : Dr. M H B Ariyaratne, MO(Health Information), email : buddhika.ari@gmail.com
  * and open the template in the editor.
  */
-package gov.sp.health.bean;
+package gov.sp.health.bean.inventory;
 
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.SessionController;
+import gov.sp.health.bean.SessionController;
+import gov.sp.health.bean.TransferBean;
+import gov.sp.health.bean.TransferBean;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.BillFacade;
 import gov.sp.health.facade.BillItemFacade;

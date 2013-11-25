@@ -30,7 +30,7 @@ public class Menu implements Serializable {
 
     @Inject
     private SessionController sessionController;
-    @ManagedProperty(value = "#{messageProvider}")
+    @Inject
     private MessageProvider messageProvider;
     MenuModel model;
     MenuModel msModel;

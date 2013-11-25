@@ -323,7 +323,7 @@ public class WebUserRoleController  implements Serializable {
             }
             WebUserRoleController controller = (WebUserRoleController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "webUserRoleController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

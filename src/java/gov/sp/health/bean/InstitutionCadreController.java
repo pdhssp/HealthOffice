@@ -481,7 +481,7 @@ public class InstitutionCadreController implements Serializable {
             }
             InstitutionCadreController controller = (InstitutionCadreController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "institutionCadreController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

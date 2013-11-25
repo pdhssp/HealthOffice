@@ -282,7 +282,7 @@ public class ProvinceController  implements Serializable {
             }
             ProvinceController controller = (ProvinceController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "provinceController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

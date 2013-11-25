@@ -209,7 +209,7 @@ public class InventoryItemController implements Serializable {
             }
             InventoryItemController controller = (InventoryItemController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "inventoryItemController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

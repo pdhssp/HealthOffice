@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -47,7 +48,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
  * @author Buddhika
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class OutBillController implements Serializable {
 
     /**
@@ -96,7 +97,7 @@ public class OutBillController implements Serializable {
     DataModel<Make> makes;
     DataModel<ItemUnit> itemUnits;
     //
-    DataModel<BillItem> billItemEntrys;
+    private DataModel<BillItem> billItemEntrys;
     List<BillItem> lstBillItems;
     //
     DataModel<Institution> fromInstitutions;
@@ -119,7 +120,7 @@ public class OutBillController implements Serializable {
      */
     Bill bill;
     BillItem billItem;
-    BillItem billItemEntry;
+    private BillItem billItemEntry;
     BillItem editBillItem;
     Institution institution;
     Unit unit;
@@ -777,5 +778,21 @@ public class OutBillController implements Serializable {
 
     public void setItemUnit(ItemUnit itemUnit) {
         this.itemUnit = itemUnit;
+    }
+
+    public DataModel<BillItem> getBillItemEntrys() {
+        return billItemEntrys;
+    }
+
+    public void setBillItemEntrys(DataModel<BillItem> billItemEntrys) {
+        this.billItemEntrys = billItemEntrys;
+    }
+
+    public BillItem getBillItemEntry() {
+        return billItemEntry;
+    }
+
+    public void setBillItemEntry(BillItem billItemEntry) {
+        this.billItemEntry = billItemEntry;
     }
 }

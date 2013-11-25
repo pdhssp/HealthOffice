@@ -62,7 +62,7 @@ public class ExpenseController implements Serializable {
     //
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
     //
     //
@@ -991,7 +991,7 @@ public class ExpenseController implements Serializable {
             try {
                 ExpenseController controller = (ExpenseController) facesContext.getApplication().getELResolver().
                         getValue(facesContext.getELContext(), null, "expenseController");
-                return controller.ejbFacade.find(getKey(value));
+                return controller.getEjbFacade().find(getKey(value));
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "Error");
                 return null;

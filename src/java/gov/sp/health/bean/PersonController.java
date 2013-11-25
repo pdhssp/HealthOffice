@@ -311,7 +311,7 @@ public class PersonController implements Serializable {
             }
             PersonController controller = (PersonController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "personController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -37,7 +38,7 @@ import org.primefaces.event.CaptureEvent;
  * Informatics)
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class ConnetcionController implements Serializable {
 
     byte[] photo;
@@ -57,9 +58,8 @@ public class ConnetcionController implements Serializable {
     AreaFacade areaFacade;
     @Inject
     private SessionController sessionController;
-    @ManagedProperty(value = "#{menu}")
-    private Menu menu;
-    @ManagedProperty(value = "#{imageController}")
+    
+    @Inject
     private ImageController imageController;
     @EJB
     AppImageFacade imageFacade;
@@ -147,7 +147,7 @@ public class ConnetcionController implements Serializable {
 
     public String loginAction() {
         if (login()) {
-            menu.createMenu();
+          //  menu.createMenu();
             return "";
         } else {
             JsfUtil.addErrorMessage("Login Failure. Please try again");
@@ -730,14 +730,7 @@ public class ConnetcionController implements Serializable {
         return HOSecurity.decrypt(getSessionController().getLoggedUser().getName());
     }
 
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
+  
     public Area getArea() {
         return area;
     }

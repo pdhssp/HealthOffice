@@ -74,7 +74,7 @@ public class AtmController  implements Serializable {
         this.current = current;
     }
 
-    private AtmFacade getFacade() {
+    public AtmFacade getFacade() {
         return ejbFacade;
     }
 
@@ -257,7 +257,7 @@ public class AtmController  implements Serializable {
             }
             AtmController controller = (AtmController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "atmController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -226,7 +226,7 @@ public class VtmController implements Serializable {
             }
             VtmController controller = (VtmController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "vtmController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

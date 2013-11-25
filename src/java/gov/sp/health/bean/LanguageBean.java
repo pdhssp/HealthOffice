@@ -34,7 +34,7 @@ public class LanguageBean implements Serializable {
     private static Map<String, Object> countries;
     @Inject
     private SessionController sessionController;
-    @ManagedProperty(value = "#{menu}")
+    @Inject
     private Menu menu;
     Boolean inSinhala;
     Boolean inTamil;

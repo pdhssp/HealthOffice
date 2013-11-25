@@ -81,7 +81,7 @@ public class WebUserController implements Serializable {
         this.current = current;
     }
 
-    private WebUserFacade getFacade() {
+    public WebUserFacade getFacade() {
         return ejbFacade;
     }
 
@@ -268,7 +268,7 @@ public class WebUserController implements Serializable {
             }
             WebUserController controller = (WebUserController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "webUserController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

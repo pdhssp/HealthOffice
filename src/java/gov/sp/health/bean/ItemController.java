@@ -74,7 +74,7 @@ public class ItemController  implements Serializable {
         this.current = current;
     }
 
-    private ItemFacade getFacade() {
+    public ItemFacade getFacade() {
         return ejbFacade;
     }
 
@@ -262,7 +262,7 @@ public class ItemController  implements Serializable {
             }
             ItemController controller = (ItemController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "itemController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -301,7 +301,7 @@ public class ItemController  implements Serializable {
             }
             ItemController controller = (ItemController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "itemController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

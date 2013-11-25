@@ -1,16 +1,56 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:outputStylesheet library="css" name="in_index.css"/>
+    <h:outputStylesheet library="css" name="in_index2.css"/>
+    
     <body>
-
+        
+        
         <ui:composition template="./resources/template/inventory_template.xhtml">
-
-          
-
+                
             <ui:define name="content">
-                content
+                <div class="container">
+            <div class="hero-unit" id="d" >
+                <h:graphicImage id="poto" library="images" name="img.jpg"></h:graphicImage>
+            <h:form class="form-horizontal" >
+                <h1 id="h1">Login and Get To Work</h1>
+                <div id="group">
+                    <div class="control-group">
+                        <label class="control-label" for="inputName" ></label>
+                        
+                        <div class="controls">
+                            <h:inputText id="inputName" label="inputName" ></h:inputText>
+                            <p:watermark for="inputName" value="User Name"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPassword" ></label>
+                        <div class="controls">
+                            <h:inputSecret id="inputPassword" label="inputPassword"></h:inputSecret>
+                            <p:watermark for="inputPassword" value="Password"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <h:commandButton class="btn btn-large btn-success" value="Login"></h:commandButton>
+                            
+                        </div>
+                        
+                    </div>
+                            
+                        </div>
+                        
+                                         
+                
+              </h:form>
+        
+        </div>
+        </div>
             </ui:define>
 
         </ui:composition>

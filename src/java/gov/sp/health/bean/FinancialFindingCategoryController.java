@@ -304,7 +304,7 @@ public class FinancialFindingCategoryController implements Serializable {
             }
             FinancialFindingCategoryController controller = (FinancialFindingCategoryController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "financialFindingCategoryController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

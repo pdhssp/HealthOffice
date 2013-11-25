@@ -781,7 +781,7 @@ public class LetterController implements Serializable {
             try {
                 LetterController controller = (LetterController) facesContext.getApplication().getELResolver().
                         getValue(facesContext.getELContext(), null, "letterController");
-                return controller.ejbFacade.find(getKey(value));
+                return controller.getEjbFacade().find(getKey(value));
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "Error");
                 return null;

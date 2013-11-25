@@ -6,8 +6,14 @@
  * and
  * a Set of Related Tools
  */
-package gov.sp.health.bean;
+package gov.sp.health.bean.inventory;
 
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.JsfUtil;
+import gov.sp.health.bean.SessionController;
+import gov.sp.health.bean.SessionController;
+import gov.sp.health.bean.TransferBean;
+import gov.sp.health.bean.TransferBean;
 import gov.sp.health.entity.*;
 import gov.sp.health.facade.InventoryItemFacade;
 import gov.sp.health.facade.*;
@@ -82,7 +88,7 @@ public class InventoryItemUnitAlterController implements Serializable {
     DataModel<Item> items;
     DataModel<Make> makes;
     //
-    DataModel<BillItem> billItemEntrys;
+    private DataModel<BillItem> billItemEntrys;
     List<BillItem> lstBillItems;
     //
     DataModel<Institution> fromInstitutions;
@@ -104,7 +110,7 @@ public class InventoryItemUnitAlterController implements Serializable {
      *
      */
     Bill bill;
-    BillItem billItemEntry;
+    private BillItem billItemEntry;
     BillItem editBillItem;
     //Controllers
     //
@@ -331,6 +337,8 @@ public class InventoryItemUnitAlterController implements Serializable {
         System.out.println(getBillFacade().findAll().toString());
         return getBillFacade().findAggregateDbl(strJQL);
     }
+    
+    
 
     private void saveNewBill() {
         Bill temBill = getBill();
@@ -354,7 +362,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 //        BillItem temItem = temEntry.getBillItem();
 //        temItem.setBill(getBill());
 //        temItem.setCreatedAt(Calendar.getInstance().getTime());
-//        temItem.setCreater(sessionController.loggedUser);
+//        temItem.setCreater(sessionController.getLoggedUser());
 //        //
 //        temItem.setDiscountCostPercentRate(getBill().getDiscountValuePercent());
 //        temItem.setDiscountCostPercentValue(getBill().getDiscountValuePercent());
@@ -431,7 +439,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 
         hxIns.setBeforeQty(calculateStock(item, toInstitution));
         hxIns.setCreatedAt(Calendar.getInstance().getTime());
-        hxIns.setCreater(sessionController.loggedUser);
+        hxIns.setCreater(sessionController.getLoggedUser());
         hxIns.setInstitution(toInstitution);
         hxIns.setItem(item);
         hxIns.setQuentity(1.0);
@@ -441,7 +449,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 
         hxUnit.setBeforeQty(calculateStock(item, toUnit));
         hxUnit.setCreatedAt(Calendar.getInstance().getTime());
-        hxUnit.setCreater(sessionController.loggedUser);
+        hxUnit.setCreater(sessionController.getLoggedUser());
         hxUnit.setUnit(toUnit);
         hxUnit.setItem(item);
         hxUnit.setQuentity(1.0);
@@ -450,7 +458,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 
         hxLoc.setBeforeQty(calculateStock(item, toLocation));
         hxLoc.setCreatedAt(Calendar.getInstance().getTime());
-        hxLoc.setCreater(sessionController.loggedUser);
+        hxLoc.setCreater(sessionController.getLoggedUser());
         hxLoc.setLocation(toLocation);
         hxLoc.setItem(item);
         hxLoc.setQuentity(1.0);
@@ -459,7 +467,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 
         hxPer.setBeforeQty(calculateStock(item, toPerson));
         hxPer.setCreatedAt(Calendar.getInstance().getTime());
-        hxPer.setCreater(sessionController.loggedUser);
+        hxPer.setCreater(sessionController.getLoggedUser());
         hxPer.setPerson(toPerson);
         hxPer.setItem(item);
         hxPer.setQuentity(1.0);
@@ -487,7 +495,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 
 //        temBillItem.setBill(getBill());
 //        temBillItem.setCreatedAt(Calendar.getInstance().getTime());
-//        temBillItem.setCreater(sessionController.loggedUser);
+//        temBillItem.setCreater(sessionController.getLoggedUser());
 //        //
 //        temBillItem.setDiscountCostPercentRate(getBill().getDiscountValuePercent());
 //        temBillItem.setDiscountCostPercentValue(getBill().getDiscountValuePercent());
@@ -561,7 +569,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 //
 //        hxIns.setBeforeQty(calculateStock(item, toInstitution));
 //        hxIns.setCreatedAt(Calendar.getInstance().getTime());
-//        hxIns.setCreater(sessionController.loggedUser);
+//        hxIns.setCreater(sessionController.getLoggedUser());
 //        hxIns.setInstitution(toInstitution);
 //        hxIns.setItem(item);
 //        hxIns.setQuentity(newItemUnit.getQuentity());
@@ -571,7 +579,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 //
 //        hxUnit.setBeforeQty(calculateStock(item, newItemUnit.getUnit()));
 //        hxUnit.setCreatedAt(Calendar.getInstance().getTime());
-//        hxUnit.setCreater(sessionController.loggedUser);
+//        hxUnit.setCreater(sessionController.getLoggedUser());
 //        hxUnit.setUnit(newItemUnit.getUnit());
 //        hxUnit.setItem(item);
 //        hxUnit.setQuentity(newItemUnit.getQuentity());
@@ -580,7 +588,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 //
 //        hxLoc.setBeforeQty(calculateStock(item, newItemUnit.getLocation()));
 //        hxLoc.setCreatedAt(Calendar.getInstance().getTime());
-//        hxLoc.setCreater(sessionController.loggedUser);
+//        hxLoc.setCreater(sessionController.getLoggedUser());
 //        hxLoc.setLocation(newItemUnit.getLocation());
 //        hxLoc.setItem(item);
 //        hxLoc.setQuentity(newItemUnit.getQuentity());
@@ -589,7 +597,7 @@ public class InventoryItemUnitAlterController implements Serializable {
 //
 //        hxPer.setBeforeQty(calculateStock(item, newItemUnit.getPerson()));
 //        hxPer.setCreatedAt(Calendar.getInstance().getTime());
-//        hxPer.setCreater(sessionController.loggedUser);
+//        hxPer.setCreater(sessionController.getLoggedUser());
 //        hxPer.setPerson(newItemUnit.getPerson());
 //        hxPer.setItem(item);
 //        hxPer.setQuentity(newItemUnit.getQuentity());
@@ -1009,5 +1017,21 @@ public class InventoryItemUnitAlterController implements Serializable {
 
     public void setNewBill(Boolean newBill) {
         this.newBill = newBill;
+    }
+
+    public DataModel<BillItem> getBillItemEntrys() {
+        return billItemEntrys;
+    }
+
+    public void setBillItemEntrys(DataModel<BillItem> billItemEntrys) {
+        this.billItemEntrys = billItemEntrys;
+    }
+
+    public BillItem getBillItemEntry() {
+        return billItemEntry;
+    }
+
+    public void setBillItemEntry(BillItem billItemEntry) {
+        this.billItemEntry = billItemEntry;
     }
 }

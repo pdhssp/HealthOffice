@@ -47,7 +47,7 @@ public class PersonContactController implements Serializable {
     
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
     List<PersonContact> lstItems;
     private PersonContact current;
@@ -532,7 +532,7 @@ public class PersonContactController implements Serializable {
             }
             PersonContactController controller = (PersonContactController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "personContactController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

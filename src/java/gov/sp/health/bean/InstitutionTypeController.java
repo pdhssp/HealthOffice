@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 
-import javax.faces.bean.ManagedProperty;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -90,7 +89,7 @@ public class InstitutionTypeController  implements Serializable {
         this.current = current;
     }
 
-    private InstitutionTypeFacade getFacade() {
+    public InstitutionTypeFacade getFacade() {
         return ejbFacade;
     }
 
@@ -293,13 +292,14 @@ public class InstitutionTypeController  implements Serializable {
     @FacesConverter(forClass = InstitutionType.class)
     public static class InstitutionTypeControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             InstitutionTypeController controller = (InstitutionTypeController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "institutionTypeController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -314,6 +314,7 @@ public class InstitutionTypeController  implements Serializable {
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;

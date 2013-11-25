@@ -274,7 +274,7 @@ public class AmppController  implements Serializable {
             }
             AmppController controller = (AmppController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "amppController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

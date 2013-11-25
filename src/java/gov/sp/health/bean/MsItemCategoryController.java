@@ -74,7 +74,7 @@ public class MsItemCategoryController  implements Serializable {
         this.current = current;
     }
 
-    private PharmaceuticalItemCategoryFacade getFacade() {
+    public PharmaceuticalItemCategoryFacade getFacade() {
         return ejbFacade;
     }
 
@@ -261,7 +261,7 @@ public class MsItemCategoryController  implements Serializable {
             }
             MsItemCategoryController controller = (MsItemCategoryController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "pharmaceuticalItemCategoryController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -53,7 +53,7 @@ public class ArticleController implements Serializable {
     private AppImageFacade imageFacade;
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{articleCategoryController}")
+    @Inject
     ArticleCategoryController articleCategoryController;
     List<Article> lstItems;
     private Article current;
@@ -1192,7 +1192,7 @@ public class ArticleController implements Serializable {
             }
             ArticleController controller = (ArticleController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "articleController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

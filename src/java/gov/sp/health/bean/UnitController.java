@@ -57,9 +57,9 @@ public class UnitController implements Serializable {
     }
 
     public DataModel<Institution> getInstitutions() {
-        if (sessionController.privilege.getRestrictedInstitution() != null) {
+        if (sessionController.getPrivilege() != null && sessionController.getPrivilege().getRestrictedInstitution() != null) {
             return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT d FROM Institution d WHERE d.retired=false And d.id = " + sessionController.getPrivilege().getRestrictedInstitution().getId() + " ORDER BY d.name"));
-        } else if (sessionController.privilege.getRestrictedUnit() != null) {
+        } else if (sessionController.getPrivilege() != null && sessionController.getPrivilege().getRestrictedUnit() != null) {
             return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT d FROM Institution d WHERE d.retired=false  And d.id = " + sessionController.getPrivilege().getRestrictedUnit().getInstitution().getId() + " ORDER BY d.name"));
         } else {
             return new ListDataModel<Institution>(getInstitutionFacade().findBySQL("SELECT d FROM Institution d WHERE d.retired=false ORDER BY d.name"));
@@ -348,7 +348,7 @@ public class UnitController implements Serializable {
             }
             UnitController controller = (UnitController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "unitController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

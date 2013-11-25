@@ -737,7 +737,7 @@ public class HeadCountController implements Serializable {
             try {
                 HeadCountController controller = (HeadCountController) facesContext.getApplication().getELResolver().
                         getValue(facesContext.getELContext(), null, "headCountController");
-                return controller.ejbFacade.find(getKey(value));
+                return controller.getEjbFacade().find(getKey(value));
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "Error");
                 return null;

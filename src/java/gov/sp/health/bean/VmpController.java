@@ -186,7 +186,7 @@ public class VmpController implements Serializable {
             }
             VmpController controller = (VmpController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "vmpController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

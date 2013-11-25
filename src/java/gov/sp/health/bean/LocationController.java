@@ -37,7 +37,7 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class LocationController  implements Serializable {
+public class LocationController implements Serializable {
 
     @EJB
     private LocationFacade ejbFacade;
@@ -47,8 +47,8 @@ public class LocationController  implements Serializable {
     InstitutionFacade institutionFacade;
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
-    ImageController imageController;    
+    @Inject
+    ImageController imageController;
     List<Location> lstItems;
     private Location current;
     private DataModel<Location> items = null;
@@ -72,8 +72,6 @@ public class LocationController  implements Serializable {
     public void setImageController(ImageController imageController) {
         this.imageController = imageController;
     }
-
-    
 
     public void setInstitution(Institution institution) {
         this.institution = institution;
@@ -171,7 +169,7 @@ public class LocationController  implements Serializable {
 
     public DataModel<Location> getItems() {
         if (getUnit() != null) {
-            items = new ListDataModel(getFacade().findBySQL("select l from Location l where l.retired=false and l.unit.id = " + getUnit().getId() + "order by l.name"  ));
+            items = new ListDataModel(getFacade().findBySQL("select l from Location l where l.retired=false and l.unit.id = " + getUnit().getId() + "order by l.name"));
             return items;
         } else {
             return null;
@@ -250,10 +248,10 @@ public class LocationController  implements Serializable {
     }
 
     public void saveSelected() {
-        if (sessionController.getPrivilege().isInventoryEdit()==false){
+        if (sessionController.getPrivilege().isInventoryEdit() == false) {
             JsfUtil.addErrorMessage("You are not autherized to make changes to any content");
             return;
-        }            
+        }
         current.setUnit(unit);
         if (selectedItemIndex > 0) {
             getFacade().edit(current);
@@ -292,7 +290,7 @@ public class LocationController  implements Serializable {
     }
 
     public void delete() {
-        if (sessionController.getPrivilege().isInventoryDelete()==false){
+        if (sessionController.getPrivilege().isInventoryDelete() == false) {
             JsfUtil.addErrorMessage("You are not autherized to delete any content");
             return;
         }
@@ -373,7 +371,7 @@ public class LocationController  implements Serializable {
             }
             LocationController controller = (LocationController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "locationController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

@@ -47,7 +47,7 @@ public class FileController implements Serializable {
     private FileFacade ejbFacade;
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
     List<File> lstItems;
     private File current;
@@ -514,7 +514,7 @@ public class FileController implements Serializable {
             }
             FileController controller = (FileController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "fileController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

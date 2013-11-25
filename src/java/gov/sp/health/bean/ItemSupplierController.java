@@ -269,7 +269,7 @@ public class ItemSupplierController implements Serializable {
             }
             ItemSupplierController controller = (ItemSupplierController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "itemSupplierController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getItemFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

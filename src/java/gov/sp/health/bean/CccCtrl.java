@@ -27,7 +27,7 @@ public class CccCtrl {
     CitizenCharterCategoryFacade facade;
     @Inject
     private SessionController sessionController;
-    @ManagedProperty(value = "#{messageProvider}")
+    @Inject
     private MessageProvider messageProvider;
     List<CitizenCharterCategory> items;
     CitizenCharterCategory current;

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./../css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <h:outputStylesheet library="css" name="finance_css.css" />
+        <title>Facelets Template</title>
+        <style>
+            .menubar{
+                background-color: #dbc59e;
+                color: #d0e9c6;
+                width: 100%;
+                margin: 2px;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+
+        <div id="top" class="top">
+            <ui:insert name="top">
+                <h:graphicImage library="image" name="header01en.jpg" width="100%"/>
+                <h:form>
+                    <p:menubar styleClass="menubar">
+
+                        <p:submenu label="Home"  />
+                        <p:submenu label="Finance" >
+                            <p:menuitem value="AddExpenses" action="finance_add_expense" />
+                            <p:menuitem value="Reports" action="finance_reports" />
+                            <p:menuitem value="Edit" action="finance_edit" />
+                        </p:submenu>
+                        <p:submenu label="Admin" />
+                        
+                        <p:submenu label="User" />
+                        <p:submenu label="About Us" />
+                        <p:submenu label="Logout" />
+                    </p:menubar>
+                </h:form>
+            </ui:insert>
+        </div>
+
+        <div id="fcontent" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

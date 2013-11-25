@@ -9,13 +9,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="inventorydefault.css" />
         <h:outputStylesheet library="css" name="inventoryLayout.css" />
+        
+    
         <title>Facelets Template</title>
         <style type="text/css">
             .menubar{
-                background-color: #ee5f5b;
+                background-color: salmon;
                 width: 100%;
-                padding: 2px;
-                margin: 1px;
+                margin: 2px;
+                padding: 1px;
             }
 
         </style>
@@ -25,12 +27,12 @@
 
 
         <div id="itop" class="itop">
-            <ui:insert name="top">
+            <ui:insert name="itop">
                 <h:graphicImage library="image" name="header01en.jpg" style="width: 100%" />
                 <h:form>
                     <p:menubar styleClass="menubar">
 
-                        <p:submenu label="Home"  />
+                        <p:menuitem value="Home" action="index.xhtml" ajax="false" />
 
                         <p:submenu label="Admin" />
                         <p:submenu label="Articles" />
@@ -41,7 +43,7 @@
                 </h:form>
             </ui:insert>
         </div>
-        <div>
+        <div >
             <div id="ileft">
                 <ui:insert name="left">
                     <h:form>
@@ -49,42 +51,40 @@
 
                         <p:panelMenu style="width: 250px" >
                             <p:submenu label="Inventory Reports"  >
-                                <p:menuitem value="Main Inventory Report" />
-                                <p:menuitem value="Sub Inventory Report" />
-                                <p:menuitem value="Unit Stock Report" />
-                                <p:menuitem value="Institution Inventory" />
-                                <p:menuitem value="Institution Inventory Counts" />
-                                <p:menuitem value="Ledger" />
-                                <p:menuitem value="Purchase Bill" />
+                                <p:menuitem value="Main Inventory Report" action="inventory_report_institution_items" />
+                                <p:menuitem value="Sub Inventory Report" url="inventory_report_institution_items.xhtml"/>
+                                <p:menuitem value="Unit Stock Report" url="inventory_report_institution_items.xhtml"/>
+                                <p:menuitem value="Institution Inventory" url="inventory_report_institution_items.xhtml"/>
+                                <p:menuitem value="Institution Inventory Counts" url="inventory_report_institution_items_counts.xhtml"/>
+                                <p:menuitem value="Ledger" action="inventory_report_unit_ledger" />
+                                <p:menuitem value="Purchase Bill" url="inventory_report_unit_purchase.xhtml"/>
                             </p:submenu>
                             <p:submenu label="Consumable Reports">
-                                <p:menuitem value="Institution Stock Report" />
-                                <p:menuitem value="Unit Stock Report" />
+                                <p:menuitem value="Institution Stock Report" url="consumable_report_institution_stock.xhtml"/>
+                                <p:menuitem value="Unit Stock Report" url="consumable_report_unit_stock.xhtml"/>
                             </p:submenu>
                             <p:submenu label="Purchase">
-
+                                <p:menuitem value="Purchase" url="inventory_purchase.xhtml" />
                             </p:submenu>
                             <p:submenu label="Issues">
-
+                                <p:menuitem value="Issues" url="inventory_issue.xhtml" />
                             </p:submenu>
                             <p:submenu label="Receive Items">
-
+                                 <p:menuitem value="Received Item" url="inventory_institution_received_bills.xhtml" />
                             </p:submenu>
                             <p:submenu label="Adjust">
-                                <p:menuitem value="Edit MetaData" />
+                                <p:menuitem value="Edit MetaData" url="inventory_adjust.xhtml"/>
                             </p:submenu>
                             <p:submenu label="Edit">
-                                <p:menuitem value="Internal Institution" />
-                                <p:menuitem value="External Institution" />
-                                <p:menuitem value="Inventory Item Details" />
-                                <p:menuitem value="Consumable Details" />
+                                <p:menuitem value="edit" url="inventory_edit.xhtml"/>
+                                
                             </p:submenu>
                         </p:panelMenu>
                     </h:form>
                 </ui:insert>
             </div>
 
-            <div >
+            <div id="icontent">
                 <ui:insert name="content">Content</ui:insert>
 
             </div>

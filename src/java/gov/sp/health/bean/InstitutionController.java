@@ -407,7 +407,7 @@ public class InstitutionController implements Serializable {
             }
             InstitutionController controller = (InstitutionController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "institutionController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

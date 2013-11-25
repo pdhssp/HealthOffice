@@ -279,7 +279,7 @@ public class ContactTypeController  implements Serializable {
             }
             ContactTypeController controller = (ContactTypeController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "contactTypeController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

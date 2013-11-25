@@ -151,7 +151,7 @@ public class OldInstitutionCategoryController {
             }
             OldInstitutionCategoryController controller = (OldInstitutionCategoryController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "oldInstitutionCategoryController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

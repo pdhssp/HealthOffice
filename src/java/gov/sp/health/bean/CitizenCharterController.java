@@ -66,7 +66,7 @@ public class CitizenCharterController {
     //
     @Inject
     SessionController sessionController;
-    @ManagedProperty(value = "#{imageController}")
+    @Inject
     ImageController imageController;
     //
     //
@@ -925,7 +925,7 @@ public class CitizenCharterController {
             try {
                 CitizenCharterController controller = (CitizenCharterController) facesContext.getApplication().getELResolver().
                         getValue(facesContext.getELContext(), null, "citizenCharterController");
-                return controller.ejbFacade.find(getKey(value));
+                return controller.getEjbFacade().find(getKey(value));
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "Error");
                 return null;

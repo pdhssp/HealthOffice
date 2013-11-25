@@ -1,0 +1,16 @@
+/* 
+    Document   : finance_css
+    Created on : Nov 20, 2013, 10:29:58 AM
+    
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.fcontent{
+    position: absolute;
+    top: 220px;
+}

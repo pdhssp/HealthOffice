@@ -317,7 +317,7 @@ public class MohController  implements Serializable {
             }
             MohController controller = (MohController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "mohController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {

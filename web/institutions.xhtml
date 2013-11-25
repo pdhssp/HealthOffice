@@ -67,19 +67,14 @@
 
                     <p:panel>
                         <h:panelGrid id="gpDetail" columns="1">
+
+
                             <h:panelGrid id="gpDetailText" columns="2">
                                 <h:outputText id="lblName" value="#{labels.institution}" ></h:outputText>
                                 <h:inputText id="txtName" value="#{institutionController.current.name}" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
                                 <h:outputText id="lblCode" value="#{postLabels.code}" ></h:outputText>
                                 <h:inputText id="txtCode"  class="pdInputText" value="#{institutionController.current.code }" disabled="#{institutionController.modifyControlDisable}" ></h:inputText>
-                                <h:outputText id="lblCat" value="#{labels.institutionType}" ></h:outputText>
-                                <h:selectOneListbox class="pdListAll" id="cmbCat1" value="#{institutionController.current.institutionType}"  disabled="#{institutionController.modifyControlDisable}" >
-                                    <f:selectItems value="#{institutionController.institutionTypes}" />
-                                </h:selectOneListbox>
-
-
-
-
+                     
                                 <h:selectOneListbox rendered="#{institutionController.current.id!=null}" id="cmbCon" value="#{personController.currentContact.contactType}" size="1">
                                     <f:selectItems value="#{contactTypeController.items}"/>
                                     <f:ajax execute="cmbCon" event="change"/>
@@ -139,6 +134,13 @@
             </p:panel>
         </h:form>        
 
+   <!--        <h:outputText id="lblCat" value="#{labels.institutionType}" ></h:outputText>
+                               <h:selectOneListbox class="pdListAll" id="cmbCat1" value="#{institutionController.current.institutionType}"  disabled="#{institutionController.modifyControlDisable}" >
+                                    <f:selectItems value="#{institutionController.institutionTypes}" var="i" itemLabel="#{i.name}" itemValue="#{i}" />
+                                </h:selectOneListbox>
+
+
+-->
 
 
     </ui:define>

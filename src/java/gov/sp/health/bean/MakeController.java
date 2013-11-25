@@ -282,7 +282,7 @@ public class MakeController  implements Serializable {
             }
             MakeController controller = (MakeController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "makeController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
