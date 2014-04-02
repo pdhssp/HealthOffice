@@ -9,14 +9,21 @@
 
 
     <ui:define name="content">
+
+
+
+
         <h:form >
             <p:growl autoUpdate="true" />
-            <p:panel header="#{labels.caderPostionDataManagement}" >
-                <p:panelGrid columns="1" >
-                    <h:commandButton value="Positions by Institutions" action="cadre_reports_positions"/>
-                </p:panelGrid>
+            <p:panel  >
+
+                <p:commandButton value="Carder Positions by Designation" action="cadre_reports_positions.xhtml" ajax="false" >
+                </p:commandButton>
             </p:panel>
         </h:form>        
+
+
+
     </ui:define>
 
 </ui:composition>

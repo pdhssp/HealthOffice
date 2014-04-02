@@ -19,7 +19,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -46,6 +48,7 @@ public final class InstitutionCadreController implements Serializable {
     SessionController sessionController;
     private InstitutionCadre current;
     private List<InstitutionCadre> items = null;
+    private List<InstitutionCadre> designationItems = null;
     Institution institution;
     Designation designation;
     long caderCount;
@@ -274,7 +277,7 @@ public final class InstitutionCadreController implements Serializable {
         System.out.println("7");
         setCarderMonth(temM);
         System.out.println("8");
-        if (temM == 1) {
+        if (temM == 0) {
             System.out.println("9");
             temM = 11;
             temY = temY - 1;
@@ -318,10 +321,10 @@ public final class InstitutionCadreController implements Serializable {
             JsfUtil.addErrorMessage("Please select an institution type");
             return;
         }
-        if (caderCount == 0l) {
-            JsfUtil.addErrorMessage("Please enter the count");
-            return;
-        }
+//        if (caderCount == 0l) {
+//            JsfUtil.addErrorMessage("Please enter the count");
+//            return;
+//        }
         System.out.println("all variables ok to add");
         InstitutionCadre itc = new InstitutionCadre();
         itc.setDesignation(getDesignation());
@@ -336,9 +339,11 @@ public final class InstitutionCadreController implements Serializable {
         itc.setCreatedAt(Calendar.getInstance().getTime());
         itc.setCreater(sessionController.loggedUser);
         getEjbFacade().create(itc);
-//        JsfUtil.addSuccessMessage("Added Successfully");
+        JsfUtil.addSuccessMessage("Added Successfully");
         setDesignation(null);
         setCaderCount(0);
+        setMaleIn(0);
+        setFemaleIn(0);
         System.out.println("saved for " + itc.getIntYear() + " " + itc.getIntMonth());
         items = null;
     }
@@ -416,13 +421,16 @@ public final class InstitutionCadreController implements Serializable {
         return "";
     }
 
-    public void calculateCountr() {
+    public void calculateCountr(List<InstitutionCadre> ics) {
         long t = 0l;
         long mi = 0l;
         long fi = 0l;
         long a = 0l;
         long v = 0l;
-        for (InstitutionCadre c : items) {
+        if (ics == null) {
+            return;
+        }
+        for (InstitutionCadre c : ics) {
             t = t + c.getMaleAndFemaleIn();
             mi = mi + c.getMaleIn();
             fi = fi + c.getFemaleIn();
@@ -444,13 +452,32 @@ public final class InstitutionCadreController implements Serializable {
             }
             sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.name";
             items = getFacade().findBySQL(sql);
-            calculateCountr();
+            calculateCountr(items);
         }
         return items;
     }
 
+    public void listDesignationItems() {
+        System.out.println("listing designation items");
+        String sql;
+        Map m = new HashMap();
+        m.put("des", designation);
+        System.out.println("des = " + designation);
+        sql = "Select d From InstitutionCadre d where d.retired=false and d.designation=:des and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.name";
+        designationItems = getFacade().findBySQL(sql, m);
+        calculateCountr(designationItems);
+    }
+
     public void recreateItems() {
         items = null;
+    }
+
+    public List<InstitutionCadre> getDesignationItems() {
+        return designationItems;
+    }
+
+    public void setDesignationItems(List<InstitutionCadre> designationItems) {
+        this.designationItems = designationItems;
     }
 
     public InstitutionCadreFacade getEjbFacade() {

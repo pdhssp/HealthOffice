@@ -38,7 +38,7 @@
                                         <h:outputLabel value="#{labels.month}" />
                                     </td>
                                     <td>
-                                        <p:calendar id="calDate"    value="#{institutionCadreController.carderDate}" pattern="MMMM yyyy" navigator="true" >
+                                        <p:calendar id="calDate"    value="#{institutionCadreController.carderDate}" pattern="dd MMMM yyyy" navigator="true" >
                                             <p:ajax event="dateSelect"  update="tblC" process="calDate" />
                                         </p:calendar>
                                     </td>
