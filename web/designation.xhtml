@@ -74,8 +74,10 @@
                                 <h:inputText id="txtNameS" value="#{designationController.current.sname}" disabled="#{designationController.modifyControlDisable}" ></h:inputText>
                                 <h:outputText id="lblNameT" value="#{labels.tdesignation}" ></h:outputText>
                                 <h:inputText id="txtNameT" value="#{designationController.current.tname}" disabled="#{designationController.modifyControlDisable}" ></h:inputText>
+                                <h:outputText id="lblOrderNo" value="#{labels.orderNo}" ></h:outputText>
+                                <h:inputText id="txtOrderNo" value="#{designationController.current.orderNo}" disabled="#{designationController.modifyControlDisable}" ></h:inputText>
 
-                                
+
                             </h:panelGrid>
                             <h:panelGrid id="gpDetailButtons" columns="2">
                                 <h:commandButton id="btnSave" value="#{labels.save}" disabled="#{designationController.modifyControlDisable}" action="#{designationController.saveSelected()}" styleClass="buttons">
@@ -92,9 +94,9 @@
                 </h:panelGrid>
             </p:panel>
         </h:form>        
-        
-        
-        
+
+
+
     </ui:define>
 
 </ui:composition>

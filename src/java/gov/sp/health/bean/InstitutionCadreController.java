@@ -318,7 +318,7 @@ public final class InstitutionCadreController implements Serializable {
             return;
         }
         if (getInstitution() == null) {
-            JsfUtil.addErrorMessage("Please select an institution type");
+            JsfUtil.addErrorMessage("Please select an institution");
             return;
         }
 //        if (caderCount == 0l) {
@@ -450,7 +450,7 @@ public final class InstitutionCadreController implements Serializable {
             if (getInstitution() == null) {
                 return new ArrayList<InstitutionCadre>();
             }
-            sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.name";
+            sql = "Select d From InstitutionCadre d where d.retired=false and d.institution.id = " + getInstitution().getId() + " and d.intYear = " + getCarderYear() + " and d.intMonth = " + getCarderMonth() + " order by d.designation.name";
             items = getFacade().findBySQL(sql);
             calculateCountr(items);
         }
