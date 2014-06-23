@@ -73,9 +73,14 @@ public abstract class AbstractFacade<T> {
         Iterator it = s.iterator();
         while (it.hasNext()) {
             Map.Entry m = (Map.Entry) it.next();
-            Date pVal = (Date) m.getValue();
+            Object pVal = m.getValue();
             String pPara = (String) m.getKey();
-            qry.setParameter(pPara, pVal, TemporalType.DATE);
+            if (pVal instanceof Date) {
+                Date pDate = (Date) pVal;
+                qry.setParameter(pPara, pDate, TemporalType.DATE);
+            } else {
+                qry.setParameter(pPara, pVal);
+            }
             System.out.println("Parameter " + pPara + "\tVal" + pVal);
         }
         return qry.getResultList();
@@ -89,12 +94,12 @@ public abstract class AbstractFacade<T> {
         return (Long) q.getSingleResult();
     }
 
-     public List<Long> longListBySql(String sql) {
+    public List<Long> longListBySql(String sql) {
         Query q;
         q = getEntityManager().createQuery(sql);
         return q.getResultList();
     }
-    
+
     public Double sumBySql(String sql) {
         Query q = getEntityManager().createQuery(sql);
         return (Double) q.getSingleResult();
@@ -221,7 +226,7 @@ public abstract class AbstractFacade<T> {
             return 0.0;
         }
     }
-    
+
     public Long findAggregateLong(String strJQL) {
         Query q = getEntityManager().createQuery(strJQL);
         try {
@@ -231,7 +236,7 @@ public abstract class AbstractFacade<T> {
             return 0l;
         }
     }
-    
+
     public List<String> findString(String strJQL) {
         Query q = getEntityManager().createQuery(strJQL);
         try {
@@ -241,7 +246,7 @@ public abstract class AbstractFacade<T> {
             return null;
         }
     }
-    
+
     public Double findAggregateDbl(String temSQL, Map<String, Date> parameters) {
         TypedQuery<Double> qry = getEntityManager().createQuery(temSQL, Double.class);
         Set s = parameters.entrySet();
@@ -260,7 +265,4 @@ public abstract class AbstractFacade<T> {
             return 0.0;
         }
     }
-    
-    
-    
 }

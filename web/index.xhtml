@@ -17,114 +17,92 @@
 
 
         <table id="indexTbl" style="width:100%;">
-            <tr>
-                <td colspan="2"  align="center" width="30%" >
+            
+                <tr>
+                    <td  align="center" width="40%" >
 
-                    <div>
-                        <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true" transitionInterval="5000" effect="clip" effectSpeed="1500" >
-                            <table  >
-                                <tr >
-                                    <td  >
-                                        <table >
-                                            <tr>
-                                                <td class="centreText">
-                                                    <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaTopic}" styleClass="welcomeHeading" ></h:outputLabel>
-                                                    <h:outputLabel rendered="#{languageBean.inTamil}" value="#{w.tamilTopic}" styleClass="welcomeHeading" ></h:outputLabel>
-                                                    <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{w.englishTopic}" styleClass="welcomeHeading" ></h:outputLabel>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="justifiedText">
-                                                    <h:outputText escape="false"  rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputText>
-                                                    <h:outputText escape="false"  rendered="#{languageBean.inTamil}" value="#{w.tamilContent }" styleClass="welcomeText" ></h:outputText>
-                                                    <h:outputText escape="false"  rendered="#{languageBean.inEnglish}" value="#{w.englishContent }" styleClass="welcomeText" ></h:outputText>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td >
-                                        <p:graphicImage value="#{articleController.imageById}" styleClass="welcomeImage" >
-                                            <f:param name="id" value="#{w.imgId}" />
-                                        </p:graphicImage>
-                                    </td>
-                                </tr>
-                            </table>
-                        </p:galleria>
+                        <div>
+                            <iframe width="480" height="302" src="http://www.ustream.tv/embed/16802164?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;">    </iframe>
+                            <br /><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Video streaming by Ustream</a>
 
-                    </div>
+                            <!--                        
+                                                    <p:galleria id="isWelcome"  value="#{articleController.welcomes}" var="w" autoPlay="true" transitionInterval="5000" effect="clip" effectSpeed="1500" >
+                                                        <table  >
+                                                            <tr >
+                                                                <td  >
+                                                                    <table >
+                                                                        <tr>
+                                                                            <td class="centreText">
+                                                                                <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{w.sinhalaTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                                                                                <h:outputLabel rendered="#{languageBean.inTamil}" value="#{w.tamilTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                                                                                <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{w.englishTopic}" styleClass="welcomeHeading" ></h:outputLabel>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="justifiedText">
+                                                                                <h:outputText escape="false"  rendered="#{languageBean.inSinhala}" value="#{w.sinhalaContent }" styleClass="welcomeText" ></h:outputText>
+                                                                                <h:outputText escape="false"  rendered="#{languageBean.inTamil}" value="#{w.tamilContent }" styleClass="welcomeText" ></h:outputText>
+                                                                                <h:outputText escape="false"  rendered="#{languageBean.inEnglish}" value="#{w.englishContent }" styleClass="welcomeText" ></h:outputText>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td >
+                                                                    <p:graphicImage value="#{articleController.imageById}" styleClass="welcomeImage" >
+                                                                        <f:param name="id" value="#{w.imgId}" />
+                                                                    </p:graphicImage>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </p:galleria>-->
 
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-
-
-                    <div id="newsBox" >
-                        <h:outputLabel value="Events" styleClass="eventHeader" ></h:outputLabel>
-                        <div style="padding-top: 20px;">
-                            <ui:repeat value="#{articleController.eventItems}" var="myevent" >
-                                <div class="note" >
-                                    <h:outputLabel value="#{myevent.eventDate}" >
-                                        <f:convertDateTime pattern="dd MMMM yyyy" />
-                                    </h:outputLabel>
-                                    <hr/>
-                                    <h:outputLabel value="#{myevent.sinhalaTopic}"  rendered="#{languageBean.inSinhala}" >
-                                    </h:outputLabel>
-                                    <h:outputLabel value="#{myevent.tamilTopic}"  rendered="#{languageBean.inTamil}" >
-                                    </h:outputLabel>
-                                    <h:outputLabel value="#{myevent.englishTopic}"  rendered="#{languageBean.inEnglish}" >
-                                    </h:outputLabel>
-                                    <br/>
-                                    <h:outputLabel value="#{myevent.sinhalaContent}"  rendered="#{languageBean.inSinhala}" >
-                                    </h:outputLabel>
-                                    <h:outputLabel value="#{myevent.tamilContent}"  rendered="#{languageBean.inTamil}" >
-                                    </h:outputLabel>
-                                    <h:outputLabel value="#{myevent.englishContent}"  rendered="#{languageBean.inEnglish}" >
-                                    </h:outputLabel>
-                                </div>
-                            </ui:repeat>
                         </div>
-                    </div>
 
 
 
-                    <div class="articleBox" >
-                        <p:imageSwitch   effect="fade"  >
-                            <ui:repeat value="#{articleController.allExceptWelcomesAndEvents}" var="aa" >
-                                <div>
-                                    <div>
-                                        <h:outputLabel rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                        <h:outputLabel rendered="#{languageBean.inTamil}" value="#{aa.tamilTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                        <h:outputLabel rendered="#{languageBean.inEnglish}" value="#{aa.englishTopic}" styleClass="articalTopic" ></h:outputLabel>
-                                    </div>
-                                    <div>
+                    </td>
 
-                                        <div class="articalTextBox">
-                                            <h:outputText escape="false" rendered="#{languageBean.inSinhala}" value="#{aa.sinhalaContent}" styleClass="articalText" ></h:outputText>
-                                            <h:outputText escape="false" rendered="#{languageBean.inTamil}" value="#{aa.tamilContent}" styleClass="articalText" ></h:outputText>
-                                            <h:outputText escape="false" rendered="#{languageBean.inEnglish}" value="#{aa.englishContent}" styleClass="articalText" ></h:outputText>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ui:repeat>
-                        </p:imageSwitch>
-                    </div>
+                    <td>
+                        <div>
+                            <p:panel style="position: absolute; width: 50% ">
+                                <f:facet name="header">
+                                <font color="#0066FF"><p:outputLabel value="Download Section" style="font-size: 30px;"></p:outputLabel></font>
+                                </f:facet>
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel style="font-size: 12px" value="Percentage of provincially  managed health facilities sending indoor morbidity data through e-IMMR-3A"></p:outputLabel>
+                                    <a href="/resources/downloads/eimmr.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Percentage of provincially  managed health facilities sending indoor morbidity data through e-IMMR-3B"></p:outputLabel>
+                                    <a href="/resources/downloads/eIMMR -3B.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Provincially managed health facilities with ETUs for that level of facility based on standard guidelines Form A"></p:outputLabel>
+                                    <a href="/resources/downloads/AandE.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Provincially managed health facilities with ETUs for that level of facility based on standard guidelines Form B"></p:outputLabel>
+                                    <a href="/resources/downloads/AandEDistrictFormat.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Provincially managed health facilities with ETUs for that level of facility based on standard guidelines Form A"></p:outputLabel>
+                                    <a href="/resources/downloads/ER District Format.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Provincially managed health facilities with ETUs for that level of facility based on standard guidelines Form B"></p:outputLabel>
+                                    <a href="/resources/downloads/ER.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Percentage of MOH areas with at least two healthy lifestyle centers Form A"></p:outputLabel>
+                                    <a href="/resources/downloads/HLC 1A.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Percentage of MOH areas with at least two healthy lifestyle centers Form B"></p:outputLabel>
+                                    <a href="/resources/downloads/HLC District-1B.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Percentage of MCH clinics with an agreed package of equipment and supplies for monitoring pregnant women and children under five years Form A"></p:outputLabel>
+                                    <a href="/resources/downloads/MCH-2A (2).docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Percentage of MCH clinics with an agreed package of equipment and supplies for monitoring pregnant women and children under five years Form B"></p:outputLabel>
+                                    <a href="/resources/downloads/MCH District format-2B.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Percentage  of fully functioning Quality management Units (QMUs) in provincially managed secondary and tertiary level hospitals (Base hospital and upwards) Form A"></p:outputLabel>
+                                    <a href="/resources/downloads/QMU District Format.docx"> Download</a>
+                                    <p:outputLabel style="font-size: 12px" value="Percentage  of fully functioning Quality management Units (QMUs) in provincially managed secondary and tertiary level hospitals (Base hospital and upwards) Form B"></p:outputLabel>
+                                    <a href="/resources/downloads/QMU.docx"> Download</a>
+                                </p:panelGrid>
 
-                    <div class="articleBox">
-                        <p:imageSwitch   effect="fade"  >
-                            <ui:repeat value="#{articleController.gallryImgs}" var="gi" >
-                                <p:graphicImage value="#{articleController.imageById}" styleClass="articalImage" >
-                                    <f:param name="id" value="#{gi.imgId}" />
-                                </p:graphicImage>
-                            </ui:repeat>
-                        </p:imageSwitch>
-                    </div>
+                            </p:panel>
+                        </div>
+                    </td>
 
-
-                </td>
-            </tr>
+                </tr>
+            
+                
+            
             <tr>
                 <td>
 
@@ -159,10 +137,10 @@
 
 
                     </div>
-                    
-                    
+
+
                     <script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
-                    <div style="float: left;height: 50px; background-color: red; padding: 0px;margin: 0px;" >
+                    <div style="float: left;height: 120px; padding: 0px;margin: 0px;" >
                         <div id="SkypeButton_Call_ministry-of-health_1">
                             <script type="text/javascript">
                                 Skype.ui({
@@ -173,7 +151,7 @@
                                 });
                             </script>
                         </div>
-                    </div>
+                    </div>0
 
 
                 </td>
