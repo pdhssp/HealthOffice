@@ -12,7 +12,6 @@ import gov.sp.health.entity.*;
 import gov.sp.health.facade.PersonContactFacade;
 import gov.sp.health.facade.InstitutionFacade;
 import gov.sp.health.facade.ItemUnitHistoryFacade;
-import gov.sp.health.facade.LocationFacade;
 import gov.sp.health.facade.UnitFacade;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -27,7 +26,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import org.jboss.weld.logging.messages.JsfMessage;
 
 /**
  *

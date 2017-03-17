@@ -27,7 +27,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import org.jboss.weld.logging.messages.JsfMessage;
 
 /**
  *
